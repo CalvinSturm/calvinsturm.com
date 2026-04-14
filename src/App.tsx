@@ -14,6 +14,7 @@ import {
   Phone,
   Printer,
   ShieldCheck,
+  Star,
   Wifi,
   Wrench,
   X,
@@ -32,6 +33,13 @@ const trustPoints = [
   ['Help where the problem actually happens', 'Wi-Fi, printers, TVs, and smart home issues get solved in the room where they break down.', MapPin],
   ['Family can join in', 'A spouse, adult child, or caregiver can be there in person or by phone so everyone stays aligned.', Phone],
   ['No surprise add-ons', 'If something extra is needed, you hear about it before money is spent.', Calendar],
+] as const;
+
+const reviews = [
+  ['Grover Beach', 'I didn&apos;t need tech language. I just needed someone patient to fix the Wi-Fi and explain what changed.'],
+  ['Santa Maria', 'The printer was finally working again before family came over, and everything was explained in a way that made sense.'],
+  ['Arroyo Grande', 'My new laptop, email, and phone were all set up in one visit. It felt calm instead of overwhelming.'],
+  ['Lompoc', 'I appreciated the honesty. The problem was solved at home without pressure to buy anything new.'],
 ] as const;
 
 const processSteps = [
@@ -530,16 +538,25 @@ export default function App() {
                 </div>
               ))}
             </div>
-            <div className="mt-8 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-100 p-6 lg:p-8">
-              <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-200">
-                  <CheckCircle2 className="h-5 w-5 text-amber-700" />
+            <div className="mt-8 grid gap-4 lg:grid-cols-2">
+              {reviews.map(([location, quote]) => (
+                <div key={location} className="rounded-2xl border border-amber-100 bg-gradient-to-r from-amber-50 to-orange-50 p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-200">
+                      <CheckCircle2 className="h-5 w-5 text-amber-700" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1 text-amber-500">
+                        {Array.from({ length: 5 }).map((_, index) => (
+                          <Star key={index} className="h-4 w-4 fill-current" />
+                        ))}
+                      </div>
+                      <p className="mt-2 text-lg font-medium text-slate-900">5-star review from {location}</p>
+                      <p className="mt-2 text-slate-600">&ldquo;{quote}&rdquo;</p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-lg font-medium text-slate-900">5-star review from Grover Beach</p>
-                  <p className="mt-2 text-slate-600">&ldquo;I didn&apos;t need tech language. I just needed someone patient to fix the Wi-Fi and explain what changed.&rdquo;</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
