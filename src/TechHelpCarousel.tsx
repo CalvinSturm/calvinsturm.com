@@ -7,14 +7,39 @@ import * as THREE from 'three';
 
 function FolderModel({ hovered }: { hovered?: boolean }) {
   const paperRef = useRef<THREE.Group>(null);
+  const paperSheetRef = useRef<THREE.Mesh>(null);
+  const paperLinesRef = useRef<THREE.Group>(null);
   
-  useFrame((state, delta) => {
-    if (paperRef.current && hovered) {
-      paperRef.current.position.x = THREE.MathUtils.lerp(paperRef.current.position.x, 0.5, 0.1);
-      paperRef.current.rotation.y = THREE.MathUtils.lerp(paperRef.current.rotation.y, 0.3, 0.1);
-    } else if (paperRef.current) {
-      paperRef.current.position.x = THREE.MathUtils.lerp(paperRef.current.position.x, 0.2, 0.1);
-      paperRef.current.rotation.y = THREE.MathUtils.lerp(paperRef.current.rotation.y, 0, 0.1);
+  useFrame((_state, delta) => {
+    if (paperRef.current) {
+      paperRef.current.position.x = THREE.MathUtils.lerp(paperRef.current.position.x, hovered ? 1.3 : 0.2, 0.09);
+      paperRef.current.position.y = THREE.MathUtils.lerp(paperRef.current.position.y, hovered ? 1.25 : 0.2, 0.09);
+      paperRef.current.position.z = THREE.MathUtils.lerp(paperRef.current.position.z, hovered ? 0.75 : 0, 0.09);
+      paperRef.current.rotation.y = THREE.MathUtils.lerp(paperRef.current.rotation.y, hovered ? 0.85 : 0, 0.09);
+      paperRef.current.rotation.z = THREE.MathUtils.lerp(paperRef.current.rotation.z, hovered ? -0.95 : 0, 0.09);
+    }
+
+    if (paperSheetRef.current) {
+      const targetScale = hovered ? 0.9 : 1;
+      paperSheetRef.current.scale.x = THREE.MathUtils.lerp(paperSheetRef.current.scale.x, targetScale, 0.1);
+      paperSheetRef.current.scale.y = THREE.MathUtils.lerp(paperSheetRef.current.scale.y, targetScale, 0.1);
+      paperSheetRef.current.scale.z = THREE.MathUtils.lerp(paperSheetRef.current.scale.z, 1, 0.12);
+
+      const material = paperSheetRef.current.material as THREE.MeshStandardMaterial;
+      material.transparent = true;
+      material.opacity = THREE.MathUtils.lerp(material.opacity, hovered ? 0.92 : 1, 0.12);
+    }
+
+    if (paperLinesRef.current) {
+      paperLinesRef.current.scale.x = THREE.MathUtils.lerp(paperLinesRef.current.scale.x, hovered ? 0.95 : 1, 0.1);
+      paperLinesRef.current.scale.y = THREE.MathUtils.lerp(paperLinesRef.current.scale.y, hovered ? 0.95 : 1, 0.1);
+      paperLinesRef.current.position.z = THREE.MathUtils.lerp(paperLinesRef.current.position.z, hovered ? 0.06 : 0.03, 0.12);
+      for (const child of paperLinesRef.current.children) {
+        const mesh = child as THREE.Mesh;
+        const material = mesh.material as THREE.MeshStandardMaterial;
+        material.transparent = true;
+        material.opacity = THREE.MathUtils.lerp(material.opacity, hovered ? 0.9 : 1, 0.12);
+      }
     }
   });
 
@@ -25,26 +50,24 @@ function FolderModel({ hovered }: { hovered?: boolean }) {
         <meshStandardMaterial color="#fbbf24" />
       </mesh>
       <group ref={paperRef} position={[0.2, 0.2, 0]}>
-        <mesh>
+        <mesh ref={paperSheetRef}>
           <boxGeometry args={[1.6, 1.4, 0.05]} />
           <meshStandardMaterial color="#ffffff" />
         </mesh>
-        {hovered && (
-          <group position={[0, 0, 0.03]}>
-            <mesh position={[-0.3, 0.4, 0]}>
-              <boxGeometry args={[0.8, 0.1, 0.02]} />
-              <meshStandardMaterial color="#3b82f6" />
-            </mesh>
-            <mesh position={[-0.3, 0.15, 0]}>
-              <boxGeometry args={[0.7, 0.08, 0.02]} />
-              <meshStandardMaterial color="#94a3b8" />
-            </mesh>
-            <mesh position={[-0.3, -0.1, 0]}>
-              <boxGeometry args={[0.6, 0.08, 0.02]} />
-              <meshStandardMaterial color="#94a3b8" />
-            </mesh>
-          </group>
-        )}
+        <group ref={paperLinesRef} position={[0, 0, 0.03]}>
+          <mesh position={[-0.3, 0.4, 0]}>
+            <boxGeometry args={[0.8, 0.1, 0.02]} />
+            <meshStandardMaterial color="#3b82f6" />
+          </mesh>
+          <mesh position={[-0.3, 0.15, 0]}>
+            <boxGeometry args={[0.7, 0.08, 0.02]} />
+            <meshStandardMaterial color="#94a3b8" />
+          </mesh>
+          <mesh position={[-0.3, -0.1, 0]}>
+            <boxGeometry args={[0.6, 0.08, 0.02]} />
+            <meshStandardMaterial color="#94a3b8" />
+          </mesh>
+        </group>
       </group>
       <mesh position={[0, -0.1, 0.2]} rotation={[-0.2, 0, 0]}>
         <boxGeometry args={[2, 1.4, 0.1]} />
@@ -573,7 +596,7 @@ const issues = [
     id: 1, 
     title: 'Where did my files go?', 
     description: 'Downloaded a document or picture and can\'t find it? We can help you locate your missing files and organize your folders.',
-    hoverTitle: 'Files slide out to show saved documents',
+    hoverTitle: 'The file shoots out and flies away',
     Model: FolderModel 
   },
   { 

@@ -394,15 +394,11 @@ export default function App() {
             <div className="absolute right-[-5%] bottom-[-10%] h-[400px] w-[400px] rounded-full bg-indigo-200/25 blur-[100px]" />
           </div>
           <div className="section-shell py-12 lg:py-20">
-            <div className="grid gap-8 lg:grid-cols-[1fr_380px] lg:gap-12">
-              <div className="max-w-2xl">
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-200/60 bg-white/60 px-3 py-1.5 text-sm font-medium text-slate-700 backdrop-blur-sm animate-fade-in-up">
-                  <span className="flex h-2 w-2 items-center justify-center rounded-full bg-emerald-500" />
-                  Serving Five Cities, Santa Maria, Orcutt & Lompoc
-                </div>
-                <h1 className="font-display mb-5 text-4xl font-medium leading-[1.15] text-slate-900 sm:text-5xl lg:text-[3.25rem] animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-                  Tech support that comes to you.
-                </h1>
+              <div className="grid gap-8 lg:grid-cols-[1fr_380px] lg:gap-12">
+                <div className="max-w-2xl">
+                  <h1 className="font-display mb-5 text-4xl font-medium leading-[1.15] text-slate-900 sm:text-5xl lg:text-[3.25rem] animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
+                    Tech support that comes to you.
+                  </h1>
                 <p className="mb-6 text-lg leading-relaxed text-slate-600 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                   No jargon. No confusion. Just patient, local help for Wi-Fi, printers, devices, and everyday tech at your home.
                 </p>
