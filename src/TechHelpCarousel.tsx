@@ -12,33 +12,39 @@ function FolderModel({ hovered }: { hovered?: boolean }) {
   
   useFrame((_state, delta) => {
     if (paperRef.current) {
-      paperRef.current.position.x = THREE.MathUtils.lerp(paperRef.current.position.x, hovered ? 1.3 : 0.2, 0.09);
-      paperRef.current.position.y = THREE.MathUtils.lerp(paperRef.current.position.y, hovered ? 1.25 : 0.2, 0.09);
-      paperRef.current.position.z = THREE.MathUtils.lerp(paperRef.current.position.z, hovered ? 0.75 : 0, 0.09);
-      paperRef.current.rotation.y = THREE.MathUtils.lerp(paperRef.current.rotation.y, hovered ? 0.85 : 0, 0.09);
-      paperRef.current.rotation.z = THREE.MathUtils.lerp(paperRef.current.rotation.z, hovered ? -0.95 : 0, 0.09);
+      paperRef.current.position.x = THREE.MathUtils.lerp(paperRef.current.position.x, hovered ? 2.65 : 0.2, 0.11);
+      paperRef.current.position.y = THREE.MathUtils.lerp(paperRef.current.position.y, hovered ? 2.15 : 0.2, 0.11);
+      paperRef.current.position.z = THREE.MathUtils.lerp(paperRef.current.position.z, hovered ? 1.45 : 0, 0.11);
+      paperRef.current.rotation.x = THREE.MathUtils.lerp(paperRef.current.rotation.x, hovered ? -0.55 : 0, 0.1);
+      paperRef.current.rotation.y = THREE.MathUtils.lerp(paperRef.current.rotation.y, hovered ? 1.3 : 0, 0.11);
+      paperRef.current.rotation.z = THREE.MathUtils.lerp(paperRef.current.rotation.z, hovered ? -1.35 : 0, 0.11);
+
+      const paperScale = hovered ? 0.3 : 1;
+      paperRef.current.scale.x = THREE.MathUtils.lerp(paperRef.current.scale.x, paperScale, 0.12);
+      paperRef.current.scale.y = THREE.MathUtils.lerp(paperRef.current.scale.y, paperScale, 0.12);
+      paperRef.current.scale.z = THREE.MathUtils.lerp(paperRef.current.scale.z, hovered ? 0.7 : 1, 0.12);
     }
 
     if (paperSheetRef.current) {
-      const targetScale = hovered ? 0.9 : 1;
+      const targetScale = hovered ? 0.45 : 1;
       paperSheetRef.current.scale.x = THREE.MathUtils.lerp(paperSheetRef.current.scale.x, targetScale, 0.1);
       paperSheetRef.current.scale.y = THREE.MathUtils.lerp(paperSheetRef.current.scale.y, targetScale, 0.1);
-      paperSheetRef.current.scale.z = THREE.MathUtils.lerp(paperSheetRef.current.scale.z, 1, 0.12);
+      paperSheetRef.current.scale.z = THREE.MathUtils.lerp(paperSheetRef.current.scale.z, hovered ? 0.7 : 1, 0.12);
 
       const material = paperSheetRef.current.material as THREE.MeshStandardMaterial;
       material.transparent = true;
-      material.opacity = THREE.MathUtils.lerp(material.opacity, hovered ? 0.92 : 1, 0.12);
+      material.opacity = THREE.MathUtils.lerp(material.opacity, hovered ? 0.18 : 1, 0.14);
     }
 
     if (paperLinesRef.current) {
-      paperLinesRef.current.scale.x = THREE.MathUtils.lerp(paperLinesRef.current.scale.x, hovered ? 0.95 : 1, 0.1);
-      paperLinesRef.current.scale.y = THREE.MathUtils.lerp(paperLinesRef.current.scale.y, hovered ? 0.95 : 1, 0.1);
-      paperLinesRef.current.position.z = THREE.MathUtils.lerp(paperLinesRef.current.position.z, hovered ? 0.06 : 0.03, 0.12);
+      paperLinesRef.current.scale.x = THREE.MathUtils.lerp(paperLinesRef.current.scale.x, hovered ? 0.55 : 1, 0.12);
+      paperLinesRef.current.scale.y = THREE.MathUtils.lerp(paperLinesRef.current.scale.y, hovered ? 0.55 : 1, 0.12);
+      paperLinesRef.current.position.z = THREE.MathUtils.lerp(paperLinesRef.current.position.z, hovered ? 0.08 : 0.03, 0.12);
       for (const child of paperLinesRef.current.children) {
         const mesh = child as THREE.Mesh;
         const material = mesh.material as THREE.MeshStandardMaterial;
         material.transparent = true;
-        material.opacity = THREE.MathUtils.lerp(material.opacity, hovered ? 0.9 : 1, 0.12);
+        material.opacity = THREE.MathUtils.lerp(material.opacity, hovered ? 0.12 : 1, 0.14);
       }
     }
   });
