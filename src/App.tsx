@@ -13,6 +13,7 @@ import {
   MonitorSmartphone,
   Phone,
   Printer,
+  Search,
   ShieldCheck,
   Star,
   Wifi,
@@ -91,6 +92,12 @@ const faqs = [
 ] as const;
 
 const cities = ['Arroyo Grande', 'Grover Beach', 'Pismo Beach', 'Shell Beach', 'Avila Beach', 'Santa Maria', 'Orcutt', 'Lompoc'];
+
+const serviceAreaFacts = [
+  ['In-home visits', 'Homes, condos, and apartments across the core service area.', House],
+  ['Fast range check', 'Nearby cities can usually be confirmed quickly by city or ZIP.', MapPin],
+  ['Clear next step', 'If you are nearby, call now or request a callback to confirm the address.', Phone],
+] as const;
 
 const mapCities = [
   ['Lompoc', 45, 30, 'nearby'],
@@ -664,68 +671,136 @@ export default function App() {
               <p className="mt-3 text-lg text-slate-600">We come to you. Check if we cover your area.</p>
             </div>
 
-            <div className="mb-10 flex justify-center">
-              <div className="relative w-full max-w-lg rounded-2xl bg-white border border-slate-200 p-6 overflow-hidden">
-                <div className="absolute inset-0 opacity-15">
-                  <svg viewBox="0 0 200 140" className="h-full w-full">
-                    <path d="M10,70 Q50,50 90,65 T190,60" fill="none" stroke="#64748b" strokeWidth="0.5" />
-                    <path d="M0,80 Q40,60 100,75 T200,70" fill="none" stroke="#94a3b8" strokeWidth="0.3" />
-                    <path d="M0,90 Q60,70 130,85 T200,80" fill="none" stroke="#cbd5e1" strokeWidth="0.2" />
-                  </svg>
+            <div className="service-area-shell">
+              <div className="service-area-map-panel">
+                <div className="service-area-map-copy">
+                  <div>
+                    <p className="service-area-kicker">Primary coverage</p>
+                    <h3 className="text-2xl font-semibold text-slate-900">Five Cities, Santa Maria, Orcutt, and Lompoc</h3>
+                    <p className="mt-3 text-base text-slate-600">The main house-call zone covers the places most visits come from, with nearby Central Coast areas confirmed case by case.</p>
+                  </div>
+                  <div className="service-area-stat-row">
+                    <div className="service-area-stat">
+                      <span className="service-area-stat-value">8</span>
+                      <span className="service-area-stat-label">core cities shown</span>
+                    </div>
+                    <div className="service-area-stat">
+                      <span className="service-area-stat-value">Nearby</span>
+                      <span className="service-area-stat-label">areas confirmed quickly</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="relative flex flex-col items-center">
-                  <img src="/5CitiesMap.png" alt="Five Cities Service Area Map" className="w-full max-w-md mx-auto rounded-xl" />
+
+                <div className="service-area-map-visual">
+                  <div className="absolute inset-0 opacity-15">
+                    <svg viewBox="0 0 200 140" className="h-full w-full">
+                      <path d="M10,70 Q50,50 90,65 T190,60" fill="none" stroke="#64748b" strokeWidth="0.5" />
+                      <path d="M0,80 Q40,60 100,75 T200,70" fill="none" stroke="#94a3b8" strokeWidth="0.3" />
+                      <path d="M0,90 Q60,70 130,85 T200,80" fill="none" stroke="#cbd5e1" strokeWidth="0.2" />
+                    </svg>
+                  </div>
+                  <div className="service-area-map-frame">
+                    <img src="/5CitiesMap.png" alt="Five Cities Service Area Map" className="w-full max-w-md mx-auto rounded-xl" />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
-              <div>
-                <div className="mb-6">
-                  <input
-                    type="text"
-                    value={areaQuery}
-                    onChange={(event) => handleAreaCheck(event.target.value)}
-                    placeholder="Enter city or ZIP code"
-                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400"
-                  />
+              <div className="service-area-info-panel">
+                <div className="service-area-checker-card">
+                  <div className="flex items-start gap-3">
+                    <div className="service-area-checker-icon">
+                      <Search className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-slate-900">Check your city or ZIP</h3>
+                      <p className="mt-1 text-sm text-slate-600">Start typing or tap a city below for a quick coverage check.</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-5">
+                    <label htmlFor="service-area-search" className="mb-2 block text-sm font-medium text-slate-700">City or ZIP code</label>
+                    <div className="service-area-search-wrap">
+                      <Search className="h-5 w-5 text-slate-400" />
+                      <input
+                        id="service-area-search"
+                        type="text"
+                        value={areaQuery}
+                        onChange={(event) => handleAreaCheck(event.target.value)}
+                        placeholder="Enter city or ZIP code"
+                        className="service-area-search-input"
+                      />
+                    </div>
+                  </div>
+
                   {areaResult && (
-                    <div className={`mt-3 rounded-lg p-3 text-sm ${areaResult.tone === 'in-range' ? 'bg-emerald-50 text-emerald-700' : areaResult.tone === 'nearby' ? 'bg-amber-50 text-amber-700' : 'bg-slate-100 text-slate-600'}`}>
-                      <strong>{areaResult.title}</strong> — {areaResult.body}
+                    <div className={`service-area-result-card ${areaResult.tone === 'in-range' ? 'service-area-result-card-in-range' : areaResult.tone === 'nearby' ? 'service-area-result-card-nearby' : 'service-area-result-card-unknown'}`}>
+                      <div className="flex items-start gap-3">
+                        <div className="service-area-result-badge">
+                          <MapPin className="h-4 w-4" />
+                        </div>
+                        <div>
+                          <p className="text-base font-semibold">{areaResult.title}</p>
+                          <p className="mt-1 text-sm leading-relaxed">{areaResult.body}</p>
+                        </div>
+                      </div>
                     </div>
                   )}
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {cities.map((city) => (
-                    <button
-                      key={city}
-                      type="button"
-                      onClick={() => handleCitySelect(city)}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
-                    >
-                      {city}
-                    </button>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={() => handleAreaCheck('San Luis Obispo')}
-                    className="rounded-full border border-slate-200 bg-amber-50 px-3 py-1.5 text-sm text-amber-700"
-                  >
-                    + Nearby
-                  </button>
-                </div>
-              </div>
 
-              <div className="rounded-2xl bg-white border border-slate-200 p-6">
-                <h3 className="text-lg font-semibold text-slate-900">Good to know</h3>
-                <ul className="mt-4 space-y-3">
-                  {['We come to homes, apartments & condos', 'Family can join in person or by phone', 'No technical language needed', 'You approve any extra costs'].map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-slate-600">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                  <div className="mt-5">
+                    <p className="mb-3 text-sm font-medium text-slate-700">Popular service areas</p>
+                    <div className="service-area-chip-grid">
+                      {cities.map((city) => (
+                        <button
+                          key={city}
+                          type="button"
+                          onClick={() => handleCitySelect(city)}
+                          className={`service-area-chip ${areaQuery.trim().toLowerCase() === city.toLowerCase() ? 'service-area-chip-active' : ''}`}
+                        >
+                          {city}
+                        </button>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => handleAreaCheck('San Luis Obispo')}
+                        className={`service-area-chip service-area-chip-nearby ${areaQuery.trim().toLowerCase() === 'san luis obispo' ? 'service-area-chip-active' : ''}`}
+                      >
+                        Nearby areas
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="service-area-notes-card">
+                  <h3 className="text-lg font-semibold text-slate-900">Good to know</h3>
+                  <div className="mt-4 grid gap-3">
+                    {serviceAreaFacts.map(([title, body, Icon]) => (
+                      <div key={title} className="service-area-fact-row">
+                        <div className="service-area-fact-icon">
+                          <Icon className="h-4 w-4" />
+                        </div>
+                        <div>
+                          <p className="font-medium text-slate-900">{title}</p>
+                          <p className="mt-1 text-sm text-slate-600">{body}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-5 rounded-2xl bg-slate-900 px-4 py-4 text-white">
+                    <p className="text-sm font-medium text-slate-200">Not sure if you are just outside the map?</p>
+                    <p className="mt-1 text-sm text-slate-300">Call now or request a callback with your city or ZIP and the visit range can usually be confirmed quickly.</p>
+                    <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                      <a href="tel:+18059940881" className="cta-primary flex-1 justify-center">
+                        <Phone className="h-4 w-4" />
+                        Call Now
+                      </a>
+                      <a href="#request-help" className="cta-secondary flex-1 justify-center border-white/20 bg-white/8 text-white hover:bg-white/12 hover:text-white">
+                        <Calendar className="h-4 w-4" />
+                        Request Callback
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -809,6 +809,235 @@ button:active {
   box-shadow: 0 16px 50px rgba(15, 23, 42, 0.3);
 }
 
+.service-area-shell {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.service-area-map-panel,
+.service-area-info-panel {
+  border-radius: 1.5rem;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 250, 252, 0.92) 100%);
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+}
+
+.service-area-map-panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.service-area-map-copy {
+  display: grid;
+  gap: 1rem;
+}
+
+.service-area-kicker {
+  margin: 0;
+  color: #6366f1;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.service-area-stat-row {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.service-area-stat {
+  border-radius: 1rem;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: rgba(255, 255, 255, 0.82);
+  padding: 0.9rem 1rem;
+}
+
+.service-area-stat-value {
+  display: block;
+  color: #0f172a;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.service-area-stat-label {
+  display: block;
+  margin-top: 0.15rem;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.service-area-map-visual {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(226, 232, 240, 0.75);
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255, 224, 168, 0.5), transparent 26%),
+    radial-gradient(circle at 82% 28%, rgba(191, 219, 254, 0.5), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(241, 245, 249, 0.92));
+  min-height: 320px;
+  padding: 1rem;
+}
+
+.service-area-map-frame {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(8px);
+}
+
+.service-area-info-panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.service-area-checker-card,
+.service-area-notes-card {
+  border-radius: 1.25rem;
+  border: 1px solid rgba(226, 232, 240, 0.75);
+  background: rgba(255, 255, 255, 0.82);
+  padding: 1.25rem;
+}
+
+.service-area-checker-icon,
+.service-area-fact-icon,
+.service-area-result-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.service-area-checker-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.85rem;
+  background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
+  color: #4f46e5;
+}
+
+.service-area-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  background: white;
+  padding: 0 1rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.service-area-search-wrap:focus-within {
+  border-color: rgba(79, 70, 229, 0.35);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.service-area-search-input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #0f172a;
+  font-size: 1rem;
+  padding: 0.95rem 0;
+}
+
+.service-area-search-input:focus {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.service-area-chip-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.service-area-chip {
+  border-radius: 9999px;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  background: white;
+  color: #475569;
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 0.7rem 1rem;
+}
+
+.service-area-chip:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  background: #f8fafc;
+}
+
+.service-area-chip-active {
+  border-color: rgba(99, 102, 241, 0.45);
+  background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+  color: #3730a3;
+  box-shadow: 0 10px 24px rgba(99, 102, 241, 0.12);
+}
+
+.service-area-chip-nearby {
+  background: #fff7ed;
+  color: #b45309;
+}
+
+.service-area-result-card {
+  margin-top: 1rem;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  padding: 1rem;
+}
+
+.service-area-result-card-in-range {
+  border-color: rgba(16, 185, 129, 0.22);
+  background: linear-gradient(180deg, rgba(236, 253, 245, 0.95), rgba(209, 250, 229, 0.88));
+  color: #047857;
+}
+
+.service-area-result-card-nearby {
+  border-color: rgba(245, 158, 11, 0.24);
+  background: linear-gradient(180deg, rgba(255, 251, 235, 0.96), rgba(254, 243, 199, 0.9));
+  color: #b45309;
+}
+
+.service-area-result-card-unknown {
+  border-color: rgba(148, 163, 184, 0.24);
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.96), rgba(241, 245, 249, 0.92));
+  color: #475569;
+}
+
+.service-area-result-badge {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.service-area-fact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  border-radius: 1rem;
+  background: rgba(248, 250, 252, 0.92);
+  padding: 0.9rem 0.95rem;
+}
+
+.service-area-fact-icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.7rem;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  color: #475569;
+}
+
 .faq-item-modern {
   border-radius: 0.75rem;
   border: 1px solid rgba(226, 232, 240, 0.6);
@@ -898,6 +1127,11 @@ button:active {
 
   .visit-scene {
     gap: 1.25rem;
+  }
+
+  .service-area-shell {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    align-items: start;
   }
 }
 
@@ -1082,6 +1316,96 @@ html.dark .pricing-card-modern:hover {
 
 html.dark .pricing-card-featured-modern {
   background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+}
+
+html.dark .service-area-map-panel,
+html.dark .service-area-info-panel,
+html.dark .service-area-checker-card,
+html.dark .service-area-notes-card {
+  background: rgba(30, 41, 59, 0.78);
+  border-color: rgba(100, 116, 139, 0.4);
+}
+
+html.dark .service-area-map-visual,
+html.dark .service-area-fact-row,
+html.dark .service-area-stat {
+  border-color: rgba(100, 116, 139, 0.4);
+  background: rgba(15, 23, 42, 0.35);
+}
+
+html.dark .service-area-map-frame,
+html.dark .service-area-result-badge {
+  background: rgba(30, 41, 59, 0.72);
+}
+
+html.dark .service-area-checker-icon {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(96, 165, 250, 0.14));
+  color: #93c5fd;
+}
+
+html.dark .service-area-search-wrap {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(100, 116, 139, 0.4);
+}
+
+html.dark .service-area-search-wrap:focus-within {
+  border-color: rgba(96, 165, 250, 0.45);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.14);
+}
+
+html.dark .service-area-search-input,
+html.dark .service-area-stat-value,
+html.dark .service-area-chip,
+html.dark .service-area-kicker {
+  color: #e2e8f0;
+}
+
+html.dark .service-area-stat-label {
+  color: #94a3b8;
+}
+
+html.dark .service-area-chip {
+  background: rgba(15, 23, 42, 0.55);
+  border-color: rgba(100, 116, 139, 0.45);
+}
+
+html.dark .service-area-chip:hover {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(96, 165, 250, 0.35);
+}
+
+html.dark .service-area-chip-active {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.18), rgba(37, 99, 235, 0.14));
+  border-color: rgba(96, 165, 250, 0.5);
+  color: #bfdbfe;
+}
+
+html.dark .service-area-chip-nearby {
+  background: rgba(120, 53, 15, 0.38);
+  color: #fcd34d;
+}
+
+html.dark .service-area-result-card-in-range {
+  background: linear-gradient(180deg, rgba(6, 95, 70, 0.45), rgba(5, 150, 105, 0.26));
+  border-color: rgba(52, 211, 153, 0.32);
+  color: #a7f3d0;
+}
+
+html.dark .service-area-result-card-nearby {
+  background: linear-gradient(180deg, rgba(146, 64, 14, 0.45), rgba(180, 83, 9, 0.24));
+  border-color: rgba(251, 191, 36, 0.32);
+  color: #fde68a;
+}
+
+html.dark .service-area-result-card-unknown {
+  background: linear-gradient(180deg, rgba(51, 65, 85, 0.72), rgba(30, 41, 59, 0.72));
+  border-color: rgba(148, 163, 184, 0.28);
+  color: #cbd5e1;
+}
+
+html.dark .service-area-fact-icon {
+  background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+  color: #93c5fd;
 }
 
 html.dark .faq-item-modern {
