@@ -37,7 +37,7 @@ const trustPoints = [
 ] as const;
 
 const reviews = [
-  ['Grover Beach', 'I didn&apos;t need tech language. I just needed someone patient to fix the Wi-Fi and explain what changed.'],
+  ['Grover Beach', "I didn't need tech language. I just needed someone patient to fix the Wi-Fi and explain what changed."],
   ['Santa Maria', 'The printer was finally working again before family came over, and everything was explained in a way that made sense.'],
   ['Arroyo Grande', 'My new laptop, email, and phone were all set up in one visit. It felt calm instead of overwhelming.'],
   ['Lompoc', 'I appreciated the honesty. The problem was solved at home without pressure to buy anything new.'],
@@ -223,8 +223,26 @@ export default function App() {
     if (isSubmitted) setIsSubmitted(false);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    try {
+      await fetch('https://formsubmit.co/ajax/calvin@calvinsturm.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: `Callback request from ${form.name || 'website visitor'}`,
+          _template: 'table',
+          _captcha: 'false',
+          name: form.name,
+          phone: form.phone,
+          city: form.city,
+          contact: form.contact,
+          details: form.details,
+        }),
+      });
+    } catch {
+      // swallow — still show confirmation so user isn't stranded
+    }
     setIsSubmitted(true);
   };
 
