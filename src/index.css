@@ -1545,6 +1545,22 @@ html.dark .rounded-xl.bg-slate-50 {
   background: rgba(30, 41, 59, 0.6) !important;
 }
 
+html.dark .bg-indigo-50 {
+  background: rgba(51, 65, 85, 0.6) !important;
+}
+
+html.dark .text-indigo-700 {
+  color: #a5b4fc !important;
+}
+
+html.dark .bg-white\/95 {
+  background: rgba(30, 41, 59, 0.92) !important;
+}
+
+html.dark .bg-white\/95 .text-slate-800 {
+  color: #e2e8f0 !important;
+}
+
 html.dark .bg-blue-50 {
   background: rgba(30, 58, 138, 0.3) !important;
 }
