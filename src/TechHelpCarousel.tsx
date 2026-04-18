@@ -83,19 +83,63 @@ function FolderModel({ hovered }: { hovered?: boolean }) {
   );
 }
 
-function KeyIcon({ angle, offset = 0, color = "#fbbf24" }: { angle: number; offset?: number; color?: string }) {
+function OrbitingKey({
+  baseAngle,
+  baseOffset,
+  color,
+  seed,
+  hoverTimeRef,
+}: {
+  baseAngle: number;
+  baseOffset: number;
+  color: string;
+  seed: number;
+  hoverTimeRef: React.MutableRefObject<number>;
+}) {
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const t = state.clock.elapsedTime;
+    const hv = hoverTimeRef.current;
+    const chaos = Math.min(hv / 2.5, 1);
+
+    const baseSpeed = 0.2;
+    const hoverSpeed = 2.5 + seed * 0.7;
+    const angularSpeed = baseSpeed + (hoverSpeed - baseSpeed) * chaos;
+
+    const wobble =
+      chaos *
+      (Math.sin(t * (3 + seed) + seed * 2.1) * 0.6 +
+        Math.sin(t * (5 + seed * 0.7) + seed) * 0.35);
+    const angle = baseAngle + t * angularSpeed + wobble;
+
+    const radius = 1.3 + baseOffset * 0.3 + chaos * Math.sin(t * (2.3 + seed)) * 0.35;
+    const yJitter = chaos * Math.sin(t * (4 + seed * 1.3) + seed * 3.1) * 0.45;
+    const zJitter = chaos * Math.cos(t * (3.2 + seed * 0.9) + seed * 1.7) * 0.3;
+
+    groupRef.current.position.set(
+      Math.cos(angle) * radius,
+      yJitter,
+      Math.sin(angle) * radius + zJitter,
+    );
+    groupRef.current.rotation.set(
+      chaos * Math.sin(t * (4 + seed)) * 0.8,
+      -angle + Math.PI / 2 + chaos * Math.sin(t * 2 + seed) * 0.5,
+      Math.PI / 2 + chaos * Math.cos(t * 3 + seed) * 0.8,
+    );
+  });
+
   return (
-    <group rotation={[0, angle, 0]}>
-      <group position={[1.3 + offset * 0.3, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <mesh>
-          <boxGeometry args={[0.18, 0.04, 0.03]} />
-          <meshStandardMaterial color={color} metalness={0.7} roughness={0.3} />
-        </mesh>
-        <mesh position={[0.1, 0, 0]}>
-          <cylinderGeometry args={[0.04, 0.04, 0.03]} />
-          <meshStandardMaterial color={color} metalness={0.7} roughness={0.3} />
-        </mesh>
-      </group>
+    <group ref={groupRef}>
+      <mesh>
+        <boxGeometry args={[0.18, 0.04, 0.03]} />
+        <meshStandardMaterial color={color} metalness={0.7} roughness={0.3} />
+      </mesh>
+      <mesh position={[0.1, 0, 0]}>
+        <cylinderGeometry args={[0.04, 0.04, 0.03]} />
+        <meshStandardMaterial color={color} metalness={0.7} roughness={0.3} />
+      </mesh>
     </group>
   );
 }
@@ -103,9 +147,13 @@ function KeyIcon({ angle, offset = 0, color = "#fbbf24" }: { angle: number; offs
 function LockModel({ hovered }: { hovered?: boolean }) {
   const shackleRef = useRef<THREE.Group>(null);
   const lockBodyRef = useRef<THREE.Group>(null);
-  const ringRef = useRef<THREE.Group>(null);
-  
+  const hoverTimeRef = useRef(0);
+
   useFrame((state, delta) => {
+    hoverTimeRef.current = hovered
+      ? hoverTimeRef.current + delta
+      : Math.max(hoverTimeRef.current - delta * 1.5, 0);
+
     if (shackleRef.current) {
       if (hovered) {
         shackleRef.current.position.y = THREE.MathUtils.lerp(shackleRef.current.position.y, 0.35, 0.1);
@@ -114,12 +162,6 @@ function LockModel({ hovered }: { hovered?: boolean }) {
         shackleRef.current.position.y = THREE.MathUtils.lerp(shackleRef.current.position.y, 0, 0.1);
         shackleRef.current.rotation.z = THREE.MathUtils.lerp(shackleRef.current.rotation.z, 0, 0.1);
       }
-    }
-    if (ringRef.current && hovered) {
-      ringRef.current.rotation.y += delta * 0.8;
-      ringRef.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 2) * 0.05);
-    } else if (ringRef.current) {
-      ringRef.current.rotation.y += delta * 0.2;
     }
     if (lockBodyRef.current && hovered) {
       const pulse = Math.sin(state.clock.elapsedTime * 3) * 0.02 + 1;
@@ -158,16 +200,27 @@ function LockModel({ hovered }: { hovered?: boolean }) {
         </mesh>
       </group>
       
-      {/* Orbiting ring of keys */}
-      <group ref={ringRef} position={[0, 0, 0]}>
-        <KeyIcon angle={0} offset={0} color={keyColors[0]} />
-        <KeyIcon angle={Math.PI * 0.25} offset={0.1} color={keyColors[1]} />
-        <KeyIcon angle={Math.PI * 0.5} offset={0.05} color={keyColors[2]} />
-        <KeyIcon angle={Math.PI * 0.75} offset={0} color={keyColors[3]} />
-        <KeyIcon angle={Math.PI} offset={0.1} color={keyColors[4]} />
-        <KeyIcon angle={Math.PI * 1.25} offset={0} color={keyColors[5]} />
-        <KeyIcon angle={Math.PI * 1.5} offset={0.05} color={keyColors[6]} />
-        <KeyIcon angle={Math.PI * 1.75} offset={0} color={keyColors[7]} />
+      {/* Orbiting keys — calm when idle, chaotic on hover */}
+      <group position={[0, 0, 0]}>
+        {[
+          [0, 0],
+          [Math.PI * 0.25, 0.1],
+          [Math.PI * 0.5, 0.05],
+          [Math.PI * 0.75, 0],
+          [Math.PI, 0.1],
+          [Math.PI * 1.25, 0],
+          [Math.PI * 1.5, 0.05],
+          [Math.PI * 1.75, 0],
+        ].map(([angle, offset], i) => (
+          <OrbitingKey
+            key={i}
+            baseAngle={angle}
+            baseOffset={offset}
+            color={keyColors[i]}
+            seed={i * 1.37}
+            hoverTimeRef={hoverTimeRef}
+          />
+        ))}
       </group>
     </group>
   );
@@ -609,12 +662,13 @@ const issues = [
     hoverTitle: '8 keys orbit around the lock!',
     Model: LockModel 
   },
-  { 
-    id: 3, 
-    title: 'Is this a scam?', 
+  {
+    id: 3,
+    title: 'Is this a scam?',
     description: 'Received a suspicious email or text message? We can teach you how to spot phishing attempts and keep your personal info safe.',
-    hoverTitle: 'Watch out! Scam warning + fake Elon & Jeff',
-    Model: EnvelopeModel 
+    hoverTitle: 'Real scam messages we\'ve seen',
+    Model: EnvelopeModel,
+    images: ['/scam-jeff.png', '/scam-elon.png'],
   },
   { 
     id: 4, 
@@ -706,25 +760,41 @@ export default function TechHelpCarousel() {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
-            <ambientLight intensity={0.6} />
-            <directionalLight position={[10, 10, 5]} intensity={1.5} />
-            <Environment preset="city" />
-            <PresentationControls
-              global
-              rotation={[0.1, 0.3, 0]}
-              polar={[-0.4, 0.2]}
-              azimuth={[-1, 0.75]}
-              snap={true}
-            >
-              <Float rotationIntensity={0} floatIntensity={0} speed={0}>
-                <InteractableModel key={currentIndex} hovered={isHovered}>
-                  <CurrentModel hovered={isHovered} />
-                </InteractableModel>
-              </Float>
-            </PresentationControls>
-            <ContactShadows position={[0, -2, 0]} opacity={0.5} scale={10} blur={2.5} far={4} />
-          </Canvas>
+          {issues[currentIndex].images ? (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6">
+              {issues[currentIndex].images!.map((src, i) => (
+                <motion.img
+                  key={src}
+                  src={src}
+                  alt="Example scam message"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.15, duration: 0.4 }}
+                  className="max-w-full max-h-[45%] object-contain drop-shadow-md"
+                />
+              ))}
+            </div>
+          ) : (
+            <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
+              <ambientLight intensity={0.6} />
+              <directionalLight position={[10, 10, 5]} intensity={1.5} />
+              <Environment preset="city" />
+              <PresentationControls
+                global
+                rotation={[0.1, 0.3, 0]}
+                polar={[-0.4, 0.2]}
+                azimuth={[-1, 0.75]}
+                snap={true}
+              >
+                <Float rotationIntensity={0} floatIntensity={0} speed={0}>
+                  <InteractableModel key={currentIndex} hovered={isHovered}>
+                    <CurrentModel hovered={isHovered} />
+                  </InteractableModel>
+                </Float>
+              </PresentationControls>
+              <ContactShadows position={[0, -2, 0]} opacity={0.5} scale={10} blur={2.5} far={4} />
+            </Canvas>
+          )}
           <div className="absolute bottom-4 left-4 right-4 text-center">
             <motion.div
               initial={{ opacity: 0, y: 10 }}

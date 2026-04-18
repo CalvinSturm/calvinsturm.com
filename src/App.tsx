@@ -516,7 +516,7 @@ export default function App() {
                 <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">Tell us what&apos;s going on.</h2>
                 <p className="mt-3 text-lg text-slate-600">A simple description is enough. We&apos;ll follow up in plain English.</p>
               </div>
-              <form className="mt-8 space-y-4" action="https://formsubmit.co/calvinasturm@gmail.com" method="POST" aria-label="Request a callback">
+              <form className="mt-8 space-y-4" onSubmit={handleSubmit} action="https://formsubmit.co/calvinasturm@gmail.com" method="POST" aria-label="Request a callback">
                 <input type="hidden" name="_subject" value="New callback request from calvinsturm.com" />
                 <input type="hidden" name="_template" value="table" />
                 <input type="hidden" name="_captcha" value="false" />
@@ -896,6 +896,7 @@ export default function App() {
               <h3 className="text-sm font-semibold text-slate-900 mb-3">Contact</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 <li><a href="tel:+18059940881" className="font-medium text-slate-900">(805) 994-0881</a></li>
+                <li><a href="mailto:techwiz@calvinsturm.com" className="hover:text-slate-900">techwiz@calvinsturm.com</a></li>
                 <li><a href="#request-help" className="hover:text-slate-900">Request a callback</a></li>
                 <li>Serving: Arroyo Grande, Grover Beach, Pismo Beach, Santa Maria, Orcutt, Lompoc</li>
               </ul>
