@@ -1492,7 +1492,8 @@ html.dark .border-slate-100 {
 
 html.dark .bg-indigo-100,
 html.dark .bg-emerald-100,
-html.dark .bg-amber-100 {
+html.dark .bg-amber-100,
+html.dark .bg-slate-100 {
   background: rgba(51, 65, 85, 0.6) !important;
 }
 
@@ -1543,6 +1544,22 @@ html.dark .bg-emerald-50 {
 
 html.dark .rounded-xl.bg-slate-50 {
   background: rgba(30, 41, 59, 0.6) !important;
+}
+
+html.dark .bg-indigo-50 {
+  background: rgba(51, 65, 85, 0.6) !important;
+}
+
+html.dark .text-indigo-700 {
+  color: #a5b4fc !important;
+}
+
+html.dark .bg-white\/95 {
+  background: rgba(30, 41, 59, 0.92) !important;
+}
+
+html.dark .bg-white\/95 .text-slate-800 {
+  color: #e2e8f0 !important;
 }
 
 html.dark .bg-blue-50 {

@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from 'react';
-import TechHelpCarousel from './TechHelpCarousel';
+import { lazy, Suspense, useRef, useState, useEffect } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
+
+const TechHelpCarousel = lazy(() => import('./TechHelpCarousel'));
 import {
   ArrowRight,
   Calendar,
@@ -37,10 +38,10 @@ const trustPoints = [
 ] as const;
 
 const reviews = [
-  ['Grover Beach', "I didn't need tech language. I just needed someone patient to fix the Wi-Fi and explain what changed."],
-  ['Santa Maria', 'The printer was finally working again before family came over, and everything was explained in a way that made sense.'],
-  ['Arroyo Grande', 'My new laptop, email, and phone were all set up in one visit. It felt calm instead of overwhelming.'],
-  ['Lompoc', 'I appreciated the honesty. The problem was solved at home without pressure to buy anything new.'],
+  ['Alex R.', 'Arroyo Grande', 'My new laptop, email, and phone were all set up in one visit. It felt calm instead of overwhelming.'],
+  ['Mary F.', 'Nipomo', 'The printer was finally working again before family came over, and everything was explained in a way that made sense.'],
+  ['Greg S.', 'Grover Beach', "I didn't need tech language. I just needed someone patient to fix the Wi-Fi and explain what changed."],
+  ['Samantha', 'Atascadero', 'I appreciated the honesty. The problem was solved at home without pressure to buy anything new.'],
 ] as const;
 
 const processSteps = [
@@ -151,7 +152,7 @@ const cityZipLookup: Record<string, { label: string; status: 'in-range' | 'nearb
   '93444': { label: 'Nipomo', status: 'nearby' },
 };
 
-type RequestForm = { name: string; phone: string; city: string; contact: string; details: string };
+type RequestForm = { name: string; phone: string; email: string; city: string; contact: string; details: string };
 
 function TechWizMark({ className = 'h-6 w-6' }: { className?: string }) {
   return (
@@ -209,7 +210,7 @@ export default function App() {
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [areaQuery, setAreaQuery] = useState('');
   const [areaResult, setAreaResult] = useState<{ tone: 'in-range' | 'nearby' | 'unknown'; title: string; body: string } | null>(null);
-  const [form, setForm] = useState<RequestForm>({ name: '', phone: '', city: '', contact: 'phone call', details: '' });
+  const [form, setForm] = useState<RequestForm>({ name: '', phone: '', email: '', city: '', contact: 'phone call', details: '' });
   const [openFaq, setOpenFaq] = useState<number>(0);
   const detailsRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -235,6 +236,7 @@ export default function App() {
           _captcha: 'false',
           name: form.name,
           phone: form.phone,
+          email: form.email,
           city: form.city,
           contact: form.contact,
           details: form.details,
@@ -316,6 +318,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-transparent pb-24 text-slate-900 md:pb-0">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        Skip to main content
+      </a>
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div className="section-shell">
           <div className="flex h-16 items-center justify-between">
@@ -405,7 +413,7 @@ export default function App() {
         )}
       </header>
 
-      <main id="main-content" className="pt-16">
+      <main id="main-content" className="pt-16 pb-24 md:pb-0">
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 -z-10">
             <div className="absolute left-[-10%] top-[-20%] h-[500px] w-[500px] rounded-full bg-amber-200/30 blur-[120px]" />
@@ -459,6 +467,10 @@ export default function App() {
                     src="/hero-helping.png"
                     alt="Patient in-home tech help with a neighbor at their kitchen table"
                     loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                    width="1648"
+                    height="927"
                     className="h-full w-full object-cover aspect-[4/3] lg:aspect-[5/6]"
                   />
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-900/40 to-transparent" />
@@ -488,45 +500,10 @@ export default function App() {
         </section>
 
         <div className="section-shell py-12 lg:py-20">
-          <TechHelpCarousel />
+          <Suspense fallback={<div className="h-[450px] w-full max-w-5xl mx-auto rounded-[32px] bg-slate-100 animate-pulse" aria-hidden="true" />}>
+            <TechHelpCarousel />
+          </Suspense>
         </div>
-
-        <section id="request-help" className="py-16 lg:py-20">
-          <div className="section-shell">
-            <div className="mx-auto max-w-2xl">
-              <div className="mb-6 text-center">
-                <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">Request a callback</div>
-                <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">Tell us what&apos;s going on.</h2>
-                <p className="mt-3 text-lg text-slate-600">A simple description is enough. We&apos;ll follow up in plain English.</p>
-              </div>
-              <form className="mt-8 space-y-4" onSubmit={handleSubmit} action="https://formsubmit.co/calvinasturm@gmail.com" method="POST" aria-label="Request a callback">
-                <input type="hidden" name="_subject" value="New callback request from calvinsturm.com" />
-                <input type="hidden" name="_template" value="table" />
-                <input type="hidden" name="_captcha" value="false" />
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div><label htmlFor="name" className="mb-1.5 block text-sm font-medium text-slate-700">Your name <span className="text-amber-600">*</span></label><input type="text" id="name" name="name" autoComplete="name" value={form.name} onChange={handleChange} placeholder="Jane Smith" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
-                  <div><label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-slate-700">Phone number <span className="text-amber-600">*</span></label><input type="tel" id="phone" name="phone" autoComplete="tel" value={form.phone} onChange={handleChange} placeholder="(805) 994-0881" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div><label htmlFor="city" className="mb-1.5 block text-sm font-medium text-slate-700">City <span className="text-amber-600">*</span></label><input type="text" id="city" name="city" autoComplete="address-level2" value={form.city} onChange={handleChange} placeholder="Arroyo Grande" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
-                  <div><label htmlFor="contact" className="mb-1.5 block text-sm font-medium text-slate-700">Best contact</label><select id="contact" name="contact" value={form.contact} onChange={handleChange} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900"><option value="phone call">Phone call</option><option value="text message">Text message</option><option value="either one">Either one</option></select></div>
-                </div>
-                <div><label htmlFor="details" className="mb-1.5 block text-sm font-medium text-slate-700">What do you need help with? <span className="text-amber-600">*</span></label><textarea ref={detailsRef} id="details" name="details" value={form.details} onChange={handleChange} rows={4} placeholder="Example: Wi-Fi drops in the back bedroom, printer stopped connecting..." className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base leading-relaxed text-slate-900" required /></div>
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <button type="submit" className="cta-primary flex-1 justify-center">
-                    <Calendar className="h-5 w-5" />
-                    Request Callback
-                  </button>
-                  <a href="tel:+18059940881" className="cta-secondary flex-1 justify-center">
-                    <Phone className="h-5 w-5" />
-                    Call Now
-                  </a>
-                </div>
-                {isSubmitted && <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-base text-emerald-800">Thanks{form.name ? `, ${form.name}` : ''}. We&apos;ll be in touch soon.</div>}
-              </form>
-            </div>
-          </div>
-        </section>
 
         <section id="why-book" className="py-16 lg:py-20">
           <div className="section-shell">
@@ -546,8 +523,8 @@ export default function App() {
               ))}
             </div>
             <div className="mt-8 grid gap-4 lg:grid-cols-2">
-              {reviews.map(([location, quote]) => (
-                <div key={location} className="rounded-2xl border border-amber-100 bg-gradient-to-r from-amber-50 to-orange-50 p-6">
+              {reviews.map(([name, location, quote]) => (
+                <div key={name} className="rounded-2xl border border-amber-100 bg-gradient-to-r from-amber-50 to-orange-50 p-6">
                   <div className="flex items-start gap-4">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-200">
                       <CheckCircle2 className="h-5 w-5 text-amber-700" />
@@ -558,8 +535,8 @@ export default function App() {
                           <Star key={index} className="h-4 w-4 fill-current" />
                         ))}
                       </div>
-                      <p className="mt-2 text-lg font-medium text-slate-900">5-star review from {location}</p>
                       <p className="mt-2 text-slate-600">&ldquo;{quote}&rdquo;</p>
+                      <p className="mt-3 text-sm font-medium text-slate-900">{name} <span className="text-slate-500 font-normal">· {location}</span></p>
                     </div>
                   </div>
                 </div>
@@ -571,7 +548,7 @@ export default function App() {
         <section id="how-it-works" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-800">How it works</div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">How it works</div>
               <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">A simple path from first call to fixed.</h2>
             </div>
             <div className="grid gap-6 sm:grid-cols-3">
@@ -600,7 +577,7 @@ export default function App() {
         <section id="services" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-800">Services</div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Services</div>
               <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Common issues we fix at home.</h2>
             </div>
             
@@ -652,7 +629,7 @@ export default function App() {
                   <p className={`mt-2 text-3xl font-semibold ${index === 1 ? 'text-white' : 'text-slate-900'}`}>{price}</p>
                   <p className={`mt-3 text-sm ${index === 1 ? 'text-slate-300' : 'text-slate-600'}`}>{desc}</p>
                   {index === 1 && <div className="mt-4 inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white">Most popular</div>}
-                  <div className={`mt-4 text-sm font-medium ${index === 1 ? 'text-indigo-300' : 'text-indigo-600'}`}>Click to select →</div>
+                  <div className={`mt-4 inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium ${index === 1 ? 'bg-white/15 text-white' : 'bg-amber-100 text-amber-800'}`}>Start with this plan <ArrowRight className="h-4 w-4" /></div>
                 </button>
               ))}
             </div>
@@ -700,7 +677,7 @@ export default function App() {
                     </svg>
                   </div>
                   <div className="service-area-map-frame">
-                    <img src="/5CitiesMap.png" alt="Five Cities Service Area Map" className="w-full max-w-md mx-auto rounded-xl" />
+                    <img src="/5CitiesMap.png" alt="Map of Five Cities service area on the Central Coast" loading="lazy" decoding="async" className="w-full max-w-md mx-auto rounded-xl" />
                   </div>
                 </div>
               </div>
@@ -806,10 +783,48 @@ export default function App() {
           </div>
         </section>
 
+        <section id="request-help" className="py-16 lg:py-20 bg-white">
+          <div className="section-shell">
+            <div className="mx-auto max-w-2xl">
+              <div className="mb-6 text-center">
+                <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">Request a callback</div>
+                <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">Tell us what&apos;s going on.</h2>
+                <p className="mt-3 text-lg text-slate-600">A simple description is enough. We&apos;ll follow up in plain English.</p>
+              </div>
+              <form className="mt-8 space-y-4" onSubmit={handleSubmit} action="https://formsubmit.co/calvinasturm@gmail.com" method="POST" aria-label="Request a callback">
+                <input type="hidden" name="_subject" value="New callback request from calvinsturm.com" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_captcha" value="false" />
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div><label htmlFor="name" className="mb-1.5 block text-sm font-medium text-slate-700">Your name <span className="text-amber-600">*</span></label><input type="text" id="name" name="name" autoComplete="name" value={form.name} onChange={handleChange} placeholder="Jane Smith" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
+                  <div><label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-slate-700">Phone number <span className="text-amber-600">*</span></label><input type="tel" id="phone" name="phone" autoComplete="tel" value={form.phone} onChange={handleChange} placeholder="(555) 123-4567" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div><label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-700">Email <span className="text-slate-400 font-normal">(optional)</span></label><input type="email" id="email" name="email" autoComplete="email" value={form.email} onChange={handleChange} placeholder="you@example.com" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" /></div>
+                  <div><label htmlFor="city" className="mb-1.5 block text-sm font-medium text-slate-700">City <span className="text-amber-600">*</span></label><input type="text" id="city" name="city" autoComplete="address-level2" value={form.city} onChange={handleChange} placeholder="Arroyo Grande" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
+                </div>
+                <div><label htmlFor="contact" className="mb-1.5 block text-sm font-medium text-slate-700">Best contact</label><select id="contact" name="contact" value={form.contact} onChange={handleChange} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900"><option value="phone call">Phone call</option><option value="text message">Text message</option><option value="email">Email</option><option value="either one">Any of the above</option></select></div>
+                <div><label htmlFor="details" className="mb-1.5 block text-sm font-medium text-slate-700">What do you need help with? <span className="text-amber-600">*</span></label><textarea ref={detailsRef} id="details" name="details" value={form.details} onChange={handleChange} rows={4} placeholder="Example: Wi-Fi drops in the back bedroom, printer stopped connecting..." className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base leading-relaxed text-slate-900" required /></div>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <button type="submit" className="cta-primary flex-1 justify-center">
+                    <Calendar className="h-5 w-5" />
+                    Request Callback
+                  </button>
+                  <a href="tel:+18059940881" className="cta-secondary flex-1 justify-center">
+                    <Phone className="h-5 w-5" />
+                    Call Now
+                  </a>
+                </div>
+                {isSubmitted && <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-base text-emerald-800">Thanks{form.name ? `, ${form.name}` : ''}. We&apos;ll be in touch soon.</div>}
+              </form>
+            </div>
+          </div>
+        </section>
+
         <section id="faq" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-800">FAQ</div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">FAQ</div>
               <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Common questions.</h2>
             </div>
             
