@@ -147,6 +147,8 @@ function OrbitingKey({
 function LockModel({ hovered }: { hovered?: boolean }) {
   const shackleRef = useRef<THREE.Group>(null);
   const lockBodyRef = useRef<THREE.Group>(null);
+  const keyholeRef = useRef<THREE.Group>(null);
+  const ledRef = useRef<THREE.Mesh>(null);
   const hoverTimeRef = useRef(0);
 
   useFrame((state, delta) => {
@@ -155,19 +157,37 @@ function LockModel({ hovered }: { hovered?: boolean }) {
       : Math.max(hoverTimeRef.current - delta * 1.5, 0);
 
     if (shackleRef.current) {
-      if (hovered) {
-        shackleRef.current.position.y = THREE.MathUtils.lerp(shackleRef.current.position.y, 0.35, 0.1);
-        shackleRef.current.rotation.z = THREE.MathUtils.lerp(shackleRef.current.rotation.z, Math.sin(state.clock.elapsedTime * 4) * 0.08, 0.1);
-      } else {
-        shackleRef.current.position.y = THREE.MathUtils.lerp(shackleRef.current.position.y, 0, 0.1);
-        shackleRef.current.rotation.z = THREE.MathUtils.lerp(shackleRef.current.rotation.z, 0, 0.1);
-      }
+      // Lift much higher and twist open on hover
+      const liftTarget = hovered ? 0.75 : 0.2;
+      const rotTarget = hovered ? Math.PI * 0.35 + Math.sin(state.clock.elapsedTime * 2) * 0.08 : 0;
+      shackleRef.current.position.y = THREE.MathUtils.lerp(shackleRef.current.position.y, liftTarget, 0.12);
+      shackleRef.current.rotation.y = THREE.MathUtils.lerp(shackleRef.current.rotation.y, rotTarget, 0.1);
+      shackleRef.current.rotation.z = THREE.MathUtils.lerp(
+        shackleRef.current.rotation.z,
+        hovered ? Math.sin(state.clock.elapsedTime * 3) * 0.06 : 0,
+        0.1,
+      );
     }
-    if (lockBodyRef.current && hovered) {
-      const pulse = Math.sin(state.clock.elapsedTime * 3) * 0.02 + 1;
+    if (keyholeRef.current) {
+      keyholeRef.current.rotation.z = THREE.MathUtils.lerp(
+        keyholeRef.current.rotation.z,
+        hovered ? Math.PI / 2 : 0,
+        0.12,
+      );
+    }
+    if (lockBodyRef.current) {
+      const pulse = hovered ? Math.sin(state.clock.elapsedTime * 3) * 0.015 + 1 : 1;
       lockBodyRef.current.scale.setScalar(pulse);
-    } else if (lockBodyRef.current) {
-      lockBodyRef.current.scale.setScalar(1);
+    }
+    if (ledRef.current) {
+      const mat = ledRef.current.material as THREE.MeshStandardMaterial;
+      mat.emissiveIntensity = THREE.MathUtils.lerp(
+        mat.emissiveIntensity,
+        hovered ? 1.2 + Math.sin(state.clock.elapsedTime * 5) * 0.4 : 0,
+        0.15,
+      );
+      mat.color.lerp(hovered ? new THREE.Color("#22c55e") : new THREE.Color("#1f2937"), 0.15);
+      mat.emissive.lerp(hovered ? new THREE.Color("#22c55e") : new THREE.Color("#000000"), 0.15);
     }
   });
 
@@ -180,9 +200,26 @@ function LockModel({ hovered }: { hovered?: boolean }) {
           <boxGeometry args={[1.5, 1.2, 0.8]} />
           <meshStandardMaterial color="#eab308" metalness={0.5} roughness={0.2} />
         </mesh>
-        <mesh position={[0, -0.5, 0.41]}>
-          <cylinderGeometry args={[0.2, 0.2, 0.1, 32]} />
-          <meshStandardMaterial color="#1f2937" />
+        {/* Keyhole plate */}
+        <mesh position={[0, -0.5, 0.41]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.26, 0.26, 0.04, 32]} />
+          <meshStandardMaterial color="#78716c" metalness={0.8} roughness={0.3} />
+        </mesh>
+        {/* Keyhole slot (rotates on hover like a turning key) */}
+        <group ref={keyholeRef} position={[0, -0.5, 0.44]}>
+          <mesh>
+            <circleGeometry args={[0.08, 24]} />
+            <meshStandardMaterial color="#0b0f19" />
+          </mesh>
+          <mesh position={[0, -0.12, 0]}>
+            <boxGeometry args={[0.06, 0.2, 0.01]} />
+            <meshStandardMaterial color="#0b0f19" />
+          </mesh>
+        </group>
+        {/* Status LED */}
+        <mesh ref={ledRef} position={[0, -0.95, 0.41]}>
+          <sphereGeometry args={[0.05, 16, 16]} />
+          <meshStandardMaterial color="#1f2937" emissive="#000000" emissiveIntensity={0} />
         </mesh>
       </group>
       <group ref={shackleRef} position={[0, 0.2, 0]}>
@@ -377,272 +414,424 @@ function EnvelopeModel({ hovered }: { hovered?: boolean }) {
 
 function PrinterModel({ hovered }: { hovered?: boolean }) {
   const paperOutRef = useRef<THREE.Group>(null);
-  
-  useFrame((state, delta) => {
-    if (paperOutRef.current && hovered) {
-      paperOutRef.current.position.y = THREE.MathUtils.lerp(paperOutRef.current.position.y, 0.2, 0.08);
-      paperOutRef.current.position.z = THREE.MathUtils.lerp(paperOutRef.current.position.z, 1.2, 0.08);
-    } else if (paperOutRef.current) {
-      paperOutRef.current.position.y = THREE.MathUtils.lerp(paperOutRef.current.position.y, -0.3, 0.1);
-      paperOutRef.current.position.z = THREE.MathUtils.lerp(paperOutRef.current.position.z, 0.8, 0.1);
+  const lidRef = useRef<THREE.Group>(null);
+  const ledRef = useRef<THREE.Mesh>(null);
+  const headRef = useRef<THREE.Group>(null);
+
+  useFrame((state) => {
+    if (paperOutRef.current) {
+      paperOutRef.current.position.z = THREE.MathUtils.lerp(
+        paperOutRef.current.position.z,
+        hovered ? 1.15 : 0.25,
+        0.08,
+      );
+      paperOutRef.current.position.y = THREE.MathUtils.lerp(
+        paperOutRef.current.position.y,
+        hovered ? -0.05 : -0.25,
+        0.08,
+      );
+    }
+    if (lidRef.current) {
+      lidRef.current.rotation.x = THREE.MathUtils.lerp(
+        lidRef.current.rotation.x,
+        hovered ? -0.35 : -0.15,
+        0.1,
+      );
+    }
+    if (ledRef.current) {
+      const mat = ledRef.current.material as THREE.MeshStandardMaterial;
+      const blink = hovered ? 0.6 + Math.abs(Math.sin(state.clock.elapsedTime * 4)) * 0.4 : 1;
+      mat.emissiveIntensity = THREE.MathUtils.lerp(mat.emissiveIntensity, blink, 0.2);
+    }
+    if (headRef.current && hovered) {
+      headRef.current.position.x = Math.sin(state.clock.elapsedTime * 4) * 0.45;
+    } else if (headRef.current) {
+      headRef.current.position.x = THREE.MathUtils.lerp(headRef.current.position.x, -0.5, 0.1);
     }
   });
 
   return (
-    <group>
+    <group position={[0, -0.1, 0]}>
+      {/* Main body */}
       <mesh position={[0, -0.4, 0]}>
-        <boxGeometry args={[2, 0.8, 1.5]} />
-        <meshStandardMaterial color="#d1d5db" />
+        <boxGeometry args={[2.2, 0.9, 1.5]} />
+        <meshStandardMaterial color="#e5e7eb" metalness={0.2} roughness={0.6} />
       </mesh>
-      <mesh position={[0, 0.2, -0.2]}>
-        <boxGeometry args={[1.8, 0.4, 1]} />
-        <meshStandardMaterial color="#9ca3af" />
+      {/* Darker base plinth */}
+      <mesh position={[0, -0.9, 0]}>
+        <boxGeometry args={[2.3, 0.15, 1.55]} />
+        <meshStandardMaterial color="#475569" metalness={0.3} roughness={0.5} />
       </mesh>
-      <mesh position={[0, 0.8, -0.6]} rotation={[-0.2, 0, 0]}>
-        <boxGeometry args={[1.2, 1, 0.05]} />
-        <meshStandardMaterial color="#4b5563" />
+      {/* Control panel front strip */}
+      <mesh position={[0, -0.2, 0.755]}>
+        <boxGeometry args={[2.1, 0.2, 0.02]} />
+        <meshStandardMaterial color="#1e293b" metalness={0.4} roughness={0.3} />
       </mesh>
-      <mesh position={[0, 0.9, -0.55]} rotation={[-0.2, 0, 0]}>
-        <boxGeometry args={[1, 1.2, 0.02]} />
-        <meshStandardMaterial color="#ffffff" />
+      {/* Screen */}
+      <mesh position={[-0.55, -0.2, 0.77]}>
+        <boxGeometry args={[0.55, 0.14, 0.01]} />
+        <meshStandardMaterial color="#0ea5e9" emissive="#0ea5e9" emissiveIntensity={hovered ? 0.6 : 0.3} />
       </mesh>
-      <group ref={paperOutRef} position={[0, -0.3, 0.8]} rotation={[0.1, 0, 0]}>
-        <mesh>
-          <boxGeometry args={[1, 1, 0.02]} />
+      {/* Buttons */}
+      <mesh position={[0.25, -0.2, 0.77]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.05, 0.05, 0.02, 16]} />
+        <meshStandardMaterial color="#64748b" metalness={0.6} roughness={0.3} />
+      </mesh>
+      <mesh position={[0.45, -0.2, 0.77]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.05, 0.05, 0.02, 16]} />
+        <meshStandardMaterial color="#64748b" metalness={0.6} roughness={0.3} />
+      </mesh>
+      <mesh position={[0.65, -0.2, 0.77]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.05, 0.05, 0.02, 16]} />
+        <meshStandardMaterial color="#22c55e" metalness={0.4} roughness={0.3} />
+      </mesh>
+      {/* Power LED */}
+      <mesh ref={ledRef} position={[0.88, -0.2, 0.77]}>
+        <sphereGeometry args={[0.035, 16, 16]} />
+        <meshStandardMaterial color="#22c55e" emissive="#22c55e" emissiveIntensity={1} />
+      </mesh>
+      {/* Hinged top lid with paper tray */}
+      <group ref={lidRef} position={[0, 0.05, -0.72]}>
+        <mesh position={[0, 0.1, 0.4]}>
+          <boxGeometry args={[2, 0.12, 1]} />
+          <meshStandardMaterial color="#cbd5e1" metalness={0.2} roughness={0.6} />
+        </mesh>
+        {/* Input paper stack */}
+        <mesh position={[0, 0.2, 0.4]}>
+          <boxGeometry args={[1.4, 0.08, 0.7]} />
           <meshStandardMaterial color="#ffffff" />
         </mesh>
-        {hovered && (
-          <group position={[0, 0, 0.02]}>
-            <mesh position={[-0.3, 0.2, 0]}>
-              <boxGeometry args={[0.4, 0.3, 0.01]} />
-              <meshStandardMaterial color="#3b82f6" />
-            </mesh>
-            <mesh position={[0.1, -0.2, 0]}>
-              <boxGeometry args={[0.5, 0.15, 0.01]} />
-              <meshStandardMaterial color="#64748b" />
-            </mesh>
-          </group>
-        )}
+        {/* Paper tray guide rails */}
+        <mesh position={[-0.75, 0.22, 0.4]}>
+          <boxGeometry args={[0.04, 0.1, 0.7]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
+        <mesh position={[0.75, 0.22, 0.4]}>
+          <boxGeometry args={[0.04, 0.1, 0.7]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
+      </group>
+      {/* Print head carriage moving across */}
+      <group ref={headRef} position={[-0.5, 0.03, 0.3]}>
+        <mesh>
+          <boxGeometry args={[0.25, 0.12, 0.2]} />
+          <meshStandardMaterial color="#0f172a" metalness={0.4} roughness={0.4} />
+        </mesh>
+      </group>
+      {/* Guide rail for carriage */}
+      <mesh position={[0, 0.05, 0.25]} rotation={[0, 0, Math.PI / 2]}>
+        <cylinderGeometry args={[0.02, 0.02, 2, 12]} />
+        <meshStandardMaterial color="#94a3b8" metalness={0.8} roughness={0.2} />
+      </mesh>
+      {/* Output slot */}
+      <mesh position={[0, -0.05, 0.76]}>
+        <boxGeometry args={[1.5, 0.04, 0.01]} />
+        <meshStandardMaterial color="#0f172a" />
+      </mesh>
+      {/* Paper coming out */}
+      <group ref={paperOutRef} position={[0, -0.25, 0.25]} rotation={[0.08, 0, 0]}>
+        <mesh>
+          <boxGeometry args={[1.1, 0.02, 0.9]} />
+          <meshStandardMaterial color="#ffffff" />
+        </mesh>
+        {/* Print content lines */}
+        <mesh position={[-0.25, 0.015, -0.2]}>
+          <boxGeometry args={[0.4, 0.005, 0.25]} />
+          <meshStandardMaterial color="#3b82f6" />
+        </mesh>
+        <mesh position={[0.15, 0.015, 0.05]}>
+          <boxGeometry args={[0.55, 0.005, 0.06]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
+        <mesh position={[0.05, 0.015, 0.2]}>
+          <boxGeometry args={[0.45, 0.005, 0.06]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
+        <mesh position={[-0.05, 0.015, 0.35]}>
+          <boxGeometry args={[0.35, 0.005, 0.06]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
       </group>
     </group>
   );
 }
 
 function MagnifyingGlassModel({ hovered }: { hovered?: boolean }) {
-  const glassRef = useRef<THREE.Group>(null);
-  const handleRef = useRef<THREE.Group>(null);
-  
-  useFrame((state, delta) => {
-    if (glassRef.current && hovered) {
-      glassRef.current.rotation.x = THREE.MathUtils.lerp(glassRef.current.rotation.x, 0.3, 0.1);
-      glassRef.current.rotation.y = THREE.MathUtils.lerp(glassRef.current.rotation.y, 0.3, 0.1);
-    } else if (glassRef.current) {
-      glassRef.current.rotation.x = THREE.MathUtils.lerp(glassRef.current.rotation.x, 0, 0.1);
-      glassRef.current.rotation.y = THREE.MathUtils.lerp(glassRef.current.rotation.y, 0, 0.1);
-    }
-    if (handleRef.current && hovered) {
-      handleRef.current.rotation.z = THREE.MathUtils.lerp(handleRef.current.rotation.z, Math.PI / 4 + 0.2, 0.1);
-    } else if (handleRef.current) {
-      handleRef.current.rotation.z = THREE.MathUtils.lerp(handleRef.current.rotation.z, Math.PI / 4, 0.1);
-    }
-  });
-
-  return (
-    <group>
-      <group ref={handleRef} position={[0.8, -0.8, 0]} rotation={[0, 0, Math.PI / 4]}>
-        <mesh>
-          <cylinderGeometry args={[0.15, 0.15, 1.5]} />
-          <meshStandardMaterial color="#1f2937" />
-        </mesh>
-      </group>
-      <group ref={glassRef} position={[0, 0, 0]}>
-        <mesh>
-          <torusGeometry args={[0.8, 0.15, 16, 32]} />
-          <meshStandardMaterial color="#9ca3af" metalness={0.8} roughness={0.2} />
-        </mesh>
-        <mesh>
-          <cylinderGeometry args={[0.75, 0.75, 0.05, 32]} />
-          <meshPhysicalMaterial 
-            color="#ffffff" 
-            transmission={0.9} 
-            opacity={1} 
-            metalness={0} 
-            roughness={0} 
-            ior={1.5} 
-            thickness={0.5} 
-          />
-        </mesh>
-        <group position={[0, 0, -0.5]}>
-          <mesh>
-            <boxGeometry args={[1, 0.2, 0.05]} />
-            <meshStandardMaterial color={hovered ? "#3b82f6" : "#94a3b8"} />
-          </mesh>
-          <mesh position={[0, -0.3, 0]}>
-            <boxGeometry args={[0.8, 0.1, 0.05]} />
-            <meshStandardMaterial color="#9ca3af" />
-          </mesh>
-          {hovered && (
-            <mesh position={[0, -0.5, 0]}>
-              <boxGeometry args={[0.6, 0.08, 0.05]} />
-              <meshStandardMaterial color="#64748b" />
-            </mesh>
-          )}
-        </group>
-      </group>
-    </group>
-  );
-}
-
-function SpeakerModel({ hovered }: { hovered?: boolean }) {
-  const volumeRef = useRef<THREE.Group>(null);
-  
-  useFrame((state, delta) => {
-    if (volumeRef.current && hovered) {
-      volumeRef.current.scale.x = THREE.MathUtils.lerp(volumeRef.current.scale.x, 1.3, 0.1);
-    } else if (volumeRef.current) {
-      volumeRef.current.scale.x = THREE.MathUtils.lerp(volumeRef.current.scale.x, 1, 0.1);
-    }
-  });
-
-  return (
-    <group>
-      <mesh position={[0, 0, 0]}>
-        <boxGeometry args={[2.2, 0.7, 0.6]} />
-        <meshStandardMaterial color="#4b5563" metalness={0.3} roughness={0.4} />
-      </mesh>
-      <group ref={volumeRef} position={[0, 0, 0.33]}>
-        <group position={[-0.6, 0.05, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh>
-            <cylinderGeometry args={[0.35, 0.35, 0.05, 32]} />
-            <meshStandardMaterial color="#1f2937" />
-          </mesh>
-          <mesh position={[0, 0, 0.02]}>
-            <cylinderGeometry args={[0.25, 0.25, 0.02, 32]} />
-            <meshStandardMaterial color="#111827" />
-          </mesh>
-        </group>
-        <group position={[0.6, 0.05, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <mesh>
-            <cylinderGeometry args={[0.35, 0.35, 0.05, 32]} />
-            <meshStandardMaterial color="#1f2937" />
-          </mesh>
-          <mesh position={[0, 0, 0.02]}>
-            <cylinderGeometry args={[0.25, 0.25, 0.02, 32]} />
-            <meshStandardMaterial color="#111827" />
-          </mesh>
-        </group>
-        {hovered && (
-          <>
-            <mesh position={[0, 0.5, 0]}>
-              <boxGeometry args={[1.5, 0.3, 0.3]} />
-              <meshStandardMaterial color="#22c55e" />
-            </mesh>
-            <mesh position={[0, 0.5, 0.16]}>
-              <boxGeometry args={[0.8, 0.15, 0.02]} />
-              <meshStandardMaterial color="#16a34a" />
-            </mesh>
-          </>
-        )}
-      </group>
-      <mesh position={[-0.3, 0.38, 0]}>
-        <cylinderGeometry args={[0.08, 0.08, 0.08, 16]} />
-        <meshStandardMaterial color="#9ca3af" metalness={0.6} roughness={0.3} />
-      </mesh>
-      <mesh position={[0, 0.38, 0]}>
-        <cylinderGeometry args={[0.08, 0.08, 0.08, 16]} />
-        <meshStandardMaterial color="#9ca3af" metalness={0.6} roughness={0.3} />
-      </mesh>
-      <mesh position={[0.3, 0.38, 0]}>
-        <cylinderGeometry args={[0.08, 0.08, 0.08, 16]} />
-        <meshStandardMaterial color="#9ca3af" metalness={0.6} roughness={0.3} />
-      </mesh>
-      <mesh position={[-0.9, -0.35, 0.15]}>
-        <boxGeometry args={[0.2, 0.05, 0.3]} />
-        <meshStandardMaterial color="#1f2937" />
-      </mesh>
-      <mesh position={[0.9, -0.35, 0.15]}>
-        <boxGeometry args={[0.2, 0.05, 0.3]} />
-        <meshStandardMaterial color="#1f2937" />
-      </mesh>
-    </group>
-  );
-}
-
-function WifiModel({ hovered }: { hovered?: boolean }) {
   const groupRef = useRef<THREE.Group>(null);
-  const arc1Ref = useRef<THREE.Mesh>(null);
-  const arc2Ref = useRef<THREE.Mesh>(null);
-  const arc3Ref = useRef<THREE.Mesh>(null);
-  
-  useFrame((state, delta) => {
-    if (arc1Ref.current && hovered) {
-      const pulse = Math.sin(state.clock.elapsedTime * 4) * 0.1 + 1;
-      arc1Ref.current.scale.setScalar(pulse);
+  const textRef = useRef<THREE.Group>(null);
+  const line1Ref = useRef<THREE.Mesh>(null);
+  const line2Ref = useRef<THREE.Mesh>(null);
+  const line3Ref = useRef<THREE.Mesh>(null);
+
+  useFrame((_state, _delta) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.z = THREE.MathUtils.lerp(
+        groupRef.current.rotation.z,
+        hovered ? -0.15 : 0,
+        0.1,
+      );
     }
-    if (arc2Ref.current && hovered) {
-      const pulse = Math.sin(state.clock.elapsedTime * 4 + 0.5) * 0.15 + 1;
-      arc2Ref.current.scale.setScalar(pulse);
+    if (textRef.current) {
+      const s = hovered ? 1.6 : 1;
+      textRef.current.scale.x = THREE.MathUtils.lerp(textRef.current.scale.x, s, 0.1);
+      textRef.current.scale.y = THREE.MathUtils.lerp(textRef.current.scale.y, s, 0.1);
     }
-    if (arc3Ref.current && hovered) {
-      const pulse = Math.sin(state.clock.elapsedTime * 4 + 1) * 0.2 + 1;
-      arc3Ref.current.scale.setScalar(pulse);
-    }
+    const lines = [line1Ref.current, line2Ref.current, line3Ref.current];
+    lines.forEach((m, i) => {
+      if (!m) return;
+      const mat = m.material as THREE.MeshStandardMaterial;
+      const target = hovered ? (i === 0 ? "#3b82f6" : "#475569") : "#cbd5e1";
+      mat.color.lerp(new THREE.Color(target), 0.1);
+    });
   });
 
   return (
     <group ref={groupRef}>
-      {/* Center dot */}
-      <mesh position={[0, -0.6, 0]}>
+      {/* Paper document behind */}
+      <mesh position={[0, 0, -0.3]}>
+        <boxGeometry args={[2.6, 2.2, 0.04]} />
+        <meshStandardMaterial color="#f8fafc" />
+      </mesh>
+      {/* Text lines on paper (magnified by lens) */}
+      <group ref={textRef} position={[0, 0, -0.27]}>
+        <mesh ref={line1Ref} position={[0, 0.25, 0]}>
+          <boxGeometry args={[0.9, 0.1, 0.01]} />
+          <meshStandardMaterial color="#cbd5e1" />
+        </mesh>
+        <mesh ref={line2Ref} position={[-0.05, 0, 0]}>
+          <boxGeometry args={[0.8, 0.08, 0.01]} />
+          <meshStandardMaterial color="#cbd5e1" />
+        </mesh>
+        <mesh ref={line3Ref} position={[0, -0.22, 0]}>
+          <boxGeometry args={[0.7, 0.08, 0.01]} />
+          <meshStandardMaterial color="#cbd5e1" />
+        </mesh>
+      </group>
+
+      {/* Handle */}
+      <group position={[0.95, -0.95, 0]} rotation={[0, 0, Math.PI / 4]}>
+        <mesh position={[0, -0.15, 0]}>
+          <cylinderGeometry args={[0.14, 0.12, 1.3, 24]} />
+          <meshStandardMaterial color="#0f172a" metalness={0.3} roughness={0.6} />
+        </mesh>
+        <mesh position={[0, -0.85, 0]}>
+          <sphereGeometry args={[0.14, 16, 16]} />
+          <meshStandardMaterial color="#0f172a" metalness={0.3} roughness={0.6} />
+        </mesh>
+        {/* Collar connecting handle to rim */}
+        <mesh position={[0, 0.52, 0]}>
+          <cylinderGeometry args={[0.18, 0.16, 0.25, 24]} />
+          <meshStandardMaterial color="#64748b" metalness={0.9} roughness={0.25} />
+        </mesh>
+      </group>
+
+      {/* Chrome rim */}
+      <mesh>
+        <torusGeometry args={[0.85, 0.12, 24, 64]} />
+        <meshStandardMaterial color="#d1d5db" metalness={0.95} roughness={0.1} />
+      </mesh>
+      {/* Inner bevel */}
+      <mesh>
+        <torusGeometry args={[0.78, 0.04, 16, 64]} />
+        <meshStandardMaterial color="#f1f5f9" metalness={0.7} roughness={0.2} />
+      </mesh>
+      {/* Glass lens */}
+      <mesh position={[0, 0, 0.02]}>
+        <cylinderGeometry args={[0.78, 0.78, 0.1, 48]} />
+        <meshPhysicalMaterial
+          color="#e0f2fe"
+          transmission={0.95}
+          transparent
+          opacity={0.4}
+          metalness={0}
+          roughness={0.05}
+          ior={1.45}
+          thickness={0.4}
+        />
+      </mesh>
+      {/* Specular highlight */}
+      <mesh position={[-0.3, 0.35, 0.08]} rotation={[0, 0, -0.5]}>
+        <circleGeometry args={[0.18, 24]} />
+        <meshStandardMaterial color="#ffffff" transparent opacity={0.55} />
+      </mesh>
+      <mesh position={[-0.15, 0.2, 0.08]} rotation={[0, 0, -0.5]}>
+        <circleGeometry args={[0.07, 16]} />
+        <meshStandardMaterial color="#ffffff" transparent opacity={0.7} />
+      </mesh>
+    </group>
+  );
+}
+
+function SoundWaveArc({
+  radius,
+  hovered,
+  delay,
+  meshRef,
+}: {
+  radius: number;
+  hovered: boolean;
+  delay: number;
+  meshRef: React.MutableRefObject<THREE.Mesh | null>;
+}) {
+  useFrame((state) => {
+    if (!meshRef.current) return;
+    const mat = meshRef.current.material as THREE.MeshStandardMaterial;
+    mat.transparent = true;
+    if (hovered) {
+      const t = (state.clock.elapsedTime - delay) % 1.2;
+      const phase = Math.max(0, Math.min(t, 1));
+      mat.opacity = THREE.MathUtils.lerp(mat.opacity, 0.2 + 0.8 * Math.sin(phase * Math.PI), 0.3);
+      const s = 1 + 0.08 * Math.sin(phase * Math.PI);
+      meshRef.current.scale.setScalar(s);
+    } else {
+      mat.opacity = THREE.MathUtils.lerp(mat.opacity, 0, 0.2);
+      meshRef.current.scale.setScalar(1);
+    }
+  });
+  return (
+    <mesh ref={meshRef} position={[1.1, 0.05, 0]} rotation={[0, 0, -Math.PI / 2]}>
+      <torusGeometry args={[radius, 0.05, 12, 32, Math.PI * 0.6]} />
+      <meshStandardMaterial color="#38bdf8" transparent opacity={0} />
+    </mesh>
+  );
+}
+
+function SpeakerModel({ hovered }: { hovered?: boolean }) {
+  const coneRef = useRef<THREE.Group>(null);
+  const wave1 = useRef<THREE.Mesh>(null);
+  const wave2 = useRef<THREE.Mesh>(null);
+  const wave3 = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (coneRef.current) {
+      const pulse = hovered ? 1 + Math.sin(state.clock.elapsedTime * 10) * 0.04 : 1;
+      coneRef.current.scale.z = THREE.MathUtils.lerp(coneRef.current.scale.z, pulse, 0.3);
+    }
+  });
+
+  // Windows-style trapezoidal speaker body pointing right
+  const bodyShape = new THREE.Shape();
+  bodyShape.moveTo(-0.5, -0.25);
+  bodyShape.lineTo(-0.5, 0.25);
+  bodyShape.lineTo(0.5, 0.65);
+  bodyShape.lineTo(0.5, -0.65);
+  bodyShape.lineTo(-0.5, -0.25);
+
+  return (
+    <group rotation={[0, 0.15, 0]}>
+      {/* Back cabinet (small rectangular part) */}
+      <mesh position={[-0.9, 0, 0]}>
+        <boxGeometry args={[0.5, 0.7, 0.5]} />
+        <meshStandardMaterial color="#0f172a" metalness={0.4} roughness={0.5} />
+      </mesh>
+      {/* Trapezoidal horn/cone */}
+      <mesh position={[-0.4, 0, 0]}>
+        <extrudeGeometry args={[bodyShape, { depth: 0.5, bevelEnabled: true, bevelSize: 0.03, bevelThickness: 0.03, bevelSegments: 2 }]} />
+        <meshStandardMaterial color="#1e293b" metalness={0.5} roughness={0.35} />
+      </mesh>
+      {/* Speaker face ring */}
+      <mesh position={[0.62, 0, 0.25]} rotation={[0, Math.PI / 2, 0]}>
+        <torusGeometry args={[0.55, 0.06, 16, 48]} />
+        <meshStandardMaterial color="#475569" metalness={0.8} roughness={0.25} />
+      </mesh>
+      {/* Main cone driver */}
+      <group ref={coneRef} position={[0.62, 0, 0.25]} rotation={[0, Math.PI / 2, 0]}>
+        <mesh>
+          <coneGeometry args={[0.5, 0.25, 48, 1, true]} />
+          <meshStandardMaterial color="#111827" metalness={0.3} roughness={0.7} side={THREE.DoubleSide} />
+        </mesh>
+        {/* Dust cap */}
+        <mesh position={[0, 0.13, 0]}>
+          <sphereGeometry args={[0.12, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
+          <meshStandardMaterial color="#0f172a" metalness={0.6} roughness={0.3} />
+        </mesh>
+      </group>
+      {/* Sound wave arcs */}
+      <SoundWaveArc radius={0.35} hovered={!!hovered} delay={0} meshRef={wave1} />
+      <SoundWaveArc radius={0.6} hovered={!!hovered} delay={0.25} meshRef={wave2} />
+      <SoundWaveArc radius={0.9} hovered={!!hovered} delay={0.5} meshRef={wave3} />
+      {/* Base */}
+      <mesh position={[-0.3, -0.5, 0]}>
+        <boxGeometry args={[1.6, 0.08, 0.55]} />
+        <meshStandardMaterial color="#0f172a" metalness={0.4} roughness={0.5} />
+      </mesh>
+    </group>
+  );
+}
+
+function WifiArc({
+  radius,
+  y,
+  thickness,
+  index,
+  hovered,
+  meshRef,
+}: {
+  radius: number;
+  y: number;
+  thickness: number;
+  index: number;
+  hovered: boolean;
+  meshRef: React.MutableRefObject<THREE.Mesh | null>;
+}) {
+  const IDLE_BLUE = new THREE.Color("#3b82f6");
+  const IDLE_LIGHT = new THREE.Color(index === 0 ? "#3b82f6" : index === 1 ? "#60a5fa" : "#93c5fd");
+  const ACTIVE_BLUE = new THREE.Color("#2563eb");
+  const DIM = new THREE.Color("#1e3a8a");
+
+  useFrame((state) => {
+    if (!meshRef.current) return;
+    const mat = meshRef.current.material as THREE.MeshStandardMaterial;
+    if (hovered) {
+      // Cycle: 0 -> bar0 lit, 1 -> bar1 lit, 2 -> bar2 lit, 3 -> pause, then repeat
+      const cycle = 2.0;
+      const t = state.clock.elapsedTime % cycle;
+      const stepLen = cycle / 4;
+      const activeStep = Math.floor(t / stepLen);
+      const on = index <= activeStep && activeStep < 3;
+      const target = on ? ACTIVE_BLUE : DIM;
+      mat.color.lerp(target, 0.2);
+      mat.emissive.lerp(on ? ACTIVE_BLUE : new THREE.Color("#000000"), 0.2);
+      mat.emissiveIntensity = THREE.MathUtils.lerp(mat.emissiveIntensity, on ? 0.8 : 0, 0.2);
+    } else {
+      mat.color.lerp(index === 0 ? IDLE_BLUE : IDLE_LIGHT, 0.15);
+      mat.emissive.lerp(new THREE.Color("#000000"), 0.15);
+      mat.emissiveIntensity = THREE.MathUtils.lerp(mat.emissiveIntensity, 0, 0.15);
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} position={[0, y, 0]}>
+      <torusGeometry args={[radius, thickness, 16, 48, Math.PI]} />
+      <meshStandardMaterial color={IDLE_LIGHT} />
+    </mesh>
+  );
+}
+
+function WifiModel({ hovered }: { hovered?: boolean }) {
+  const arc1Ref = useRef<THREE.Mesh>(null);
+  const arc2Ref = useRef<THREE.Mesh>(null);
+  const arc3Ref = useRef<THREE.Mesh>(null);
+  const dotRef = useRef<THREE.Mesh>(null);
+
+  useFrame((_state) => {
+    if (!dotRef.current) return;
+    const mat = dotRef.current.material as THREE.MeshStandardMaterial;
+    const target = hovered ? new THREE.Color("#2563eb") : new THREE.Color("#3b82f6");
+    mat.color.lerp(target, 0.15);
+    mat.emissive.lerp(target, 0.15);
+    mat.emissiveIntensity = THREE.MathUtils.lerp(mat.emissiveIntensity, hovered ? 0.6 : 0.2, 0.15);
+  });
+
+  return (
+    <group>
+      <mesh ref={dotRef} position={[0, -0.6, 0]}>
         <sphereGeometry args={[0.18, 32, 32]} />
-        <meshStandardMaterial color={hovered ? "#22c55e" : "#3b82f6"} emissive={hovered ? "#22c55e" : "#3b82f6"} emissiveIntensity={hovered ? 0.5 : 0.2} />
+        <meshStandardMaterial color="#3b82f6" emissive="#3b82f6" emissiveIntensity={0.2} />
       </mesh>
-      
-      {/* Signal arc 1 */}
-      <mesh ref={arc1Ref} position={[0, -0.2, 0]}>
-        <torusGeometry args={[0.4, 0.1, 16, 32, Math.PI]} />
-        <meshStandardMaterial color={hovered ? "#22c55e" : "#3b82f6"} />
-      </mesh>
-      
-      {/* Signal arc 2 */}
-      <mesh ref={arc2Ref} position={[0, 0.15, 0]}>
-        <torusGeometry args={[0.7, 0.12, 16, 32, Math.PI]} />
-        <meshStandardMaterial color={hovered ? "#22c55e" : "#60a5fa"} />
-      </mesh>
-      
-      {/* Signal arc 3 */}
-      <mesh ref={arc3Ref} position={[0, 0.55, 0]}>
-        <torusGeometry args={[1.1, 0.14, 16, 32, Math.PI]} />
-        <meshStandardMaterial color={hovered ? "#4ade80" : "#93c5fd"} />
-      </mesh>
-      
-      {hovered && (
-        <>
-          {/* Router base */}
-          <mesh position={[0, -0.9, 0]}>
-            <boxGeometry args={[0.6, 0.15, 0.4]} />
-            <meshStandardMaterial color="#166534" />
-          </mesh>
-          {/* Router antennas */}
-          <mesh position={[-0.2, -0.75, 0]}>
-            <cylinderGeometry args={[0.03, 0.03, 0.25]} />
-            <meshStandardMaterial color="#1f2937" />
-          </mesh>
-          <mesh position={[0.2, -0.75, 0]}>
-            <cylinderGeometry args={[0.03, 0.03, 0.25]} />
-            <meshStandardMaterial color="#1f2937" />
-          </mesh>
-          {/* LED indicator */}
-          <mesh position={[0, -0.9, 0.21]}>
-            <sphereGeometry args={[0.05, 16, 16]} />
-            <meshStandardMaterial color="#22c55e" emissive="#22c55e" emissiveIntensity={1} />
-          </mesh>
-          {/* Connection lines */}
-          <mesh position={[0, -0.4, 0]} rotation={[0, 0, 0]}>
-            <boxGeometry args={[0.02, 0.5, 0.02]} />
-            <meshStandardMaterial color="#4ade80" transparent opacity={0.6} />
-          </mesh>
-        </>
-      )}
+      <WifiArc radius={0.4} y={-0.2} thickness={0.1} index={0} hovered={!!hovered} meshRef={arc1Ref} />
+      <WifiArc radius={0.7} y={0.15} thickness={0.12} index={1} hovered={!!hovered} meshRef={arc2Ref} />
+      <WifiArc radius={1.1} y={0.55} thickness={0.14} index={2} hovered={!!hovered} meshRef={arc3Ref} />
     </group>
   );
 }
@@ -695,8 +884,8 @@ const issues = [
     id: 7, 
     title: 'The internet is broken', 
     description: 'Wi-Fi disconnected or running slow? We can help you get back online and stay connected with your loved ones.',
-    hoverTitle: 'Green = connected! Router appears',
-    Model: WifiModel 
+    hoverTitle: 'Bars light up as the signal connects',
+    Model: WifiModel
   },
 ];
 
@@ -877,8 +1066,8 @@ export default function TechHelpCarousel() {
                     setDirection(index > currentIndex ? 1 : -1);
                     setCurrentIndex(index);
                   }}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    index === currentIndex ? 'bg-blue-600 w-8' : 'bg-slate-200 w-2 hover:bg-slate-300'
+                  className={`h-2 w-2 rounded-full transition-all duration-300 ${
+                    index === currentIndex ? 'bg-blue-600 scale-125' : 'bg-slate-200 hover:bg-slate-300'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
