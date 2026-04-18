@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from 'react';
-import TechHelpCarousel from './TechHelpCarousel';
+import { lazy, Suspense, useRef, useState, useEffect } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
+
+const TechHelpCarousel = lazy(() => import('./TechHelpCarousel'));
 import {
   ArrowRight,
   Calendar,
@@ -317,6 +318,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-transparent pb-24 text-slate-900 md:pb-0">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        Skip to main content
+      </a>
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div className="section-shell">
           <div className="flex h-16 items-center justify-between">
@@ -460,6 +467,10 @@ export default function App() {
                     src="/hero-helping.png"
                     alt="Patient in-home tech help with a neighbor at their kitchen table"
                     loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                    width="1648"
+                    height="927"
                     className="h-full w-full object-cover aspect-[4/3] lg:aspect-[5/6]"
                   />
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-900/40 to-transparent" />
@@ -489,7 +500,9 @@ export default function App() {
         </section>
 
         <div className="section-shell py-12 lg:py-20">
-          <TechHelpCarousel />
+          <Suspense fallback={<div className="h-[450px] w-full max-w-5xl mx-auto rounded-[32px] bg-slate-100 animate-pulse" aria-hidden="true" />}>
+            <TechHelpCarousel />
+          </Suspense>
         </div>
 
         <section id="why-book" className="py-16 lg:py-20">
@@ -664,7 +677,7 @@ export default function App() {
                     </svg>
                   </div>
                   <div className="service-area-map-frame">
-                    <img src="/5CitiesMap.png" alt="Five Cities Service Area Map" className="w-full max-w-md mx-auto rounded-xl" />
+                    <img src="/5CitiesMap.png" alt="Map of Five Cities service area on the Central Coast" loading="lazy" decoding="async" className="w-full max-w-md mx-auto rounded-xl" />
                   </div>
                 </div>
               </div>
