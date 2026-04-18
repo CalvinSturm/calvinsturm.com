@@ -453,35 +453,18 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="hidden lg:block">
-                <div className="bento-grid">
-                  <div className="bento-card bento-card-large">
-                    <div className="bento-icon-wrapper">
-                      <Wifi className="h-6 w-6" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-slate-900">Wi-Fi & Internet</h3>
-                    <p className="mt-1 text-sm text-slate-600">Dropped connections, slow speeds, dead zones</p>
-                  </div>
-                  <div className="bento-card">
-                    <div className="bento-icon-wrapper">
-                      <Printer className="h-5 w-5" />
-                    </div>
-                    <h3 className="font-semibold text-slate-900">Printers</h3>
-                    <p className="mt-1 text-sm text-slate-600">Connection issues, setup help</p>
-                  </div>
-                  <div className="bento-card">
-                    <div className="bento-icon-wrapper">
-                      <MonitorSmartphone className="h-5 w-5" />
-                    </div>
-                    <h3 className="font-semibold text-slate-900">New Devices</h3>
-                    <p className="mt-1 text-sm text-slate-600">Phones, tablets, TVs</p>
-                  </div>
-                  <div className="bento-card bento-card-highlight">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-5 w-5 text-emerald-600" />
-                      <span className="text-sm font-medium text-emerald-700">In-home service</span>
-                    </div>
-                    <p className="mt-2 text-sm text-slate-600">We come to you, where the problem actually happens.</p>
+              <div className="relative animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                <div className="relative overflow-hidden rounded-3xl shadow-[0_20px_60px_rgba(15,23,42,0.18)] ring-1 ring-slate-200/60">
+                  <img
+                    src="/hero-helping.png"
+                    alt="Patient in-home tech help with a neighbor at their kitchen table"
+                    loading="eager"
+                    className="h-full w-full object-cover aspect-[4/3] lg:aspect-[5/6]"
+                  />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-900/40 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 rounded-2xl bg-white/95 px-4 py-3 shadow-md backdrop-blur">
+                    <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600" />
+                    <p className="text-sm font-medium text-slate-800">In-home service, where the problem actually happens.</p>
                   </div>
                 </div>
               </div>
