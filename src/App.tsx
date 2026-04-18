@@ -548,7 +548,7 @@ export default function App() {
         <section id="how-it-works" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-800">How it works</div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">How it works</div>
               <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">A simple path from first call to fixed.</h2>
             </div>
             <div className="grid gap-6 sm:grid-cols-3">
@@ -577,7 +577,7 @@ export default function App() {
         <section id="services" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-800">Services</div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Services</div>
               <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Common issues we fix at home.</h2>
             </div>
             
@@ -629,7 +629,7 @@ export default function App() {
                   <p className={`mt-2 text-3xl font-semibold ${index === 1 ? 'text-white' : 'text-slate-900'}`}>{price}</p>
                   <p className={`mt-3 text-sm ${index === 1 ? 'text-slate-300' : 'text-slate-600'}`}>{desc}</p>
                   {index === 1 && <div className="mt-4 inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white">Most popular</div>}
-                  <div className={`mt-4 inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium ${index === 1 ? 'bg-white/15 text-white' : 'bg-indigo-50 text-indigo-700'}`}>Start with this plan <ArrowRight className="h-4 w-4" /></div>
+                  <div className={`mt-4 inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium ${index === 1 ? 'bg-white/15 text-white' : 'bg-amber-100 text-amber-800'}`}>Start with this plan <ArrowRight className="h-4 w-4" /></div>
                 </button>
               ))}
             </div>
@@ -824,7 +824,7 @@ export default function App() {
         <section id="faq" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-800">FAQ</div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">FAQ</div>
               <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Common questions.</h2>
             </div>
             

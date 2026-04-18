@@ -1492,7 +1492,8 @@ html.dark .border-slate-100 {
 
 html.dark .bg-indigo-100,
 html.dark .bg-emerald-100,
-html.dark .bg-amber-100 {
+html.dark .bg-amber-100,
+html.dark .bg-slate-100 {
   background: rgba(51, 65, 85, 0.6) !important;
 }
 

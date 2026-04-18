@@ -705,6 +705,7 @@ export default function TechHelpCarousel() {
   const [direction, setDirection] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [isPanelHovered, setIsPanelHovered] = useState(false);
 
   const nextSlide = () => {
     setDirection(1);
@@ -717,12 +718,12 @@ export default function TechHelpCarousel() {
   };
 
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    if (!isAutoPlaying || isPanelHovered) return;
     const timer = setInterval(() => {
       nextSlide();
     }, 8000);
     return () => clearInterval(timer);
-  }, [isAutoPlaying, currentIndex]);
+  }, [isAutoPlaying, isPanelHovered, currentIndex]);
 
   const variants = {
     enter: (direction: number) => ({
@@ -746,7 +747,7 @@ export default function TechHelpCarousel() {
   return (
     <div className="w-full max-w-5xl mx-auto">
       <div className="text-center mb-8 md:mb-12">
-        <h1 className="text-4xl md:text-5xl font-light tracking-tight text-slate-900 mb-4">Tech Help Center</h1>
+        <h2 className="text-4xl md:text-5xl font-light tracking-tight text-slate-900 mb-4">Tech Help Center</h2>
         <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto">
           Common technology challenges and how we can help you solve them.
         </p>
@@ -754,6 +755,8 @@ export default function TechHelpCarousel() {
 
       <div
         className="relative h-[600px] md:h-[450px] w-full overflow-hidden rounded-[32px] bg-white shadow-[0_8px_40px_rgba(0,0,0,0.08)] border border-slate-100 flex flex-col md:flex-row"
+        onMouseEnter={() => setIsPanelHovered(true)}
+        onMouseLeave={() => setIsPanelHovered(false)}
       >
         <div 
           className="w-full md:w-1/2 h-1/2 md:h-full relative bg-slate-50/50 cursor-grab active:cursor-grabbing"
@@ -823,9 +826,9 @@ export default function TechHelpCarousel() {
                 }}
                 className="absolute inset-0 flex flex-col justify-center"
               >
-                <h2 className="text-3xl md:text-4xl font-medium text-slate-900 mb-4 leading-tight">
+                <h3 className="text-3xl md:text-4xl font-medium text-slate-900 mb-4 leading-tight">
                   {issues[currentIndex].title}
-                </h2>
+                </h3>
                 <p className="text-slate-500 text-lg md:text-xl leading-relaxed">
                   {issues[currentIndex].description}
                 </p>
