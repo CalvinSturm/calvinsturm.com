@@ -747,9 +747,10 @@ export default function TechHelpCarousel() {
   return (
     <div className="w-full max-w-5xl mx-auto">
       <div className="text-center mb-8 md:mb-12">
-        <h2 className="text-4xl md:text-5xl font-light tracking-tight text-slate-900 mb-4">Tech Help Center</h2>
-        <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto">
-          Common technology challenges and how we can help you solve them.
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Tech Help Center</div>
+        <h2 className="font-display text-3xl md:text-4xl font-medium tracking-tight text-slate-900 mb-3">Common tech challenges, explained simply.</h2>
+        <p className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto">
+          A quick tour of the everyday problems we fix at home.
         </p>
       </div>
 
