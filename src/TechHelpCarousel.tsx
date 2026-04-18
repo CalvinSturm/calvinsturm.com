@@ -720,7 +720,7 @@ export default function TechHelpCarousel() {
     if (!isAutoPlaying) return;
     const timer = setInterval(() => {
       nextSlide();
-    }, 5000);
+    }, 8000);
     return () => clearInterval(timer);
   }, [isAutoPlaying, currentIndex]);
 
