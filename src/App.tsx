@@ -516,7 +516,10 @@ export default function App() {
                 <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">Tell us what&apos;s going on.</h2>
                 <p className="mt-3 text-lg text-slate-600">A simple description is enough. We&apos;ll follow up in plain English.</p>
               </div>
-              <form className="mt-8 space-y-4" onSubmit={handleSubmit} aria-label="Request a callback">
+              <form className="mt-8 space-y-4" action="https://formsubmit.co/calvin@calvinsturm.com" method="POST" aria-label="Request a callback">
+                <input type="hidden" name="_subject" value="New callback request from calvinsturm.com" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_captcha" value="false" />
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div><label htmlFor="name" className="mb-1.5 block text-sm font-medium text-slate-700">Your name <span className="text-amber-600">*</span></label><input type="text" id="name" name="name" autoComplete="name" value={form.name} onChange={handleChange} placeholder="Jane Smith" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
                   <div><label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-slate-700">Phone number <span className="text-amber-600">*</span></label><input type="tel" id="phone" name="phone" autoComplete="tel" value={form.phone} onChange={handleChange} placeholder="(805) 994-0881" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
