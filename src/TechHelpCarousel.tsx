@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronLeft, ChevronRight, AlertTriangle, Mail, Gift, User, Wallet, Lock, FileSearch, Wifi, Volume2, Type, Printer, Eye } from 'lucide-react';
+import { ChevronLeft, ChevronRight, AlertTriangle, Mail, Gift, User, Wallet, Lock, FileSearch, Wifi, Volume2, Type, Printer, Eye, Play, Pause } from 'lucide-react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, ContactShadows, Environment, PresentationControls, Text3D, Text } from '@react-three/drei';
 import * as THREE from 'three';
@@ -522,9 +522,6 @@ function WifiModel({ hovered }: { hovered?: boolean }) {
   const arc3Ref = useRef<THREE.Mesh>(null);
   
   useFrame((state, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.3;
-    }
     if (arc1Ref.current && hovered) {
       const pulse = Math.sin(state.clock.elapsedTime * 4) * 0.1 + 1;
       arc1Ref.current.scale.setScalar(pulse);
@@ -673,10 +670,6 @@ export default function TechHelpCarousel() {
     return () => clearInterval(timer);
   }, [isAutoPlaying, currentIndex]);
 
-  const handleInteraction = () => {
-    setIsAutoPlaying(false);
-  };
-
   const variants = {
     enter: (direction: number) => ({
       y: direction > 0 ? 40 : -40,
@@ -705,10 +698,8 @@ export default function TechHelpCarousel() {
         </p>
       </div>
 
-      <div 
+      <div
         className="relative h-[600px] md:h-[450px] w-full overflow-hidden rounded-[32px] bg-white shadow-[0_8px_40px_rgba(0,0,0,0.08)] border border-slate-100 flex flex-col md:flex-row"
-        onMouseEnter={handleInteraction}
-        onTouchStart={handleInteraction}
       >
         <div 
           className="w-full md:w-1/2 h-1/2 md:h-full relative bg-slate-50/50 cursor-grab active:cursor-grabbing"
@@ -726,7 +717,7 @@ export default function TechHelpCarousel() {
               azimuth={[-1, 0.75]}
               snap={true}
             >
-              <Float rotationIntensity={0.4} floatIntensity={2} speed={2}>
+              <Float rotationIntensity={0} floatIntensity={0} speed={0}>
                 <InteractableModel key={currentIndex} hovered={isHovered}>
                   <CurrentModel hovered={isHovered} />
                 </InteractableModel>
@@ -781,12 +772,24 @@ export default function TechHelpCarousel() {
               >
                 <ChevronLeft className="w-6 h-6" />
               </button>
-              <button 
+              <button
                 onClick={nextSlide}
                 className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:scale-105 active:scale-95 transition-all"
                 aria-label="Next issue"
               >
                 <ChevronRight className="w-6 h-6" />
+              </button>
+              <button
+                onClick={() => setIsAutoPlaying((v) => !v)}
+                className={`w-12 h-12 rounded-full border flex items-center justify-center hover:scale-105 active:scale-95 transition-all ${
+                  isAutoPlaying
+                    ? 'bg-blue-600 border-blue-600 text-white hover:bg-blue-700'
+                    : 'bg-slate-50 border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                }`}
+                aria-label={isAutoPlaying ? 'Pause autoplay' : 'Start autoplay'}
+                aria-pressed={isAutoPlaying}
+              >
+                {isAutoPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
               </button>
             </div>
 
@@ -821,18 +824,21 @@ function InteractableModel({ children, hovered }: { children: React.ReactNode; h
       if (entranceRef.current < 1) {
         entranceRef.current = Math.min(entranceRef.current + delta * 3, 1);
       }
-      
-      groupRef.current.rotation.y += delta * (hovered ? 0.5 : 0.2);
-      
+
+      const t = state.clock.elapsedTime;
+      const maxAngle = (15 * Math.PI) / 180;
+      groupRef.current.rotation.y = Math.sin(t * 1.2) * maxAngle;
+      groupRef.current.position.y = Math.sin(t * 2) * 0.15;
+
       const easeOutBack = (x: number): number => {
         const c1 = 1.70158;
         const c3 = c1 + 1;
         return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
       };
-      
+
       const baseScale = easeOutBack(entranceRef.current);
       const targetScale = hovered ? baseScale * 1.15 : baseScale;
-      
+
       groupRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
     }
   });
