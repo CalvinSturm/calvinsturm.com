@@ -769,7 +769,9 @@ export default function TechHelpCarousel() {
                 <motion.img
                   key={src}
                   src={src}
-                  alt="Example scam message"
+                  alt={src.includes('elon') ? 'Fake Elon Musk crypto giveaway scam message' : 'Fake Jeff Bezos giveaway scam message'}
+                  loading="lazy"
+                  decoding="async"
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.15, duration: 0.4 }}
