@@ -226,7 +226,7 @@ export default function App() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await fetch('https://formsubmit.co/ajax/calvin@calvinsturm.com', {
+      await fetch('https://formsubmit.co/ajax/calvinasturm@gmail.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
@@ -516,7 +516,7 @@ export default function App() {
                 <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">Tell us what&apos;s going on.</h2>
                 <p className="mt-3 text-lg text-slate-600">A simple description is enough. We&apos;ll follow up in plain English.</p>
               </div>
-              <form className="mt-8 space-y-4" action="https://formsubmit.co/calvin@calvinsturm.com" method="POST" aria-label="Request a callback">
+              <form className="mt-8 space-y-4" action="https://formsubmit.co/calvinasturm@gmail.com" method="POST" aria-label="Request a callback">
                 <input type="hidden" name="_subject" value="New callback request from calvinsturm.com" />
                 <input type="hidden" name="_template" value="table" />
                 <input type="hidden" name="_captcha" value="false" />
