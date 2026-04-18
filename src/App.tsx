@@ -117,12 +117,6 @@ const featuredServices = [
   ['New Devices', 'Set up phones, tablets, computers, and TVs.', 'I need help setting up a new device and making sure everything works together.', MonitorSmartphone],
 ] as const;
 
-const heroTrustBullets = [
-  'Patient, plain-English support from first call to finished visit.',
-  'House calls solve the issue where the setup actually lives.',
-  'Family can join in person or by phone if that helps.',
-] as const;
-
 const quickTopics = ['Wi-Fi trouble', 'Printer help', 'New device setup', 'Smart TV setup'] as const;
 
 const cityZipLookup: Record<string, { label: string; status: 'in-range' | 'nearby' }> = {
@@ -422,7 +416,7 @@ export default function App() {
             <div className="absolute right-[-5%] bottom-[-10%] h-[400px] w-[400px] rounded-full bg-indigo-200/25 blur-[100px]" />
           </div>
           <div className="section-shell py-12 lg:py-20">
-              <div className="grid gap-8 lg:grid-cols-[1fr_380px] lg:gap-12">
+              <div className="grid items-center gap-8 lg:grid-cols-[1fr_420px] lg:gap-12">
                 <div className="max-w-2xl">
                   <h1 className="font-display mb-5 text-4xl font-medium leading-[1.15] text-slate-900 sm:text-5xl lg:text-[3.25rem] animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
                     Tech support that comes to you.
@@ -473,7 +467,7 @@ export default function App() {
                     decoding="async"
                     width="1648"
                     height="927"
-                    className="h-full w-full object-cover aspect-[4/3] lg:aspect-[5/6]"
+                    className="h-full w-full object-cover aspect-[4/3] lg:aspect-[4/5]"
                   />
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-900/40 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 rounded-2xl bg-white/95 px-4 py-3 shadow-md backdrop-blur">
@@ -481,21 +475,6 @@ export default function App() {
                     <p className="text-sm font-medium text-slate-800">In-home service, where the problem actually happens.</p>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="mt-10 flex items-center gap-6 text-sm text-slate-500 animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                <span>No jargon</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                <span>Family can join</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                <span>No surprise costs</span>
               </div>
             </div>
           </div>
