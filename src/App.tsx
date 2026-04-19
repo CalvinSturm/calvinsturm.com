@@ -322,9 +322,7 @@ export default function App() {
         <div className="section-shell">
           <div className="flex h-16 items-center justify-between">
             <a href="#" className="flex items-center gap-2.5" aria-label="Tech Wiz home">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-amber-100 to-amber-200 ring-1 ring-amber-300/60 shadow-sm">
-                <img src="/techWizIcon.png" alt="" aria-hidden="true" className="h-8 w-8 rounded-lg object-cover" />
-              </span>
+              <img src="/techWizIcon.png" alt="" aria-hidden="true" className="h-11 w-11 object-contain" />
               <span className="text-lg font-semibold text-slate-900">Tech Wiz</span>
             </a>
 

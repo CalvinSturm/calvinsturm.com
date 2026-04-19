@@ -841,21 +841,18 @@ const issues = [
     id: 1, 
     title: 'Where did my files go?', 
     description: 'Downloaded a document or picture and can\'t find it? We can help you locate your missing files and organize your folders.',
-    hoverTitle: 'The file shoots out and flies away',
-    Model: FolderModel 
+    Model: FolderModel
   },
   { 
     id: 2, 
     title: 'Too many passwords', 
     description: 'Struggling to remember all your logins? Learn how to safely store and manage your passwords without writing them on sticky notes.',
-    hoverTitle: '8 keys orbit around the lock!',
-    Model: LockModel 
+    Model: LockModel
   },
   {
     id: 3,
     title: 'Is this a scam?',
     description: 'Received a suspicious email or text message? We can teach you how to spot phishing attempts and keep your personal info safe.',
-    hoverTitle: 'Real scam messages we\'ve seen',
     Model: EnvelopeModel,
     images: ['/scam-jeff.png', '/scam-elon.png'],
   },
@@ -863,28 +860,24 @@ const issues = [
     id: 4, 
     title: 'The printer won\'t print', 
     description: 'Printer offline or out of ink? We can help you reconnect your printer to the Wi-Fi and get your documents printing again.',
-    hoverTitle: 'Printed page slides out with your document',
-    Model: PrinterModel 
+    Model: PrinterModel
   },
   { 
     id: 5, 
     title: 'The text is too small', 
     description: 'Squinting at the screen? We can show you how to increase the text size and make your device easier to read.',
-    hoverTitle: 'Glass magnifies text as it grows larger',
-    Model: MagnifyingGlassModel 
+    Model: MagnifyingGlassModel
   },
   { 
     id: 6, 
     title: 'I can\'t hear anything', 
     description: 'Volume too low on video calls? We can help you adjust your sound settings so you can hear your family clearly.',
-    hoverTitle: 'Volume bars pulse to show sound level',
-    Model: SpeakerModel 
+    Model: SpeakerModel
   },
   { 
     id: 7, 
     title: 'The internet is broken', 
     description: 'Wi-Fi disconnected or running slow? We can help you get back online and stay connected with your loved ones.',
-    hoverTitle: 'Bars light up as the signal connects',
     Model: WifiModel
   },
 ];
@@ -990,16 +983,6 @@ export default function TechHelpCarousel() {
               <ContactShadows position={[0, -2, 0]} opacity={0.5} scale={10} blur={2.5} far={4} />
             </Canvas>
           )}
-          <div className="absolute bottom-4 left-4 right-4 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 10 }}
-              className="bg-slate-900/90 text-white text-sm px-4 py-2 rounded-full inline-flex items-center gap-2"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              {issues[currentIndex].hoverTitle}
-            </motion.div>
-          </div>
         </div>
 
         <div className="w-full md:w-1/2 h-1/2 md:h-full p-8 md:p-12 flex flex-col justify-center relative bg-white">
