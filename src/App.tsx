@@ -322,7 +322,7 @@ export default function App() {
         <div className="section-shell">
           <div className="flex h-16 items-center justify-between">
             <a href="#" className="flex items-center gap-2.5" aria-label="Tech Wiz home">
-              <img src="/techWizIcon.png" alt="" aria-hidden="true" className="h-11 w-11 object-contain" />
+              <img src="/techWizIcon.png" alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
               <span className="text-lg font-semibold text-slate-900">Tech Wiz</span>
             </a>
 
@@ -856,7 +856,7 @@ export default function App() {
           <div className="grid gap-8 md:grid-cols-3">
             <div>
               <div className="flex items-center gap-2.5 mb-3">
-                <img src="/techWizIcon.png" alt="Tech Wiz" className="h-8 w-8 rounded-lg object-cover" />
+                <img src="/techWizIcon.png" alt="Tech Wiz" className="h-10 w-10 object-contain" />
                 <span className="text-lg font-semibold text-slate-900">Tech Wiz</span>
               </div>
               <p className="text-sm text-slate-600">Patient in-home tech support for the Five Cities, Santa Maria, Orcutt, Lompoc & nearby areas.</p>
