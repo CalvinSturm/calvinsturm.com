@@ -617,7 +617,7 @@ export default function App() {
           </div>
         </section>
 
-        <section id="service-area" className="py-16 lg:py-20 bg-slate-50">
+        <section id="service-area" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-900 px-3 py-1 text-sm font-medium text-white">Service Area</div>
@@ -719,7 +719,7 @@ export default function App() {
           </div>
         </section>
 
-        <section id="request-help" className="py-16 lg:py-20 bg-white">
+        <section id="request-help" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mx-auto max-w-2xl">
               <div className="mb-6 text-center">

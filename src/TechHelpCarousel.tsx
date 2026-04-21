@@ -689,7 +689,7 @@ function SoundWaveArc({
     }
   });
   return (
-    <mesh ref={meshRef} position={[1.1, 0.05, 0]} rotation={[0, 0, -Math.PI / 2]}>
+    <mesh ref={meshRef} position={[0, -0.25, 0.6]} rotation={[0, -Math.PI / 2, -Math.PI / 2]}>
       <torusGeometry args={[radius, 0.05, 12, 32, Math.PI * 0.6]} />
       <meshStandardMaterial color="#38bdf8" transparent opacity={0} />
     </mesh>
@@ -697,64 +697,79 @@ function SoundWaveArc({
 }
 
 function SpeakerModel({ hovered }: { hovered?: boolean }) {
-  const coneRef = useRef<THREE.Group>(null);
+  const wooferRef = useRef<THREE.Group>(null);
+  const tweeterRef = useRef<THREE.Group>(null);
   const wave1 = useRef<THREE.Mesh>(null);
   const wave2 = useRef<THREE.Mesh>(null);
   const wave3 = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
-    if (coneRef.current) {
-      const pulse = hovered ? 1 + Math.sin(state.clock.elapsedTime * 10) * 0.04 : 1;
-      coneRef.current.scale.z = THREE.MathUtils.lerp(coneRef.current.scale.z, pulse, 0.3);
+    const t = state.clock.elapsedTime;
+    if (wooferRef.current) {
+      const pulse = hovered ? 1 + Math.sin(t * 9) * 0.05 : 1;
+      wooferRef.current.scale.x = THREE.MathUtils.lerp(wooferRef.current.scale.x, pulse, 0.3);
+    }
+    if (tweeterRef.current) {
+      const pulse = hovered ? 1 + Math.sin(t * 14) * 0.03 : 1;
+      tweeterRef.current.scale.x = THREE.MathUtils.lerp(tweeterRef.current.scale.x, pulse, 0.3);
     }
   });
 
-  // Windows-style trapezoidal speaker body pointing right
-  const bodyShape = new THREE.Shape();
-  bodyShape.moveTo(-0.5, -0.25);
-  bodyShape.lineTo(-0.5, 0.25);
-  bodyShape.lineTo(0.5, 0.65);
-  bodyShape.lineTo(0.5, -0.65);
-  bodyShape.lineTo(-0.5, -0.25);
-
   return (
-    <group rotation={[0, 0.15, 0]}>
-      {/* Back cabinet (small rectangular part) */}
-      <mesh position={[-0.9, 0, 0]}>
-        <boxGeometry args={[0.5, 0.7, 0.5]} />
-        <meshStandardMaterial color="#0f172a" metalness={0.4} roughness={0.5} />
+    <group rotation={[0, -0.35, 0]} position={[0, 0, 0]}>
+      {/* Cabinet body, tilted slightly so the face catches light */}
+      <mesh position={[0, 0, 0]} castShadow receiveShadow>
+        <boxGeometry args={[0.9, 1.5, 0.75]} />
+        <meshStandardMaterial color="#475569" metalness={0.35} roughness={0.55} />
       </mesh>
-      {/* Trapezoidal horn/cone */}
-      <mesh position={[-0.4, 0, 0]}>
-        <extrudeGeometry args={[bodyShape, { depth: 0.5, bevelEnabled: true, bevelSize: 0.03, bevelThickness: 0.03, bevelSegments: 2 }]} />
-        <meshStandardMaterial color="#1e293b" metalness={0.5} roughness={0.35} />
+      {/* Cabinet front baffle (slightly inset darker panel) */}
+      <mesh position={[0, 0, 0.38]}>
+        <boxGeometry args={[0.82, 1.42, 0.03]} />
+        <meshStandardMaterial color="#334155" metalness={0.4} roughness={0.45} />
       </mesh>
-      {/* Speaker face ring */}
-      <mesh position={[0.62, 0, 0.25]} rotation={[0, Math.PI / 2, 0]}>
-        <torusGeometry args={[0.55, 0.06, 16, 48]} />
-        <meshStandardMaterial color="#475569" metalness={0.8} roughness={0.25} />
+
+      {/* Tweeter housing */}
+      <mesh position={[0, 0.42, 0.4]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.22, 0.22, 0.04, 32]} />
+        <meshStandardMaterial color="#e2e8f0" metalness={0.85} roughness={0.2} />
       </mesh>
-      {/* Main cone driver */}
-      <group ref={coneRef} position={[0.62, 0, 0.25]} rotation={[0, Math.PI / 2, 0]}>
+      {/* Tweeter cone */}
+      <group ref={tweeterRef} position={[0, 0.42, 0.42]}>
         <mesh>
-          <coneGeometry args={[0.5, 0.25, 48, 1, true]} />
-          <meshStandardMaterial color="#111827" metalness={0.3} roughness={0.7} side={THREE.DoubleSide} />
-        </mesh>
-        {/* Dust cap */}
-        <mesh position={[0, 0.13, 0]}>
-          <sphereGeometry args={[0.12, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
-          <meshStandardMaterial color="#0f172a" metalness={0.6} roughness={0.3} />
+          <sphereGeometry args={[0.14, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
+          <meshStandardMaterial color="#fbbf24" metalness={0.5} roughness={0.4} />
         </mesh>
       </group>
-      {/* Sound wave arcs */}
+
+      {/* Woofer outer surround ring */}
+      <mesh position={[0, -0.25, 0.4]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.42, 0.42, 0.04, 48]} />
+        <meshStandardMaterial color="#e2e8f0" metalness={0.85} roughness={0.2} />
+      </mesh>
+      {/* Woofer cone assembly */}
+      <group ref={wooferRef} position={[0, -0.25, 0.42]}>
+        {/* Cone */}
+        <mesh rotation={[-Math.PI / 2, 0, 0]}>
+          <coneGeometry args={[0.36, 0.12, 48, 1, true]} />
+          <meshStandardMaterial color="#0f172a" metalness={0.25} roughness={0.75} side={THREE.DoubleSide} />
+        </mesh>
+        {/* Dust cap */}
+        <mesh position={[0, 0, 0.08]}>
+          <sphereGeometry args={[0.13, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
+          <meshStandardMaterial color="#fbbf24" metalness={0.55} roughness={0.35} />
+        </mesh>
+      </group>
+
+      {/* Base plinth */}
+      <mesh position={[0, -0.82, 0]}>
+        <boxGeometry args={[1.05, 0.08, 0.85]} />
+        <meshStandardMaterial color="#1e293b" metalness={0.4} roughness={0.5} />
+      </mesh>
+
+      {/* Sound wave arcs radiating from the front */}
       <SoundWaveArc radius={0.35} hovered={!!hovered} delay={0} meshRef={wave1} />
       <SoundWaveArc radius={0.6} hovered={!!hovered} delay={0.25} meshRef={wave2} />
       <SoundWaveArc radius={0.9} hovered={!!hovered} delay={0.5} meshRef={wave3} />
-      {/* Base */}
-      <mesh position={[-0.3, -0.5, 0]}>
-        <boxGeometry args={[1.6, 0.08, 0.55]} />
-        <meshStandardMaterial color="#0f172a" metalness={0.4} roughness={0.5} />
-      </mesh>
     </group>
   );
 }
@@ -836,6 +851,155 @@ function WifiModel({ hovered }: { hovered?: boolean }) {
   );
 }
 
+function SlowComputerModel({ hovered }: { hovered?: boolean }) {
+  const spinnerRef = useRef<THREE.Group>(null);
+  const screenRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state, delta) => {
+    if (spinnerRef.current) {
+      const speed = hovered ? 2.4 : 0.9;
+      spinnerRef.current.rotation.z -= delta * speed;
+    }
+    if (screenRef.current) {
+      const mat = screenRef.current.material as THREE.MeshStandardMaterial;
+      const target = hovered ? 0.35 : 0.18;
+      mat.emissiveIntensity = THREE.MathUtils.lerp(mat.emissiveIntensity, target, 0.15);
+    }
+  });
+
+  return (
+    <group rotation={[0, -0.25, 0]} position={[0, 0.05, 0]}>
+      {/* Monitor body */}
+      <mesh position={[0, 0.2, 0]}>
+        <boxGeometry args={[1.8, 1.15, 0.12]} />
+        <meshStandardMaterial color="#334155" metalness={0.45} roughness={0.45} />
+      </mesh>
+      {/* Screen */}
+      <mesh ref={screenRef} position={[0, 0.2, 0.07]}>
+        <boxGeometry args={[1.65, 1.0, 0.02]} />
+        <meshStandardMaterial color="#0f172a" emissive="#1e3a8a" emissiveIntensity={0.18} metalness={0.3} roughness={0.25} />
+      </mesh>
+      {/* Loading spinner on screen */}
+      <group ref={spinnerRef} position={[0, 0.2, 0.09]}>
+        <mesh>
+          <torusGeometry args={[0.25, 0.04, 12, 48, Math.PI * 1.4]} />
+          <meshStandardMaterial color="#fbbf24" emissive="#fbbf24" emissiveIntensity={0.7} metalness={0.3} roughness={0.3} />
+        </mesh>
+        <mesh rotation={[0, 0, Math.PI * 1.4]} position={[0.18, 0.18, 0]}>
+          <sphereGeometry args={[0.055, 16, 12]} />
+          <meshStandardMaterial color="#fbbf24" emissive="#fbbf24" emissiveIntensity={0.8} />
+        </mesh>
+      </group>
+      {/* Stand neck */}
+      <mesh position={[0, -0.5, 0]}>
+        <boxGeometry args={[0.18, 0.45, 0.12]} />
+        <meshStandardMaterial color="#1e293b" metalness={0.5} roughness={0.4} />
+      </mesh>
+      {/* Stand base */}
+      <mesh position={[0, -0.78, 0]}>
+        <boxGeometry args={[0.8, 0.06, 0.4]} />
+        <meshStandardMaterial color="#1e293b" metalness={0.5} roughness={0.4} />
+      </mesh>
+    </group>
+  );
+}
+
+function VirusShieldModel({ hovered }: { hovered?: boolean }) {
+  const shieldRef = useRef<THREE.Mesh>(null);
+  const bugRef = useRef<THREE.Group>(null);
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime;
+    if (shieldRef.current) {
+      const mat = shieldRef.current.material as THREE.MeshStandardMaterial;
+      mat.emissiveIntensity = THREE.MathUtils.lerp(mat.emissiveIntensity, hovered ? 0.5 : 0.15, 0.1);
+    }
+    if (bugRef.current) {
+      const bob = hovered ? Math.sin(t * 4) * 0.04 : Math.sin(t * 1.5) * 0.02;
+      bugRef.current.position.y = THREE.MathUtils.lerp(bugRef.current.position.y, 0.05 + bob, 0.2);
+      bugRef.current.rotation.z = Math.sin(t * 2) * 0.08;
+    }
+  });
+
+  // Shield silhouette
+  const shieldShape = new THREE.Shape();
+  shieldShape.moveTo(0, 0.9);
+  shieldShape.bezierCurveTo(0.7, 0.85, 0.85, 0.7, 0.85, 0.3);
+  shieldShape.lineTo(0.85, -0.15);
+  shieldShape.bezierCurveTo(0.85, -0.55, 0.5, -0.85, 0, -1);
+  shieldShape.bezierCurveTo(-0.5, -0.85, -0.85, -0.55, -0.85, -0.15);
+  shieldShape.lineTo(-0.85, 0.3);
+  shieldShape.bezierCurveTo(-0.85, 0.7, -0.7, 0.85, 0, 0.9);
+
+  return (
+    <group rotation={[0, -0.2, 0]}>
+      {/* Shield body */}
+      <mesh ref={shieldRef} position={[0, 0, 0]}>
+        <extrudeGeometry
+          args={[
+            shieldShape,
+            { depth: 0.15, bevelEnabled: true, bevelSize: 0.05, bevelThickness: 0.05, bevelSegments: 3 },
+          ]}
+        />
+        <meshStandardMaterial color="#475569" emissive="#ef4444" emissiveIntensity={0.15} metalness={0.55} roughness={0.35} />
+      </mesh>
+      {/* Shield inner plate */}
+      <mesh position={[0, 0, 0.22]}>
+        <extrudeGeometry
+          args={[
+            shieldShape,
+            { depth: 0.02, bevelEnabled: false },
+          ]}
+        />
+        <meshStandardMaterial color="#334155" metalness={0.6} roughness={0.3} />
+      </mesh>
+      {/* Bug body on front of shield */}
+      <group ref={bugRef} position={[0, 0.05, 0.3]}>
+        <mesh>
+          <sphereGeometry args={[0.26, 24, 18]} />
+          <meshStandardMaterial color="#ef4444" emissive="#ef4444" emissiveIntensity={0.35} metalness={0.3} roughness={0.5} />
+        </mesh>
+        {/* Head */}
+        <mesh position={[0, 0.28, 0]}>
+          <sphereGeometry args={[0.14, 18, 14]} />
+          <meshStandardMaterial color="#dc2626" metalness={0.3} roughness={0.5} />
+        </mesh>
+        {/* Antennae */}
+        <mesh position={[-0.08, 0.42, 0]} rotation={[0, 0, 0.4]}>
+          <cylinderGeometry args={[0.012, 0.012, 0.18, 8]} />
+          <meshStandardMaterial color="#0f172a" />
+        </mesh>
+        <mesh position={[0.08, 0.42, 0]} rotation={[0, 0, -0.4]}>
+          <cylinderGeometry args={[0.012, 0.012, 0.18, 8]} />
+          <meshStandardMaterial color="#0f172a" />
+        </mesh>
+        {/* Legs */}
+        {[-0.25, 0, 0.25].map((x) => (
+          <group key={`leg-${x}`}>
+            <mesh position={[-0.22, x * 0.35, 0]} rotation={[0, 0, 0.8]}>
+              <cylinderGeometry args={[0.02, 0.02, 0.2, 8]} />
+              <meshStandardMaterial color="#0f172a" />
+            </mesh>
+            <mesh position={[0.22, x * 0.35, 0]} rotation={[0, 0, -0.8]}>
+              <cylinderGeometry args={[0.02, 0.02, 0.2, 8]} />
+              <meshStandardMaterial color="#0f172a" />
+            </mesh>
+          </group>
+        ))}
+        {/* Eyes */}
+        <mesh position={[-0.05, 0.3, 0.11]}>
+          <sphereGeometry args={[0.025, 10, 8]} />
+          <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.4} />
+        </mesh>
+        <mesh position={[0.05, 0.3, 0.11]}>
+          <sphereGeometry args={[0.025, 10, 8]} />
+          <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.4} />
+        </mesh>
+      </group>
+    </group>
+  );
+}
+
 const issues = [
   { 
     id: 1, 
@@ -874,11 +1038,23 @@ const issues = [
     description: 'Volume too low on video calls? We can help you adjust your sound settings so you can hear your family clearly.',
     Model: SpeakerModel
   },
-  { 
-    id: 7, 
-    title: 'The internet is broken', 
+  {
+    id: 7,
+    title: 'The internet is broken',
     description: 'Wi-Fi disconnected or running slow? We can help you get back online and stay connected with your loved ones.',
     Model: WifiModel
+  },
+  {
+    id: 8,
+    title: 'My computer is slow',
+    description: 'Is your computer taking forever to start up or open programs? We can clean it up, remove what it doesn\'t need, and get it running smoothly again.',
+    Model: SlowComputerModel
+  },
+  {
+    id: 9,
+    title: 'I think I have a virus',
+    description: 'Strange pop-ups, fake warnings, or worried something slipped in? We can check your computer, remove anything harmful, and help you feel safe online again.',
+    Model: VirusShieldModel
   },
 ];
 
