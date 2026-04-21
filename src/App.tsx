@@ -38,9 +38,9 @@ const trustPoints = [
 ] as const;
 
 const reviews = [
-  ['Alex R.', 'Arroyo Grande', 'My new laptop, email, and phone were all set up in one visit. It felt calm instead of overwhelming.'],
+  ['Alex R.', 'Arroyo Grande', 'My new laptop, email, and phone were all set up in one visit. Everything worked when he left.'],
   ['Mary F.', 'Nipomo', 'The printer was finally working again before family came over, and everything was explained in a way that made sense.'],
-  ['Greg S.', 'Grover Beach', "I didn't need tech language. I just needed someone patient to fix the Wi-Fi and explain what changed."],
+  ['Greg S.', 'Grover Beach', "He fixed the Wi-Fi and took the time to walk me through what he did. No confusing tech talk."],
   ['Samantha', 'Atascadero', 'I appreciated the honesty. The problem was solved at home without pressure to buy anything new.'],
 ] as const;
 
@@ -591,7 +591,7 @@ export default function App() {
         <section id="pricing" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-200 px-3 py-1 text-sm font-medium text-slate-700">Pricing</div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Pricing</div>
               <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Straightforward pricing.</h2>
               <p className="mt-3 text-lg text-slate-600">Clear starting prices. No surprise costs.</p>
             </div>
@@ -602,13 +602,15 @@ export default function App() {
                   key={name}
                   type="button"
                   onClick={() => handlePricingSelect(name, price)}
-                  className={`pricing-card-modern text-left ${index === 1 ? 'pricing-card-featured-modern' : ''}`}
+                  className={`pricing-card-modern relative text-left ${index === 1 ? 'pricing-card-featured-modern' : ''}`}
                 >
-                  <p className="text-sm font-medium text-slate-500">{name}</p>
+                  {index === 1 && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-amber-400 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-900 shadow-sm">Most popular</div>
+                  )}
+                  <p className={`text-sm font-medium ${index === 1 ? 'text-slate-200' : 'text-slate-500'}`}>{name}</p>
                   <p className={`mt-2 text-3xl font-semibold ${index === 1 ? 'text-white' : 'text-slate-900'}`}>{price}</p>
-                  <p className={`mt-3 text-sm ${index === 1 ? 'text-slate-300' : 'text-slate-600'}`}>{desc}</p>
-                  {index === 1 && <div className="mt-4 inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white">Most popular</div>}
-                  <div className={`mt-4 inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium ${index === 1 ? 'bg-white/15 text-white' : 'bg-amber-100 text-amber-800'}`}>Start with this plan <ArrowRight className="h-4 w-4" /></div>
+                  <p className={`mt-3 text-sm ${index === 1 ? 'text-slate-200' : 'text-slate-600'}`}>{desc}</p>
+                  <div className={`mt-5 inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium ${index === 1 ? 'bg-white text-slate-900' : 'bg-amber-100 text-amber-800'}`}>Start with this plan <ArrowRight className="h-4 w-4" /></div>
                 </button>
               ))}
             </div>
