@@ -533,11 +533,11 @@ export default function App() {
             <div className="grid gap-6 sm:grid-cols-3">
               {processSteps.map(([step, title, desc, Icon]) => (
                 <div key={step} className="modern-card">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-white">
-                    <span className="text-lg font-semibold">{step}</span>
-                  </div>
-                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-700">
-                    <Icon className="h-5 w-5" />
+                  <div className="mb-5 flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-900 text-white">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Step {step}</span>
                   </div>
                   <h3 className="text-xl font-semibold text-slate-900">{title}</h3>
                   <p className="mt-2 text-slate-600 leading-relaxed">{desc}</p>
