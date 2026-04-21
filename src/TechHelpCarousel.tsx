@@ -1001,60 +1001,60 @@ function VirusShieldModel({ hovered }: { hovered?: boolean }) {
 }
 
 const issues = [
-  { 
-    id: 1, 
-    title: 'Where did my files go?', 
-    description: 'Downloaded a document or picture and can\'t find it? We can help you locate your missing files and organize your folders.',
-    Model: FolderModel
-  },
-  { 
-    id: 2, 
-    title: 'Too many passwords', 
-    description: 'Struggling to remember all your logins? Learn how to safely store and manage your passwords without writing them on sticky notes.',
-    Model: LockModel
-  },
   {
-    id: 3,
-    title: 'Is this a scam?',
-    description: 'Received a suspicious email or text message? We can teach you how to spot phishing attempts and keep your personal info safe.',
-    Model: EnvelopeModel,
-    images: ['/scam-jeff.png', '/scam-elon.png'],
-  },
-  { 
-    id: 4, 
-    title: 'The printer won\'t print', 
-    description: 'Printer offline or out of ink? We can help you reconnect your printer to the Wi-Fi and get your documents printing again.',
-    Model: PrinterModel
-  },
-  { 
-    id: 5, 
-    title: 'The text is too small', 
-    description: 'Squinting at the screen? We can show you how to increase the text size and make your device easier to read.',
-    Model: MagnifyingGlassModel
-  },
-  { 
-    id: 6, 
-    title: 'I can\'t hear anything', 
-    description: 'Volume too low on video calls? We can help you adjust your sound settings so you can hear your family clearly.',
-    Model: SpeakerModel
-  },
-  {
-    id: 7,
+    id: 1,
     title: 'The internet is broken',
     description: 'Wi-Fi disconnected or running slow? We can help you get back online and stay connected with your loved ones.',
     Model: WifiModel
   },
   {
-    id: 8,
+    id: 2,
     title: 'My computer is slow',
     description: 'Is your computer taking forever to start up or open programs? We can clean it up, remove what it doesn\'t need, and get it running smoothly again.',
     Model: SlowComputerModel
   },
   {
-    id: 9,
+    id: 3,
+    title: 'The printer won\'t print',
+    description: 'Printer offline or out of ink? We can help you reconnect your printer to the Wi-Fi and get your documents printing again.',
+    Model: PrinterModel
+  },
+  {
+    id: 4,
     title: 'I think I have a virus',
     description: 'Strange pop-ups, fake warnings, or worried something slipped in? We can check your computer, remove anything harmful, and help you feel safe online again.',
     Model: VirusShieldModel
+  },
+  {
+    id: 5,
+    title: 'Is this a scam?',
+    description: 'Received a suspicious email or text message? We can teach you how to spot phishing attempts and keep your personal info safe.',
+    Model: EnvelopeModel,
+    images: ['/scam-jeff.png', '/scam-elon.png'],
+  },
+  {
+    id: 6,
+    title: 'Too many passwords',
+    description: 'Struggling to remember all your logins? Learn how to safely store and manage your passwords without writing them on sticky notes.',
+    Model: LockModel
+  },
+  {
+    id: 7,
+    title: 'Where did my files go?',
+    description: 'Downloaded a document or picture and can\'t find it? We can help you locate your missing files and organize your folders.',
+    Model: FolderModel
+  },
+  {
+    id: 8,
+    title: 'The text is too small',
+    description: 'Squinting at the screen? We can show you how to increase the text size and make your device easier to read.',
+    Model: MagnifyingGlassModel
+  },
+  {
+    id: 9,
+    title: 'I can\'t hear anything',
+    description: 'Volume too low on video calls? We can help you adjust your sound settings so you can hear your family clearly.',
+    Model: SpeakerModel
   },
 ];
 
