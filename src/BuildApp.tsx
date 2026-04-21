@@ -16,6 +16,7 @@ import {
   Menu,
   MessageSquare,
   Phone,
+  Send,
   ShieldCheck,
   Sparkles,
   Star,
@@ -23,6 +24,7 @@ import {
   Workflow,
   X,
   Zap,
+  ArrowUp,
 } from 'lucide-react';
 
 const navItems = [
@@ -35,8 +37,8 @@ const navItems = [
 
 const trustPoints = [
   ['Plain-English process', 'No buzzwords. You get clear updates, clear tradeoffs, and a working demo at every milestone.', MessageSquare],
-  ['Modern, maintainable code', 'Built on current frameworks so it keeps working after launch — and anyone can pick it up later.', Code2],
-  ['AI where it actually helps', 'GenAI used to save real hours — drafting, summarizing, searching your own data — not as a gimmick.', Sparkles],
+  ['Modern, maintainable code', 'Built on current frameworks so it keeps working after launch, and anyone can pick it up later.', Code2],
+  ['AI where it actually helps', 'GenAI used to save real hours (drafting, summarizing, searching your own data), not as a gimmick.', Sparkles],
   ['Honest scoping', 'If something is cheaper, simpler, or already solved off-the-shelf, we say so before you spend.', ShieldCheck],
 ] as const;
 
@@ -66,7 +68,7 @@ const serviceGroups = [
     title: 'Applications & software',
     intro: 'Custom tools that fit how you actually work.',
     items: [
-      ['Web applications', 'Dashboards, booking systems, client portals, internal tools — browser-based and fast.', 'I need a custom web app or internal tool for my business.', Terminal],
+      ['Web applications', 'Dashboards, booking systems, client portals, internal tools. Browser-based and fast.', 'I need a custom web app or internal tool for my business.', Terminal],
       ['Desktop & mobile apps', 'Native-feeling applications for Windows, macOS, iOS, and Android when a website is not enough.', 'I need a desktop or mobile application built.', Cpu],
     ],
   },
@@ -76,7 +78,7 @@ const serviceGroups = [
     items: [
       ['AI chatbots & assistants', 'Chat agents trained on your documents, website, or workflow to answer questions and handle tasks.', 'I want an AI chatbot or assistant trained on my own content.', Bot],
       ['Workflow & document automation', 'GenAI that drafts emails, summarizes meetings, extracts data from PDFs, and more.', 'I want AI to automate repetitive writing or document work in my business.', Brain],
-      ['Custom AI integrations', 'Plug Claude, GPT, or open models into your existing tools and data — securely.', 'I want AI integrated into a tool or workflow I already use.', Zap],
+      ['Custom AI integrations', 'Plug Claude, GPT, or open models into your existing tools and data, securely.', 'I want AI integrated into a tool or workflow I already use.', Zap],
     ],
   },
 ] as const;
@@ -92,7 +94,7 @@ const faqs = [
   ['How long does a typical project take?', 'A simple website can launch in about a week. Custom apps and AI integrations usually run two to six weeks depending on scope.'],
   ['Can I edit the site myself after launch?', 'Yes. Sites are set up so you can update text, images, and pages without needing code. Training is included.'],
   ['Is AI actually useful for my small business?', 'Often, yes. The best fit is repetitive writing, answering common questions, or pulling information out of documents. We will tell you honestly if it is not worth it in your case.'],
-  ['Who owns the code and the content?', 'You do. Everything we build is yours — code, content, accounts, and domains stay in your name.'],
+  ['Who owns the code and the content?', 'You do. Everything we build is yours: code, content, accounts, and domains stay in your name.'],
   ['Do you work with clients outside the Central Coast?', 'Yes. Most of this work happens remotely, with video calls and shared demos. Local clients are welcome to meet in person.'],
 ] as const;
 
@@ -104,7 +106,9 @@ const featuredBuilds = [
 
 const quickTopics = ['Personal website', 'Business website', 'Custom app', 'AI chatbot', 'Document automation'] as const;
 
-type RequestForm = { name: string; phone: string; email: string; company: string; contact: string; details: string };
+type RequestForm = { name: string; phone: string; email: string; company: string; contact: string; details: string; website: string };
+
+type SubmitState = 'idle' | 'submitting' | 'success' | 'error';
 
 export default function BuildApp() {
   const [isDark, setIsDark] = useState(() => {
@@ -134,24 +138,38 @@ export default function BuildApp() {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitState, setSubmitState] = useState<SubmitState>('idle');
   const [selectedService, setSelectedService] = useState<string | null>(null);
-  const [form, setForm] = useState<RequestForm>({ name: '', phone: '', email: '', company: '', contact: 'email', details: '' });
+  const [selectedQuickTopic, setSelectedQuickTopic] = useState<string | null>(null);
+  const [form, setForm] = useState<RequestForm>({ name: '', phone: '', email: '', company: '', contact: 'email', details: '', website: '' });
   const [openFaq, setOpenFaq] = useState<number>(0);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const detailsRef = useRef<HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    const onScroll = () => setShowBackToTop(window.scrollY > 600);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const toggleFaq = (index: number) => setOpenFaq(openFaq === index ? -1 : index);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
     setForm((current) => ({ ...current, [name]: value }));
-    if (isSubmitted) setIsSubmitted(false);
+    if (submitState === 'success' || submitState === 'error') setSubmitState('idle');
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (submitState === 'submitting') return;
+    if (form.website) {
+      setSubmitState('success');
+      return;
+    }
+    setSubmitState('submitting');
     try {
-      await fetch('https://formsubmit.co/ajax/calvinasturm@gmail.com', {
+      const response = await fetch('https://formsubmit.co/ajax/calvinsturm@gmail.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
@@ -166,10 +184,11 @@ export default function BuildApp() {
           details: form.details,
         }),
       });
+      if (!response.ok) throw new Error('submit failed');
+      setSubmitState('success');
     } catch {
-      // still confirm so user isn't stranded
+      setSubmitState('error');
     }
-    setIsSubmitted(true);
   };
 
   const handleBuildSelect = (build: (typeof featuredBuilds)[number]) => {
@@ -199,7 +218,7 @@ export default function BuildApp() {
   };
 
   return (
-    <div className="min-h-screen bg-transparent pb-24 text-slate-900 md:pb-0">
+    <div className="min-h-screen bg-transparent pb-24 text-slate-900 lg:pb-0">
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
@@ -214,13 +233,13 @@ export default function BuildApp() {
               <span className="text-lg font-semibold text-slate-900">Sturm Technologies</span>
             </a>
 
-            <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
+            <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 lg:flex">
               {navItems.map(([label, href]) => (
-                <a key={href} href={href} className="nav-link">{label}</a>
+                <a key={href} href={href} className="nav-link whitespace-nowrap">{label}</a>
               ))}
             </nav>
 
-            <div className="hidden items-center gap-3 md:flex">
+            <div className="hidden items-center gap-3 lg:flex">
               <button
                 onClick={() => setIsDark(!isDark)}
                 className="p-2 rounded-lg text-slate-500 hover:bg-slate-100"
@@ -233,18 +252,18 @@ export default function BuildApp() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               </button>
-              <a href="tel:+18059940881" className="nav-phone">
+              <a href="tel:+18059940881" className="nav-phone whitespace-nowrap">
                 <Phone className="h-4 w-4" />
                 (805) 994-0881
               </a>
-              <a href="#request-build" className="cta-primary text-sm py-2.5">
+              <a href="#request-build" className="cta-primary text-sm py-2.5 whitespace-nowrap">
                 <Calendar className="h-4 w-4" />
                 Start a Project
               </a>
             </div>
 
             <button
-              className="rounded-lg p-2 text-slate-600 md:hidden hover:bg-slate-100"
+              className="rounded-lg p-2 text-slate-600 lg:hidden hover:bg-slate-100"
               onClick={() => setIsMobileMenuOpen((v) => !v)}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
@@ -256,7 +275,7 @@ export default function BuildApp() {
         </div>
 
         {isMobileMenuOpen && (
-          <div id="mobile-menu" className="md:hidden bg-white border-t border-slate-100">
+          <div id="mobile-menu" className="lg:hidden bg-white border-t border-slate-100">
             <div className="section-shell py-4 space-y-1">
               {navItems.map(([label, href]) => (
                 <a
@@ -283,7 +302,7 @@ export default function BuildApp() {
         )}
       </header>
 
-      <main id="main-content" className="pt-16 pb-24 md:pb-0">
+      <main id="main-content" className="pt-16 pb-24 lg:pb-0">
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 -z-10">
             <div className="absolute left-[-10%] top-[-20%] h-[500px] w-[500px] rounded-full bg-amber-200/30 blur-[120px]" />
@@ -296,32 +315,37 @@ export default function BuildApp() {
                   <Sparkles className="h-4 w-4" />
                   Websites · Software · Applied AI
                 </div>
-                <h1 className="font-display mb-5 text-4xl font-medium leading-[1.15] text-slate-900 sm:text-5xl lg:text-[3.25rem] animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
+                <h1 className="font-display mb-5 text-4xl font-medium leading-[1.15] text-slate-900 sm:text-5xl lg:text-[3.25rem]">
                   Websites, apps, and AI built to actually help.
                 </h1>
                 <p className="mb-6 text-lg leading-relaxed text-slate-600 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                  Custom-built websites, business software, and applied AI / GenAI tools. Clear scoping, modern code, honest pricing — from the same local team that helps Central Coast neighbors with their tech.
+                  Custom-built websites, business software, and applied AI / GenAI tools. Clear scoping, modern code, honest pricing, from the same local team that helps Central Coast neighbors with their tech.
                 </p>
                 <div className="mb-8 flex flex-wrap gap-3 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
-                  {quickTopics.map((item) => (
-                    <button
-                      key={item}
-                      type="button"
-                      onClick={() => {
-                        setSelectedService(item);
-                        setForm((current) => ({
-                          ...current,
-                          details: current.details || `I'm interested in a ${item.toLowerCase()}.`,
-                        }));
-                        requestAnimationFrame(() => {
-                          detailsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        });
-                      }}
-                      className="quick-topic-btn"
-                    >
-                      {item}
-                    </button>
-                  ))}
+                  {quickTopics.map((item) => {
+                    const isActive = selectedQuickTopic === item;
+                    return (
+                      <button
+                        key={item}
+                        type="button"
+                        aria-pressed={isActive}
+                        onClick={() => {
+                          setSelectedQuickTopic(item);
+                          setSelectedService(item);
+                          setForm((current) => ({
+                            ...current,
+                            details: `I'm interested in a ${item.toLowerCase()}.`,
+                          }));
+                          requestAnimationFrame(() => {
+                            detailsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                          });
+                        }}
+                        className={`quick-topic-btn ${isActive ? 'quick-topic-btn-active' : ''}`}
+                      >
+                        {item}
+                      </button>
+                    );
+                  })}
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                   <a href="#request-build" className="cta-primary">
@@ -374,11 +398,11 @@ export default function BuildApp() {
           </div>
         </section>
 
-        <section id="what-we-build" className="py-16 lg:py-20">
+        <section id="what-we-build" aria-labelledby="what-we-build-heading" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">Why Sturm Technologies</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Software that feels built, not assembled.</h2>
+              <h2 id="what-we-build-heading" className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Software that feels built, not assembled.</h2>
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {trustPoints.map(([title, desc, Icon]) => (
@@ -414,11 +438,11 @@ export default function BuildApp() {
           </div>
         </section>
 
-        <section id="how-it-works" className="py-16 lg:py-20">
+        <section id="how-it-works" aria-labelledby="how-it-works-heading" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">How it works</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">From idea to launched, without the mystery.</h2>
+              <h2 id="how-it-works-heading" className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">From idea to launched, without the mystery.</h2>
             </div>
             <div className="grid gap-6 sm:grid-cols-3">
               {processSteps.map(([step, title, desc, Icon]) => (
@@ -443,11 +467,11 @@ export default function BuildApp() {
           </div>
         </section>
 
-        <section id="services" className="py-16 lg:py-20">
+        <section id="services" aria-labelledby="services-heading" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">What we build</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Websites, software, and AI tailored to you.</h2>
+              <h2 id="services-heading" className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Websites, software, and AI tailored to you.</h2>
             </div>
 
             <div className="space-y-10">
@@ -486,11 +510,11 @@ export default function BuildApp() {
           </div>
         </section>
 
-        <section id="pricing" className="py-16 lg:py-20">
+        <section id="pricing" aria-labelledby="pricing-heading" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Pricing</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Fixed quotes. No surprise invoices.</h2>
+              <h2 id="pricing-heading" className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Fixed quotes. No surprise invoices.</h2>
               <p className="mt-3 text-lg text-slate-600">Every project gets a written scope and a fixed price before any work begins.</p>
             </div>
 
@@ -519,11 +543,11 @@ export default function BuildApp() {
           </div>
         </section>
 
-        <section className="py-16 lg:py-20">
+        <section aria-labelledby="popular-heading" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Quick starts</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Popular projects.</h2>
+              <h2 id="popular-heading" className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Popular projects.</h2>
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {featuredBuilds.map((build) => {
@@ -550,18 +574,25 @@ export default function BuildApp() {
           </div>
         </section>
 
-        <section id="request-build" className="py-16 lg:py-20">
+        <section id="request-build" aria-labelledby="request-heading" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mx-auto max-w-2xl">
               <div className="mb-6 text-center">
                 <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">Start a project</div>
-                <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">Tell us what you have in mind.</h2>
+                <h2 id="request-heading" className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">Tell us what you have in mind.</h2>
                 <p className="mt-3 text-lg text-slate-600">One or two sentences is plenty to get started. We&apos;ll reply with next steps, not a sales pitch.</p>
               </div>
-              <form className="mt-8 space-y-4" onSubmit={handleSubmit} action="https://formsubmit.co/calvinasturm@gmail.com" method="POST" aria-label="Start a project">
-                <input type="hidden" name="_subject" value="New build inquiry from calvinsturm.com" />
-                <input type="hidden" name="_template" value="table" />
-                <input type="hidden" name="_captcha" value="false" />
+              <form className="mt-8 space-y-4" onSubmit={handleSubmit} aria-label="Start a project" noValidate>
+                <input
+                  type="text"
+                  name="website"
+                  value={form.website}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute left-[-9999px] h-0 w-0 opacity-0"
+                />
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div><label htmlFor="name" className="mb-1.5 block text-sm font-medium text-slate-700">Your name <span className="text-amber-600">*</span></label><input type="text" id="name" name="name" autoComplete="name" value={form.name} onChange={handleChange} placeholder="Jane Smith" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
                   <div><label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-700">Email <span className="text-amber-600">*</span></label><input type="email" id="email" name="email" autoComplete="email" value={form.email} onChange={handleChange} placeholder="you@example.com" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
@@ -573,26 +604,40 @@ export default function BuildApp() {
                 <div><label htmlFor="contact" className="mb-1.5 block text-sm font-medium text-slate-700">Best contact</label><select id="contact" name="contact" value={form.contact} onChange={handleChange} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900"><option value="email">Email</option><option value="phone call">Phone call</option><option value="text message">Text message</option><option value="either one">Any of the above</option></select></div>
                 <div><label htmlFor="details" className="mb-1.5 block text-sm font-medium text-slate-700">What do you want to build? <span className="text-amber-600">*</span></label><textarea ref={detailsRef} id="details" name="details" value={form.details} onChange={handleChange} rows={5} placeholder="Example: I need a website for my consulting business, plus an AI assistant that drafts client follow-up emails." className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base leading-relaxed text-slate-900" required /></div>
                 <div className="flex flex-col gap-3 sm:flex-row">
-                  <button type="submit" className="cta-primary flex-1 justify-center">
-                    <Calendar className="h-5 w-5" />
-                    Send Inquiry
+                  <button
+                    type="submit"
+                    className="cta-primary flex-1 justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+                    disabled={submitState === 'submitting'}
+                    aria-busy={submitState === 'submitting'}
+                  >
+                    <Send className="h-5 w-5" />
+                    {submitState === 'submitting' ? 'Sending…' : 'Send Inquiry'}
                   </button>
                   <a href="tel:+18059940881" className="cta-secondary flex-1 justify-center">
                     <Phone className="h-5 w-5" />
                     Call Now
                   </a>
                 </div>
-                {isSubmitted && <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-base text-emerald-800">Thanks{form.name ? `, ${form.name}` : ''}. We&apos;ll reply within one business day.</div>}
+                {submitState === 'success' && (
+                  <div role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-base text-emerald-800">
+                    Thanks{form.name ? `, ${form.name}` : ''}. We&apos;ll reply within one business day.
+                  </div>
+                )}
+                {submitState === 'error' && (
+                  <div role="alert" className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-base text-red-800">
+                    Something went wrong sending that. Email <a href="mailto:calvinsturm@gmail.com" className="underline font-medium">calvinsturm@gmail.com</a> directly or call <a href="tel:+18059940881" className="underline font-medium">(805) 994-0881</a>.
+                  </div>
+                )}
               </form>
             </div>
           </div>
         </section>
 
-        <section id="faq" className="py-16 lg:py-20">
+        <section id="faq" aria-labelledby="faq-heading" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">FAQ</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Common questions.</h2>
+              <h2 id="faq-heading" className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Common questions.</h2>
             </div>
 
             <div className="space-y-3">
@@ -606,11 +651,18 @@ export default function BuildApp() {
                     onClick={() => toggleFaq(index)}
                     className="faq-btn-modern w-full flex items-center justify-between gap-4 px-5 py-4 text-left"
                     aria-expanded={openFaq === index}
+                    aria-controls={`faq-panel-${index}`}
+                    id={`faq-btn-${index}`}
                   >
                     <span className="text-lg font-medium text-slate-900">{question}</span>
                     <ChevronDown className={`h-5 w-5 text-slate-400 shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
                   </button>
-                  <div className={`overflow-hidden transition-all duration-300 ${openFaq === index ? 'max-h-60 opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <div
+                    id={`faq-panel-${index}`}
+                    role="region"
+                    aria-labelledby={`faq-btn-${index}`}
+                    className={`overflow-hidden transition-all duration-300 ${openFaq === index ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}
+                  >
                     <p className="px-5 pb-4 text-slate-600">{answer}</p>
                   </div>
                 </div>
@@ -647,7 +699,7 @@ export default function BuildApp() {
                 <img src="/techWizIcon.png" alt="Sturm Technologies" className="h-10 w-10 object-contain" />
                 <span className="text-lg font-semibold text-slate-900">Sturm Technologies</span>
               </div>
-              <p className="text-sm text-slate-600">Websites, custom software, and applied AI — built on California&apos;s Central Coast, delivered anywhere.</p>
+              <p className="text-sm text-slate-600">Websites, custom software, and applied AI, built on California&apos;s Central Coast and delivered anywhere.</p>
             </div>
             <div>
               <h3 className="text-sm font-semibold text-slate-900 mb-3">Explore</h3>
@@ -662,7 +714,7 @@ export default function BuildApp() {
               <h3 className="text-sm font-semibold text-slate-900 mb-3">Contact</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 <li><a href="tel:+18059940881" className="font-medium text-slate-900">(805) 994-0881</a></li>
-                <li><a href="mailto:calvinasturm@gmail.com" className="hover:text-slate-900">calvinasturm@gmail.com</a></li>
+                <li><a href="mailto:calvinsturm@gmail.com" className="hover:text-slate-900">calvinsturm@gmail.com</a></li>
                 <li><a href="#request-build" className="hover:text-slate-900">Start a project</a></li>
               </ul>
             </div>
@@ -673,7 +725,16 @@ export default function BuildApp() {
         </div>
       </footer>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-stone-200 bg-white/95 p-4 shadow-[0_-8px_30px_rgba(15,23,42,0.08)] backdrop-blur md:hidden">
+      <button
+        type="button"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label="Back to top"
+        className={`fixed right-4 z-40 h-11 w-11 items-center justify-center rounded-full bg-slate-900 text-white shadow-lg transition-opacity duration-200 hover:bg-slate-800 lg:right-6 ${showBackToTop ? 'flex opacity-100' : 'hidden opacity-0'} bottom-24 lg:bottom-6`}
+      >
+        <ArrowUp className="h-5 w-5" />
+      </button>
+
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-stone-200 bg-white/95 p-4 shadow-[0_-8px_30px_rgba(15,23,42,0.08)] backdrop-blur lg:hidden">
         <div className="flex gap-3">
           <a href="tel:+18059940881" className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-4 text-base font-semibold text-white min-h-[52px]"><Phone className="h-5 w-5" />Call</a>
           <a href="#request-build" className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-4 text-base font-semibold text-slate-900 min-h-[52px]"><Calendar className="h-5 w-5" />Start</a>

@@ -17,6 +17,7 @@ import {
   Search,
   ShieldAlert,
   ShieldCheck,
+  Sparkles,
   Star,
   Wifi,
   Wrench,
@@ -326,6 +327,10 @@ export default function App() {
               {navItems.map(([label, href]) => (
                 <a key={href} href={href} className="nav-link">{label}</a>
               ))}
+              <a href="/build.html" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
+                <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+                Websites & Software
+              </a>
             </nav>
 
             <div className="hidden items-center gap-3 md:flex">
@@ -367,15 +372,22 @@ export default function App() {
           <div id="mobile-menu" className="md:hidden bg-white border-t border-slate-100">
             <div className="section-shell py-4 space-y-1">
               {navItems.map(([label, href]) => (
-                <a 
-                  key={href} 
-                  href={href} 
+                <a
+                  key={href}
+                  href={href}
                   className="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {label}
                 </a>
               ))}
+              <a
+                href="/build.html"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50"
+              >
+                <Sparkles className="h-4 w-4 text-amber-500" />
+                Websites & Software
+              </a>
               <div className="pt-4 pb-2">
                 <button
                   onClick={() => setIsDark(!isDark)}
