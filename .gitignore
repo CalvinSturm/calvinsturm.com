@@ -25,3 +25,9 @@ pnpm-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Stray ChatGPT-generated images
+assets/ChatGPT Image*
