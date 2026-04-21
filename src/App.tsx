@@ -15,6 +15,7 @@ import {
   Phone,
   Printer,
   Search,
+  ShieldAlert,
   ShieldCheck,
   Star,
   Wifi,
@@ -71,6 +72,7 @@ const serviceGroups = [
     title: 'Protection and peace of mind',
     intro: 'For the files and devices you do not want to lose or misconfigure.',
     items: [
+      ['Virus and malware removal', 'Check a computer for viruses, malware, and pop-ups, then clean it up and get it running normally again.', 'I think my computer may have a virus or malware and I need help checking it and cleaning it up.', ShieldAlert],
       ['Photos and backup help', 'Protect family photos, important documents, and the files that matter most.', 'I want help backing up family photos and important documents before something gets lost.', HardDrive],
       ['Smart home and safety setup', 'Doorbells, cameras, thermostats, and streaming devices configured with privacy in mind.', 'I need help setting up smart home devices and making sure they are configured safely.', ShieldCheck],
     ],
@@ -79,7 +81,7 @@ const serviceGroups = [
 
 const pricingPlans = [
   ['Quick Help', 'Starting at $79', 'Best for printer issues, password help, email setup, or a shorter troubleshooting visit.'],
-  ['In-Home Visit', 'Starting at $149', 'Best for Wi-Fi, new computers, smart TVs, device setup, and more involved home tech issues.'],
+  ['In-Home Visit', 'Starting at $149', 'Best for Wi-Fi, new computers, smart TVs, virus and malware cleanup, and more involved home tech issues.'],
   ['Care Plan', '$39 / month', 'Best for households that want priority scheduling, routine checkups, and ongoing peace of mind.'],
 ] as const;
 
@@ -93,12 +95,6 @@ const faqs = [
 ] as const;
 
 const cities = ['Arroyo Grande', 'Grover Beach', 'Pismo Beach', 'Shell Beach', 'Avila Beach', 'Santa Maria', 'Orcutt', 'Lompoc'];
-
-const serviceAreaFacts = [
-  ['In-home visits', 'Homes, condos, and apartments across the core service area.', House],
-  ['Fast range check', 'Nearby cities can usually be confirmed quickly by city or ZIP.', MapPin],
-  ['Clear next step', 'If you are nearby, call now or request a callback to confirm the address.', Phone],
-] as const;
 
 const mapCities = [
   ['Lompoc', 45, 30, 'nearby'],
@@ -117,7 +113,7 @@ const featuredServices = [
   ['New Devices', 'Set up phones, tablets, computers, and TVs.', 'I need help setting up a new device and making sure everything works together.', MonitorSmartphone],
 ] as const;
 
-const quickTopics = ['Wi-Fi trouble', 'Printer help', 'New device setup', 'Smart TV setup'] as const;
+const quickTopics = ['Wi-Fi trouble', 'Printer help', 'Virus or malware check', 'New device setup', 'Smart TV setup'] as const;
 
 const cityZipLookup: Record<string, { label: string; status: 'in-range' | 'nearby' }> = {
   'arroyo grande': { label: 'Arroyo Grande', status: 'in-range' },
@@ -635,17 +631,7 @@ export default function App() {
                   <div>
                     <p className="service-area-kicker">Primary coverage</p>
                     <h3 className="text-2xl font-semibold text-slate-900">Five Cities, Santa Maria, Orcutt, and Lompoc</h3>
-                    <p className="mt-3 text-base text-slate-600">The main house-call zone covers the places most visits come from, with nearby Central Coast areas confirmed case by case.</p>
-                  </div>
-                  <div className="service-area-stat-row">
-                    <div className="service-area-stat">
-                      <span className="service-area-stat-value">8</span>
-                      <span className="service-area-stat-label">core cities shown</span>
-                    </div>
-                    <div className="service-area-stat">
-                      <span className="service-area-stat-value">Nearby</span>
-                      <span className="service-area-stat-label">areas confirmed quickly</span>
-                    </div>
+                    <p className="mt-3 text-base text-slate-600">The main house-call zone covers the places most visits come from. Nearby Central Coast areas are confirmed case by case.</p>
                   </div>
                 </div>
 
@@ -665,18 +651,11 @@ export default function App() {
 
               <div className="service-area-info-panel">
                 <div className="service-area-checker-card">
-                  <div className="flex items-start gap-3">
-                    <div className="service-area-checker-icon">
-                      <Search className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-slate-900">Check your city or ZIP</h3>
-                      <p className="mt-1 text-sm text-slate-600">Start typing or tap a city below for a quick coverage check.</p>
-                    </div>
-                  </div>
+                  <h3 className="text-xl font-semibold text-slate-900">Check your city or ZIP</h3>
+                  <p className="mt-1 text-sm text-slate-600">Type your city or ZIP, or tap one below.</p>
 
                   <div className="mt-5">
-                    <label htmlFor="service-area-search" className="mb-2 block text-sm font-medium text-slate-700">City or ZIP code</label>
+                    <label htmlFor="service-area-search" className="sr-only">City or ZIP code</label>
                     <div className="service-area-search-wrap">
                       <Search className="h-5 w-5 text-slate-400" />
                       <input
@@ -717,46 +696,22 @@ export default function App() {
                           {city}
                         </button>
                       ))}
-                      <button
-                        type="button"
-                        onClick={() => handleAreaCheck('San Luis Obispo')}
-                        className={`service-area-chip service-area-chip-nearby ${areaQuery.trim().toLowerCase() === 'san luis obispo' ? 'service-area-chip-active' : ''}`}
-                      >
-                        Nearby areas
-                      </button>
                     </div>
                   </div>
                 </div>
 
                 <div className="service-area-notes-card">
-                  <h3 className="text-lg font-semibold text-slate-900">Good to know</h3>
-                  <div className="mt-4 grid gap-3">
-                    {serviceAreaFacts.map(([title, body, Icon]) => (
-                      <div key={title} className="service-area-fact-row">
-                        <div className="service-area-fact-icon">
-                          <Icon className="h-4 w-4" />
-                        </div>
-                        <div>
-                          <p className="font-medium text-slate-900">{title}</p>
-                          <p className="mt-1 text-sm text-slate-600">{body}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-5 rounded-2xl bg-slate-900 px-4 py-4 text-white">
-                    <p className="text-sm font-medium text-slate-200">Not sure if you are just outside the map?</p>
-                    <p className="mt-1 text-sm text-slate-300">Call now or request a callback with your city or ZIP and the visit range can usually be confirmed quickly.</p>
-                    <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                      <a href="tel:+18059940881" className="cta-primary flex-1 justify-center">
-                        <Phone className="h-4 w-4" />
-                        Call Now
-                      </a>
-                      <a href="#request-help" className="cta-secondary flex-1 justify-center border-white/20 bg-white/8 text-white hover:bg-white/12 hover:text-white">
-                        <Calendar className="h-4 w-4" />
-                        Request Callback
-                      </a>
-                    </div>
+                  <h3 className="text-lg font-semibold text-slate-900">Just outside the map?</h3>
+                  <p className="mt-2 text-sm text-slate-600">Call or request a callback with your city or ZIP. Nearby areas can usually be confirmed quickly.</p>
+                  <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                    <a href="tel:+18059940881" className="cta-primary flex-1 justify-center">
+                      <Phone className="h-4 w-4" />
+                      Call Now
+                    </a>
+                    <a href="#request-help" className="cta-secondary flex-1 justify-center">
+                      <Calendar className="h-4 w-4" />
+                      Request Callback
+                    </a>
                   </div>
                 </div>
               </div>
