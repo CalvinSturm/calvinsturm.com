@@ -880,7 +880,7 @@ export default function App() {
             </div>
           </div>
           <div className="mt-8 pt-6 border-t border-slate-200 text-center text-sm text-slate-500">
-            © {new Date().getFullYear()} Tech Wiz. Local in-home tech support.
+            © {new Date().getFullYear()} Sturm Technologies LLC. Local in-home tech support.
           </div>
         </div>
       </footer>
