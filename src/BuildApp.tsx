@@ -11,6 +11,7 @@ import {
   Cpu,
   Gauge,
   Globe,
+  House,
   Layers,
   LineChart,
   Menu,
@@ -237,6 +238,10 @@ export default function BuildApp() {
               {navItems.map(([label, href]) => (
                 <a key={href} href={href} className="nav-link whitespace-nowrap">{label}</a>
               ))}
+              <a href="/" className="nav-link inline-flex items-center gap-1.5 whitespace-nowrap text-slate-700">
+                <House className="h-3.5 w-3.5 text-amber-500" />
+                In-home tech support
+              </a>
             </nav>
 
             <div className="hidden items-center gap-3 lg:flex">
@@ -287,6 +292,13 @@ export default function BuildApp() {
                   {label}
                 </a>
               ))}
+              <a
+                href="/"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50"
+              >
+                <House className="h-4 w-4 text-amber-500" />
+                In-home tech support
+              </a>
               <div className="pt-4 pb-2">
                 <a href="tel:+18059940881" className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 font-semibold text-slate-700">
                   <Phone className="h-4 w-4" />
