@@ -800,6 +800,31 @@ export default function App() {
           </div>
         </section>
 
+        <section aria-labelledby="also-build-heading" className="py-12 lg:py-16">
+          <div className="section-shell">
+            <div className="rounded-3xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-indigo-50 p-6 sm:p-10 lg:p-12">
+              <div className="grid items-center gap-6 lg:grid-cols-[1fr_auto] lg:gap-10">
+                <div>
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">
+                    <Sparkles className="h-4 w-4" />
+                    Also from Sturm Technologies
+                  </div>
+                  <h2 id="also-build-heading" className="font-display text-2xl font-medium text-slate-900 sm:text-3xl">
+                    Need a website, app, or AI tool built?
+                  </h2>
+                  <p className="mt-3 text-lg text-slate-600">
+                    The same local team that helps with home tech also builds custom websites, business software, and applied AI for personal brands and small businesses.
+                  </p>
+                </div>
+                <a href="/build.html" className="cta-primary justify-center whitespace-nowrap self-start lg:self-center">
+                  Explore Sturm Technologies
+                  <ArrowRight className="h-5 w-5" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="rounded-3xl bg-slate-900 px-6 py-12 text-center lg:px-12 lg:py-16">
@@ -836,6 +861,7 @@ export default function App() {
                 {navItems.map(([label, href]) => (
                   <li key={href}><a href={href} className="hover:text-slate-900">{label}</a></li>
                 ))}
+                <li><a href="/build.html" className="hover:text-slate-900">Websites & software</a></li>
               </ul>
             </div>
             <div>
