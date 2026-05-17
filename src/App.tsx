@@ -1,7 +1,6 @@
-import { lazy, Suspense, useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 
-const TechHelpCarousel = lazy(() => import('./TechHelpCarousel'));
 import {
   ArrowRight,
   Calendar,
@@ -14,7 +13,6 @@ import {
   MonitorSmartphone,
   Phone,
   Printer,
-  Search,
   ShieldAlert,
   ShieldCheck,
   Sparkles,
@@ -40,10 +38,8 @@ const trustPoints = [
 ] as const;
 
 const reviews = [
-  ['Alex R.', 'Arroyo Grande', 'My new laptop, email, and phone were all set up in one visit. Everything worked when he left.'],
   ['Mary F.', 'Nipomo', 'The printer was finally working again before family came over, and everything was explained in a way that made sense.'],
   ['Greg S.', 'Grover Beach', "He fixed the Wi-Fi and took the time to walk me through what he did. No confusing tech talk."],
-  ['Samantha', 'Atascadero', 'I appreciated the honesty. The problem was solved at home without pressure to buy anything new.'],
 ] as const;
 
 const processSteps = [
@@ -90,80 +86,12 @@ const faqs = [
   ['Do I need to unplug anything or bring my computer somewhere?', 'No. This service is built around house calls, so the goal is to make things easier on you, not harder.'],
   ['What if I am not sure how to describe the problem?', 'That is normal. A simple explanation like "the printer stopped working" is enough to get started.'],
   ['Can a family member or caregiver join the visit?', 'Yes. They can be there in person or join by phone if that makes the visit more comfortable.'],
-  ['Do you come to my city or neighborhood?', 'Five Cities, Santa Maria, Orcutt, and Lompoc are the main service area. Nearby communities can usually be confirmed quickly with a city, ZIP, or callback request.'],
-  ['Can you help set up a new device I already bought?', 'Yes. Phones, printers, laptops, smart TVs, streaming devices, and other home tech can be set up where they are actually being used.'],
   ['Will I be pushed into buying new devices?', 'No surprise upselling. If replacement is the best option, it should be explained clearly before you spend anything.'],
-] as const;
-
-const cities = ['Arroyo Grande', 'Grover Beach', 'Pismo Beach', 'Shell Beach', 'Avila Beach', 'Santa Maria', 'Orcutt', 'Lompoc'];
-
-const mapCities = [
-  ['Lompoc', 45, 30, 'nearby'],
-  ['Santa Maria', 75, 50, 'in-range'],
-  ['Orcutt', 90, 40, 'in-range'],
-  ['Arroyo Grande', 130, 80, 'in-range'],
-  ['Grover Beach', 145, 85, 'in-range'],
-  ['Pismo Beach', 155, 95, 'in-range'],
-  ['Shell Beach', 165, 100, 'in-range'],
-  ['Avila Beach', 175, 110, 'nearby'],
-] as const;
-
-const featuredServices = [
-  ['Wi-Fi Help', 'Fix weak rooms, drops, and unstable home internet.', 'The Wi-Fi keeps dropping in one part of the house and I need help getting it stable again.', Wifi],
-  ['Printer Setup', 'Reconnect printers and get them working again.', 'My printer stopped connecting and I need help getting it set up again.', Printer],
-  ['New Devices', 'Set up phones, tablets, computers, and TVs.', 'I need help setting up a new device and making sure everything works together.', MonitorSmartphone],
 ] as const;
 
 const quickTopics = ['Wi-Fi trouble', 'Printer help', 'Virus or malware check', 'New device setup', 'Smart TV setup'] as const;
 
-const cityZipLookup: Record<string, { label: string; status: 'in-range' | 'nearby' }> = {
-  'arroyo grande': { label: 'Arroyo Grande', status: 'in-range' },
-  '93420': { label: 'Arroyo Grande', status: 'in-range' },
-  'grover beach': { label: 'Grover Beach', status: 'in-range' },
-  '93433': { label: 'Grover Beach', status: 'in-range' },
-  'pismo beach': { label: 'Pismo Beach', status: 'in-range' },
-  '93449': { label: 'Pismo Beach', status: 'in-range' },
-  'shell beach': { label: 'Shell Beach', status: 'in-range' },
-  '93448': { label: 'Shell Beach', status: 'in-range' },
-  'avila beach': { label: 'Avila Beach', status: 'nearby' },
-  '93424': { label: 'Avila Beach', status: 'nearby' },
-  'santa maria': { label: 'Santa Maria', status: 'in-range' },
-  '93454': { label: 'Santa Maria', status: 'in-range' },
-  '93455': { label: 'Santa Maria', status: 'in-range' },
-  '93456': { label: 'Santa Maria', status: 'in-range' },
-  'orcutt': { label: 'Orcutt', status: 'in-range' },
-  '93457': { label: 'Orcutt', status: 'in-range' },
-  'lompoc': { label: 'Lompoc', status: 'in-range' },
-  '93436': { label: 'Lompoc', status: 'in-range' },
-  '93438': { label: 'Lompoc', status: 'in-range' },
-  'san luis obispo': { label: 'San Luis Obispo', status: 'nearby' },
-  '93401': { label: 'San Luis Obispo', status: 'nearby' },
-  '93405': { label: 'San Luis Obispo', status: 'nearby' },
-  'nipomo': { label: 'Nipomo', status: 'nearby' },
-  '93444': { label: 'Nipomo', status: 'nearby' },
-};
-
 type RequestForm = { name: string; phone: string; email: string; city: string; contact: string; details: string };
-
-function TechWizMark({ className = 'h-6 w-6' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
-      <defs>
-        <linearGradient id="techwiz-hat" x1="16" y1="8" x2="52" y2="56" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#4f86ff" />
-          <stop offset="1" stopColor="#1d3b8f" />
-        </linearGradient>
-      </defs>
-      <ellipse cx="32" cy="52" rx="22" ry="6.5" fill="#10203f" opacity="0.18" />
-      <path d="M22 47c1-6 2.8-13.4 5.6-20.8C30.8 17.4 35.9 10 43 8c5.8-1.6 9.4 1.6 8.6 6.1-.5 3.1-2.4 5.8-5.2 8.5 2.8.6 5 2.6 5 6 0 5.9-4.9 8.9-9.2 10.6-5.4 2.2-12.8 4.1-20.2 5.1Z" fill="url(#techwiz-hat)" />
-      <path d="M14 48c2.8-2.2 8.7-3.8 18-3.8 11.4 0 20.2 2.2 20.2 5.8S43.4 56 32 56c-9.3 0-15.2-1.6-18-3.8L14 48Z" fill="#1c387a" />
-      <path d="M28.6 28.1c2.5-4.5 7.2-8.1 13.6-8.9-5.1 2.8-7.4 8.3-7.6 13.2 2.8-.8 5.5-2.6 7.6-5.2-.1 5.8-3.7 12.4-10.4 14.4-5.5 1.7-10.9-.6-13.7-4.7 3.9.7 7.8-.8 10.5-3.9-2.8-.8-5.3-3.2-6.1-6.9 1.8 1.4 4 2 6.1 2Z" fill="#f4f7ff" opacity="0.95" />
-      <circle cx="41.5" cy="20" r="2.1" fill="#f7d36b" />
-      <circle cx="46.8" cy="26.4" r="1.5" fill="#f7d36b" />
-      <circle cx="38.2" cy="12.7" r="1.4" fill="#f7d36b" />
-    </svg>
-  );
-}
 
 export default function App() {
   const [isDark, setIsDark] = useState(() => {
@@ -199,8 +127,6 @@ export default function App() {
   }, []);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedService, setSelectedService] = useState<string | null>(null);
-  const [areaQuery, setAreaQuery] = useState('');
-  const [areaResult, setAreaResult] = useState<{ tone: 'in-range' | 'nearby' | 'unknown'; title: string; body: string } | null>(null);
   const [form, setForm] = useState<RequestForm>({ name: '', phone: '', email: '', city: '', contact: 'phone call', details: '' });
   const [openFaq, setOpenFaq] = useState<number>(0);
   const detailsRef = useRef<HTMLTextAreaElement | null>(null);
@@ -239,16 +165,6 @@ export default function App() {
     setIsSubmitted(true);
   };
 
-  const handleServiceSelect = (service: (typeof featuredServices)[number]) => {
-    const [label, , prompt] = service;
-    setSelectedService(label);
-    setForm((current) => ({ ...current, details: prompt }));
-    requestAnimationFrame(() => {
-      detailsRef.current?.focus();
-      detailsRef.current?.setSelectionRange(detailsRef.current.value.length, detailsRef.current.value.length);
-    });
-  };
-
   const handleServiceItemSelect = (title: string, prompt: string) => {
     setSelectedService(title);
     setForm((current) => ({ ...current, details: prompt }));
@@ -263,48 +179,6 @@ export default function App() {
     requestAnimationFrame(() => {
       detailsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
-  };
-
-  const handleAreaCheck = (value: string) => {
-    const normalized = value.trim().toLowerCase();
-    setAreaQuery(value);
-
-    if (!normalized) {
-      setAreaResult(null);
-      return;
-    }
-
-    const match = cityZipLookup[normalized];
-    if (match?.status === 'in-range') {
-      setAreaResult({
-        tone: 'in-range',
-        title: `${match.label} is in range`,
-        body: 'That area fits the normal house-call zone. Request a callback and mention the city or ZIP.',
-      });
-      setForm((current) => ({ ...current, city: current.city || match.label }));
-      return;
-    }
-
-    if (match?.status === 'nearby') {
-      setAreaResult({
-        tone: 'nearby',
-        title: `${match.label} is close by`,
-        body: 'That area is nearby. Call now or request a callback to confirm the visit range for your address.',
-      });
-      setForm((current) => ({ ...current, city: current.city || match.label }));
-      return;
-    }
-
-    setAreaResult({
-      tone: 'unknown',
-      title: 'Let us confirm your location',
-      body: 'If you are on the Central Coast but do not see your city here, request a callback with your address or ZIP and we can confirm quickly.',
-    });
-  };
-
-  const handleCitySelect = (city: string) => {
-    handleAreaCheck(city);
-    setForm((current) => ({ ...current, city }));
   };
 
   return (
@@ -486,12 +360,6 @@ export default function App() {
           </div>
         </section>
 
-        <div className="section-shell py-12 lg:py-20">
-          <Suspense fallback={<div className="h-[450px] w-full max-w-5xl mx-auto rounded-[32px] bg-slate-100 animate-pulse" aria-hidden="true" />}>
-            <TechHelpCarousel />
-          </Suspense>
-        </div>
-
         <section id="why-book" className="py-16 lg:py-20">
           <div className="section-shell">
             <div className="mb-10 lg:mb-12">
@@ -631,101 +499,22 @@ export default function App() {
 
         <section id="service-area" className="py-16 lg:py-20">
           <div className="section-shell">
-            <div className="mb-10 lg:mb-12">
+            <div className="mx-auto max-w-2xl text-center">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-900 px-3 py-1 text-sm font-medium text-white">Service Area</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Serving the Five Cities & Central Coast.</h2>
-              <p className="mt-3 text-lg text-slate-600">We come to you. Check if we cover your area.</p>
-            </div>
-
-            <div className="service-area-shell">
-              <div className="service-area-map-panel">
-                <div className="service-area-map-copy">
-                  <div>
-                    <p className="service-area-kicker">Primary coverage</p>
-                    <h3 className="text-2xl font-semibold text-slate-900">Five Cities, Santa Maria, Orcutt, and Lompoc</h3>
-                    <p className="mt-3 text-base text-slate-600">The main house-call zone covers the places most visits come from. Nearby Central Coast areas are confirmed case by case.</p>
-                  </div>
-                </div>
-
-                <div className="service-area-map-visual">
-                  <div className="absolute inset-0 opacity-15">
-                    <svg viewBox="0 0 200 140" className="h-full w-full">
-                      <path d="M10,70 Q50,50 90,65 T190,60" fill="none" stroke="#64748b" strokeWidth="0.5" />
-                      <path d="M0,80 Q40,60 100,75 T200,70" fill="none" stroke="#94a3b8" strokeWidth="0.3" />
-                      <path d="M0,90 Q60,70 130,85 T200,80" fill="none" stroke="#cbd5e1" strokeWidth="0.2" />
-                    </svg>
-                  </div>
-                  <div className="service-area-map-frame">
-                    <img src="/5CitiesMap.png" alt="Map of Five Cities service area on the Central Coast" loading="lazy" decoding="async" className="w-full max-w-md mx-auto rounded-xl" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="service-area-info-panel">
-                <div className="service-area-checker-card">
-                  <h3 className="text-xl font-semibold text-slate-900">Check your city or ZIP</h3>
-                  <p className="mt-1 text-sm text-slate-600">Type your city or ZIP, or tap one below.</p>
-
-                  <div className="mt-5">
-                    <label htmlFor="service-area-search" className="sr-only">City or ZIP code</label>
-                    <div className="service-area-search-wrap">
-                      <Search className="h-5 w-5 text-slate-400" />
-                      <input
-                        id="service-area-search"
-                        type="text"
-                        value={areaQuery}
-                        onChange={(event) => handleAreaCheck(event.target.value)}
-                        placeholder="Enter city or ZIP code"
-                        className="service-area-search-input"
-                      />
-                    </div>
-                  </div>
-
-                  {areaResult && (
-                    <div className={`service-area-result-card ${areaResult.tone === 'in-range' ? 'service-area-result-card-in-range' : areaResult.tone === 'nearby' ? 'service-area-result-card-nearby' : 'service-area-result-card-unknown'}`}>
-                      <div className="flex items-start gap-3">
-                        <div className="service-area-result-badge">
-                          <MapPin className="h-4 w-4" />
-                        </div>
-                        <div>
-                          <p className="text-base font-semibold">{areaResult.title}</p>
-                          <p className="mt-1 text-sm leading-relaxed">{areaResult.body}</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="mt-5">
-                    <p className="mb-3 text-sm font-medium text-slate-700">Popular service areas</p>
-                    <div className="service-area-chip-grid">
-                      {cities.map((city) => (
-                        <button
-                          key={city}
-                          type="button"
-                          onClick={() => handleCitySelect(city)}
-                          className={`service-area-chip ${areaQuery.trim().toLowerCase() === city.toLowerCase() ? 'service-area-chip-active' : ''}`}
-                        >
-                          {city}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="service-area-notes-card">
-                  <h3 className="text-lg font-semibold text-slate-900">Just outside the map?</h3>
-                  <p className="mt-2 text-sm text-slate-600">Call or request a callback with your city or ZIP. Nearby areas can usually be confirmed quickly.</p>
-                  <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                    <a href="tel:+18059940881" className="cta-primary flex-1 justify-center">
-                      <Phone className="h-4 w-4" />
-                      Call Now
-                    </a>
-                    <a href="#request-help" className="cta-secondary flex-1 justify-center">
-                      <Calendar className="h-4 w-4" />
-                      Request Callback
-                    </a>
-                  </div>
-                </div>
+              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">Serving the Five Cities & Central Coast.</h2>
+              <p className="mt-4 text-lg text-slate-600">
+                Arroyo Grande, Grover Beach, Pismo Beach, Shell Beach, Avila Beach, Santa Maria, Orcutt, and Lompoc.
+              </p>
+              <p className="mt-2 text-base text-slate-500">Nearby? Call to confirm.</p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+                <a href="tel:+18059940881" className="cta-primary justify-center">
+                  <Phone className="h-5 w-5" />
+                  Call Now
+                </a>
+                <a href="#request-help" className="cta-secondary justify-center">
+                  <Calendar className="h-5 w-5" />
+                  Request Callback
+                </a>
               </div>
             </div>
           </div>
@@ -800,49 +589,6 @@ export default function App() {
           </div>
         </section>
 
-        <section aria-labelledby="also-build-heading" className="py-12 lg:py-16">
-          <div className="section-shell">
-            <div className="rounded-3xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-indigo-50 p-6 sm:p-10 lg:p-12">
-              <div className="grid items-center gap-6 lg:grid-cols-[1fr_auto] lg:gap-10">
-                <div>
-                  <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">
-                    <Sparkles className="h-4 w-4" />
-                    Also from Sturm Technologies
-                  </div>
-                  <h2 id="also-build-heading" className="font-display text-2xl font-medium text-slate-900 sm:text-3xl">
-                    Need a website, app, or AI tool built?
-                  </h2>
-                  <p className="mt-3 text-lg text-slate-600">
-                    The same local team that helps with home tech also builds custom websites, business software, and applied AI for personal brands and small businesses.
-                  </p>
-                </div>
-                <a href="/build.html" className="cta-primary justify-center whitespace-nowrap self-start lg:self-center">
-                  Explore Sturm Technologies
-                  <ArrowRight className="h-5 w-5" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 lg:py-20">
-          <div className="section-shell">
-            <div className="rounded-3xl bg-slate-900 px-6 py-12 text-center lg:px-12 lg:py-16">
-              <h2 className="font-display text-3xl font-medium text-white sm:text-4xl">Ready to get things working?</h2>
-              <p className="mt-4 text-lg text-slate-300">Call now or request a callback. A simple description is enough.</p>
-              <div className="mt-8 flex flex-col gap-4 sm:flex-row justify-center">
-                <a href="tel:+18059940881" className="cta-primary">
-                  <Phone className="h-5 w-5" />
-                  Call Now
-                </a>
-                <a href="#request-help" className="cta-secondary">
-                  <Calendar className="h-5 w-5" />
-                  Request Callback
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
 
       <footer className="bg-slate-50 border-t border-slate-200 py-12">
