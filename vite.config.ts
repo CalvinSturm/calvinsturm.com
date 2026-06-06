@@ -20,6 +20,7 @@ export default defineConfig(({mode}) => {
         input: {
           main: path.resolve(__dirname, 'index.html'),
           build: path.resolve(__dirname, 'build.html'),
+          projects: path.resolve(__dirname, 'projects.html'),
         },
       },
     },
