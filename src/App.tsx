@@ -3,28 +3,28 @@ import type { ChangeEvent, FormEvent } from 'react';
 
 import {
   ArrowRight,
+  ArrowUpRight,
   Calendar,
   CheckCircle2,
-  ChevronDown,
   HardDrive,
-  House,
   MapPin,
   Menu,
+  Minus,
   MonitorSmartphone,
   Phone,
+  Plus,
   Printer,
   ShieldAlert,
   ShieldCheck,
   Sparkles,
-  Star,
   Wifi,
   Wrench,
   X,
 } from 'lucide-react';
 
 const navItems = [
-  ['Why Book', '#why-book'],
-  ['How It Works', '#how-it-works'],
+  ['Why', '#why-book'],
+  ['How it works', '#how-it-works'],
   ['Services', '#services'],
   ['Pricing', '#pricing'],
   ['FAQ', '#faq'],
@@ -32,54 +32,36 @@ const navItems = [
 
 const trustPoints = [
   ['Patient, plain-English help', 'Questions are welcome. The explanation should make sense before the visit is over.', ShieldCheck],
-  ['Help where the problem actually happens', 'Wi-Fi, printers, TVs, and smart home issues get solved in the room where they break down.', MapPin],
+  ['Help where the problem happens', 'Wi-Fi, printers, TVs, and smart-home issues get solved in the room where they break down.', MapPin],
   ['Family can join in', 'A spouse, adult child, or caregiver can be there in person or by phone so everyone stays aligned.', Phone],
-  ['No surprise add-ons', 'If something extra is needed, you hear about it before money is spent.', Calendar],
+  ['No surprise add-ons', 'If something extra is needed, you hear about it before any money is spent.', Calendar],
 ] as const;
 
 const reviews = [
-  ['Mary F.', 'Nipomo', 'The printer was finally working again before family came over, and everything was explained in a way that made sense.'],
-  ['Greg S.', 'Grover Beach', "He fixed the Wi-Fi and took the time to walk me through what he did. No confusing tech talk."],
+  ['The printer was finally working again before family came over, and everything was explained in a way that made sense.', 'Mary F.', 'Nipomo'],
+  ['He fixed the Wi-Fi and took the time to walk me through what he did. No confusing tech talk.', 'Greg S.', 'Grover Beach'],
 ] as const;
 
 const processSteps = [
-  ['01', 'Reach out in plain language', 'Call or request a callback with a simple description of what feels off.', Phone],
-  ['02', 'Get help at home', 'The issue gets worked on where it happens, with calm explanations as things are fixed.', House],
-  ['03', 'Leave with a setup that feels lighter', 'You get a working solution, the next step if one exists, and fewer lingering headaches.', CheckCircle2],
+  ['01', 'Reach out in plain language', 'Call or request a callback with a simple description of what feels off.'],
+  ['02', 'Get help at home', 'The issue gets worked on where it happens, with calm explanations as things are fixed.'],
+  ['03', 'Leave feeling lighter', 'You get a working solution, the next step if one exists, and fewer lingering headaches.'],
 ] as const;
 
-const serviceGroups = [
-  {
-    title: 'Connectivity and setup',
-    intro: 'Choose the kind of help that sounds closest to your issue.',
-    items: [
-      ['Wi-Fi and internet problems', 'Dead zones, dropped connections, slow speeds, and unstable routers.', 'My Wi-Fi keeps dropping in parts of the house and I need help getting it stable again.', Wifi],
-      ['New device setup', 'Phones, tablets, laptops, TVs, and printers set up to feel usable right away.', 'I need help setting up a new device and making sure everything works together at home.', MonitorSmartphone],
-    ],
-  },
-  {
-    title: 'Everyday device problems',
-    intro: 'Good for the problems that quietly derail the day.',
-    items: [
-      ['Computer cleanup', 'Speed up a sluggish computer, remove unwanted software, and sort out routine glitches.', 'My computer has gotten slow and I need help cleaning it up and fixing a few issues.', Wrench],
-      ['Printer, email, and login help', 'Printer connections, password confusion, and email settings that keep breaking.', 'I need help with printer setup, email problems, or logins that keep failing.', Printer],
-    ],
-  },
-  {
-    title: 'Protection and peace of mind',
-    intro: 'For the files and devices you do not want to lose or misconfigure.',
-    items: [
-      ['Virus and malware removal', 'Check a computer for viruses, malware, and pop-ups, then clean it up and get it running normally again.', 'I think my computer may have a virus or malware and I need help checking it and cleaning it up.', ShieldAlert],
-      ['Photos and backup help', 'Protect family photos, important documents, and the files that matter most.', 'I want help backing up family photos and important documents before something gets lost.', HardDrive],
-      ['Smart home and safety setup', 'Doorbells, cameras, thermostats, and streaming devices configured with privacy in mind.', 'I need help setting up smart home devices and making sure they are configured safely.', ShieldCheck],
-    ],
-  },
+const services = [
+  ['Wi-Fi and internet problems', 'Dead zones, dropped connections, slow speeds, and unstable routers.', 'My Wi-Fi keeps dropping in parts of the house and I need help getting it stable again.', Wifi],
+  ['New device setup', 'Phones, tablets, laptops, TVs, and printers set up to feel usable right away.', 'I need help setting up a new device and making sure everything works together at home.', MonitorSmartphone],
+  ['Computer cleanup', 'Speed up a sluggish computer, remove unwanted software, and sort out routine glitches.', 'My computer has gotten slow and I need help cleaning it up and fixing a few issues.', Wrench],
+  ['Printer, email, and login help', 'Printer connections, password confusion, and email settings that keep breaking.', 'I need help with printer setup, email problems, or logins that keep failing.', Printer],
+  ['Virus and malware removal', 'Check a computer for viruses, malware, and pop-ups, then clean it up and get it running normally again.', 'I think my computer may have a virus or malware and I need help checking it and cleaning it up.', ShieldAlert],
+  ['Photos and backup help', 'Protect family photos, important documents, and the files that matter most.', 'I want help backing up family photos and important documents before something gets lost.', HardDrive],
+  ['Smart home and safety setup', 'Doorbells, cameras, thermostats, and streaming devices configured with privacy in mind.', 'I need help setting up smart home devices and making sure they are configured safely.', ShieldCheck],
 ] as const;
 
 const pricingPlans = [
-  ['Quick Help', 'Starting at $79', 'Best for printer issues, password help, email setup, or a shorter troubleshooting visit.'],
-  ['In-Home Visit', 'Starting at $149', 'Best for Wi-Fi, new computers, smart TVs, virus and malware cleanup, and more involved home tech issues.'],
-  ['Care Plan', '$39 / month', 'Best for households that want priority scheduling, routine checkups, and ongoing peace of mind.'],
+  ['Quick Help', 'Starting at $79', 'Printer issues, password help, email setup, or a shorter troubleshooting visit.'],
+  ['In-Home Visit', 'Starting at $149', 'Wi-Fi, new computers, smart TVs, virus and malware cleanup, and more involved home tech.'],
+  ['Care Plan', '$39 / month', 'Priority scheduling, routine checkups, and ongoing peace of mind for the whole household.'],
 ] as const;
 
 const faqs = [
@@ -90,6 +72,8 @@ const faqs = [
 ] as const;
 
 const quickTopics = ['Wi-Fi trouble', 'Printer help', 'Virus or malware check', 'New device setup', 'Smart TV setup'] as const;
+
+const serviceArea = ['Arroyo Grande', 'Grover Beach', 'Pismo Beach', 'Shell Beach', 'Avila Beach', 'Santa Maria', 'Orcutt', 'Lompoc'] as const;
 
 type RequestForm = { name: string; phone: string; email: string; city: string; contact: string; details: string };
 
@@ -165,20 +149,28 @@ export default function App() {
     setIsSubmitted(true);
   };
 
-  const handleServiceItemSelect = (title: string, prompt: string) => {
-    setSelectedService(title);
-    setForm((current) => ({ ...current, details: prompt }));
+  const scrollToDetails = () => {
     requestAnimationFrame(() => {
       detailsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   };
 
+  const handleServiceItemSelect = (title: string, prompt: string) => {
+    setSelectedService(title);
+    setForm((current) => ({ ...current, details: prompt }));
+    scrollToDetails();
+  };
+
   const handlePricingSelect = (name: string, price: string) => {
     setSelectedService(name);
     setForm((current) => ({ ...current, details: `I'm interested in ${name} (${price}).` }));
-    requestAnimationFrame(() => {
-      detailsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
+    scrollToDetails();
+  };
+
+  const handleQuickTopic = (item: string) => {
+    setSelectedService(item);
+    setForm((current) => ({ ...current, details: current.details || `I need help with ${item.toLowerCase()}.` }));
+    scrollToDetails();
   };
 
   return (
@@ -189,15 +181,16 @@ export default function App() {
       >
         Skip to main content
       </a>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+
+      <header className="fixed top-0 left-0 right-0 z-50 border-b border-slate-200 bg-[#fbf8f3]/80 backdrop-blur-md">
         <div className="section-shell">
           <div className="flex h-16 items-center justify-between">
             <a href="#" className="flex items-center gap-2.5" aria-label="Tech Wiz home">
-              <img src="/techWizIcon.png" alt="" aria-hidden="true" className="h-12 w-12 object-contain" />
-              <span className="text-lg font-semibold text-slate-900">Tech Wiz</span>
+              <img src="/techWizIcon.png" alt="" aria-hidden="true" className="h-11 w-11 object-contain" />
+              <span className="font-display text-xl text-slate-900">Tech Wiz</span>
             </a>
 
-            <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
+            <nav className="hidden items-center gap-7 text-sm font-medium text-slate-600 md:flex">
               {navItems.map(([label, href]) => (
                 <a key={href} href={href} className="nav-link">{label}</a>
               ))}
@@ -210,13 +203,13 @@ export default function App() {
             <div className="hidden items-center gap-3 md:flex">
               <button
                 onClick={() => setIsDark(!isDark)}
-                className="p-2 rounded-lg text-slate-500 hover:bg-slate-100"
+                className="rounded-lg p-2 text-slate-500 hover:bg-slate-100"
                 aria-label="Toggle dark mode"
               >
                 <svg className="h-5 w-5 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                 </svg>
-                <svg className="h-5 w-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="hidden h-5 w-5 dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                 </svg>
               </button>
@@ -224,14 +217,13 @@ export default function App() {
                 <Phone className="h-4 w-4" />
                 (805) 994-0881
               </a>
-              <a href="#request-help" className="cta-primary text-sm py-2.5">
-                <Calendar className="h-4 w-4" />
-                Request Callback
+              <a href="#request-help" className="cta-primary py-2.5 text-sm">
+                Request callback
               </a>
             </div>
 
-            <button 
-              className="rounded-lg p-2 text-slate-600 md:hidden hover:bg-slate-100" 
+            <button
+              className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 md:hidden"
               onClick={() => setIsMobileMenuOpen((v) => !v)}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
@@ -243,13 +235,13 @@ export default function App() {
         </div>
 
         {isMobileMenuOpen && (
-          <div id="mobile-menu" className="md:hidden bg-white border-t border-slate-100">
-            <div className="section-shell py-4 space-y-1">
+          <div id="mobile-menu" className="border-t border-slate-200 bg-[#fbf8f3] md:hidden">
+            <div className="section-shell space-y-1 py-4">
               {navItems.map(([label, href]) => (
                 <a
                   key={href}
                   href={href}
-                  className="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50"
+                  className="block rounded-lg px-3 py-2.5 text-base font-medium text-slate-700 hover:bg-slate-100"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {label}
@@ -257,7 +249,7 @@ export default function App() {
               ))}
               <a
                 href="/build.html"
-                className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50"
+                className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-base font-medium text-slate-700 hover:bg-slate-100"
               >
                 <Sparkles className="h-4 w-4 text-amber-500" />
                 Websites & Software
@@ -265,15 +257,9 @@ export default function App() {
               <div className="pt-4 pb-2">
                 <button
                   onClick={() => setIsDark(!isDark)}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 font-semibold text-slate-700 mb-2"
+                  className="mb-2 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 font-semibold text-slate-700"
                 >
-                  <svg className="h-4 w-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                  </svg>
-                  <svg className="h-4 w-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                  {isDark ? 'Light Mode' : 'Dark Mode'}
+                  {isDark ? 'Light mode' : 'Dark mode'}
                 </button>
                 <a href="tel:+18059940881" className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 font-semibold text-slate-700">
                   <Phone className="h-4 w-4" />
@@ -281,7 +267,7 @@ export default function App() {
                 </a>
                 <a href="#request-help" className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 font-semibold text-white" onClick={() => setIsMobileMenuOpen(false)}>
                   <Calendar className="h-4 w-4" />
-                  Request Callback
+                  Request callback
                 </a>
               </div>
             </div>
@@ -290,137 +276,126 @@ export default function App() {
       </header>
 
       <main id="main-content" className="pt-16 pb-24 md:pb-0">
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute left-[-10%] top-[-20%] h-[500px] w-[500px] rounded-full bg-amber-200/30 blur-[120px]" />
-            <div className="absolute right-[-5%] bottom-[-10%] h-[400px] w-[400px] rounded-full bg-indigo-200/25 blur-[100px]" />
-          </div>
-          <div className="section-shell py-12 lg:py-20">
-              <div className="grid items-center gap-8 lg:grid-cols-[1fr_420px] lg:gap-12">
-                <div className="max-w-2xl">
-                  <h1 className="font-display mb-5 text-4xl font-medium leading-[1.15] text-slate-900 sm:text-5xl lg:text-[3.25rem] animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
-                    Tech support that comes to you.
-                  </h1>
-                <p className="mb-6 text-lg leading-relaxed text-slate-600 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-                  No jargon. No confusion. Just patient, local help for Wi-Fi, printers, devices, and everyday tech at your home.
-                </p>
-                <div className="mb-8 flex flex-wrap gap-3 animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
-                  {quickTopics.map((item) => (
-                    <button
-                      key={item}
-                      type="button"
-                      onClick={() => {
-                        setSelectedService(item);
-                        setForm((current) => ({
-                          ...current,
-                          details: current.details || `I need help with ${item.toLowerCase()}.`,
-                        }));
-                        requestAnimationFrame(() => {
-                          detailsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        });
-                      }}
-                      className="quick-topic-btn"
-                    >
-                      {item}
-                    </button>
-                  ))}
-                </div>
-                <div className="flex flex-col gap-3 sm:flex-row animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                  <a href="#request-help" className="cta-primary">
-                    <Calendar className="h-5 w-5" />
-                    Request a Callback
-                  </a>
-                  <a href="tel:+18059940881" className="cta-secondary">
-                    <Phone className="h-5 w-5" />
-                    Call Now
-                  </a>
-                </div>
+        {/* ---- Hero ---- */}
+        <section className="section-shell py-16 lg:py-24">
+          <div className="grid items-end gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <p className="eyebrow-amber animate-fade-in-up" style={{ animationDelay: '0.05s' }}>
+                Central Coast · In-home tech help
+              </p>
+              <h1
+                className="font-display mt-5 text-[2.75rem] leading-[1.05] text-slate-900 animate-fade-in-up sm:text-6xl lg:text-7xl"
+                style={{ animationDelay: '0.1s' }}
+              >
+                Tech support that comes to you.
+              </h1>
+              <p
+                className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 animate-fade-in-up"
+                style={{ animationDelay: '0.15s' }}
+              >
+                No jargon. No confusion. Just patient, local help for Wi-Fi, printers, devices, and everyday tech, right at your kitchen table.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 animate-fade-in-up sm:flex-row" style={{ animationDelay: '0.2s' }}>
+                <a href="#request-help" className="cta-primary">
+                  <Calendar className="h-5 w-5" />
+                  Request a callback
+                </a>
+                <a href="tel:+18059940881" className="cta-secondary">
+                  <Phone className="h-5 w-5" />
+                  (805) 994-0881
+                </a>
               </div>
+              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
+                <span className="text-sm font-medium text-slate-400">Popular:</span>
+                {quickTopics.map((item) => (
+                  <button key={item} type="button" onClick={() => handleQuickTopic(item)} className="quick-topic-btn">
+                    {item}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-              <div className="relative animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                <div className="relative overflow-hidden rounded-3xl shadow-[0_20px_60px_rgba(15,23,42,0.18)] ring-1 ring-slate-200/60">
-                  <img
-                    src="/hero-helping.png"
-                    alt="Patient in-home tech help with a neighbor at their kitchen table"
-                    loading="eager"
-                    fetchPriority="high"
-                    decoding="async"
-                    width="1648"
-                    height="927"
-                    className="h-full w-full object-cover aspect-[4/3] lg:aspect-[4/5]"
-                  />
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-900/40 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 rounded-2xl bg-white/95 px-4 py-3 shadow-md backdrop-blur">
-                    <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600" />
-                    <p className="text-sm font-medium text-slate-800">In-home service, where the problem actually happens.</p>
-                  </div>
+            <div className="relative animate-fade-in-up lg:col-span-5" style={{ animationDelay: '0.2s' }}>
+              <div className="relative overflow-hidden rounded-3xl">
+                <img
+                  src="/hero-helping.png"
+                  alt="Patient in-home tech help with a neighbor at their kitchen table"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  width="1648"
+                  height="927"
+                  className="aspect-[4/3] h-full w-full object-cover lg:aspect-[4/5]"
+                />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-900/40 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 rounded-2xl bg-white/95 px-4 py-3 shadow-md backdrop-blur">
+                  <CheckCircle2 className="h-5 w-5 shrink-0 text-amber-600" />
+                  <p className="text-sm font-medium text-slate-800">In-home service, where the problem actually happens.</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="why-book" className="py-16 lg:py-20">
-          <div className="section-shell">
-            <div className="mb-10 lg:mb-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">Why Tech Wiz</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Help that feels calm, clear, and trustworthy.</h2>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {trustPoints.map(([title, desc, Icon]) => (
-                <div key={title} className="modern-card group">
-                  <div className="modern-card-icon">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
-                  <p className="mt-2 text-sm text-slate-600 leading-relaxed">{desc}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-8 grid gap-4 lg:grid-cols-2">
-              {reviews.map(([name, location, quote]) => (
-                <div key={name} className="rounded-2xl border border-amber-100 bg-gradient-to-r from-amber-50 to-orange-50 p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-200">
-                      <CheckCircle2 className="h-5 w-5 text-amber-700" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1 text-amber-500">
-                        {Array.from({ length: 5 }).map((_, index) => (
-                          <Star key={index} className="h-4 w-4 fill-current" />
-                        ))}
+        {/* ---- Why book ---- */}
+        <section id="why-book" className="border-t border-slate-200">
+          <div className="section-shell py-16 lg:py-24">
+            <div className="grid gap-x-12 gap-y-10 lg:grid-cols-12">
+              <div className="lg:col-span-4">
+                <p className="eyebrow-amber">Why Tech Wiz</p>
+                <h2 className="font-display mt-4 text-3xl text-slate-900 sm:text-4xl">
+                  Help that feels calm, clear, and trustworthy.
+                </h2>
+              </div>
+              <div className="lg:col-span-7 lg:col-start-6">
+                <dl>
+                  {trustPoints.map(([title, desc, Icon], index) => (
+                    <div key={title} className={`flex gap-5 py-6 ${index > 0 ? 'border-t border-slate-200' : ''}`}>
+                      <Icon className="mt-1 h-6 w-6 shrink-0 text-amber-600" />
+                      <div>
+                        <dt className="text-lg font-semibold text-slate-900">{title}</dt>
+                        <dd className="mt-1.5 leading-relaxed text-slate-600">{desc}</dd>
                       </div>
-                      <p className="mt-2 text-slate-600">&ldquo;{quote}&rdquo;</p>
-                      <p className="mt-3 text-sm font-medium text-slate-900">{name} <span className="text-slate-500 font-normal">· {location}</span></p>
                     </div>
-                  </div>
-                </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
+
+            <div className="mt-14 grid gap-x-12 gap-y-10 sm:grid-cols-2">
+              {reviews.map(([quote, name, location]) => (
+                <figure key={name}>
+                  <blockquote className="font-display text-2xl leading-snug text-slate-800 sm:text-[1.6rem]">
+                    &ldquo;{quote}&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-4 text-sm font-medium text-slate-500">
+                    {name} <span className="text-slate-400">· {location}</span>
+                  </figcaption>
+                </figure>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="how-it-works" className="py-16 lg:py-20">
-          <div className="section-shell">
-            <div className="mb-10 lg:mb-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">How it works</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">A simple path from first call to fixed.</h2>
+        {/* ---- How it works ---- */}
+        <section id="how-it-works" className="border-t border-slate-200">
+          <div className="section-shell py-16 lg:py-24">
+            <div className="max-w-2xl">
+              <p className="eyebrow-amber">How it works</p>
+              <h2 className="font-display mt-4 text-3xl text-slate-900 sm:text-4xl">
+                A simple path from first call to fixed.
+              </h2>
             </div>
-            <div className="grid gap-6 sm:grid-cols-3">
-              {processSteps.map(([step, title, desc, Icon]) => (
-                <div key={step} className="modern-card">
-                  <div className="mb-5 flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-900 text-white">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Step {step}</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-slate-900">{title}</h3>
-                  <p className="mt-2 text-slate-600 leading-relaxed">{desc}</p>
-                </div>
+            <ol className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-0">
+              {processSteps.map(([step, title, desc], index) => (
+                <li key={step} className={`sm:px-8 sm:first:pl-0 ${index > 0 ? 'sm:border-l sm:border-slate-200' : ''}`}>
+                  <span className="font-display text-5xl text-amber-500/90">{step}</span>
+                  <h3 className="mt-4 text-xl font-semibold text-slate-900">{title}</h3>
+                  <p className="mt-2 leading-relaxed text-slate-600">{desc}</p>
+                </li>
               ))}
-            </div>
-            <div className="mt-8 flex justify-center">
+            </ol>
+            <div className="mt-12">
               <a href="#request-help" className="cta-primary">
                 Get started
                 <ArrowRight className="h-5 w-5" />
@@ -429,180 +404,217 @@ export default function App() {
           </div>
         </section>
 
-        <section id="services" className="py-16 lg:py-20">
-          <div className="section-shell">
-            <div className="mb-10 lg:mb-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Services</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Common issues we fix at home.</h2>
+        {/* ---- Services ---- */}
+        <section id="services" className="border-t border-slate-200">
+          <div className="section-shell py-16 lg:py-24">
+            <div className="max-w-2xl">
+              <p className="eyebrow-amber">Services</p>
+              <h2 className="font-display mt-4 text-3xl text-slate-900 sm:text-4xl">
+                Common issues we fix at home.
+              </h2>
+              <p className="mt-4 text-lg text-slate-600">Pick what sounds closest and we&apos;ll start the request for you.</p>
             </div>
-            
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {serviceGroups.flatMap(group => 
-                group.items.map(([title, desc, prompt, Icon]) => (
+
+            <ul className="mt-10 border-b border-slate-200">
+              {services.map(([title, desc, prompt, Icon], index) => (
+                <li key={title}>
                   <button
-                    key={title}
                     type="button"
                     onClick={() => handleServiceItemSelect(title, prompt)}
-                    className={`service-card ${selectedService === title ? 'service-card-active' : ''}`}
+                    className={`edit-row group ${selectedService === title ? 'edit-row-active' : ''}`}
                   >
-                    <div className="service-card-icon">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div className="text-left">
-                      <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
-                      <p className="mt-1 text-sm text-slate-600">{desc}</p>
-                    </div>
-                    <ArrowRight className="h-4 w-4 text-slate-400 shrink-0" />
+                    <span className="edit-index">{String(index + 1).padStart(2, '0')}</span>
+                    <Icon className="mt-0.5 hidden h-6 w-6 shrink-0 text-slate-400 transition-colors group-hover:text-amber-600 sm:block" />
+                    <span className="min-w-0 flex-1">
+                      <span className="font-display block text-xl text-slate-900 sm:text-2xl">{title}</span>
+                      <span className="mt-1 block text-slate-600">{desc}</span>
+                    </span>
+                    <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-slate-300 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-amber-600" />
                   </button>
-                ))
-              )}
-            </div>
-
-            <div className="mt-8 text-center">
-              <p className="text-slate-600">Not sure which one fits? <a href="#request-help" className="font-medium text-slate-900 underline">Describe the issue</a> and we&apos;ll help.</p>
-            </div>
-          </div>
-        </section>
-
-        <section id="pricing" className="py-16 lg:py-20">
-          <div className="section-shell">
-            <div className="mb-10 lg:mb-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Pricing</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Straightforward pricing.</h2>
-              <p className="mt-3 text-lg text-slate-600">Clear starting prices. No surprise costs.</p>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              {pricingPlans.map(([name, price, desc], index) => (
-                <button
-                  key={name}
-                  type="button"
-                  onClick={() => handlePricingSelect(name, price)}
-                  className={`pricing-card-modern relative text-left ${index === 1 ? 'pricing-card-featured-modern' : ''}`}
-                >
-                  {index === 1 && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-amber-400 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-900 shadow-sm">Most popular</div>
-                  )}
-                  <p className={`text-sm font-medium ${index === 1 ? 'text-slate-200' : 'text-slate-500'}`}>{name}</p>
-                  <p className={`mt-2 text-3xl font-semibold ${index === 1 ? 'text-white' : 'text-slate-900'}`}>{price}</p>
-                  <p className={`mt-3 text-sm ${index === 1 ? 'text-slate-200' : 'text-slate-600'}`}>{desc}</p>
-                  <div className={`mt-5 inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-medium ${index === 1 ? 'bg-white text-slate-900' : 'bg-amber-100 text-amber-800'}`}>Start with this plan <ArrowRight className="h-4 w-4" /></div>
-                </button>
+                </li>
               ))}
-            </div>
+            </ul>
 
-            <div className="mt-8 rounded-xl bg-slate-50 border border-slate-200 p-4 text-center">
-              <p className="text-sm text-slate-600">You approve the price before any extra work. A short visit stays short.</p>
-            </div>
+            <p className="mt-6 text-slate-600">
+              Not sure which one fits? <a href="#request-help" className="font-medium text-slate-900 underline decoration-amber-400 underline-offset-4">Describe the issue</a> and we&apos;ll help.
+            </p>
           </div>
         </section>
 
-        <section id="service-area" className="py-16 lg:py-20">
-          <div className="section-shell">
-            <div className="mx-auto max-w-2xl text-center">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-900 px-3 py-1 text-sm font-medium text-white">Service Area</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">Serving the Five Cities & Central Coast.</h2>
-              <p className="mt-4 text-lg text-slate-600">
-                Arroyo Grande, Grover Beach, Pismo Beach, Shell Beach, Avila Beach, Santa Maria, Orcutt, and Lompoc.
-              </p>
-              <p className="mt-2 text-base text-slate-500">Nearby? Call to confirm.</p>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
-                <a href="tel:+18059940881" className="cta-primary justify-center">
-                  <Phone className="h-5 w-5" />
-                  Call Now
-                </a>
-                <a href="#request-help" className="cta-secondary justify-center">
-                  <Calendar className="h-5 w-5" />
-                  Request Callback
-                </a>
-              </div>
+        {/* ---- Pricing ---- */}
+        <section id="pricing" className="border-t border-slate-200">
+          <div className="section-shell py-16 lg:py-24">
+            <div className="max-w-2xl">
+              <p className="eyebrow-amber">Pricing</p>
+              <h2 className="font-display mt-4 text-3xl text-slate-900 sm:text-4xl">Straightforward pricing.</h2>
+              <p className="mt-4 text-lg text-slate-600">Clear starting prices. You approve any extra before it happens.</p>
             </div>
-          </div>
-        </section>
 
-        <section id="request-help" className="py-16 lg:py-20">
-          <div className="section-shell">
-            <div className="mx-auto max-w-2xl">
-              <div className="mb-6 text-center">
-                <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">Request a callback</div>
-                <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">Tell us what&apos;s going on.</h2>
-                <p className="mt-3 text-lg text-slate-600">A simple description is enough. We&apos;ll follow up in plain English.</p>
-              </div>
-              <form className="mt-8 space-y-4" onSubmit={handleSubmit} action="https://formsubmit.co/calvinasturm@gmail.com" method="POST" aria-label="Request a callback">
-                <input type="hidden" name="_subject" value="New callback request from calvinsturm.com" />
-                <input type="hidden" name="_template" value="table" />
-                <input type="hidden" name="_captcha" value="false" />
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div><label htmlFor="name" className="mb-1.5 block text-sm font-medium text-slate-700">Your name <span className="text-amber-600">*</span></label><input type="text" id="name" name="name" autoComplete="name" value={form.name} onChange={handleChange} placeholder="Jane Smith" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
-                  <div><label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-slate-700">Phone number <span className="text-amber-600">*</span></label><input type="tel" id="phone" name="phone" autoComplete="tel" value={form.phone} onChange={handleChange} placeholder="(555) 123-4567" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div><label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-700">Email <span className="text-slate-400 font-normal">(optional)</span></label><input type="email" id="email" name="email" autoComplete="email" value={form.email} onChange={handleChange} placeholder="you@example.com" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" /></div>
-                  <div><label htmlFor="city" className="mb-1.5 block text-sm font-medium text-slate-700">City <span className="text-amber-600">*</span></label><input type="text" id="city" name="city" autoComplete="address-level2" value={form.city} onChange={handleChange} placeholder="Arroyo Grande" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
-                </div>
-                <div><label htmlFor="contact" className="mb-1.5 block text-sm font-medium text-slate-700">Best contact</label><select id="contact" name="contact" value={form.contact} onChange={handleChange} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900"><option value="phone call">Phone call</option><option value="text message">Text message</option><option value="email">Email</option><option value="either one">Any of the above</option></select></div>
-                <div><label htmlFor="details" className="mb-1.5 block text-sm font-medium text-slate-700">What do you need help with? <span className="text-amber-600">*</span></label><textarea ref={detailsRef} id="details" name="details" value={form.details} onChange={handleChange} rows={4} placeholder="Example: Wi-Fi drops in the back bedroom, printer stopped connecting..." className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base leading-relaxed text-slate-900" required /></div>
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <button type="submit" className="cta-primary flex-1 justify-center">
-                    <Calendar className="h-5 w-5" />
-                    Request Callback
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+              {pricingPlans.map(([name, price, desc], index) => {
+                const featured = index === 1;
+                return (
+                  <button
+                    key={name}
+                    type="button"
+                    onClick={() => handlePricingSelect(name, price)}
+                    className={`group relative flex flex-col rounded-2xl border p-6 text-left transition-all duration-200 hover:-translate-y-1 ${
+                      featured
+                        ? 'border-slate-900 bg-slate-900 text-white shadow-[0_20px_50px_rgba(15,23,42,0.25)]'
+                        : 'border-slate-200 bg-white hover:border-amber-300'
+                    }`}
+                  >
+                    {featured && (
+                      <span className="absolute -top-3 left-6 rounded-full bg-amber-400 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-900">
+                        Most popular
+                      </span>
+                    )}
+                    <span className={`text-sm font-medium ${featured ? 'text-slate-300' : 'text-slate-500'}`}>{name}</span>
+                    <span className={`font-display mt-3 text-3xl ${featured ? 'text-white' : 'text-slate-900'}`}>{price}</span>
+                    <span className={`mt-3 flex-1 text-sm leading-relaxed ${featured ? 'text-slate-300' : 'text-slate-600'}`}>{desc}</span>
+                    <span className={`mt-6 inline-flex items-center gap-1.5 text-sm font-semibold ${featured ? 'text-amber-300' : 'text-amber-700'}`}>
+                      Start with this
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </span>
                   </button>
-                  <a href="tel:+18059940881" className="cta-secondary flex-1 justify-center">
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ---- Service area (dark band) ---- */}
+        <section id="service-area" className="bg-slate-900">
+          <div className="section-shell py-16 lg:py-24">
+            <div className="grid gap-x-12 gap-y-8 lg:grid-cols-12 lg:items-center">
+              <div className="lg:col-span-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-400">Service area</p>
+                <h2 className="font-display mt-4 text-3xl text-white sm:text-4xl">
+                  Serving the Five Cities &amp; Central Coast.
+                </h2>
+                <p className="mt-4 text-slate-400">Nearby and not listed? Call to confirm: there&apos;s a good chance we can help.</p>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <a href="tel:+18059940881" className="inline-flex items-center justify-center gap-2 rounded-full bg-amber-400 px-6 py-3.5 font-semibold text-[#1f1003] transition-colors hover:bg-amber-300">
                     <Phone className="h-5 w-5" />
-                    Call Now
+                    Call now
+                  </a>
+                  <a href="#request-help" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-6 py-3.5 font-semibold text-white transition-colors hover:bg-white/10">
+                    <Calendar className="h-5 w-5" />
+                    Request callback
                   </a>
                 </div>
-                {isSubmitted && <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-base text-emerald-800">Thanks{form.name ? `, ${form.name}` : ''}. We&apos;ll be in touch soon.</div>}
-              </form>
+              </div>
+              <div className="lg:col-span-6 lg:col-start-7">
+                <ul className="grid grid-cols-2 gap-x-8 gap-y-1 sm:grid-cols-3 lg:grid-cols-2">
+                  {serviceArea.map((city) => (
+                    <li key={city} className="font-display border-b border-white/10 py-3 text-lg text-slate-200 lg:text-xl">
+                      {city}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </section>
 
-        <section id="faq" className="py-16 lg:py-20">
-          <div className="section-shell">
-            <div className="mb-10 lg:mb-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">FAQ</div>
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl lg:text-[2.5rem]">Common questions.</h2>
-            </div>
-            
-            <div className="space-y-3">
-              {faqs.map(([question, answer], index) => (
-                <div 
-                  key={question} 
-                  className={`faq-item-modern ${openFaq === index ? 'faq-item-open' : ''}`}
-                >
-                  <button
-                    type="button"
-                    onClick={() => toggleFaq(index)}
-                    className="faq-btn-modern w-full flex items-center justify-between gap-4 px-5 py-4 text-left"
-                    aria-expanded={openFaq === index}
-                  >
-                    <span className="text-lg font-medium text-slate-900">{question}</span>
-                    <ChevronDown className={`h-5 w-5 text-slate-400 shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
-                  </button>
-                  <div className={`overflow-hidden transition-all duration-300 ${openFaq === index ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                    <p className="px-5 pb-4 text-slate-600">{answer}</p>
+        {/* ---- Request help ---- */}
+        <section id="request-help" className="border-t border-slate-200">
+          <div className="section-shell py-16 lg:py-24">
+            <div className="grid gap-x-12 gap-y-10 lg:grid-cols-12">
+              <div className="lg:col-span-4">
+                <p className="eyebrow-amber">Request a callback</p>
+                <h2 className="font-display mt-4 text-3xl text-slate-900 sm:text-4xl">Tell us what&apos;s going on.</h2>
+                <p className="mt-4 text-lg leading-relaxed text-slate-600">
+                  A simple description is enough. We&apos;ll follow up in plain English, usually the same day.
+                </p>
+                <a href="tel:+18059940881" className="mt-6 inline-flex items-center gap-2 font-display text-2xl text-slate-900 hover:text-amber-700">
+                  <Phone className="h-5 w-5 text-amber-600" />
+                  (805) 994-0881
+                </a>
+              </div>
+
+              <div className="lg:col-span-7 lg:col-start-6">
+                <form className="space-y-4" onSubmit={handleSubmit} action="https://formsubmit.co/calvinasturm@gmail.com" method="POST" aria-label="Request a callback">
+                  <input type="hidden" name="_subject" value="New callback request from calvinsturm.com" />
+                  <input type="hidden" name="_template" value="table" />
+                  <input type="hidden" name="_captcha" value="false" />
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div><label htmlFor="name" className="mb-1.5 block text-sm font-medium text-slate-700">Your name <span className="text-amber-600">*</span></label><input type="text" id="name" name="name" autoComplete="name" value={form.name} onChange={handleChange} placeholder="Jane Smith" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
+                    <div><label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-slate-700">Phone number <span className="text-amber-600">*</span></label><input type="tel" id="phone" name="phone" autoComplete="tel" value={form.phone} onChange={handleChange} placeholder="(555) 123-4567" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
                   </div>
-                </div>
-              ))}
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div><label htmlFor="email" className="mb-1.5 block text-sm font-medium text-slate-700">Email <span className="font-normal text-slate-400">(optional)</span></label><input type="email" id="email" name="email" autoComplete="email" value={form.email} onChange={handleChange} placeholder="you@example.com" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" /></div>
+                    <div><label htmlFor="city" className="mb-1.5 block text-sm font-medium text-slate-700">City <span className="text-amber-600">*</span></label><input type="text" id="city" name="city" autoComplete="address-level2" value={form.city} onChange={handleChange} placeholder="Arroyo Grande" className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900" required /></div>
+                  </div>
+                  <div><label htmlFor="contact" className="mb-1.5 block text-sm font-medium text-slate-700">Best contact</label><select id="contact" name="contact" value={form.contact} onChange={handleChange} className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900"><option value="phone call">Phone call</option><option value="text message">Text message</option><option value="email">Email</option><option value="either one">Any of the above</option></select></div>
+                  <div><label htmlFor="details" className="mb-1.5 block text-sm font-medium text-slate-700">What do you need help with? <span className="text-amber-600">*</span></label><textarea ref={detailsRef} id="details" name="details" value={form.details} onChange={handleChange} rows={4} placeholder="Example: Wi-Fi drops in the back bedroom, printer stopped connecting..." className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base leading-relaxed text-slate-900" required /></div>
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <button type="submit" className="cta-primary flex-1 justify-center">
+                      <Calendar className="h-5 w-5" />
+                      Request callback
+                    </button>
+                    <a href="tel:+18059940881" className="cta-secondary flex-1 justify-center">
+                      <Phone className="h-5 w-5" />
+                      Call now
+                    </a>
+                  </div>
+                  {isSubmitted && <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-base text-emerald-800">Thanks{form.name ? `, ${form.name}` : ''}. We&apos;ll be in touch soon.</div>}
+                </form>
+              </div>
             </div>
           </div>
         </section>
 
+        {/* ---- FAQ ---- */}
+        <section id="faq" className="border-t border-slate-200">
+          <div className="section-shell py-16 lg:py-24">
+            <div className="grid gap-x-12 gap-y-8 lg:grid-cols-12">
+              <div className="lg:col-span-4">
+                <p className="eyebrow-amber">FAQ</p>
+                <h2 className="font-display mt-4 text-3xl text-slate-900 sm:text-4xl">Common questions.</h2>
+              </div>
+              <div className="lg:col-span-7 lg:col-start-6">
+                <div className="border-b border-slate-200">
+                  {faqs.map(([question, answer], index) => {
+                    const open = openFaq === index;
+                    return (
+                      <div key={question} className="border-t border-slate-200">
+                        <button
+                          type="button"
+                          onClick={() => toggleFaq(index)}
+                          className="flex w-full items-center justify-between gap-6 py-5 text-left"
+                          aria-expanded={open}
+                        >
+                          <span className="text-lg font-medium text-slate-900">{question}</span>
+                          <span className="mt-0.5 shrink-0 text-amber-600">
+                            {open ? <Minus className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
+                          </span>
+                        </button>
+                        <div className={`overflow-hidden transition-all duration-300 ${open ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
+                          <p className="pb-5 pr-10 leading-relaxed text-slate-600">{answer}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
-      <footer className="bg-slate-50 border-t border-slate-200 py-12">
+      <footer className="border-t border-slate-200 py-14">
         <div className="section-shell">
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-10 md:grid-cols-3">
             <div>
-              <div className="flex items-center gap-2.5 mb-3">
+              <div className="mb-3 flex items-center gap-2.5">
                 <img src="/techWizIcon.png" alt="Tech Wiz" className="h-10 w-10 object-contain" />
-                <span className="text-lg font-semibold text-slate-900">Tech Wiz</span>
+                <span className="font-display text-xl text-slate-900">Tech Wiz</span>
               </div>
-              <p className="text-sm text-slate-600">Patient in-home tech support for the Five Cities, Santa Maria, Orcutt, Lompoc & nearby areas.</p>
+              <p className="max-w-xs text-sm leading-relaxed text-slate-600">Patient in-home tech support for the Five Cities, Santa Maria, Orcutt, Lompoc, and nearby areas.</p>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-slate-900 mb-3">Quick Links</h3>
+              <h3 className="mb-3 text-sm font-semibold text-slate-900">Explore</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 {navItems.map(([label, href]) => (
                   <li key={href}><a href={href} className="hover:text-slate-900">{label}</a></li>
@@ -611,25 +623,24 @@ export default function App() {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-slate-900 mb-3">Contact</h3>
+              <h3 className="mb-3 text-sm font-semibold text-slate-900">Contact</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 <li><a href="tel:+18059940881" className="font-medium text-slate-900">(805) 994-0881</a></li>
                 <li><a href="mailto:techwiz@calvinsturm.com" className="hover:text-slate-900">techwiz@calvinsturm.com</a></li>
                 <li><a href="#request-help" className="hover:text-slate-900">Request a callback</a></li>
-                <li>Serving: Arroyo Grande, Grover Beach, Pismo Beach, Santa Maria, Orcutt, Lompoc</li>
               </ul>
             </div>
           </div>
-          <div className="mt-8 pt-6 border-t border-slate-200 text-center text-sm text-slate-500">
-            © {new Date().getFullYear()} Sturm Technologies LLC. Local in-home tech support.
+          <div className="mt-10 border-t border-slate-200 pt-6 text-sm text-slate-500">
+            © {new Date().getFullYear()} Sturm Technologies LLC · Local in-home tech support.
           </div>
         </div>
       </footer>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-stone-200 bg-white/95 p-4 shadow-[0_-8px_30px_rgba(15,23,42,0.08)] backdrop-blur md:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-[#fbf8f3]/95 p-4 shadow-[0_-8px_30px_rgba(15,23,42,0.08)] backdrop-blur md:hidden">
         <div className="flex gap-3">
-          <a href="tel:+18059940881" className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-4 text-base font-semibold text-white min-h-[52px]"><Phone className="h-5 w-5" />Call</a>
-          <a href="#request-help" className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-4 text-base font-semibold text-slate-900 min-h-[52px]"><Calendar className="h-5 w-5" />Callback</a>
+          <a href="tel:+18059940881" className="inline-flex min-h-[52px] flex-1 items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-4 text-base font-semibold text-white"><Phone className="h-5 w-5" />Call</a>
+          <a href="#request-help" className="inline-flex min-h-[52px] flex-1 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-4 text-base font-semibold text-slate-900"><Calendar className="h-5 w-5" />Callback</a>
         </div>
       </div>
     </div>

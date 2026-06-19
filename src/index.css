@@ -21,40 +21,13 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at top left, rgba(255, 222, 173, 0.3), transparent 28%),
-    radial-gradient(circle at 85% 16%, rgba(153, 202, 255, 0.28), transparent 24%),
-    linear-gradient(180deg, #fffaf2 0%, #f6efe5 38%, #eef3f9 100%);
+  background: #fbf8f3;
   color: #172033;
   font-family: "Aptos", "Segoe UI", sans-serif;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(to right, rgba(255, 255, 255, 0.18) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.18) 1px, transparent 1px);
-  background-size: 32px 32px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 70%);
-  opacity: 0.28;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.55), transparent 22%),
-    radial-gradient(circle at 70% 24%, rgba(255, 255, 255, 0.28), transparent 18%);
-  opacity: 0.85;
 }
 
 a:focus-visible,
@@ -104,8 +77,82 @@ button:active {
   font-family: var(--font-display);
   font-optical-sizing: auto;
   font-weight: 500;
-  letter-spacing: -0.02em;
-  font-style: italic;
+  letter-spacing: -0.018em;
+  font-style: normal;
+}
+
+/* ---- Editorial primitives (used across the redesigned pages) ---- */
+.eyebrow-amber {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #b45309;
+}
+
+html.dark .eyebrow-amber {
+  color: #fbbf24;
+}
+
+/* Editorial list row: hairline-divided, oversized index, hover wash */
+.edit-row {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  width: 100%;
+  padding: 1.5rem 0.75rem 1.5rem 0.25rem;
+  text-align: left;
+  border-top: 1px solid rgba(120, 129, 148, 0.18);
+  transition: padding-left 220ms ease, background 220ms ease;
+}
+
+.edit-row:hover {
+  padding-left: 1rem;
+  background: linear-gradient(90deg, rgba(180, 83, 9, 0.05), transparent 60%);
+}
+
+.edit-row-active {
+  padding-left: 1rem;
+  background: linear-gradient(90deg, rgba(180, 83, 9, 0.08), transparent 60%);
+}
+
+.edit-row-active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  width: 2px;
+  background: #d97706;
+}
+
+.edit-index {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+  color: #b45309;
+  line-height: 1;
+  padding-top: 0.35rem;
+  min-width: 2.25rem;
+}
+
+html.dark .edit-index {
+  color: #fbbf24;
+}
+
+html.dark .edit-row {
+  border-top-color: rgba(148, 163, 184, 0.2);
+}
+
+html.dark .edit-row:hover {
+  background: linear-gradient(90deg, rgba(251, 191, 36, 0.08), transparent 60%);
+}
+
+html.dark .edit-row-active {
+  background: linear-gradient(90deg, rgba(251, 191, 36, 0.1), transparent 60%);
 }
 
 .section-shell {

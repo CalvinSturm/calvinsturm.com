@@ -390,17 +390,17 @@ export default function ProjectsApp() {
         Skip to main content
       </a>
 
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+      <header className="fixed top-0 left-0 right-0 z-50 border-b border-slate-200 bg-[#fbf8f3]/80 backdrop-blur-md">
         <div className="section-shell">
           <div className="flex h-16 items-center justify-between">
             <a href="/" className="flex items-center gap-2.5" aria-label="Calvin Sturm home">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white">
                 <Code2 className="h-5 w-5" />
               </span>
-              <span className="text-lg font-semibold text-slate-900">Calvin Sturm</span>
+              <span className="font-display text-xl text-slate-900">Calvin Sturm</span>
             </a>
 
-            <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
+            <nav className="hidden items-center gap-7 text-sm font-medium text-slate-600 md:flex">
               <a href="/build.html" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
                 <Sparkles className="h-3.5 w-3.5 text-amber-500" />
                 Websites &amp; Software
@@ -443,18 +443,18 @@ export default function ProjectsApp() {
         </div>
 
         {isMobileMenuOpen && (
-          <div id="mobile-menu" className="md:hidden bg-white border-t border-slate-100">
+          <div id="mobile-menu" className="border-t border-slate-200 bg-[#fbf8f3] md:hidden">
             <div className="section-shell py-4 space-y-1">
               <a
                 href="/build.html"
-                className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
               >
                 <Sparkles className="h-4 w-4 text-amber-500" />
                 Websites &amp; Software
               </a>
               <a
                 href="/"
-                className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
               >
                 <House className="h-4 w-4 text-amber-500" />
                 In-home tech support
@@ -483,51 +483,40 @@ export default function ProjectsApp() {
       </header>
 
       <main id="main-content" className="pt-16">
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute left-[-10%] top-[-20%] h-[500px] w-[500px] rounded-full bg-amber-200/30 blur-[120px]" />
-            <div className="absolute right-[-5%] bottom-[-10%] h-[400px] w-[400px] rounded-full bg-indigo-200/25 blur-[100px]" />
-          </div>
-          <div className="section-shell py-14 lg:py-20">
-            <div className="max-w-3xl">
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-800">
-                <Github className="h-4 w-4" />
-                Open source
+        <section className="section-shell py-16 lg:py-24">
+          <div className="max-w-3xl">
+            <p className="eyebrow-amber">Open source</p>
+            <h1 className="font-display mt-5 text-[2.75rem] leading-[1.05] text-slate-900 sm:text-6xl lg:text-7xl">
+              Things I&apos;ve built.
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
+              A selection of my open-source projects: local-first AI tooling, Rust performance work, and a few things built purely for fun. Most are public on GitHub, so you can read the code and run it yourself.
+            </p>
+            <dl className="mt-10 flex flex-wrap gap-x-12 gap-y-5">
+              <div>
+                <dt className="font-display text-3xl text-slate-900">{totalProjects}</dt>
+                <dd className="mt-0.5 text-sm text-slate-500">open-source projects</dd>
               </div>
-              <h1 className="font-display mb-5 text-4xl font-medium leading-[1.15] text-slate-900 sm:text-5xl lg:text-[3.25rem]">
-                Things I&apos;ve built.
-              </h1>
-              <p className="mb-8 text-lg leading-relaxed text-slate-600">
-                A selection of my open-source projects: local-first AI tooling, Rust performance work, and a few things built purely for fun. Most are public on GitHub, so you can read the code and run it yourself.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <div className="hero-stat">
-                  <span className="block text-2xl font-semibold text-slate-900">{totalProjects}</span>
-                  <span className="text-sm text-slate-600">open-source projects</span>
-                </div>
-                <div className="hero-stat">
-                  <span className="flex items-center gap-1.5 text-2xl font-semibold text-slate-900">
-                    <Star className="h-5 w-5 fill-amber-400 text-amber-400" />
-                    {totalStars}
-                  </span>
-                  <span className="text-sm text-slate-600">stars on GitHub</span>
-                </div>
-                <div className="hero-stat">
-                  <span className="block text-2xl font-semibold text-slate-900">Rust · Python · TS</span>
-                  <span className="text-sm text-slate-600">primary languages</span>
-                </div>
+              <div>
+                <dt className="font-display flex items-center gap-1.5 text-3xl text-slate-900">
+                  <Star className="h-6 w-6 fill-amber-400 text-amber-400" />
+                  {totalStars}
+                </dt>
+                <dd className="mt-0.5 text-sm text-slate-500">stars on GitHub</dd>
               </div>
-            </div>
+              <div>
+                <dt className="font-display text-3xl text-slate-900">Rust · Python · TS</dt>
+                <dd className="mt-0.5 text-sm text-slate-500">primary languages</dd>
+              </div>
+            </dl>
           </div>
         </section>
 
-        <section aria-labelledby="featured-heading" className="py-12 lg:py-16">
+        <section aria-labelledby="featured-heading" className="border-t border-slate-200 py-16 lg:py-24">
           <div className="section-shell">
             <div className="mb-8 lg:mb-10">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">
-                Featured
-              </div>
-              <h2 id="featured-heading" className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">
+              <p className="eyebrow-amber">Featured</p>
+              <h2 id="featured-heading" className="font-display mt-4 text-3xl text-slate-900 sm:text-4xl">
                 Projects I&apos;m proud of.
               </h2>
               <p className="mt-3 hidden text-sm text-slate-500 lg:block">
@@ -539,13 +528,11 @@ export default function ProjectsApp() {
           </div>
         </section>
 
-        <section aria-labelledby="more-heading" className="py-12 lg:py-16">
+        <section aria-labelledby="more-heading" className="border-t border-slate-200 py-16 lg:py-24">
           <div className="section-shell">
             <div className="mb-8 lg:mb-10">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">
-                More on GitHub
-              </div>
-              <h2 id="more-heading" className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">
+              <p className="eyebrow-amber">More on GitHub</p>
+              <h2 id="more-heading" className="font-display mt-4 text-3xl text-slate-900 sm:text-4xl">
                 Other things I&apos;ve been tinkering with.
               </h2>
             </div>
@@ -582,51 +569,49 @@ export default function ProjectsApp() {
           </div>
         </section>
 
-        <section className="py-12 lg:py-20">
-          <div className="section-shell">
-            <div className="cta-panel px-6 py-12 text-center lg:px-12 lg:py-16">
-              <h2 className="font-display text-3xl font-medium text-slate-900 sm:text-4xl">
-                Want something like this built for you?
-              </h2>
-              <p className="mt-4 text-lg text-slate-600">
-                I build websites, custom software, and applied AI through Sturm Technologies. Tell me what you have in mind.
-              </p>
-              <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-                <a href="/build.html" className="cta-primary">
-                  <Sparkles className="h-5 w-5" />
-                  Start a project
-                </a>
-                <a
-                  href="https://github.com/CalvinSturm"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cta-secondary"
-                >
-                  <Github className="h-5 w-5" />
-                  See all repositories
-                </a>
-              </div>
+        <section className="bg-slate-900">
+          <div className="section-shell py-16 text-center lg:py-24">
+            <h2 className="font-display text-3xl text-white sm:text-4xl">
+              Want something like this built for you?
+            </h2>
+            <p className="mt-4 text-lg text-slate-400">
+              I build websites, custom software, and applied AI through Sturm Technologies. Tell me what you have in mind.
+            </p>
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href="/build.html" className="inline-flex items-center justify-center gap-2 rounded-full bg-amber-400 px-6 py-3.5 font-semibold text-[#1f1003] transition-colors hover:bg-amber-300">
+                <Sparkles className="h-5 w-5" />
+                Start a project
+              </a>
+              <a
+                href="https://github.com/CalvinSturm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-6 py-3.5 font-semibold text-white transition-colors hover:bg-white/10"
+              >
+                <Github className="h-5 w-5" />
+                See all repositories
+              </a>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="bg-slate-50 border-t border-slate-200 py-12">
+      <footer className="border-t border-slate-200 py-14">
         <div className="section-shell">
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-10 md:grid-cols-3">
             <div>
-              <div className="flex items-center gap-2.5 mb-3">
+              <div className="mb-3 flex items-center gap-2.5">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white">
                   <Code2 className="h-5 w-5" />
                 </span>
-                <span className="text-lg font-semibold text-slate-900">Calvin Sturm</span>
+                <span className="font-display text-xl text-slate-900">Calvin Sturm</span>
               </div>
-              <p className="text-sm text-slate-600">
+              <p className="max-w-xs text-sm leading-relaxed text-slate-600">
                 Developer and founder of Sturm Technologies LLC. Open-source projects, custom software, and AI built on California&apos;s Central Coast.
               </p>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-slate-900 mb-3">Explore</h3>
+              <h3 className="mb-3 text-sm font-semibold text-slate-900">Explore</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 <li><a href="/build.html" className="hover:text-slate-900">Websites &amp; software</a></li>
                 <li><a href="/" className="hover:text-slate-900">In-home tech support</a></li>
@@ -634,14 +619,14 @@ export default function ProjectsApp() {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-slate-900 mb-3">Contact</h3>
+              <h3 className="mb-3 text-sm font-semibold text-slate-900">Contact</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 <li><a href="mailto:calvinsturm@gmail.com" className="hover:text-slate-900">calvinsturm@gmail.com</a></li>
                 <li><a href="/build.html" className="hover:text-slate-900">Start a project</a></li>
               </ul>
             </div>
           </div>
-          <div className="mt-8 pt-6 border-t border-slate-200 text-center text-sm text-slate-500">
+          <div className="mt-10 border-t border-slate-200 pt-6 text-sm text-slate-500">
             © {new Date().getFullYear()} Sturm Technologies LLC.
           </div>
         </div>
