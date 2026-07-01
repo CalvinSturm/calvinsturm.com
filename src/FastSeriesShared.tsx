@@ -22,8 +22,8 @@ import {
 import type { LucideIcon } from 'lucide-react';
 
 // ---- Product data -----------------------------------------------------------
-// Only FastPlay has a confirmed public repo and site. The others are described
-// conservatively as in development, with no invented external links.
+// External links stay product-specific: public sites/downloads are linked when
+// confirmed, and source links are only shown when the source repo is public.
 
 export type Product = {
   slug: string;
@@ -38,6 +38,9 @@ export type Product = {
   siteUrl?: string;
   siteLabel?: string;
   githubUrl?: string;
+  githubLabel?: string;
+  releaseUrl?: string;
+  releaseLabel?: string;
 };
 
 export const products: Product[] = [
@@ -49,7 +52,7 @@ export const products: Product[] = [
     valueProp: 'Beginner-friendly Windows screen recording and live streaming.',
     what:
       'FastCast is a Windows app for recording your screen and going live without wrestling with complicated software. Set up a local recording or start a stream, and keep the setup simple.',
-    status: 'In development',
+    status: 'Open Beta',
     whoFor: [
       'Creators making tutorials and demos',
       'Coaches and educators recording lessons',
@@ -61,6 +64,10 @@ export const products: Product[] = [
       'Capture desktop and microphone audio',
       'Stream to RTMP and RTMPS destinations',
     ],
+    siteUrl: 'https://calvinsturm.github.io/FastCast-releases/',
+    siteLabel: 'Visit release site',
+    releaseUrl: 'https://github.com/CalvinSturm/FastCast-releases/releases/latest',
+    releaseLabel: 'Download latest release',
   },
   {
     slug: 'fastplay',
@@ -85,6 +92,7 @@ export const products: Product[] = [
     siteUrl: 'https://calvinsturm.github.io/FastPlay/',
     siteLabel: 'Visit site',
     githubUrl: 'https://github.com/CalvinSturm/FastPlay',
+    githubLabel: 'View source',
   },
   {
     slug: 'fastclip',
@@ -415,7 +423,7 @@ export function FastSeriesHub() {
           <div className="section-shell py-16 text-center lg:py-24">
             <h2 className="font-display text-3xl text-white sm:text-4xl">Read the code, run it yourself.</h2>
             <p className="mt-4 text-lg text-slate-400">
-              The Fast Series is developed in the open. Browse the repositories and releases on GitHub.
+              Public pages, repositories, and release metadata are linked where each product has them.
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <a
@@ -447,7 +455,21 @@ export function FastSeriesHub() {
 // ---- Product page -----------------------------------------------------------
 
 export function ProductPage({ product }: { product: Product }) {
-  const { name, Icon, valueProp, what, status, whoFor, whatItDoes, siteUrl, siteLabel, githubUrl } = product;
+  const {
+    name,
+    Icon,
+    valueProp,
+    what,
+    status,
+    whoFor,
+    whatItDoes,
+    siteUrl,
+    siteLabel,
+    githubUrl,
+    githubLabel,
+    releaseUrl,
+    releaseLabel,
+  } = product;
 
   return (
     <div className="min-h-screen bg-transparent text-slate-900">
@@ -492,7 +514,14 @@ export function ProductPage({ product }: { product: Product }) {
             {githubUrl && (
               <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="cta-secondary text-sm py-2.5">
                 <Github className="h-4 w-4" />
-                View on GitHub
+                {githubLabel ?? 'View on GitHub'}
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            )}
+            {releaseUrl && (
+              <a href={releaseUrl} target="_blank" rel="noopener noreferrer" className="cta-secondary text-sm py-2.5">
+                <Github className="h-4 w-4" />
+                {releaseLabel ?? 'View releases'}
                 <ArrowUpRight className="h-4 w-4" />
               </a>
             )}
