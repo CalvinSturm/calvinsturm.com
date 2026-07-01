@@ -29,6 +29,7 @@ import {
   Sun,
   Wand2,
   X,
+  Zap,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -401,6 +402,10 @@ export default function ProjectsApp() {
             </a>
 
             <nav className="hidden items-center gap-7 text-sm font-medium text-slate-600 md:flex">
+              <a href="/fast-series" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
+                <Zap className="h-3.5 w-3.5 text-amber-500" />
+                Fast Series
+              </a>
               <a href="/build.html" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
                 <Sparkles className="h-3.5 w-3.5 text-amber-500" />
                 Websites &amp; Software
@@ -445,6 +450,13 @@ export default function ProjectsApp() {
         {isMobileMenuOpen && (
           <div id="mobile-menu" className="border-t border-slate-200 bg-[#fbf8f3] md:hidden">
             <div className="section-shell py-4 space-y-1">
+              <a
+                href="/fast-series"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
+              >
+                <Zap className="h-4 w-4 text-amber-500" />
+                Fast Series
+              </a>
               <a
                 href="/build.html"
                 className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
@@ -613,6 +625,7 @@ export default function ProjectsApp() {
             <div>
               <h3 className="mb-3 text-sm font-semibold text-slate-900">Explore</h3>
               <ul className="space-y-2 text-sm text-slate-600">
+                <li><a href="/fast-series" className="hover:text-slate-900">Fast Series</a></li>
                 <li><a href="/build.html" className="hover:text-slate-900">Websites &amp; software</a></li>
                 <li><a href="/" className="hover:text-slate-900">In-home tech support</a></li>
                 <li><a href="https://github.com/CalvinSturm" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub profile</a></li>
