@@ -185,7 +185,7 @@ export default function App() {
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-slate-200 bg-[#fbf8f3]/80 backdrop-blur-md">
         <div className="section-shell">
           <div className="flex h-16 items-center justify-between">
-            <a href="#" className="flex items-center gap-2.5" aria-label="Tech Wiz home">
+            <a href="/tech-support" className="flex items-center gap-2.5" aria-label="Tech Wiz home">
               <img src="/techWizIcon.png" alt="" aria-hidden="true" className="h-11 w-11 object-contain" />
               <span className="font-display text-xl text-slate-900">Tech Wiz</span>
             </a>
@@ -194,7 +194,7 @@ export default function App() {
               {navItems.map(([label, href]) => (
                 <a key={href} href={href} className="nav-link">{label}</a>
               ))}
-              <a href="/build.html" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
+              <a href="/" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
                 <Sparkles className="h-3.5 w-3.5 text-amber-500" />
                 Websites & Software
               </a>
@@ -248,7 +248,7 @@ export default function App() {
                 </a>
               ))}
               <a
-                href="/build.html"
+                href="/"
                 className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-base font-medium text-slate-700 hover:bg-slate-100"
               >
                 <Sparkles className="h-4 w-4 text-amber-500" />
@@ -619,7 +619,7 @@ export default function App() {
                 {navItems.map(([label, href]) => (
                   <li key={href}><a href={href} className="hover:text-slate-900">{label}</a></li>
                 ))}
-                <li><a href="/build.html" className="hover:text-slate-900">Websites & software</a></li>
+                <li><a href="/" className="hover:text-slate-900">Websites & software</a></li>
               </ul>
             </div>
             <div>

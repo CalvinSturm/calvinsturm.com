@@ -406,11 +406,11 @@ export default function ProjectsApp() {
                 <Zap className="h-3.5 w-3.5 text-amber-500" />
                 Fast Series
               </a>
-              <a href="/build.html" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
+              <a href="/" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
                 <Sparkles className="h-3.5 w-3.5 text-amber-500" />
                 Websites &amp; Software
               </a>
-              <a href="/" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
+              <a href="/tech-support" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
                 <House className="h-3.5 w-3.5 text-amber-500" />
                 In-home tech support
               </a>
@@ -458,14 +458,14 @@ export default function ProjectsApp() {
                 Fast Series
               </a>
               <a
-                href="/build.html"
+                href="/"
                 className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
               >
                 <Sparkles className="h-4 w-4 text-amber-500" />
                 Websites &amp; Software
               </a>
               <a
-                href="/"
+                href="/tech-support"
                 className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
               >
                 <House className="h-4 w-4 text-amber-500" />
@@ -590,7 +590,7 @@ export default function ProjectsApp() {
               I build websites, custom software, and applied AI through Sturm Technologies. Tell me what you have in mind.
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href="/build.html" className="inline-flex items-center justify-center gap-2 rounded-full bg-amber-400 px-6 py-3.5 font-semibold text-[#1f1003] transition-colors hover:bg-amber-300">
+              <a href="/" className="inline-flex items-center justify-center gap-2 rounded-full bg-amber-400 px-6 py-3.5 font-semibold text-[#1f1003] transition-colors hover:bg-amber-300">
                 <Sparkles className="h-5 w-5" />
                 Start a project
               </a>
@@ -626,8 +626,8 @@ export default function ProjectsApp() {
               <h3 className="mb-3 text-sm font-semibold text-slate-900">Explore</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 <li><a href="/fast-series" className="hover:text-slate-900">Fast Series</a></li>
-                <li><a href="/build.html" className="hover:text-slate-900">Websites &amp; software</a></li>
-                <li><a href="/" className="hover:text-slate-900">In-home tech support</a></li>
+                <li><a href="/" className="hover:text-slate-900">Websites &amp; software</a></li>
+                <li><a href="/tech-support" className="hover:text-slate-900">In-home tech support</a></li>
                 <li><a href="https://github.com/CalvinSturm" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub profile</a></li>
               </ul>
             </div>
@@ -635,7 +635,7 @@ export default function ProjectsApp() {
               <h3 className="mb-3 text-sm font-semibold text-slate-900">Contact</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 <li><a href="mailto:calvinsturm@gmail.com" className="hover:text-slate-900">calvinsturm@gmail.com</a></li>
-                <li><a href="/build.html" className="hover:text-slate-900">Start a project</a></li>
+                <li><a href="/" className="hover:text-slate-900">Start a project</a></li>
               </ul>
             </div>
           </div>

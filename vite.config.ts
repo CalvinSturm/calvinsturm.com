@@ -20,6 +20,7 @@ export default defineConfig(({mode}) => {
         input: {
           main: path.resolve(__dirname, 'index.html'),
           build: path.resolve(__dirname, 'build.html'),
+          techSupport: path.resolve(__dirname, 'tech-support.html'),
           projects: path.resolve(__dirname, 'projects.html'),
           fastSeries: path.resolve(__dirname, 'fast-series.html'),
           fastcast: path.resolve(__dirname, 'fastcast.html'),
