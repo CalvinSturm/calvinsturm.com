@@ -489,21 +489,10 @@ export function ProductPage({ product }: { product: Product }) {
                 {status}
               </span>
             )}
-            {githubUrl ? (
+            {githubUrl && (
               <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="cta-secondary text-sm py-2.5">
                 <Github className="h-4 w-4" />
                 View on GitHub
-                <ArrowUpRight className="h-4 w-4" />
-              </a>
-            ) : (
-              <a
-                href="https://github.com/CalvinSturm"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cta-secondary text-sm py-2.5"
-              >
-                <Github className="h-4 w-4" />
-                View GitHub profile
                 <ArrowUpRight className="h-4 w-4" />
               </a>
             )}
