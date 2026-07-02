@@ -3490,6 +3490,139 @@ html.home-page body {
   justify-content: center;
 }
 
+/* ---- Fast Series hub page ---- */
+.fs-hero {
+  padding: 84px 0 8px;
+}
+
+.fs-hero .home-hero-sub {
+  max-width: 38rem;
+}
+
+.fs-hero h1 {
+  max-width: 18ch;
+  font-size: clamp(2.4rem, 5.2vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.fs-pipeline {
+  counter-reset: none;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fs-step {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--hl-border);
+  border-radius: var(--hl-radius);
+  background: var(--hl-surface);
+  padding: 18px;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.fs-step:hover {
+  transform: translateY(-2px);
+  border-color: var(--hl-border-hover);
+  background: var(--hl-surface-2);
+}
+
+.fs-step-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.fs-step-num {
+  color: var(--hl-accent);
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.fs-step-icon {
+  color: var(--hl-faint);
+  transition: color 160ms ease;
+}
+
+.fs-step:hover .fs-step-icon {
+  color: var(--hl-accent);
+}
+
+.fs-step-verb {
+  color: var(--hl-faint);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.fs-step h3 {
+  margin-top: 4px;
+  font-size: 1.05rem;
+}
+
+.fs-step p {
+  flex: 1;
+  margin-top: 8px;
+  color: var(--hl-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.fs-step .home-status-chip {
+  margin-top: 14px;
+  width: fit-content;
+}
+
+.fs-spot-meta {
+  margin-top: 18px;
+  color: var(--hl-faint);
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 0.8rem;
+}
+
+.fs-indev-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.fs-indev-note {
+  margin-top: 18px;
+  color: var(--hl-faint);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 1023px) {
+  .fs-pipeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fs-indev-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .fs-hero {
+    padding-top: 56px;
+  }
+
+  .fs-pipeline {
+    grid-template-columns: 1fr;
+  }
+
+  .fs-indev-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---- Footer ---- */
 .home-footer {
   border-top: 1px solid var(--hl-border);

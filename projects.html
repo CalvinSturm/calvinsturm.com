@@ -21,15 +21,39 @@
     <meta name="twitter:title" content="Projects | Calvin Sturm" />
     <meta name="twitter:description" content="Open-source projects: local-first AI tooling, Rust performance work, and more." />
 
-    <link rel="icon" type="image/png" href="/techWizIcon.png" />
-    <link rel="apple-touch-icon" href="/techWizIcon.png" />
+    <link rel="icon" type="image/svg+xml" href="/sturm-mark.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <style>
+      .projects-static-fallback{margin:0 auto;max-width:760px;padding:110px 24px 64px;font-family:"Segoe UI",-apple-system,system-ui,sans-serif;color:#172033;line-height:1.65}
+      .projects-static-fallback h1{margin:0;font-size:clamp(2.2rem,5.4vw,3.4rem);font-weight:700;line-height:1.1;letter-spacing:-.02em}
+      .projects-static-fallback .sub{margin:20px 0 0;max-width:36rem;color:#5f6b7f;font-size:1.1rem}
+      .projects-static-fallback .links{margin:30px 0 0}
+      .projects-static-fallback a{margin-right:22px;color:#b45309;font-weight:700;text-decoration:none}
+      .projects-static-fallback a:hover{text-decoration:underline}
+    </style>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <main class="projects-static-fallback">
+        <section>
+          <h1>Things I&#8217;ve built</h1>
+          <p class="sub">Open-source projects by Calvin Sturm: local-first AI tooling, Rust performance work, and the Fast Series of native Windows creator tools.</p>
+          <p class="links">
+            <a href="/fast-series">Fast Series</a>
+            <a href="/fastcast">FastCast</a>
+            <a href="/fastplay">FastPlay</a>
+            <a href="https://github.com/CalvinSturm">GitHub</a>
+          </p>
+        </section>
+      </main>
+    </div>
     <script type="module" src="/src/projects.tsx"></script>
   </body>
 </html>

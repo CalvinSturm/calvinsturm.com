@@ -1,10 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { FastSeriesHub } from './FastSeriesShared.tsx';
+import FastSeriesApp from './FastSeriesApp.tsx';
 import './index.css';
+
+document.documentElement.classList.add('home-page');
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <FastSeriesHub />
+    <FastSeriesApp />
   </StrictMode>,
 );

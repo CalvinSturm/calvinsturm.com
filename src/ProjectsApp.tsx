@@ -19,6 +19,7 @@ import {
   Languages,
   LineChart,
   Menu,
+  MonitorPlay,
   Moon,
   PawPrint,
   PlayCircle,
@@ -39,12 +40,27 @@ type Project = {
   language: string;
   stars: number;
   url: string;
+  codeLabel?: string;
   demo?: string;
   demoLabel?: string;
+  privateSource?: boolean;
   Icon: LucideIcon;
 };
 
 const featured: Project[] = [
+  {
+    name: 'FastCast',
+    tagline:
+      'Native Windows screen recorder and OBS alternative: local MP4 recording, webcam overlay, and RTMP/RTMPS streaming. Source is private; releases, SHA-256 checksums, and beta notes are public.',
+    language: 'Private source',
+    stars: 0,
+    url: 'https://github.com/CalvinSturm/FastCast-releases',
+    codeLabel: 'Public releases',
+    demo: '/fastcast',
+    demoLabel: 'Product page',
+    privateSource: true,
+    Icon: MonitorPlay,
+  },
   {
     name: 'LocalAgent',
     tagline: 'Local-first agent runtime for MCP workflows, with explicit trust controls, replayable runs, and built-in evals.',
@@ -59,8 +75,8 @@ const featured: Project[] = [
     language: 'Rust',
     stars: 15,
     url: 'https://github.com/CalvinSturm/FastPlay',
-    demo: 'https://calvinsturm.github.io/FastPlay/',
-    demoLabel: 'Visit site',
+    demo: '/fastplay',
+    demoLabel: 'Product page',
     Icon: PlayCircle,
   },
   {
@@ -152,12 +168,13 @@ const more: Project[] = [
 ];
 
 const totalStars = [...featured, ...more].reduce((sum, p) => sum + p.stars, 0);
-const totalProjects = featured.length + more.length;
+const totalProjects = [...featured, ...more].filter((p) => !p.privateSource).length;
 
 const languageStyles: Record<string, string> = {
   Rust: 'bg-orange-100 text-orange-800',
   Python: 'bg-blue-100 text-blue-800',
   TypeScript: 'bg-indigo-100 text-indigo-800',
+  'Private source': 'bg-slate-200 text-slate-700',
 };
 
 function LanguageBadge({ language }: { language: string }) {
@@ -171,7 +188,8 @@ function LanguageBadge({ language }: { language: string }) {
 }
 
 function ProjectPreview({ project }: { project: Project }) {
-  const { name, tagline, language, stars, url, demo, demoLabel, Icon } = project;
+  const { name, tagline, language, stars, url, codeLabel, demo, demoLabel, Icon } = project;
+  const demoIsInternal = demo?.startsWith('/');
   return (
     <div className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-7 shadow-[0_30px_80px_rgba(17,24,39,0.16)]">
       <div className="mb-6 flex items-start justify-between">
@@ -198,14 +216,14 @@ function ProjectPreview({ project }: { project: Project }) {
           className="cta-primary text-sm py-2.5"
         >
           <Github className="h-4 w-4" />
-          View code
+          {codeLabel ?? 'View code'}
           <ArrowUpRight className="h-4 w-4" />
         </a>
         {demo && (
           <a
             href={demo}
-            target="_blank"
-            rel="noopener noreferrer"
+            target={demoIsInternal ? undefined : '_blank'}
+            rel={demoIsInternal ? undefined : 'noopener noreferrer'}
             className="cta-secondary text-sm py-2.5"
           >
             <ExternalLink className="h-4 w-4" />
@@ -406,7 +424,7 @@ export default function ProjectsApp() {
                 <Zap className="h-3.5 w-3.5 text-amber-500" />
                 Fast Series
               </a>
-              <a href="/" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
+              <a href="/build" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
                 <Sparkles className="h-3.5 w-3.5 text-amber-500" />
                 Websites &amp; Software
               </a>
@@ -458,7 +476,7 @@ export default function ProjectsApp() {
                 Fast Series
               </a>
               <a
-                href="/"
+                href="/build"
                 className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
               >
                 <Sparkles className="h-4 w-4 text-amber-500" />
@@ -502,7 +520,13 @@ export default function ProjectsApp() {
               Things I&apos;ve built.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-              A selection of my open-source projects: local-first AI tooling, Rust performance work, and a few things built purely for fun. Most are public on GitHub, so you can read the code and run it yourself.
+              A selection of my open-source projects: local-first AI tooling, Rust performance work, and a few things
+              built purely for fun. Most are public on GitHub, so you can read the code and run it yourself. The most
+              polished tools ship as the{' '}
+              <a href="/fast-series" className="font-medium text-slate-900 underline decoration-amber-400 underline-offset-4 hover:text-amber-700">
+                Fast Series
+              </a>
+              .
             </p>
             <dl className="mt-10 flex flex-wrap gap-x-12 gap-y-5">
               <div>
@@ -584,15 +608,20 @@ export default function ProjectsApp() {
         <section className="bg-slate-900">
           <div className="section-shell py-16 text-center lg:py-24">
             <h2 className="font-display text-3xl text-white sm:text-4xl">
-              Want something like this built for you?
+              From prototypes to products.
             </h2>
             <p className="mt-4 text-lg text-slate-400">
-              I build websites, custom software, and applied AI through Sturm Technologies. Tell me what you have in mind.
+              These projects grow into the Fast Series: finished Windows tools for creator and media workflows. Need
+              something custom built instead?{' '}
+              <a href="/build" className="text-amber-300 underline decoration-amber-400/50 underline-offset-4 hover:text-amber-200">
+                Start a project
+              </a>
+              .
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href="/" className="inline-flex items-center justify-center gap-2 rounded-full bg-amber-400 px-6 py-3.5 font-semibold text-[#1f1003] transition-colors hover:bg-amber-300">
-                <Sparkles className="h-5 w-5" />
-                Start a project
+              <a href="/fast-series" className="inline-flex items-center justify-center gap-2 rounded-full bg-amber-400 px-6 py-3.5 font-semibold text-[#1f1003] transition-colors hover:bg-amber-300">
+                <Zap className="h-5 w-5" />
+                Explore the Fast Series
               </a>
               <a
                 href="https://github.com/CalvinSturm"
@@ -626,7 +655,9 @@ export default function ProjectsApp() {
               <h3 className="mb-3 text-sm font-semibold text-slate-900">Explore</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 <li><a href="/fast-series" className="hover:text-slate-900">Fast Series</a></li>
-                <li><a href="/" className="hover:text-slate-900">Websites &amp; software</a></li>
+                <li><a href="/fastcast" className="hover:text-slate-900">FastCast</a></li>
+                <li><a href="/fastplay" className="hover:text-slate-900">FastPlay</a></li>
+                <li><a href="/build" className="hover:text-slate-900">Websites &amp; software</a></li>
                 <li><a href="/tech-support" className="hover:text-slate-900">In-home tech support</a></li>
                 <li><a href="https://github.com/CalvinSturm" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub profile</a></li>
               </ul>
@@ -635,7 +666,7 @@ export default function ProjectsApp() {
               <h3 className="mb-3 text-sm font-semibold text-slate-900">Contact</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 <li><a href="mailto:calvinsturm@gmail.com" className="hover:text-slate-900">calvinsturm@gmail.com</a></li>
-                <li><a href="/" className="hover:text-slate-900">Start a project</a></li>
+                <li><a href="/build" className="hover:text-slate-900">Start a project</a></li>
               </ul>
             </div>
           </div>

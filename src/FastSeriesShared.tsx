@@ -208,7 +208,7 @@ function useDarkMode() {
 const navLinks = [
   ['/fast-series', 'Fast Series', Zap],
   ['/projects', 'Projects', Code2],
-  ['/', 'Websites & Software', Sparkles],
+  ['/build', 'Websites & Software', Sparkles],
 ] as const;
 
 function SiteHeader() {
@@ -343,7 +343,7 @@ function SiteFooter() {
             <h3 className="mb-3 text-sm font-semibold text-slate-900">Explore</h3>
             <ul className="space-y-2 text-sm text-slate-600">
               <li><a href="/projects" className="hover:text-slate-900">Projects</a></li>
-              <li><a href="/" className="hover:text-slate-900">Websites &amp; software</a></li>
+              <li><a href="/build" className="hover:text-slate-900">Websites &amp; software</a></li>
               <li><a href="https://github.com/CalvinSturm" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub profile</a></li>
               <li><a href="mailto:calvinsturm@gmail.com" className="hover:text-slate-900">calvinsturm@gmail.com</a></li>
             </ul>
