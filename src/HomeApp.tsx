@@ -181,7 +181,7 @@ export default function HomeApp() {
       <header className="home-header">
         <div className="home-shell home-header-inner">
           <a href="/" className="home-brand" aria-label="Calvin Sturm home">
-            <img src="/sturm-mark.svg" alt="" width={30} height={30} aria-hidden="true" />
+            <img src="/sturm-mark.svg" alt="Sturm Technologies" width={30} height={30} />
             <span>Calvin Sturm</span>
           </a>
 
@@ -263,7 +263,7 @@ export default function HomeApp() {
 
               <div className="home-console-body">
                 <div className="home-console-card home-console-cast">
-                  <img src="/assets/FastCast/FastCast_Icon.png" alt="" width={38} height={38} />
+                  <img src="/assets/FastCast/FastCast_Icon.png" alt="FastCast app icon" width={38} height={38} />
                   <div className="home-console-card-text">
                     <span className="home-console-name">FastCast</span>
                     <span className="home-console-desc">Screen capture · Livestream</span>
@@ -276,7 +276,7 @@ export default function HomeApp() {
 
                 <div className="home-console-card home-console-play">
                   <div className="home-console-card-top">
-                    <img src="/assets/FastPlay/fastplay.png" alt="" width={38} height={38} />
+                    <img src="/assets/FastPlay/fastplay.png" alt="FastPlay app icon" width={38} height={38} />
                     <div className="home-console-card-text">
                       <span className="home-console-name">FastPlay</span>
                       <span className="home-console-desc">Local playback</span>
@@ -323,7 +323,7 @@ export default function HomeApp() {
             {spotlights.map((p) => (
               <a key={p.slug} href={`/${p.slug}`} className={`home-spot-card home-spot-${p.slug}`}>
                 <div className="home-spot-top">
-                  <img src={p.iconUrl} alt="" width={52} height={52} className="home-spot-icon" />
+                  <img src={p.iconUrl} alt={`${p.name} app icon`} width={52} height={52} className="home-spot-icon" />
                   <span className="home-status-chip">{p.status}</span>
                 </div>
                 <h3>{p.name}</h3>
@@ -518,7 +518,7 @@ export default function HomeApp() {
         <div className="home-shell home-footer-grid">
           <div>
             <a href="/" className="home-brand home-footer-brand">
-              <img src="/sturm-mark.svg" alt="" width={28} height={28} aria-hidden="true" />
+              <img src="/sturm-mark.svg" alt="Sturm Technologies" width={28} height={28} />
               <span>Calvin Sturm</span>
             </a>
             <p className="home-footer-blurb">
