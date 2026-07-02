@@ -1726,6 +1726,13 @@ html.dark .border-blue-600 {
   object-fit: contain;
 }
 
+.product-hero-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .product-nav-links {
   display: flex;
   align-items: center;
@@ -2023,6 +2030,19 @@ html.dark .border-blue-600 {
   min-width: 0;
 }
 
+.product-landing-fastcast .product-icon-badge,
+.product-landing-fastplay .product-icon-badge {
+  overflow: hidden;
+  background: transparent !important;
+  box-shadow: 0 0 0 1px var(--product-border);
+}
+
+.product-landing-fastcast .product-icon-status,
+.product-landing-fastplay .product-icon-status {
+  display: flex !important;
+  margin-bottom: 24px;
+}
+
 .product-landing-fastcast .product-eyebrow {
   display: none;
 }
@@ -2198,6 +2218,10 @@ html.dark .border-blue-600 {
 
 .product-landing-fastplay .product-hero-copy {
   max-width: none;
+}
+
+.product-landing-fastplay .product-icon-status {
+  justify-content: center;
 }
 
 .product-landing-fastplay .product-eyebrow {
