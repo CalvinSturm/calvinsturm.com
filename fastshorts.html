@@ -21,15 +21,38 @@
     <meta name="twitter:title" content="FastShorts | Short-form vertical video workflow" />
     <meta name="twitter:description" content="An experimental local, AI-assisted pipeline for short-form vertical video." />
 
-    <link rel="icon" type="image/png" href="/techWizIcon.png" />
-    <link rel="apple-touch-icon" href="/techWizIcon.png" />
+    <link rel="icon" type="image/svg+xml" href="/sturm-mark.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+    <style>
+      .static-page-fallback{margin:0 auto;max-width:760px;padding:110px 24px 64px;font-family:"Segoe UI",-apple-system,system-ui,sans-serif;color:#172033;line-height:1.65}
+      .static-page-fallback .kicker{margin:0 0 14px;color:#b45309;font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+      .static-page-fallback h1{margin:0;font-size:clamp(2.2rem,5.4vw,3.2rem);font-weight:700;line-height:1.1;letter-spacing:-.02em}
+      .static-page-fallback .sub{margin:20px 0 0;max-width:36rem;color:#5f6b7f;font-size:1.1rem}
+      .static-page-fallback .links{margin:30px 0 0}
+      .static-page-fallback a{margin-right:22px;color:#b45309;font-weight:700;text-decoration:none}
+      .static-page-fallback a:hover{text-decoration:underline}
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <main class="static-page-fallback">
+        <section>
+          <p class="kicker">The Fast Series &#183; Sturm Technologies</p>
+          <h1>FastShorts</h1>
+          <p class="sub">Local-first short-form video pipeline for faceless and creator workflows. Experimental.</p>
+          <p class="links">
+            <a href="/fast-series">Explore the Fast Series</a>
+            <a href="/">Calvin Sturm home</a>
+          </p>
+        </section>
+      </main>
+    </div>
     <script type="module" src="/src/fastshorts.tsx"></script>
   </body>
 </html>
