@@ -614,28 +614,53 @@ type ProductSectionHeadingProps = {
 
 function ProductSectionHeading({ eyebrow, title, description }: ProductSectionHeadingProps) {
   return (
-    <div className="max-w-3xl">
-      {eyebrow && <p className="eyebrow-amber">{eyebrow}</p>}
-      <h2 className="font-display mt-4 text-3xl leading-tight text-slate-900 sm:text-4xl">{title}</h2>
-      {description && <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">{description}</p>}
+    <div className="product-section-heading max-w-3xl">
+      {eyebrow && <p className="product-eyebrow eyebrow-amber">{eyebrow}</p>}
+      <h2 className="product-section-title font-display mt-4 text-3xl leading-tight text-slate-900 sm:text-4xl">{title}</h2>
+      {description && <p className="product-section-description mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">{description}</p>}
     </div>
   );
 }
 
-function ProductShell({ children }: { children: ReactNode }) {
+type ProductLandingVariant = 'fastcast' | 'fastplay';
+
+type ProductShellProps = {
+  children: ReactNode;
+  variant: ProductLandingVariant;
+  brand: string;
+  navLinks: Array<{ href: string; label: string }>;
+  footer: ReactNode;
+  brandIconUrl?: string;
+};
+
+function ProductShell({ children, variant, brand, navLinks, footer, brandIconUrl }: ProductShellProps) {
   return (
-    <div className="min-h-screen bg-transparent text-slate-900">
+    <div className={`product-landing product-landing-${variant}`}>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-slate-950"
       >
         Skip to main content
       </a>
-      <SiteHeader />
-      <main id="main-content" className="pt-16">
+      <header className="product-site-header" aria-label={`${brand} page navigation`}>
+        <a href="#main-content" className="product-brand" aria-label={`${brand} home`}>
+          {brandIconUrl && <img src={brandIconUrl} alt="" className="product-brand-mark" width="30" height="30" aria-hidden="true" />}
+          <span>{brand}</span>
+        </a>
+        <nav className="product-nav-links" aria-label="Page sections">
+          {navLinks.map((link) => (
+            <a key={`${link.href}-${link.label}`} href={link.href}>
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </header>
+      <main id="main-content">
         {children}
       </main>
-      <SiteFooter />
+      <footer className="product-site-footer">
+        {footer}
+      </footer>
     </div>
   );
 }
@@ -660,7 +685,8 @@ type ProductHeroProps = {
   secondaryLabel: string;
   secondaryHref: string;
   meta: string;
-  notes: string[];
+  notes?: string[];
+  subMeta?: string;
   preview: ReactNode;
 };
 
@@ -676,47 +702,50 @@ function ProductHero({
   secondaryHref,
   meta,
   notes,
+  subMeta,
   preview,
 }: ProductHeroProps) {
   return (
-    <section className="section-shell py-14 lg:py-20">
-      <ProductBackLink />
-      <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.82fr)] lg:items-center">
-        <div>
-          <div className="flex flex-wrap items-center gap-4">
-            <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-100 to-amber-200 text-amber-800">
+    <section className="product-hero section-shell py-14 lg:py-20" aria-labelledby="product-hero-title">
+      <div className="product-hero-grid mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.82fr)] lg:items-center">
+        <div className="product-hero-copy">
+          <div className="product-icon-status flex flex-wrap items-center gap-4">
+            <span className="product-icon-badge flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-100 to-amber-200 text-amber-800">
               <product.Icon className="h-8 w-8" />
             </span>
             <StatusBadge status={product.status} />
           </div>
-          <p className="eyebrow-amber mt-8">{eyebrow}</p>
-          <h1 className="font-display mt-4 text-[2.45rem] leading-[1.05] text-slate-900 sm:text-6xl lg:text-7xl">
+          <p className="product-eyebrow eyebrow-amber mt-8">{eyebrow}</p>
+          <h1 id="product-hero-title" className="product-hero-title font-display mt-4 text-[2.45rem] leading-[1.05] text-slate-900 sm:text-6xl lg:text-7xl">
             {title}
           </h1>
-          <p className="mt-5 max-w-2xl text-xl leading-relaxed text-slate-700">{subtitle}</p>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">{description}</p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a href={primaryHref} target="_blank" rel="noopener noreferrer" className="cta-primary">
+          <p className="product-hero-subtitle mt-5 max-w-2xl text-xl leading-relaxed text-slate-700">{subtitle}</p>
+          <p className="product-hero-description mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">{description}</p>
+          <div className="product-hero-actions mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a href={primaryHref} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary">
               <Download className="h-5 w-5" />
               {primaryLabel}
             </a>
-            <a href={secondaryHref} target="_blank" rel="noopener noreferrer" className="cta-secondary">
+            <a href={secondaryHref} target="_blank" rel="noopener noreferrer" className="product-button product-button-secondary cta-secondary">
               <Github className="h-5 w-5" />
               {secondaryLabel}
               <ArrowUpRight className="h-4 w-4" />
             </a>
           </div>
-          <p className="mt-4 text-sm font-medium text-slate-500">{meta}</p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {notes.map((note) => (
-              <span
-                key={note}
-                className="inline-flex items-center rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs font-semibold text-slate-600"
-              >
-                {note}
-              </span>
-            ))}
-          </div>
+          <p className="product-meta mt-4 text-sm font-medium text-slate-500">{meta}</p>
+          {subMeta && <p className="product-sub-meta text-sm font-medium text-slate-500">{subMeta}</p>}
+          {notes && notes.length > 0 && (
+            <div className="product-note-row mt-5 flex flex-wrap gap-2">
+              {notes.map((note) => (
+                <span
+                  key={note}
+                  className="product-note-chip inline-flex items-center rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs font-semibold text-slate-600"
+                >
+                  {note}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
         {preview}
       </div>
@@ -732,16 +761,16 @@ type FeatureItem = {
 
 function FeatureGrid({ items }: { items: FeatureItem[] }) {
   return (
-    <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="product-feature-grid mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map(({ title, body, Icon }) => (
-        <article key={title} className="feature-tile p-5">
+        <article key={title} className="product-feature-card feature-tile p-5">
           {Icon && (
-            <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white">
+            <span className="product-feature-icon mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white">
               <Icon className="h-5 w-5" />
             </span>
           )}
-          <h3 className="text-base font-semibold text-slate-900">{title}</h3>
-          {body && <p className="mt-2 text-sm leading-relaxed text-slate-600">{body}</p>}
+          <h3 className="product-card-title text-base font-semibold text-slate-900">{title}</h3>
+          {body && <p className="product-card-copy mt-2 text-sm leading-relaxed text-slate-600">{body}</p>}
         </article>
       ))}
     </div>
@@ -750,10 +779,10 @@ function FeatureGrid({ items }: { items: FeatureItem[] }) {
 
 function BulletedList({ items }: { items: string[] }) {
   return (
-    <ul className="space-y-3">
+    <ul className="product-bullet-list space-y-3">
       {items.map((item) => (
         <li key={item} className="flex items-start gap-3 text-base leading-relaxed text-slate-700">
-          <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-amber-500" />
+          <ArrowRight className="product-bullet-icon mt-1 h-4 w-4 shrink-0 text-amber-500" />
           <span>{item}</span>
         </li>
       ))}
@@ -763,15 +792,15 @@ function BulletedList({ items }: { items: string[] }) {
 
 function FactsTable({ rows }: { rows: Array<[string, string]> }) {
   return (
-    <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+    <div className="product-facts-wrapper mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
       <table className="w-full border-collapse text-left text-sm">
         <tbody>
           {rows.map(([label, value]) => (
             <tr key={label} className="border-b border-slate-100 last:border-b-0">
-              <th className="w-36 px-4 py-4 align-top text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 sm:w-52 sm:px-6">
+              <th className="product-fact-label w-36 px-4 py-4 align-top text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 sm:w-52 sm:px-6">
                 {label}
               </th>
-              <td className="px-4 py-4 align-top text-slate-700 sm:px-6">{value}</td>
+              <td className="product-fact-value px-4 py-4 align-top text-slate-700 sm:px-6">{value}</td>
             </tr>
           ))}
         </tbody>
@@ -782,14 +811,14 @@ function FactsTable({ rows }: { rows: Array<[string, string]> }) {
 
 function FaqList({ faqs }: { faqs: Array<{ question: string; answer: ReactNode }> }) {
   return (
-    <div className="mt-8 grid gap-3">
+    <div className="product-faq-list mt-8 grid gap-3">
       {faqs.map((faq) => (
-        <details key={faq.question} className="faq-item rounded-2xl border border-slate-200 bg-white/80 p-5">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-slate-900">
+        <details key={faq.question} open className="product-faq-item faq-item rounded-2xl border border-slate-200 bg-white/80 p-5">
+          <summary className="product-faq-summary flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-slate-900">
             {faq.question}
             <span className="faq-marker" aria-hidden="true" />
           </summary>
-          <div className="mt-3 text-sm leading-relaxed text-slate-600">{faq.answer}</div>
+          <div className="product-faq-answer mt-3 text-sm leading-relaxed text-slate-600">{faq.answer}</div>
         </details>
       ))}
     </div>
@@ -833,7 +862,28 @@ export function FastCastProductPage() {
   const product = productBySlug.fastcast;
 
   return (
-    <ProductShell>
+    <ProductShell
+      variant="fastcast"
+      brand="FastCast"
+      brandIconUrl="https://calvinsturm.github.io/FastCast-releases/assets/FastCast_Icon.png"
+      navLinks={[
+        { href: '#privacy', label: 'Privacy' },
+        { href: '#verify', label: 'Verify' },
+        { href: '#beta', label: 'Open Beta' },
+        { href: fastCastAllReleasesUrl, label: 'Releases' },
+      ]}
+      footer={
+        <>
+          <p>Source code is private.</p>
+          <p>This repository hosts public downloads and version metadata only.</p>
+          <p>
+            <a href={fastCastAllReleasesUrl} target="_blank" rel="noopener noreferrer">All releases</a>
+            <span aria-hidden="true"> / </span>
+            <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer">Latest release</a>
+          </p>
+        </>
+      }
+    >
       <ProductHero
         product={product}
         eyebrow="Native Windows screen recorder"
@@ -845,9 +895,8 @@ export function FastCastProductPage() {
         secondaryLabel="View release notes"
         secondaryHref={fastCastReleaseUrl}
         meta="Windows 10/11 x64 · Portable ZIP · Free during Open Beta"
-        notes={['Local MP4 recording', 'RTMP/RTMPS livestreaming', 'No accounts', 'No telemetry']}
         preview={
-          <figure className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
+          <figure className="product-preview overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
             <img
               src="https://calvinsturm.github.io/FastCast-releases/assets/fastcast-gui-v0.3.2.png"
               alt="FastCast Open Beta interface showing capture, audio, webcam, stream, and recording controls."
@@ -859,8 +908,8 @@ export function FastCastProductPage() {
         }
       />
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
-        <div className="section-shell grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
+      <section className="product-section product-section-intro border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-split-grid grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
           <div>
             <ProductSectionHeading
               eyebrow="Workflow"
@@ -868,14 +917,14 @@ export function FastCastProductPage() {
               description="FastCast focuses on the common path: choose a screen or window, choose audio, add an optional webcam overlay, then record or stream. It is designed for lightweight Windows capture workflows during Open Beta."
             />
           </div>
-          <aside className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
-            <p className="eyebrow-amber">Current release</p>
-            <p className="mt-3 font-display text-4xl text-slate-900">v0.3.2</p>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+          <aside className="product-panel product-release-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+            <h3>Current release</h3>
+            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.3.2</p>
+            <p className="product-panel-copy mt-3 text-sm leading-relaxed text-slate-600">
               The latest public build is hosted on GitHub Releases. FastCast does not download or install updates
               automatically.
             </p>
-            <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+            <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-panel-link mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
               Open release page
               <ArrowUpRight className="h-4 w-4 text-amber-500" />
             </a>
@@ -883,18 +932,18 @@ export function FastCastProductPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
+      <section className="product-section product-section-features border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
           <ProductSectionHeading eyebrow="Open Beta features" title="Screen recording, audio, webcam, and streaming in one focused app" />
           <FeatureGrid items={fastCastFeatures} />
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
-        <div className="section-shell grid gap-8 lg:grid-cols-2">
-          <div>
+      <section id="privacy" className="product-section product-section-trust border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-split-grid grid gap-8 lg:grid-cols-2">
+          <div className="product-copy-block">
             <ProductSectionHeading eyebrow="Privacy and trust" title="Local-first behavior, explicit checks" />
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-slate-700">
+            <div className="product-prose mt-6 space-y-4 text-base leading-relaxed text-slate-700">
               <p className="font-semibold text-slate-900">
                 No telemetry. No accounts. No crash upload. No background polling. No automatic updates.
               </p>
@@ -910,10 +959,10 @@ export function FastCastProductPage() {
             </div>
           </div>
           <div className="grid gap-4">
-            <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+            <article id="verify" className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
               <ShieldCheck className="h-6 w-6 text-emerald-600" />
               <h3 className="mt-4 text-lg font-semibold text-slate-900">Verify the download</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+              <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
                 Download <code>FastCast-0.3.2-win-x64.zip</code> from the latest release. An optional{' '}
                 <code>.sha256</code> sidecar is included for integrity checks.
               </p>
@@ -922,10 +971,10 @@ export function FastCastProductPage() {
                 fb48f1edc0798753f8a06a2c5aca5ccf39f135b4ba4da38d20e1b7386542a29e
               </code>
             </article>
-            <article className="rounded-2xl border border-amber-200/70 bg-amber-50 p-6">
+            <article className="product-panel product-warning-panel rounded-2xl border border-amber-200/70 bg-amber-50 p-6">
               <TriangleAlert className="h-6 w-6 text-amber-700" />
               <h3 className="mt-4 text-lg font-semibold text-slate-900">Unsigned Open Beta</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+              <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-700">
                 FastCast is currently unsigned, so Windows SmartScreen may show an "Unknown Publisher" warning. If you
                 trust the download source, click More info -&gt; Run anyway. If that is a dealbreaker, do not run it yet.
               </p>
@@ -934,18 +983,18 @@ export function FastCastProductPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
-        <div className="section-shell grid gap-8 lg:grid-cols-2">
-          <div>
+      <section id="beta" className="product-section product-section-beta border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-split-grid grid gap-8 lg:grid-cols-2">
+          <div className="product-copy-block">
             <ProductSectionHeading eyebrow="Open Beta status" title="Free during beta, with known gaps called out" />
-            <p className="mt-5 text-base leading-relaxed text-slate-600">
+            <p className="product-section-description mt-5 text-base leading-relaxed text-slate-600">
               FastCast is currently free during Open Beta. A Pro version may be added later for advanced creator
               features, but there is no Pro tier, license, or account system today.
             </p>
-            <div className="mt-7 rounded-2xl border border-slate-200 bg-white p-6">
+            <div className="product-panel mt-7 rounded-2xl border border-slate-200 bg-white p-6">
               <LockKeyhole className="h-6 w-6 text-slate-700" />
               <h3 className="mt-4 text-lg font-semibold text-slate-900">Private source</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+              <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
                 FastCast source code is private and proprietary. The public repository hosts downloads and version
                 metadata only.
               </p>
@@ -969,27 +1018,27 @@ export function FastCastProductPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
+      <section className="product-section product-section-faq border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
           <ProductSectionHeading eyebrow="FAQ" title="FastCast questions" />
           <FaqList faqs={fastCastFaqs} />
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
+      <section className="product-section product-section-cta border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
-          <div className="cta-panel p-8 text-center sm:p-10">
-            <h2 className="font-display text-3xl text-slate-900 sm:text-4xl">Download the current Open Beta</h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
+          <div className="product-cta-panel cta-panel p-8 text-center sm:p-10">
+            <h2 className="product-section-title font-display text-3xl text-slate-900 sm:text-4xl">Download the current Open Beta</h2>
+            <p className="product-section-description mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
               If something breaks, click Save Support Bundle in FastCast and send the generated ZIP with a short
               description of what happened.
             </p>
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="cta-primary">
+            <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary">
                 <Download className="h-5 w-5" />
                 Download latest release
               </a>
-              <a href={fastCastAllReleasesUrl} target="_blank" rel="noopener noreferrer" className="cta-secondary">
+              <a href={fastCastAllReleasesUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-secondary cta-secondary">
                 <Github className="h-5 w-5" />
                 All releases
               </a>
@@ -1107,7 +1156,40 @@ export function FastPlayProductPage() {
   const product = productBySlug.fastplay;
 
   return (
-    <ProductShell>
+    <ProductShell
+      variant="fastplay"
+      brand="FastPlay"
+      navLinks={[
+        { href: '#release', label: 'v0.4.1' },
+        { href: '#features', label: 'Features' },
+        { href: '#architecture', label: 'Architecture' },
+        { href: '#vlc', label: 'vs VLC' },
+        { href: '#faq', label: 'FAQ' },
+        { href: fastPlaySourceUrl, label: 'GitHub' },
+      ]}
+      footer={
+        <>
+          <p className="product-intent-links">
+            <span>Fast Windows video player</span>
+            <span aria-hidden="true"> · </span>
+            <span>Play videos fast on Windows</span>
+            <span aria-hidden="true"> · </span>
+            <span>Lightweight video player for Windows</span>
+            <span aria-hidden="true"> · </span>
+            <span>VLC alternative for Windows</span>
+            <span aria-hidden="true"> · </span>
+            <span>FastPlay benchmarks</span>
+          </p>
+          <p>
+            FastPlay by <a href="https://github.com/CalvinSturm" target="_blank" rel="noopener noreferrer">Calvin Sturm</a>
+            <span aria-hidden="true"> · </span>
+            <a href={fastPlaySourceUrl} target="_blank" rel="noopener noreferrer">Source on GitHub</a>
+            <span aria-hidden="true"> · </span>
+            MIT License
+          </p>
+        </>
+      }
+    >
       <ProductHero
         product={product}
         eyebrow="Fast lightweight Windows video player"
@@ -1119,9 +1201,9 @@ export function FastPlayProductPage() {
         secondaryLabel="View source on GitHub"
         secondaryHref={fastPlaySourceUrl}
         meta="v0.4.1 · Windows 10+ · MIT License"
-        notes={['Windows x64', 'Local playback', 'Hardware-accelerated decode', 'No streaming or media library']}
+        subMeta="Windows x64 local playback. No streaming, media library, or plugin system."
         preview={
-          <figure className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
+          <figure className="product-preview overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
             <img
               src="https://github.com/user-attachments/assets/ac8ae5f1-b4e3-42ca-b21e-c20c1c5de5c0"
               alt="FastPlay fast Windows video player playing a local video file with timeline scrubbing controls."
@@ -1131,27 +1213,27 @@ export function FastPlayProductPage() {
         }
       />
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
+      <section id="release" className="product-section product-section-release border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
-          <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)] sm:p-8">
+          <article className="product-panel product-release-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)] sm:p-8">
             <ProductSectionHeading
               eyebrow="Current release"
               title="New in v0.4.1: smoother shutdown and steadier audio"
               description="A stability and playback-robustness release. FastPlay now closes instantly without the occasional shutdown stall, and keeps audio realtime on heavy 4K60 files that fall back to software video decode."
             />
-            <div className="mt-7 grid gap-4 md:grid-cols-3">
+            <div className="product-release-list mt-7 grid gap-4 md:grid-cols-3">
               {[
                 ['Crash-free close', 'Skips fragile in-process GPU teardown at exit, so closing the window is instant instead of occasionally stalling.'],
                 ['Steady 4K60 audio', 'An independent audio decode worker keeps sound realtime even when video falls back to software decode.'],
                 ['Reliable resume', 'Shutdown still persists recent-file and resume state before exiting.'],
               ].map(([title, body]) => (
-                <div key={title} className="rounded-xl bg-slate-50 p-4">
+                <div key={title} className="product-release-item rounded-xl bg-slate-50 p-4">
                   <h3 className="font-semibold text-slate-900">{title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{body}</p>
+                  <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">{body}</p>
                 </div>
               ))}
             </div>
-            <a href={fastPlayReleaseNotesUrl} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+            <a href={fastPlayReleaseNotesUrl} target="_blank" rel="noopener noreferrer" className="product-panel-link mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
               Read v0.4.1 release notes
               <ArrowUpRight className="h-4 w-4 text-amber-500" />
             </a>
@@ -1159,7 +1241,7 @@ export function FastPlayProductPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
+      <section id="features" className="product-section product-section-overview border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
           <ProductSectionHeading
             eyebrow="At a glance"
@@ -1170,7 +1252,7 @@ export function FastPlayProductPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
+      <section id="architecture" className="product-section product-section-architecture border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
           <ProductSectionHeading
             eyebrow="Architecture"
@@ -1183,17 +1265,17 @@ export function FastPlayProductPage() {
               ['Audio path', 'FFmpeg decode -> WASAPI shared-mode sink'],
               ['Fallback path (software decode)', 'FFmpeg demux -> Software decode -> D3D11 upload -> DXGI present'],
             ].map(([label, path]) => (
-              <div key={label} className="rounded-2xl border border-slate-200 bg-slate-900 p-5 text-white shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-amber-300">{label}</p>
-                <p className="mt-3 break-words font-mono text-sm leading-relaxed text-slate-200">{path}</p>
+              <div key={label} className="product-arch-path rounded-2xl border border-slate-200 bg-slate-900 p-5 text-white shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+                <p className="product-arch-label text-xs font-semibold uppercase tracking-[0.14em] text-amber-300">{label}</p>
+                <p className="product-arch-copy mt-3 break-words font-mono text-sm leading-relaxed text-slate-200">{path}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
-        <div className="section-shell grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
+      <section id="vlc" className="product-section product-section-formats border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-format-audience-grid grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
           <div>
             <ProductSectionHeading
               eyebrow="Format support"
@@ -1202,14 +1284,14 @@ export function FastPlayProductPage() {
             />
             <div className="mt-6 flex flex-wrap gap-2">
               {['.mp4', '.mkv', '.mov', '.avi', '.webm', '.m4v', '.wmv', '.mp3', '.flac', '.wav', '.srt subtitles'].map((format) => (
-                <span key={format} className="rounded-full border border-slate-200 bg-white px-4 py-2 font-mono text-sm text-slate-600">
+                <span key={format} className="product-format-tag rounded-full border border-slate-200 bg-white px-4 py-2 font-mono text-sm text-slate-600">
                   {format}
                 </span>
               ))}
             </div>
           </div>
           <div className="grid gap-5 sm:grid-cols-2">
-            <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+            <article className="product-panel product-audience-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
               <h3 className="text-lg font-semibold text-slate-900">FastPlay is a good fit if you want</h3>
               <div className="mt-5">
                 <BulletedList
@@ -1224,7 +1306,7 @@ export function FastPlayProductPage() {
                 />
               </div>
             </article>
-            <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+            <article className="product-panel product-audience-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
               <h3 className="text-lg font-semibold text-slate-900">VLC is still better if you need</h3>
               <div className="mt-5">
                 <BulletedList
@@ -1243,7 +1325,7 @@ export function FastPlayProductPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
+      <section id="facts" className="product-section product-section-facts border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
           <ProductSectionHeading eyebrow="Facts" title="FastPlay facts" description="A quick reference for the essentials." />
           <FactsTable
@@ -1263,14 +1345,14 @@ export function FastPlayProductPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
+      <section id="controls" className="product-section product-section-controls border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
           <ProductSectionHeading
             eyebrow="Keyboard controls"
             title="Every action has a keybind"
             description="Hold H in the player to see the full controls overlay."
           />
-          <div className="mt-8 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+          <div className="product-controls-wrapper mt-8 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
             <table className="w-full min-w-[34rem] border-collapse text-left text-sm">
               <thead>
                 <tr className="border-b border-slate-200 bg-slate-50">
@@ -1291,26 +1373,26 @@ export function FastPlayProductPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
+      <section id="faq" className="product-section product-section-faq border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
           <ProductSectionHeading eyebrow="FAQ" title="Frequently asked questions" />
           <FaqList faqs={fastPlayFaqs} />
         </div>
       </section>
 
-      <section className="border-t border-slate-200 py-14 lg:py-20">
+      <section className="product-section product-section-cta border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
-          <div className="cta-panel p-8 text-center sm:p-10">
-            <h2 className="font-display text-3xl text-slate-900 sm:text-4xl">Try FastPlay</h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
+          <div className="product-cta-panel cta-panel p-8 text-center sm:p-10">
+            <h2 className="product-section-title font-display text-3xl text-slate-900 sm:text-4xl">Try FastPlay</h2>
+            <p className="product-section-description mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
               Free, open source, MIT licensed. Built for Windows 10 and later.
             </p>
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href={fastPlayReleaseUrl} target="_blank" rel="noopener noreferrer" className="cta-primary">
+            <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href={fastPlayReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary">
                 <Download className="h-5 w-5" />
                 Download MSI installer
               </a>
-              <a href={fastPlaySourceUrl} target="_blank" rel="noopener noreferrer" className="cta-secondary">
+              <a href={fastPlaySourceUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-secondary cta-secondary">
                 <Github className="h-5 w-5" />
                 GitHub repository
               </a>
