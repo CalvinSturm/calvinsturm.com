@@ -302,10 +302,16 @@ export default function HomeApp() {
               <p className="home-eyebrow">The Fast Series</p>
               <h2 id="series-heading">One tool per job, one pipeline overall</h2>
             </div>
-            <a href="/fast-series" className="home-inline-link">
-              View the full series
-              <ArrowUpRight className="h-4 w-4" />
-            </a>
+            <div className="home-section-head-links">
+              <a href="/fast-series" className="home-inline-link">
+                View the full series
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+              <a href="/roadmap" className="home-inline-link">
+                Product roadmap
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            </div>
           </div>
 
           <div className="home-grid">

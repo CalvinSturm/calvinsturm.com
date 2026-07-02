@@ -5,6 +5,7 @@ export const navLinks = [
   ['/fast-series', 'Fast Series'],
   ['/fastcast', 'FastCast'],
   ['/fastplay', 'FastPlay'],
+  ['/roadmap', 'Roadmap'],
   ['/projects', 'Projects'],
   ['/tech-support', 'Tech Support'],
 ] as const;
@@ -112,6 +113,7 @@ export function HomeFooter() {
         </nav>
         <nav aria-label="Explore">
           <h3>Explore</h3>
+          <a href="/roadmap">Product roadmap</a>
           <a href="/projects">Projects</a>
           <a href="/build">Websites &amp; software</a>
           <a href="/tech-support">Tech support</a>

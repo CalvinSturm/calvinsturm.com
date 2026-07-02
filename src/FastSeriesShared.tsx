@@ -885,6 +885,7 @@ export function FastCastProductPage() {
         { href: '#privacy', label: 'Privacy' },
         { href: '#verify', label: 'Verify' },
         { href: '#beta', label: 'Open Beta' },
+        { href: '/roadmap', label: 'Roadmap' },
         { href: fastCastAllReleasesUrl, label: 'Releases' },
       ]}
       footer={
@@ -1183,6 +1184,7 @@ export function FastPlayProductPage() {
         { href: '#architecture', label: 'Architecture' },
         { href: '#vlc', label: 'vs VLC' },
         { href: '#faq', label: 'FAQ' },
+        { href: '/roadmap', label: 'Roadmap' },
         { href: fastPlaySourceUrl, label: 'GitHub' },
       ]}
       footer={

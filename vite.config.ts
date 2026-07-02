@@ -23,6 +23,7 @@ export default defineConfig(({mode}) => {
           techSupport: path.resolve(__dirname, 'tech-support.html'),
           projects: path.resolve(__dirname, 'projects.html'),
           fastSeries: path.resolve(__dirname, 'fast-series.html'),
+          roadmap: path.resolve(__dirname, 'roadmap.html'),
           fastcast: path.resolve(__dirname, 'fastcast.html'),
           fastplay: path.resolve(__dirname, 'fastplay.html'),
           fastclip: path.resolve(__dirname, 'fastclip.html'),

@@ -657,6 +657,7 @@ export default function ProjectsApp() {
                 <li><a href="/fast-series" className="hover:text-slate-900">Fast Series</a></li>
                 <li><a href="/fastcast" className="hover:text-slate-900">FastCast</a></li>
                 <li><a href="/fastplay" className="hover:text-slate-900">FastPlay</a></li>
+                <li><a href="/roadmap" className="hover:text-slate-900">Product roadmap</a></li>
                 <li><a href="/build" className="hover:text-slate-900">Websites &amp; software</a></li>
                 <li><a href="/tech-support" className="hover:text-slate-900">In-home tech support</a></li>
                 <li><a href="https://github.com/CalvinSturm" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub profile</a></li>

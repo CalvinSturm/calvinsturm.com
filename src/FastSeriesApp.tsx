@@ -168,9 +168,15 @@ export default function FastSeriesApp() {
 
         {/* ---- Flagship cards ---- */}
         <section className="home-section home-shell" aria-labelledby="flagship-heading">
-          <div className="home-section-head">
-            <p className="home-eyebrow">Available now</p>
-            <h2 id="flagship-heading">The two that ship today</h2>
+          <div className="home-section-head home-section-head-split">
+            <div>
+              <p className="home-eyebrow">Available now</p>
+              <h2 id="flagship-heading">The two that ship today</h2>
+            </div>
+            <a href="/roadmap" className="home-inline-link">
+              View the roadmap
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
           </div>
           <div className="home-spot-grid">
             {flagships.map((p) => (
