@@ -6,20 +6,121 @@
     <meta name="theme-color" content="#fbbf24" />
     <meta name="color-scheme" content="light dark" />
 
-    <title>FastPlay | A fast, lightweight Windows video player</title>
-    <meta name="description" content="FastPlay is a minimal native Windows video player built for responsive playback and quick seeking. Lightweight, keyboard-driven, and quick to open. Part of the Fast Series by Calvin Sturm." />
-    <link rel="canonical" href="https://calvinsturm.com/fastplay" />
+    <title>FastPlay | Fast lightweight Windows video player for local files</title>
+    <meta name="description" content="FastPlay is a fast, lightweight native Windows video player for local file playback, responsive seeking, hardware-accelerated decode, smooth scrubbing, resume playback, and simple controls." />
+    <meta name="author" content="Calvin Sturm" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.calvinsturm.com/fastplay" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Calvin Sturm" />
-    <meta property="og:title" content="FastPlay | A fast, lightweight Windows video player" />
-    <meta property="og:description" content="A minimal native Windows video player built for responsive playback. Part of the Fast Series by Calvin Sturm." />
-    <meta property="og:url" content="https://calvinsturm.com/fastplay" />
+    <meta property="og:title" content="FastPlay | Fast lightweight Windows video player" />
+    <meta property="og:description" content="A native Windows video player for local files, responsive seeking, hardware-accelerated decode, smooth scrubbing, resume playback, and simple controls." />
+    <meta property="og:url" content="https://www.calvinsturm.com/fastplay" />
+    <meta property="og:image" content="https://github.com/user-attachments/assets/ac8ae5f1-b4e3-42ca-b21e-c20c1c5de5c0" />
     <meta property="og:locale" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="FastPlay | A fast, lightweight Windows video player" />
-    <meta name="twitter:description" content="A minimal native Windows video player built for responsive playback." />
+    <meta name="twitter:title" content="FastPlay | Fast lightweight Windows video player" />
+    <meta name="twitter:description" content="FastPlay is a native Windows video player for local files, responsive seeking, hardware-accelerated decode, and simple controls." />
+    <meta name="twitter:image" content="https://github.com/user-attachments/assets/ac8ae5f1-b4e3-42ca-b21e-c20c1c5de5c0" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "FastPlay",
+        "operatingSystem": "Windows 10, Windows 11",
+        "applicationCategory": "MultimediaApplication",
+        "applicationSubCategory": "Video Player",
+        "description": "FastPlay is a fast, lightweight native Windows video player for local playback, responsive seeking, hardware-accelerated decode, smooth scrubbing, resume playback, and simple controls.",
+        "softwareVersion": "0.4.1",
+        "license": "https://opensource.org/licenses/MIT",
+        "url": "https://www.calvinsturm.com/fastplay",
+        "downloadUrl": "https://github.com/CalvinSturm/FastPlay/releases/latest",
+        "codeRepository": "https://github.com/CalvinSturm/FastPlay",
+        "programmingLanguage": "Rust",
+        "releaseNotes": "https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.1.md",
+        "screenshot": "https://github.com/user-attachments/assets/ac8ae5f1-b4e3-42ca-b21e-c20c1c5de5c0",
+        "image": "https://github.com/user-attachments/assets/ac8ae5f1-b4e3-42ca-b21e-c20c1c5de5c0",
+        "author": {
+          "@type": "Person",
+          "name": "Calvin Sturm",
+          "url": "https://github.com/CalvinSturm"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "fileFormat": ["video/mp4", "video/x-matroska", "video/quicktime", "video/x-msvideo", "video/webm"],
+        "softwareRequirements": "Windows 10 or later, 64-bit"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is FastPlay?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FastPlay is a fast, lightweight native Windows video player built for local video playback, responsive seeking, hardware-accelerated decode, and simple controls."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is FastPlay a VLC alternative?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FastPlay can be used as a lightweight VLC alternative for Windows users who mainly want simple local file playback, fast startup, smooth scrubbing, and responsive controls. VLC is still better for advanced streaming, disc playback, filters, plugins, and cross-platform use."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What platforms does FastPlay support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FastPlay is built for Windows 10 and later, 64-bit."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is FastPlay free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. FastPlay is free and open source under the MIT License."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What makes FastPlay fast?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FastPlay is built around native Windows playback, FFmpeg demux and decode, D3D11 hardware decode, DXGI presentation, bounded queues, stale-work dropping during seek, and WASAPI audio."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does FastPlay support subtitles?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FastPlay supports external sidecar .srt subtitle files placed next to the media file. Embedded subtitle tracks and other subtitle formats are not loaded, and styling is intentionally minimal."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is FastPlay the fastest video player?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FastPlay is designed for fast local playback, but fastest claims require benchmark data. The benchmark page covers planned startup, seek, resume, memory, and playback comparisons."
+            }
+          }
+        ]
+      }
+    </script>
 
     <link rel="icon" type="image/png" href="/techWizIcon.png" />
     <link rel="apple-touch-icon" href="/techWizIcon.png" />

@@ -1,21 +1,34 @@
 import { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
+  BadgeCheck,
   Clapperboard,
   Code2,
+  Cpu,
+  Download,
   ExternalLink,
+  FileVideo,
   Github,
+  HardDrive,
   House,
+  Keyboard,
+  LockKeyhole,
   Menu,
+  Mic,
   Minimize2,
   MonitorPlay,
   Moon,
   PlayCircle,
+  Radio,
+  ShieldCheck,
   Scissors,
   Sparkles,
   Sun,
+  TriangleAlert,
+  Video,
   X,
   Zap,
 } from 'lucide-react';
@@ -584,5 +597,727 @@ export function ProductPage({ product }: { product: Product }) {
 
       <SiteFooter />
     </div>
+  );
+}
+
+const fastCastReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.3.2';
+const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
+const fastPlayReleaseUrl = 'https://github.com/CalvinSturm/FastPlay/releases/latest';
+const fastPlaySourceUrl = 'https://github.com/CalvinSturm/FastPlay';
+const fastPlayReleaseNotesUrl = 'https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.1.md';
+
+type ProductSectionHeadingProps = {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+};
+
+function ProductSectionHeading({ eyebrow, title, description }: ProductSectionHeadingProps) {
+  return (
+    <div className="max-w-3xl">
+      {eyebrow && <p className="eyebrow-amber">{eyebrow}</p>}
+      <h2 className="font-display mt-4 text-3xl leading-tight text-slate-900 sm:text-4xl">{title}</h2>
+      {description && <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">{description}</p>}
+    </div>
+  );
+}
+
+function ProductShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="min-h-screen bg-transparent text-slate-900">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        Skip to main content
+      </a>
+      <SiteHeader />
+      <main id="main-content" className="pt-16">
+        {children}
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
+
+function ProductBackLink() {
+  return (
+    <a href="/fast-series" className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-800">
+      <ArrowLeft className="h-4 w-4" />
+      Fast Series
+    </a>
+  );
+}
+
+type ProductHeroProps = {
+  product: Product;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel: string;
+  secondaryHref: string;
+  meta: string;
+  notes: string[];
+  preview: ReactNode;
+};
+
+function ProductHero({
+  product,
+  eyebrow,
+  title,
+  subtitle,
+  description,
+  primaryLabel,
+  primaryHref,
+  secondaryLabel,
+  secondaryHref,
+  meta,
+  notes,
+  preview,
+}: ProductHeroProps) {
+  return (
+    <section className="section-shell py-14 lg:py-20">
+      <ProductBackLink />
+      <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.82fr)] lg:items-center">
+        <div>
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-100 to-amber-200 text-amber-800">
+              <product.Icon className="h-8 w-8" />
+            </span>
+            <StatusBadge status={product.status} />
+          </div>
+          <p className="eyebrow-amber mt-8">{eyebrow}</p>
+          <h1 className="font-display mt-4 text-[2.45rem] leading-[1.05] text-slate-900 sm:text-6xl lg:text-7xl">
+            {title}
+          </h1>
+          <p className="mt-5 max-w-2xl text-xl leading-relaxed text-slate-700">{subtitle}</p>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">{description}</p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a href={primaryHref} target="_blank" rel="noopener noreferrer" className="cta-primary">
+              <Download className="h-5 w-5" />
+              {primaryLabel}
+            </a>
+            <a href={secondaryHref} target="_blank" rel="noopener noreferrer" className="cta-secondary">
+              <Github className="h-5 w-5" />
+              {secondaryLabel}
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+          </div>
+          <p className="mt-4 text-sm font-medium text-slate-500">{meta}</p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {notes.map((note) => (
+              <span
+                key={note}
+                className="inline-flex items-center rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs font-semibold text-slate-600"
+              >
+                {note}
+              </span>
+            ))}
+          </div>
+        </div>
+        {preview}
+      </div>
+    </section>
+  );
+}
+
+type FeatureItem = {
+  title: string;
+  body?: string;
+  Icon?: LucideIcon;
+};
+
+function FeatureGrid({ items }: { items: FeatureItem[] }) {
+  return (
+    <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {items.map(({ title, body, Icon }) => (
+        <article key={title} className="feature-tile p-5">
+          {Icon && (
+            <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white">
+              <Icon className="h-5 w-5" />
+            </span>
+          )}
+          <h3 className="text-base font-semibold text-slate-900">{title}</h3>
+          {body && <p className="mt-2 text-sm leading-relaxed text-slate-600">{body}</p>}
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function BulletedList({ items }: { items: string[] }) {
+  return (
+    <ul className="space-y-3">
+      {items.map((item) => (
+        <li key={item} className="flex items-start gap-3 text-base leading-relaxed text-slate-700">
+          <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-amber-500" />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function FactsTable({ rows }: { rows: Array<[string, string]> }) {
+  return (
+    <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+      <table className="w-full border-collapse text-left text-sm">
+        <tbody>
+          {rows.map(([label, value]) => (
+            <tr key={label} className="border-b border-slate-100 last:border-b-0">
+              <th className="w-36 px-4 py-4 align-top text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 sm:w-52 sm:px-6">
+                {label}
+              </th>
+              <td className="px-4 py-4 align-top text-slate-700 sm:px-6">{value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function FaqList({ faqs }: { faqs: Array<{ question: string; answer: ReactNode }> }) {
+  return (
+    <div className="mt-8 grid gap-3">
+      {faqs.map((faq) => (
+        <details key={faq.question} className="faq-item rounded-2xl border border-slate-200 bg-white/80 p-5">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-slate-900">
+            {faq.question}
+            <span className="faq-marker" aria-hidden="true" />
+          </summary>
+          <div className="mt-3 text-sm leading-relaxed text-slate-600">{faq.answer}</div>
+        </details>
+      ))}
+    </div>
+  );
+}
+
+const fastCastFeatures: FeatureItem[] = [
+  { title: 'Monitor or window capture', Icon: MonitorPlay },
+  { title: 'Desktop audio plus microphone', Icon: Mic },
+  { title: 'Webcam picture-in-picture overlay', Icon: Video },
+  { title: 'Local MP4 recording', Icon: HardDrive },
+  { title: 'RTMP and RTMPS livestreaming', Icon: Radio },
+  { title: 'Hardware H.264 tested on NVIDIA and AMD', Icon: Cpu },
+  { title: 'Passthrough, 1080p, or 720p output', Icon: FileVideo },
+  { title: 'Global Start/Stop hotkey: Ctrl+Alt+F9', Icon: Keyboard },
+];
+
+const fastCastFaqs = [
+  {
+    question: 'What is FastCast?',
+    answer:
+      'FastCast is a native Windows screen recorder and live streaming app for local MP4 recording, monitor or window capture, desktop audio, microphone capture, webcam overlay, and RTMP/RTMPS streaming.',
+  },
+  {
+    question: 'Is FastCast an OBS alternative?',
+    answer:
+      'FastCast is a simpler OBS alternative for focused single-scene recording and streaming workflows. OBS is still better when you need advanced scenes, filters, plugins, multistreaming, or complex broadcast production.',
+  },
+  {
+    question: 'Does FastCast save stream keys?',
+    answer: 'No. Stream keys are not saved to disk.',
+  },
+  {
+    question: 'Is FastCast signed?',
+    answer:
+      'FastCast is currently unsigned during Open Beta, so Windows SmartScreen may show an Unknown Publisher warning.',
+  },
+];
+
+export function FastCastProductPage() {
+  const product = productBySlug.fastcast;
+
+  return (
+    <ProductShell>
+      <ProductHero
+        product={product}
+        eyebrow="Native Windows screen recorder"
+        title="FastCast"
+        subtitle="A native Windows screen recorder and live streaming app."
+        description="FastCast helps creators record locally and stream to custom RTMP/RTMPS endpoints with desktop audio, microphone capture, and a webcam overlay. It is built as a simpler OBS alternative for focused single-scene recordings: choose a monitor or window, pick your audio, and record MP4 or go live without setting up scenes first."
+        primaryLabel="Download FastCast v0.3.2"
+        primaryHref={fastCastReleaseUrl}
+        secondaryLabel="View release notes"
+        secondaryHref={fastCastReleaseUrl}
+        meta="Windows 10/11 x64 · Portable ZIP · Free during Open Beta"
+        notes={['Local MP4 recording', 'RTMP/RTMPS livestreaming', 'No accounts', 'No telemetry']}
+        preview={
+          <figure className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
+            <img
+              src="https://calvinsturm.github.io/FastCast-releases/assets/fastcast-gui-v0.3.2.png"
+              alt="FastCast Open Beta interface showing capture, audio, webcam, stream, and recording controls."
+              className="h-auto w-full"
+              width="700"
+              height="957"
+            />
+          </figure>
+        }
+      />
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
+          <div>
+            <ProductSectionHeading
+              eyebrow="Workflow"
+              title="Quick captures without scene setup"
+              description="FastCast focuses on the common path: choose a screen or window, choose audio, add an optional webcam overlay, then record or stream. It is designed for lightweight Windows capture workflows during Open Beta."
+            />
+          </div>
+          <aside className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+            <p className="eyebrow-amber">Current release</p>
+            <p className="mt-3 font-display text-4xl text-slate-900">v0.3.2</p>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              The latest public build is hosted on GitHub Releases. FastCast does not download or install updates
+              automatically.
+            </p>
+            <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+              Open release page
+              <ArrowUpRight className="h-4 w-4 text-amber-500" />
+            </a>
+          </aside>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading eyebrow="Open Beta features" title="Screen recording, audio, webcam, and streaming in one focused app" />
+          <FeatureGrid items={fastCastFeatures} />
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell grid gap-8 lg:grid-cols-2">
+          <div>
+            <ProductSectionHeading eyebrow="Privacy and trust" title="Local-first behavior, explicit checks" />
+            <div className="mt-6 space-y-4 text-base leading-relaxed text-slate-700">
+              <p className="font-semibold text-slate-900">
+                No telemetry. No accounts. No crash upload. No background polling. No automatic updates.
+              </p>
+              <p>Stream keys are not saved to disk.</p>
+              <p>
+                The manual Check for Updates action only checks the public release feed. It does not download or install
+                updates.
+              </p>
+              <p>
+                Support bundles are created only when you click Save Support Bundle. They are saved locally and redacted
+                before being written.
+              </p>
+            </div>
+          </div>
+          <div className="grid gap-4">
+            <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <ShieldCheck className="h-6 w-6 text-emerald-600" />
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">Verify the download</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                Download <code>FastCast-0.3.2-win-x64.zip</code> from the latest release. An optional{' '}
+                <code>.sha256</code> sidecar is included for integrity checks.
+              </p>
+              <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Expected SHA-256</p>
+              <code className="mt-2 block break-all rounded-xl bg-slate-100 p-3 text-xs text-slate-700">
+                fb48f1edc0798753f8a06a2c5aca5ccf39f135b4ba4da38d20e1b7386542a29e
+              </code>
+            </article>
+            <article className="rounded-2xl border border-amber-200/70 bg-amber-50 p-6">
+              <TriangleAlert className="h-6 w-6 text-amber-700" />
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">Unsigned Open Beta</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                FastCast is currently unsigned, so Windows SmartScreen may show an "Unknown Publisher" warning. If you
+                trust the download source, click More info -&gt; Run anyway. If that is a dealbreaker, do not run it yet.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell grid gap-8 lg:grid-cols-2">
+          <div>
+            <ProductSectionHeading eyebrow="Open Beta status" title="Free during beta, with known gaps called out" />
+            <p className="mt-5 text-base leading-relaxed text-slate-600">
+              FastCast is currently free during Open Beta. A Pro version may be added later for advanced creator
+              features, but there is no Pro tier, license, or account system today.
+            </p>
+            <div className="mt-7 rounded-2xl border border-slate-200 bg-white p-6">
+              <LockKeyhole className="h-6 w-6 text-slate-700" />
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">Private source</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                FastCast source code is private and proprietary. The public repository hosts downloads and version
+                metadata only.
+              </p>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-slate-900">Known limitations</h3>
+            <div className="mt-5">
+              <BulletedList
+                items={[
+                  'No scene system / multiple sources yet',
+                  'No chroma key or filters yet',
+                  'No multistream / simulcast yet',
+                  'No platform OAuth yet',
+                  'Intel hardware encoding is not broadly validated yet; software fallback is included',
+                  'App is unsigned during Open Beta',
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading eyebrow="FAQ" title="FastCast questions" />
+          <FaqList faqs={fastCastFaqs} />
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <div className="cta-panel p-8 text-center sm:p-10">
+            <h2 className="font-display text-3xl text-slate-900 sm:text-4xl">Download the current Open Beta</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
+              If something breaks, click Save Support Bundle in FastCast and send the generated ZIP with a short
+              description of what happened.
+            </p>
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="cta-primary">
+                <Download className="h-5 w-5" />
+                Download latest release
+              </a>
+              <a href={fastCastAllReleasesUrl} target="_blank" rel="noopener noreferrer" className="cta-secondary">
+                <Github className="h-5 w-5" />
+                All releases
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </ProductShell>
+  );
+}
+
+const fastPlayFeatures: FeatureItem[] = [
+  {
+    title: 'Instant first frame',
+    body: 'Opens files and reaches the first visible frame as fast as the hardware allows. D3D11 hardware decode keeps video on the GPU from decode to present.',
+    Icon: Zap,
+  },
+  {
+    title: 'Responsive seek',
+    body: 'Generation-based stale-work dropping means old frames never delay new ones. Scrub the timeline and see results immediately.',
+    Icon: BadgeCheck,
+  },
+  {
+    title: 'GPU-resident video path',
+    body: 'Decoded video stays on the GPU through a DXGI flip-model swap chain. No CPU copy-back during normal playback.',
+    Icon: Cpu,
+  },
+  {
+    title: 'Recent files and resume',
+    body: 'Open recent files from the overlay and resume each file near the last watched position without building a persistent library.',
+    Icon: FileVideo,
+  },
+  {
+    title: 'Queue without playlists',
+    body: 'Drop several files or one folder to create a temporary queue. Step through it manually or let natural end-of-file advance to the next item.',
+    Icon: PlayCircle,
+  },
+  {
+    title: 'Viewing controls',
+    body: 'Cursor-centered zoom, drag-to-pan, 90-degree rotation, borderless fullscreen, playback speed control, and in/out point looping.',
+    Icon: Keyboard,
+  },
+  {
+    title: 'Robust Windows playback',
+    body: 'Handles resize, DPI, audio endpoint churn, device recovery, and software decode fallback while preserving the D3D11 present path.',
+    Icon: ShieldCheck,
+  },
+];
+
+const fastPlayControls: Array<[string, string]> = [
+  ['Space', 'Pause / resume / replay'],
+  ['Left / Right', 'Seek 5s, hold for 15s steps'],
+  ['Ctrl+F / Ctrl+B', 'Move one frame forward / backward'],
+  ['Ctrl+O (letter O)', 'Open media file'],
+  ['Ctrl+Shift+O (letter O)', 'Recent files overlay'],
+  ['PageUp / PageDown', 'Previous / next file in the play queue'],
+  ['Ctrl+S', 'Save screenshot'],
+  ['[ / ]', 'Decrease / increase playback speed'],
+  ['\\', 'Reset speed to 1x'],
+  ['I / O', 'Set in-point / out-point'],
+  ['Shift+I / Shift+O', 'Clear in-point / out-point'],
+  ['R', 'Toggle loop range or auto-replay'],
+  ['S', 'Toggle subtitles'],
+  ['Mouse wheel', 'Volume'],
+  ['Ctrl+Mouse wheel', 'Zoom at cursor'],
+  ['Ctrl+Drag', 'Pan when zoomed'],
+  ['Ctrl+0 (zero)', 'Reset zoom, pan, rotation'],
+  ['Ctrl+R / Ctrl+E', 'Rotate CW / CCW'],
+  ['Ctrl+H', 'Borderless fullscreen'],
+  ['Esc', 'Exit fullscreen'],
+  ['Ctrl+W', 'Fit window to video'],
+  ['Ctrl+Q', 'Half-resolution window'],
+  ['Backspace', 'Cancel scrub'],
+  ['H (hold)', 'Show controls overlay'],
+  ['`', 'Toggle HW/SW decode mode in title bar'],
+];
+
+const fastPlayFaqs = [
+  {
+    question: 'What is FastPlay?',
+    answer:
+      'FastPlay is a fast, lightweight native Windows video player built for local video playback, responsive seeking, hardware-accelerated decode, and simple controls.',
+  },
+  {
+    question: 'Is FastPlay a VLC alternative?',
+    answer:
+      'FastPlay can be used as a lightweight VLC alternative for Windows users who mainly want simple local file playback, fast startup, smooth scrubbing, and responsive controls. VLC is still better for advanced streaming, disc playback, filters, plugins, and cross-platform use.',
+  },
+  {
+    question: 'What platforms does FastPlay support?',
+    answer: 'FastPlay is built for Windows 10 and later, 64-bit.',
+  },
+  {
+    question: 'Is FastPlay free?',
+    answer: 'Yes. FastPlay is free and open source under the MIT License.',
+  },
+  {
+    question: 'What makes FastPlay fast?',
+    answer:
+      'FastPlay is built around native Windows playback, FFmpeg demux/decode, D3D11 hardware decode, DXGI presentation, bounded queues, stale-work dropping during seek, and WASAPI audio.',
+  },
+  {
+    question: 'Does FastPlay support subtitles?',
+    answer:
+      'FastPlay supports external sidecar .srt subtitle files placed next to the media file. Embedded subtitle tracks and other subtitle formats are not loaded, and styling is intentionally minimal.',
+  },
+  {
+    question: 'Is FastPlay the fastest video player?',
+    answer:
+      'FastPlay is designed for fast local playback, but "fastest" claims require benchmark data. The benchmark page covers planned startup, seek, resume, memory, and playback comparisons.',
+  },
+];
+
+export function FastPlayProductPage() {
+  const product = productBySlug.fastplay;
+
+  return (
+    <ProductShell>
+      <ProductHero
+        product={product}
+        eyebrow="Fast lightweight Windows video player"
+        title="A fast Windows video player for local files"
+        subtitle="FastPlay opens local videos quickly, seeks responsively, uses hardware-accelerated decode, and stays out of the way."
+        description="FastPlay is a simple native Windows app for local file playback. It is not trying to replace every advanced VLC feature; it focuses on fast startup, smooth scrubbing, responsive controls, and a lightweight everyday playback experience."
+        primaryLabel="Download FastPlay for Windows"
+        primaryHref={fastPlayReleaseUrl}
+        secondaryLabel="View source on GitHub"
+        secondaryHref={fastPlaySourceUrl}
+        meta="v0.4.1 · Windows 10+ · MIT License"
+        notes={['Windows x64', 'Local playback', 'Hardware-accelerated decode', 'No streaming or media library']}
+        preview={
+          <figure className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
+            <img
+              src="https://github.com/user-attachments/assets/ac8ae5f1-b4e3-42ca-b21e-c20c1c5de5c0"
+              alt="FastPlay fast Windows video player playing a local video file with timeline scrubbing controls."
+              className="h-auto w-full"
+            />
+          </figure>
+        }
+      />
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)] sm:p-8">
+            <ProductSectionHeading
+              eyebrow="Current release"
+              title="New in v0.4.1: smoother shutdown and steadier audio"
+              description="A stability and playback-robustness release. FastPlay now closes instantly without the occasional shutdown stall, and keeps audio realtime on heavy 4K60 files that fall back to software video decode."
+            />
+            <div className="mt-7 grid gap-4 md:grid-cols-3">
+              {[
+                ['Crash-free close', 'Skips fragile in-process GPU teardown at exit, so closing the window is instant instead of occasionally stalling.'],
+                ['Steady 4K60 audio', 'An independent audio decode worker keeps sound realtime even when video falls back to software decode.'],
+                ['Reliable resume', 'Shutdown still persists recent-file and resume state before exiting.'],
+              ].map(([title, body]) => (
+                <div key={title} className="rounded-xl bg-slate-50 p-4">
+                  <h3 className="font-semibold text-slate-900">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{body}</p>
+                </div>
+              ))}
+            </div>
+            <a href={fastPlayReleaseNotesUrl} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+              Read v0.4.1 release notes
+              <ArrowUpRight className="h-4 w-4 text-amber-500" />
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="At a glance"
+            title="A native Windows video player for fast local playback"
+            description="FastPlay focuses on startup speed, responsive seeking, smooth playback, hardware-accelerated decode, and simple controls. No media library. No plugin maze. Just fast open, clean playback, and responsive controls."
+          />
+          <FeatureGrid items={fastPlayFeatures} />
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="Architecture"
+            title="Rust, FFmpeg, D3D11, DXGI, and WASAPI"
+            description="Single crate, single coordinator, bounded queues, and an explicit state machine keep the playback path focused."
+          />
+          <div className="mt-8 grid gap-4">
+            {[
+              ['Video path (hardware decode)', 'FFmpeg demux -> D3D11 hw decode -> GPU surface -> DXGI flip-model present'],
+              ['Audio path', 'FFmpeg decode -> WASAPI shared-mode sink'],
+              ['Fallback path (software decode)', 'FFmpeg demux -> Software decode -> D3D11 upload -> DXGI present'],
+            ].map(([label, path]) => (
+              <div key={label} className="rounded-2xl border border-slate-200 bg-slate-900 p-5 text-white shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-amber-300">{label}</p>
+                <p className="mt-3 break-words font-mono text-sm leading-relaxed text-slate-200">{path}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
+          <div>
+            <ProductSectionHeading
+              eyebrow="Format support"
+              title="Common local video and audio formats"
+              description="FFmpeg-backed demux and decode support for everyday local media files."
+            />
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['.mp4', '.mkv', '.mov', '.avi', '.webm', '.m4v', '.wmv', '.mp3', '.flac', '.wav', '.srt subtitles'].map((format) => (
+                <span key={format} className="rounded-full border border-slate-200 bg-white px-4 py-2 font-mono text-sm text-slate-600">
+                  {format}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <h3 className="text-lg font-semibold text-slate-900">FastPlay is a good fit if you want</h3>
+              <div className="mt-5">
+                <BulletedList
+                  items={[
+                    'A fast Windows video player for local files',
+                    'A lightweight media player without a media-library workflow',
+                    'Smooth scrubbing and responsive seek behavior',
+                    'Resume-friendly everyday playback',
+                    'Hardware-accelerated playback on Windows',
+                    'Simple controls without plugin or settings clutter',
+                  ]}
+                />
+              </div>
+            </article>
+            <article className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <h3 className="text-lg font-semibold text-slate-900">VLC is still better if you need</h3>
+              <div className="mt-5">
+                <BulletedList
+                  items={[
+                    'Advanced codec tools',
+                    'Network streams',
+                    'Disc playback',
+                    'Filters and plugins',
+                    'Cross-platform support',
+                    'Deep media troubleshooting tools',
+                  ]}
+                />
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading eyebrow="Facts" title="FastPlay facts" description="A quick reference for the essentials." />
+          <FactsTable
+            rows={[
+              ['Product', 'FastPlay'],
+              ['Developer', 'Calvin Sturm'],
+              ['Category', 'Windows video player'],
+              ['Platform', 'Windows 10 and later, 64-bit'],
+              ['License', 'MIT License (free and open source)'],
+              ['Primary use', 'Local video playback'],
+              ['Main benefits', 'Fast startup, responsive seeking, hardware-accelerated decode, simple controls'],
+              ['Technology', 'Rust, FFmpeg, D3D11, DXGI, WASAPI'],
+              ['Best for', 'Users who want a fast lightweight Windows video player for local files'],
+              ['Not designed for', 'Advanced network streaming, disc playback, broadcast workflows, or replacing every VLC power-user feature'],
+            ]}
+          />
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="Keyboard controls"
+            title="Every action has a keybind"
+            description="Hold H in the player to see the full controls overlay."
+          />
+          <div className="mt-8 overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+            <table className="w-full min-w-[34rem] border-collapse text-left text-sm">
+              <thead>
+                <tr className="border-b border-slate-200 bg-slate-50">
+                  <th className="px-5 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Key</th>
+                  <th className="px-5 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {fastPlayControls.map(([key, action]) => (
+                  <tr key={key} className="border-b border-slate-100 last:border-b-0">
+                    <td className="whitespace-nowrap px-5 py-3 font-mono text-sm text-slate-900">{key}</td>
+                    <td className="px-5 py-3 text-slate-600">{action}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading eyebrow="FAQ" title="Frequently asked questions" />
+          <FaqList faqs={fastPlayFaqs} />
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <div className="cta-panel p-8 text-center sm:p-10">
+            <h2 className="font-display text-3xl text-slate-900 sm:text-4xl">Try FastPlay</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
+              Free, open source, MIT licensed. Built for Windows 10 and later.
+            </p>
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href={fastPlayReleaseUrl} target="_blank" rel="noopener noreferrer" className="cta-primary">
+                <Download className="h-5 w-5" />
+                Download MSI installer
+              </a>
+              <a href={fastPlaySourceUrl} target="_blank" rel="noopener noreferrer" className="cta-secondary">
+                <Github className="h-5 w-5" />
+                GitHub repository
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </ProductShell>
   );
 }
