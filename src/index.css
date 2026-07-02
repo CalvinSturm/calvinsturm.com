@@ -3124,6 +3124,75 @@ html.home-page body {
   transform: translateX(3px);
 }
 
+/* ---- Start here strip ---- */
+.home-start-here {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-top: 20px;
+  border: 1px solid var(--hl-border);
+  border-radius: var(--hl-radius);
+  background: var(--hl-surface);
+  overflow: hidden;
+}
+
+.home-start-label {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-right: 1px solid var(--hl-border);
+  color: var(--hl-accent);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 16px 22px;
+}
+
+.home-start-here a {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 14px;
+  min-width: 0;
+  padding: 14px 22px;
+  transition: background 150ms ease;
+}
+
+.home-start-here a + a {
+  border-left: 1px solid var(--hl-border);
+}
+
+.home-start-here a:hover {
+  background: var(--hl-surface-2);
+}
+
+.home-start-here a span {
+  color: var(--hl-muted);
+  font-size: 0.88rem;
+}
+
+.home-start-here a strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--hl-text);
+  font-size: 0.9rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.home-start-here a strong svg {
+  color: var(--hl-accent);
+  transition: transform 150ms ease;
+}
+
+.home-start-here a:hover strong svg {
+  transform: translateX(3px);
+}
+
 /* ---- Fast Series grid ---- */
 .home-grid {
   display: grid;
@@ -3548,6 +3617,21 @@ html.home-page body {
 
   .home-spot-grid {
     grid-template-columns: 1fr;
+  }
+
+  .home-start-here {
+    flex-direction: column;
+  }
+
+  .home-start-label {
+    border-right: 0;
+    border-bottom: 1px solid var(--hl-border);
+    padding: 12px 20px;
+  }
+
+  .home-start-here a + a {
+    border-left: 0;
+    border-top: 1px solid var(--hl-border);
   }
 
   .home-spot-card {

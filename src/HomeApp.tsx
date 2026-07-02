@@ -145,8 +145,8 @@ const trustPoints = [
   },
   {
     Icon: FolderGit2,
-    title: 'GitHub as the release backend',
-    body: 'Downloads, release notes, and version metadata live on public GitHub releases where each product has them.',
+    title: 'Public releases where possible',
+    body: 'FastPlay is open source under the MIT License. FastCast publishes release artifacts, SHA-256 checksums, and clear beta notes on GitHub release pages.',
   },
   {
     Icon: ShieldCheck,
@@ -340,6 +340,31 @@ export default function HomeApp() {
               </a>
             ))}
           </div>
+
+          <nav className="home-start-here" aria-label="Start here">
+            <span className="home-start-label">Start here</span>
+            <a href="/fastcast">
+              <span>Recording or streaming?</span>
+              <strong>
+                FastCast
+                <ArrowRight className="h-3.5 w-3.5" />
+              </strong>
+            </a>
+            <a href="/fastplay">
+              <span>Playing and reviewing footage?</span>
+              <strong>
+                FastPlay
+                <ArrowRight className="h-3.5 w-3.5" />
+              </strong>
+            </a>
+            <a href="/fast-series">
+              <span>Building a shorts workflow?</span>
+              <strong>
+                Fast Series
+                <ArrowRight className="h-3.5 w-3.5" />
+              </strong>
+            </a>
+          </nav>
         </section>
 
         {/* ---- Fast Series grid ---- */}

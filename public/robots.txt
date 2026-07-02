@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://calvinsturm.com/sitemap.xml
+Sitemap: https://www.calvinsturm.com/sitemap.xml
