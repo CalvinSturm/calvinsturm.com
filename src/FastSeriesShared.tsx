@@ -688,6 +688,7 @@ type ProductHeroProps = {
   notes?: string[];
   subMeta?: string;
   heroIconUrl?: string;
+  heroIconAlt?: string;
   preview: ReactNode;
 };
 
@@ -705,6 +706,7 @@ function ProductHero({
   notes,
   subMeta,
   heroIconUrl,
+  heroIconAlt,
   preview,
 }: ProductHeroProps) {
   return (
@@ -714,7 +716,14 @@ function ProductHero({
           <div className="product-icon-status flex flex-wrap items-center gap-4">
             <span className="product-icon-badge flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-100 to-amber-200 text-amber-800">
               {heroIconUrl ? (
-                <img src={heroIconUrl} alt="" className="product-hero-logo" width="64" height="64" aria-hidden="true" />
+                <img
+                  src={heroIconUrl}
+                  alt={heroIconAlt ?? ''}
+                  aria-hidden={heroIconAlt ? undefined : true}
+                  className="product-hero-logo"
+                  width="64"
+                  height="64"
+                />
               ) : (
                 <product.Icon className="h-8 w-8" />
               )}
@@ -902,6 +911,7 @@ export function FastCastProductPage() {
         secondaryHref={fastCastReleaseUrl}
         meta="Windows 10/11 x64 · Portable ZIP · Free during Open Beta"
         heroIconUrl="/assets/FastCast/FastCast_Icon.png"
+        heroIconAlt="FastCast app icon"
         preview={
           <figure className="product-preview overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
             <img
@@ -1211,6 +1221,7 @@ export function FastPlayProductPage() {
         meta="v0.4.1 · Windows 10+ · MIT License"
         subMeta="Windows x64 local playback. No streaming, media library, or plugin system."
         heroIconUrl="/assets/FastPlay/fastplay.png"
+        heroIconAlt="FastPlay app icon"
         preview={
           <figure className="product-preview overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
             <img
