@@ -396,9 +396,9 @@ export default function App() {
                   A software builder, not a call center.
                 </h2>
                 <p className="mt-4 text-lg leading-relaxed text-slate-600">
-                  Tech Wiz is the local services side of Sturm Technologies. Calvin Sturm builds practical Windows
-                  software for creators and builders, and brings that same patient, methodical approach to the
-                  everyday tech problems that slow people down on the Central Coast.
+                  Tech Wiz is the local services side of Sturm Technologies. Calvin Sturm builds the Fast Series,
+                  practical Windows software for creators and builders, and brings that same patient, methodical
+                  approach to the everyday tech problems that slow people down on the Central Coast.
                 </p>
                 <p className="mt-3 leading-relaxed text-slate-600">
                   The person at your kitchen table writes software for a living. No scripts, no upselling, and

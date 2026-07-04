@@ -39,6 +39,7 @@ const trustPoints = [
   ['Modern, maintainable code', 'Built on current frameworks so it keeps working after launch, and anyone can pick it up later.', Code2],
   ['AI where it actually helps', 'GenAI used to save real hours: drafting, summarizing, searching your own data, not as a gimmick.', Sparkles],
   ['Honest scoping', 'If something is cheaper, simpler, or already solved off-the-shelf, we say so before you spend.', ShieldCheck],
+  ['Products, not just projects', 'Sturm Technologies ships its own software: the Fast Series of native Windows creator tools, with public releases on GitHub.', Zap],
 ] as const;
 
 const reviews = [
@@ -221,7 +222,7 @@ export default function BuildApp() {
         <div className="section-shell">
           <div className="flex h-16 items-center justify-between">
             <a href="/" className="flex items-center gap-2.5" aria-label="Sturm Technologies home">
-              <img src="/techWizIcon.png" alt="" aria-hidden="true" className="h-11 w-11 object-contain" />
+              <img src="/sturm-mark.svg" alt="" aria-hidden="true" className="h-9 w-9 object-contain" />
               <span className="font-display text-xl text-slate-900">Sturm Technologies</span>
             </a>
 
@@ -325,7 +326,7 @@ export default function BuildApp() {
                 className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 animate-fade-in-up"
                 style={{ animationDelay: '0.15s' }}
               >
-                Custom-built websites, business software, and applied AI / GenAI tools. Clear scoping, modern code, honest pricing, from the same local team that helps Central Coast neighbors with their tech.
+                Custom-built websites, business software, and applied AI / GenAI tools. Clear scoping, modern code, honest pricing, from the developer behind the Fast Series of native Windows creator tools.
               </p>
               <div className="mt-8 flex flex-col gap-3 animate-fade-in-up sm:flex-row" style={{ animationDelay: '0.2s' }}>
                 <a href="#request-build" className="cta-primary">
@@ -679,7 +680,7 @@ export default function BuildApp() {
           <div className="grid gap-10 md:grid-cols-3">
             <div>
               <div className="mb-3 flex items-center gap-2.5">
-                <img src="/techWizIcon.png" alt="Sturm Technologies" className="h-10 w-10 object-contain" />
+                <img src="/sturm-mark.svg" alt="Sturm Technologies" className="h-9 w-9 object-contain" />
                 <span className="font-display text-xl text-slate-900">Sturm Technologies</span>
               </div>
               <p className="max-w-xs text-sm leading-relaxed text-slate-600">Websites, custom software, and applied AI, built on California&apos;s Central Coast and delivered anywhere.</p>
@@ -690,6 +691,7 @@ export default function BuildApp() {
                 {navItems.map(([label, href]) => (
                   <li key={href}><a href={href} className="hover:text-slate-900">{label}</a></li>
                 ))}
+                <li><a href="/fast-series" className="hover:text-slate-900">Fast Series</a></li>
                 <li><a href="/projects" className="hover:text-slate-900">Projects</a></li>
                 <li><a href="/tech-support" className="hover:text-slate-900">Local tech support</a></li>
               </ul>

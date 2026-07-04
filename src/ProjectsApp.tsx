@@ -445,8 +445,8 @@ export default function ProjectsApp() {
                 Products in flight.
               </h2>
               <p className="mt-3 max-w-2xl text-base text-slate-600">
-                Every tool below has a real product page and an honest status. Nothing here is vaporware, and nothing
-                is promised before it ships.
+                Every tool below has a real product page and an honest status. Four of the five are downloadable
+                today, and nothing is promised before it ships.
               </p>
             </div>
 
