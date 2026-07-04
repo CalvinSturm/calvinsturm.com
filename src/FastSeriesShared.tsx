@@ -23,6 +23,7 @@ import {
   Menu,
   Mic,
   Minimize2,
+  Music,
   MonitorPlay,
   Moon,
   PlayCircle,
@@ -160,20 +161,20 @@ export const products: Product[] = [
     slug: 'fastshorts',
     name: 'FastShorts',
     Icon: Clapperboard,
-    tagline: 'A workflow for building short-form vertical videos.',
-    valueProp: 'A local, AI-assisted pipeline for short-form vertical video.',
+    tagline: 'Turn a written story into a finished vertical short.',
+    valueProp: 'A local, AI-assisted pipeline that turns story packages into narrated, captioned shorts with generated visuals, music, and SFX.',
     what:
-      'FastShorts is a local, AI-assisted pipeline for generating and assembling vertical short-form videos. It is experimental and still taking shape.',
+      'FastShorts is a local Windows pipeline for faceless short-form video. It takes a story package, a script with scene timing and visual prompts, and produces a finished vertical MP4: AI images per scene, image-to-video motion, narration, word-level karaoke captions, and music mixed under the voice. It is experimental and still taking shape.',
     status: 'Experimental',
     whoFor: [
-      'Creators producing short-form vertical video',
-      'People assembling shorts from existing footage',
-      'Anyone experimenting with an AI-assisted shorts workflow',
+      'Faceless story and narration channels',
+      'Creators producing AI-assisted vertical video',
+      'Anyone turning scripts into finished shorts without filming',
     ],
     whatItDoes: [
-      'Assemble vertical short-form videos',
-      'Assist the workflow with local, AI-assisted steps',
-      'Prepare clips for short-form platforms',
+      'Generate scene visuals and animate them with local image-to-video',
+      'Narrate scripts with cloud or local TTS and burn karaoke captions',
+      'Compose narration, music, and SFX into a final 9:16 MP4',
     ],
   },
 ];
@@ -632,7 +633,7 @@ function ProductSectionHeading({ eyebrow, title, description }: ProductSectionHe
   );
 }
 
-type ProductLandingVariant = 'fastcast' | 'fastplay' | 'fastclip' | 'fastcompress';
+type ProductLandingVariant = 'fastcast' | 'fastplay' | 'fastclip' | 'fastcompress' | 'fastshorts';
 
 type ProductShellProps = {
   children: ReactNode;
@@ -2293,6 +2294,349 @@ export function FastCompressProductPage() {
             <h2 className="product-section-title font-display text-3xl text-slate-900 sm:text-4xl">FastCompress is on the way</h2>
             <p className="product-section-description mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
               While FastCompress is in development, FastCast and FastPlay are available now. Both are free, native
+              Windows tools from the same Fast Series.
+            </p>
+            <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href="/fast-series" className="product-button product-button-primary cta-primary">
+                <Zap className="h-5 w-5" />
+                Explore the Fast Series
+              </a>
+              <a href={githubProfileUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-secondary cta-secondary">
+                <Github className="h-5 w-5" />
+                Follow on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </ProductShell>
+  );
+}
+
+const fastShortsSteps: Array<{ num: string; title: string; body: string }> = [
+  {
+    num: '01',
+    title: 'Start from a story package',
+    body: 'A short script with scene timing and one visual prompt per scene. That single file drives the whole pipeline.',
+  },
+  {
+    num: '02',
+    title: 'Generate scene visuals',
+    body: 'One vertical image per scene, generated in the cloud or fully locally through a ComfyUI text-to-image workflow.',
+  },
+  {
+    num: '03',
+    title: 'Narrate and time the words',
+    body: 'Narration comes from ElevenLabs or a local Kokoro TTS server, with word-level timing extracted for captions.',
+  },
+  {
+    num: '04',
+    title: 'Animate each scene',
+    body: 'Still images become motion clips through a local ComfyUI Wan image-to-video workflow, scene by scene, with resumable checkpoints.',
+  },
+  {
+    num: '05',
+    title: 'Compose the final short',
+    body: 'Clips are cut against the narration, word-level karaoke captions are burned in, and music is mixed under the voice with ducking. Out comes a finished 9:16 MP4.',
+  },
+];
+
+const fastShortsFeatures: FeatureItem[] = [
+  {
+    title: 'Story packages in, videos out',
+    body: 'The input is a script with scenes, timing, and prompts. The output is a finished vertical MP4. Everything between is pipeline.',
+    Icon: ListChecks,
+  },
+  {
+    title: 'AI images per scene',
+    body: 'Scene visuals from cloud image models or a local ComfyUI text-to-image workflow when you want zero cloud dependency.',
+    Icon: Sparkles,
+  },
+  {
+    title: 'Local image-to-video motion',
+    body: 'Scenes are animated on your own GPU with a ComfyUI Wan image-to-video workflow instead of a metered cloud renderer.',
+    Icon: FileVideo,
+  },
+  {
+    title: 'Cloud or local narration',
+    body: 'ElevenLabs voices when you want them, or a fully local Kokoro TTS server in Docker when you do not.',
+    Icon: Mic,
+  },
+  {
+    title: 'Word-level karaoke captions',
+    body: 'Captions are timed to each spoken word and burned into the video, in the style short-form viewers expect.',
+    Icon: Subtitles,
+  },
+  {
+    title: 'Music and SFX with ducking',
+    body: 'Background music and effects are mixed under the narration automatically, including optional local audio generation.',
+    Icon: Music,
+  },
+  {
+    title: 'Resumable renders',
+    body: 'Completed scenes are checkpointed and skipped on a rerun, so a failed scene does not restart the whole video.',
+    Icon: Gauge,
+  },
+  {
+    title: 'Built to be agent-driven',
+    body: 'A companion app exposes the pipeline through a visible UI and a headless local HTTP API that an AI agent can drive end to end.',
+    Icon: Terminal,
+  },
+];
+
+const fastShortsFaqs = [
+  {
+    question: 'What is FastShorts?',
+    answer:
+      'FastShorts is a local Windows pipeline that turns a story package, a script with scene timing and visual prompts, into a finished short-form vertical video with AI-generated visuals, narration, word-level karaoke captions, music, and SFX.',
+  },
+  {
+    question: 'Does FastShorts run locally?',
+    answer:
+      'The pipeline itself runs on your machine: composition through FFmpeg, image-to-video through ComfyUI on your own GPU, and optional local narration, image, and audio generation. Cloud services like ElevenLabs or cloud image models are optional steps, not requirements.',
+  },
+  {
+    question: 'Is FastShorts for faceless channels?',
+    answer:
+      'That is the core use case: story-driven, narrated vertical videos produced without filming anything. If you have scripts and a Windows PC with a GPU, FastShorts is designed to turn them into finished shorts.',
+  },
+  {
+    question: 'How is FastShorts different from FastClip?',
+    answer:
+      'FastClip starts from footage you already have and cuts it into clips. FastShorts starts from a written story and generates the video: images, motion, narration, captions, and music. They cover opposite ends of the short-form workflow.',
+  },
+  {
+    question: 'What does FastShorts need to run?',
+    answer:
+      'Windows with PowerShell, FFmpeg, and a local ComfyUI install for image-to-video generation. Optional pieces include Docker for local Kokoro TTS narration and a local audio-generation setup for music and SFX.',
+  },
+  {
+    question: 'When can I use FastShorts?',
+    answer:
+      'FastShorts is experimental and the source is currently private. There is no public download yet. FastCast and FastPlay are available today, and FastShorts will be announced on the Fast Series page when it is ready.',
+  },
+];
+
+export function FastShortsProductPage() {
+  const product = productBySlug.fastshorts;
+
+  return (
+    <ProductShell
+      variant="fastshorts"
+      brand="FastShorts"
+      brandIconUrl="/assets/FastShorts/FastShorts_Icon.png"
+      navLinks={[
+        { href: '#how', label: 'How it works' },
+        { href: '#features', label: 'Features' },
+        { href: '#compare', label: 'Compare' },
+        { href: '#faq', label: 'FAQ' },
+        { href: '/fast-series', label: 'Fast Series' },
+      ]}
+      footer={
+        <>
+          <p>FastShorts is experimental. Source is currently private.</p>
+          <p>
+            FastShorts by <a href={githubProfileUrl} target="_blank" rel="noopener noreferrer">Calvin Sturm</a> / Sturm Technologies LLC
+            <span aria-hidden="true"> · </span>
+            <a href="/fast-series">Fast Series</a>
+          </p>
+        </>
+      }
+    >
+      <ProductHero
+        product={product}
+        eyebrow="AI short-form video pipeline for Windows"
+        title="Turn a written story into a finished vertical short"
+        subtitle="FastShorts takes a script with scene prompts and produces a narrated, captioned 9:16 video with generated visuals, motion, music, and SFX."
+        description="FastShorts is a local Windows pipeline for faceless short-form video. Scene images come from AI image models, motion comes from local image-to-video generation, narration comes from cloud or local TTS, and the final MP4 is composed on your machine with word-level karaoke captions and ducked background music."
+        primaryLabel="Explore the Fast Series"
+        primaryHref="/fast-series"
+        secondaryLabel="Follow on GitHub"
+        secondaryHref={githubProfileUrl}
+        meta="Experimental · Windows 10/11 x64 · Local pipeline, optional cloud steps"
+        subMeta="No public download yet. FastCast and FastPlay are available now."
+        heroIconUrl="/assets/FastShorts/FastShorts_Icon.png"
+        heroIconAlt="FastShorts app icon"
+        PrimaryIcon={Zap}
+        preview={
+          <div
+            className="fastshorts-preview product-preview"
+            role="img"
+            aria-label="Illustration of the FastShorts pipeline: a story package, generation stages for images, motion, narration, captions, and music, and a finished vertical MP4."
+          >
+            <div className="fastshorts-row fastshorts-file">
+              <span className="fastshorts-file-name">the-mirror-was-early/story.json</span>
+              <span className="fastshorts-file-size">6 scenes</span>
+            </div>
+            <div className="fastshorts-chips">
+              {['Images', 'Motion', 'Narration', 'Captions', 'Music'].map((stage) => (
+                <span key={stage} className="fastshorts-chip fastshorts-chip-done">
+                  {stage}
+                </span>
+              ))}
+            </div>
+            <div className="fastshorts-caption-line" aria-hidden="true">
+              <span>THE</span>
+              <span>MIRROR</span>
+              <span className="fastshorts-caption-active">WAS</span>
+              <span>ALREADY</span>
+              <span>AWAKE</span>
+            </div>
+            <div className="fastshorts-progress">
+              <span style={{ width: '100%' }} />
+            </div>
+            <div className="fastshorts-row fastshorts-result">
+              <span className="fastshorts-result-label">Rendered</span>
+              <span className="fastshorts-result-value">the-mirror-was-early.mp4 · 9:16 · 45s</span>
+            </div>
+          </div>
+        }
+      />
+
+      <section id="how" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="How it works"
+            title="From story package to finished MP4"
+            description="One script drives every stage. Each stage runs locally, checkpoints its work, and hands off to the next."
+          />
+          <div className="fastclip-step-grid">
+            {fastShortsSteps.map((step) => (
+              <article key={step.num} className="fastclip-step">
+                <span className="fastclip-step-num">{step.num}</span>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="features" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="Features"
+            title="A whole shorts studio, running on your PC"
+            description="FastShorts is not an editor. It is a production pipeline: writing stays yours, and everything after the script is automated."
+          />
+          <FeatureGrid items={fastShortsFeatures} />
+        </div>
+      </section>
+
+      <section id="privacy" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-split-grid grid gap-8 lg:grid-cols-2">
+          <div className="product-copy-block">
+            <ProductSectionHeading eyebrow="Local-first" title="Your renders happen on your hardware" />
+            <div className="product-prose mt-6 space-y-4 text-base leading-relaxed text-slate-700">
+              <p className="font-semibold text-slate-900">
+                No render queue. No per-video credits. No subscription meter.
+              </p>
+              <p>
+                Cloud shorts generators charge per render and keep your pipeline on their servers. FastShorts runs
+                image-to-video, caption burning, and audio mixing on your own GPU through ComfyUI and FFmpeg. Cloud
+                services are optional ingredients, like ElevenLabs voices, not the factory.
+              </p>
+            </div>
+          </div>
+          <div className="grid gap-4">
+            <article className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <Clapperboard className="h-6 w-6 text-slate-700" />
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">A pipeline, not an editor</h3>
+              <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
+                There is no timeline to drag clips around. FastShorts turns a finished script into a finished video.
+                If you want to cut existing footage into clips, that is FastClip.
+              </p>
+            </article>
+            <article className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <LockKeyhole className="h-6 w-6 text-slate-700" />
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">Experimental</h3>
+              <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
+                FastShorts is the most experimental tool in the Fast Series. The source is currently private and the
+                pipeline is still taking shape, so there is no public download yet.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="compare" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="Compare"
+            title="Where FastShorts fits"
+            description="Cloud generators sell renders by the credit. Editors want your time. FastShorts wants a script and a GPU."
+          />
+          <div className="mt-8 grid gap-5 sm:grid-cols-2">
+            <article className="product-panel product-audience-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <h3 className="text-lg font-semibold text-slate-900">FastShorts is a good fit if you want</h3>
+              <div className="mt-5">
+                <BulletedList
+                  items={[
+                    'Story-driven faceless shorts from a written script',
+                    'Renders on your own GPU instead of per-video credits',
+                    'Word-level karaoke captions burned in automatically',
+                    'Narration from ElevenLabs or a fully local TTS',
+                    'Music and SFX mixed under the voice without an editor',
+                    'A pipeline an AI agent can drive end to end',
+                  ]}
+                />
+              </div>
+            </article>
+            <article className="product-panel product-audience-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <h3 className="text-lg font-semibold text-slate-900">Other tools are still better if you need</h3>
+              <div className="mt-5">
+                <BulletedList
+                  items={[
+                    'Clips cut from footage you already recorded (FastClip)',
+                    'A hands-on timeline editor with manual control',
+                    'A finished product today: FastShorts is experimental',
+                    'Mac or Linux support',
+                    'A hosted, no-setup cloud service',
+                    'Photorealistic long-form video generation',
+                  ]}
+                />
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="facts" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading eyebrow="Facts" title="FastShorts facts" description="A quick reference for the essentials." />
+          <FactsTable
+            rows={[
+              ['Product', 'FastShorts'],
+              ['Developer', 'Calvin Sturm (Sturm Technologies LLC)'],
+              ['Category', 'AI short-form video pipeline'],
+              ['Platform', 'Windows 10 and later, 64-bit'],
+              ['Status', 'Experimental, no public download yet'],
+              ['Input', 'Story packages: a script with scene timing and one visual prompt per scene'],
+              ['Output', 'Vertical 9:16 MP4 with narration, word-level karaoke captions, music, and SFX'],
+              ['Visuals', 'AI images per scene, animated locally with a ComfyUI Wan image-to-video workflow'],
+              ['Narration', 'ElevenLabs voices or a local Kokoro TTS server'],
+              ['Processing', 'Local through FFmpeg and ComfyUI on your own GPU; cloud steps are optional'],
+              ['Technology', 'Windows companion app with a local HTTP API, FFmpeg, ComfyUI'],
+              ['Best for', 'Faceless story channels producing narrated vertical shorts from scripts'],
+              ['Not designed for', 'Editing existing footage (FastClip) or hands-on timeline editing'],
+            ]}
+          />
+        </div>
+      </section>
+
+      <section id="faq" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading eyebrow="FAQ" title="FastShorts questions" />
+          <FaqList faqs={fastShortsFaqs} />
+        </div>
+      </section>
+
+      <section className="product-section product-section-cta border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <div className="product-cta-panel cta-panel p-8 text-center sm:p-10">
+            <h2 className="product-section-title font-display text-3xl text-slate-900 sm:text-4xl">FastShorts is taking shape</h2>
+            <p className="product-section-description mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
+              While FastShorts is experimental, FastCast and FastPlay are available now. Both are free, native
               Windows tools from the same Fast Series.
             </p>
             <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">

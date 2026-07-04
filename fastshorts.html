@@ -3,39 +3,110 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#fbbf24" />
-    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#100909" />
+    <meta name="color-scheme" content="dark" />
 
-    <title>FastShorts | Short-form vertical video workflow</title>
-    <meta name="description" content="FastShorts is an experimental, local, AI-assisted pipeline for generating and assembling vertical short-form videos on Windows. Part of the Fast Series by Calvin Sturm." />
+    <title>FastShorts | AI short-form video pipeline for Windows</title>
+    <meta name="description" content="FastShorts turns a written story into a finished vertical short: AI images per scene, local image-to-video motion, narration, word-level karaoke captions, and music with ducking. Experimental, local-first, Windows." />
+    <meta name="author" content="Calvin Sturm" />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://www.calvinsturm.com/fastshorts" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Calvin Sturm" />
-    <meta property="og:title" content="FastShorts | Short-form vertical video workflow" />
-    <meta property="og:description" content="An experimental local, AI-assisted pipeline for short-form vertical video. Part of the Fast Series by Calvin Sturm." />
+    <meta property="og:title" content="FastShorts | AI short-form video pipeline for Windows" />
+    <meta property="og:description" content="FastShorts turns a written story into a finished vertical short: AI images per scene, local image-to-video motion, narration, word-level karaoke captions, and music with ducking." />
     <meta property="og:url" content="https://www.calvinsturm.com/fastshorts" />
+    <meta property="og:image" content="https://www.calvinsturm.com/assets/FastShorts/FastShorts_Icon.png" />
     <meta property="og:locale" content="en_US" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="FastShorts | Short-form vertical video workflow" />
-    <meta name="twitter:description" content="An experimental local, AI-assisted pipeline for short-form vertical video." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="FastShorts | AI short-form video pipeline for Windows" />
+    <meta name="twitter:description" content="A local Windows pipeline that turns story packages into narrated, captioned vertical shorts with generated visuals, music, and SFX. Experimental." />
+    <meta name="twitter:image" content="https://www.calvinsturm.com/assets/FastShorts/FastShorts_Icon.png" />
 
-    <link rel="icon" type="image/svg+xml" href="/sturm-mark.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "FastShorts",
+        "operatingSystem": "Windows 10, Windows 11",
+        "applicationCategory": "MultimediaApplication",
+        "applicationSubCategory": "AI Video Pipeline",
+        "description": "FastShorts is a local Windows pipeline that turns story packages into finished short-form vertical videos with AI-generated visuals, image-to-video motion, narration, word-level karaoke captions, music, and SFX.",
+        "url": "https://www.calvinsturm.com/fastshorts",
+        "image": "https://www.calvinsturm.com/assets/FastShorts/FastShorts_Icon.png",
+        "author": {
+          "@type": "Person",
+          "name": "Calvin Sturm",
+          "url": "https://github.com/CalvinSturm"
+        },
+        "softwareRequirements": "Windows 10 or Windows 11, 64-bit"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is FastShorts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FastShorts is a local Windows pipeline that turns a story package, a script with scene timing and visual prompts, into a finished short-form vertical video with AI-generated visuals, narration, word-level karaoke captions, music, and SFX."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does FastShorts run locally?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The pipeline runs on your machine: composition through FFmpeg, image-to-video through ComfyUI on your own GPU, and optional local narration, image, and audio generation. Cloud services like ElevenLabs are optional steps, not requirements."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is FastShorts for faceless channels?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, that is the core use case: story-driven, narrated vertical videos produced without filming anything."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is FastShorts different from FastClip?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FastClip starts from footage you already have and cuts it into clips. FastShorts starts from a written story and generates the video: images, motion, narration, captions, and music."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "When can I use FastShorts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FastShorts is experimental and the source is currently private. There is no public download yet. FastCast and FastPlay are available today, and FastShorts will be announced on the Fast Series page when it is ready."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <link rel="icon" type="image/png" sizes="any" href="/assets/FastShorts/FastShorts_Icon.png?v=fastshorts" />
+    <link rel="shortcut icon" type="image/png" href="/assets/FastShorts/FastShorts_Icon.png?v=fastshorts" />
+    <link rel="apple-touch-icon" href="/assets/FastShorts/FastShorts_Icon.png?v=fastshorts" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
     <style>
-      .static-page-fallback{margin:0 auto;max-width:760px;padding:110px 24px 64px;font-family:"Segoe UI",-apple-system,system-ui,sans-serif;color:#172033;line-height:1.65}
-      .static-page-fallback .kicker{margin:0 0 14px;color:#b45309;font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+      .static-page-fallback{margin:0 auto;max-width:760px;padding:110px 24px 64px;font-family:"Segoe UI",-apple-system,system-ui,sans-serif;color:#f9f1ef;line-height:1.65}
+      .static-page-fallback .kicker{margin:0 0 14px;color:#ff9440;font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
       .static-page-fallback h1{margin:0;font-size:clamp(2.2rem,5.4vw,3.2rem);font-weight:700;line-height:1.1;letter-spacing:-.02em}
-      .static-page-fallback .sub{margin:20px 0 0;max-width:36rem;color:#5f6b7f;font-size:1.1rem}
+      .static-page-fallback .sub{margin:20px 0 0;max-width:36rem;color:#c0a3a0;font-size:1.1rem}
       .static-page-fallback .links{margin:30px 0 0}
-      .static-page-fallback a{margin-right:22px;color:#b45309;font-weight:700;text-decoration:none}
+      .static-page-fallback a{margin-right:22px;color:#ff9440;font-weight:700;text-decoration:none}
       .static-page-fallback a:hover{text-decoration:underline}
     </style>
   </head>
@@ -44,8 +115,8 @@
       <main class="static-page-fallback">
         <section>
           <p class="kicker">The Fast Series &#183; Sturm Technologies</p>
-          <h1>FastShorts</h1>
-          <p class="sub">Local-first short-form video pipeline for faceless and creator workflows. Experimental.</p>
+          <h1>FastShorts: turn a written story into a finished vertical short</h1>
+          <p class="sub">A local Windows pipeline that turns story packages into narrated, captioned 9:16 videos with AI-generated visuals, motion, music, and SFX. Experimental.</p>
           <p class="links">
             <a href="/fast-series">Explore the Fast Series</a>
             <a href="/">Calvin Sturm home</a>
