@@ -3,56 +3,114 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#fbbf24" />
-    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0b0a12" />
+    <meta name="color-scheme" content="dark" />
 
-    <title>FastCompress | Simple Windows video compression</title>
-    <meta name="description" content="FastCompress is a simple Windows video compression tool with clear presets and readable size estimates, so you can reduce file size without learning FFmpeg. Part of the Fast Series by Calvin Sturm." />
+    <title>FastCompress | Shrink videos for Discord and email on Windows</title>
+    <meta name="description" content="FastCompress is a dead-simple Windows video compressor. Presets for Discord, email, and YouTube, editable target sizes, and local FFmpeg processing. No watermark, no account, no uploads." />
+    <meta name="author" content="Calvin Sturm" />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://www.calvinsturm.com/fastcompress" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Calvin Sturm" />
-    <meta property="og:title" content="FastCompress | Simple Windows video compression" />
-    <meta property="og:description" content="Simple Windows video compression with clear presets and readable results. Part of the Fast Series by Calvin Sturm." />
+    <meta property="og:title" content="FastCompress | Shrink videos for Discord and email on Windows" />
+    <meta property="og:description" content="FastCompress is a dead-simple Windows video compressor. Presets for Discord, email, and YouTube, editable target sizes, and local FFmpeg processing. No watermark, no account, no uploads." />
     <meta property="og:url" content="https://www.calvinsturm.com/fastcompress" />
+    <meta property="og:image" content="https://www.calvinsturm.com/assets/FastCompress/FastCompress_Icon.png" />
     <meta property="og:locale" content="en_US" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="FastCompress | Simple Windows video compression" />
-    <meta name="twitter:description" content="Simple Windows video compression with clear presets and readable results." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="FastCompress | Shrink videos for Discord and email on Windows" />
+    <meta name="twitter:description" content="A dead-simple Windows video compressor with presets for Discord, email, and YouTube. Local FFmpeg processing, no watermark, no account. In development." />
+    <meta name="twitter:image" content="https://www.calvinsturm.com/assets/FastCompress/FastCompress_Icon.png" />
 
-    <link rel="icon" type="image/svg+xml" href="/sturm-mark.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "FastCompress",
+        "operatingSystem": "Windows 10, Windows 11",
+        "applicationCategory": "MultimediaApplication",
+        "applicationSubCategory": "Video Compressor",
+        "description": "FastCompress is a dead-simple Windows video compressor with presets for Discord, email, YouTube, and archiving, editable target sizes, and local FFmpeg processing. No watermark, no account, no uploads.",
+        "url": "https://www.calvinsturm.com/fastcompress",
+        "image": "https://www.calvinsturm.com/assets/FastCompress/FastCompress_Icon.png",
+        "author": {
+          "@type": "Person",
+          "name": "Calvin Sturm",
+          "url": "https://github.com/CalvinSturm"
+        },
+        "softwareRequirements": "Windows 10 or Windows 11, 64-bit"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is FastCompress?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FastCompress is a dead-simple Windows video compressor. Pick where the video is going, like Discord or email, and it produces a smaller file that fits, using FFmpeg locally on your machine."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does FastCompress upload my videos?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Compression runs entirely on your machine through FFmpeg. There are no uploads, no cloud services, and no account."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does FastCompress add a watermark?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The free version has no watermark and no account requirement."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What formats does FastCompress support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MP4, AVI, MOV, MKV, WebM, FLV, and WMV input files, compressed to H.264 output."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "When can I download FastCompress?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FastCompress is in development and there is no public download yet. FastCast and FastPlay are available today, and FastCompress will be announced on the Fast Series page when it ships."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will FastCompress be free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Basic compression stays free: one video at a time, all presets, editable target sizes, no watermark. A one-time FastCompress Pro license is planned for workflow features like batch compression, folder watch, saved presets, and GPU encoding. No subscription is planned."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <link rel="icon" type="image/png" sizes="any" href="/assets/FastCompress/FastCompress_Icon.png?v=fastcompress" />
+    <link rel="shortcut icon" type="image/png" href="/assets/FastCompress/FastCompress_Icon.png?v=fastcompress" />
+    <link rel="apple-touch-icon" href="/assets/FastCompress/FastCompress_Icon.png?v=fastcompress" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
-    <style>
-      .static-page-fallback{margin:0 auto;max-width:760px;padding:110px 24px 64px;font-family:"Segoe UI",-apple-system,system-ui,sans-serif;color:#172033;line-height:1.65}
-      .static-page-fallback .kicker{margin:0 0 14px;color:#b45309;font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
-      .static-page-fallback h1{margin:0;font-size:clamp(2.2rem,5.4vw,3.2rem);font-weight:700;line-height:1.1;letter-spacing:-.02em}
-      .static-page-fallback .sub{margin:20px 0 0;max-width:36rem;color:#5f6b7f;font-size:1.1rem}
-      .static-page-fallback .links{margin:30px 0 0}
-      .static-page-fallback a{margin-right:22px;color:#b45309;font-weight:700;text-decoration:none}
-      .static-page-fallback a:hover{text-decoration:underline}
-    </style>
   </head>
   <body>
-    <div id="root">
-      <main class="static-page-fallback">
-        <section>
-          <p class="kicker">The Fast Series &#183; Sturm Technologies</p>
-          <h1>FastCompress</h1>
-          <p class="sub">Simple Windows video compression for smaller files without complicated setup. In development.</p>
-          <p class="links">
-            <a href="/fast-series">Explore the Fast Series</a>
-            <a href="/">Calvin Sturm home</a>
-          </p>
-        </section>
-      </main>
-    </div>
+    <div id="root"></div>
     <script type="module" src="/src/fastcompress.tsx"></script>
   </body>
 </html>

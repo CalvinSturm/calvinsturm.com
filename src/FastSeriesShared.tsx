@@ -11,7 +11,9 @@ import {
   Crop,
   Download,
   ExternalLink,
+  FileDown,
   FileVideo,
+  Gauge,
   Github,
   HardDrive,
   House,
@@ -27,9 +29,12 @@ import {
   Radio,
   ShieldCheck,
   Scissors,
+  SlidersHorizontal,
   Sparkles,
   Subtitles,
   Sun,
+  Target,
+  Terminal,
   TriangleAlert,
   Video,
   WifiOff,
@@ -135,20 +140,20 @@ export const products: Product[] = [
     slug: 'fastcompress',
     name: 'FastCompress',
     Icon: Minimize2,
-    tagline: 'Simple video compression for Windows.',
-    valueProp: 'Shrink video files with clear presets, no FFmpeg required.',
+    tagline: 'Shrink videos to fit, without learning FFmpeg.',
+    valueProp: 'A dead-simple Windows video compressor with presets for Discord, email, and YouTube.',
     what:
-      'FastCompress reduces video file sizes using readable presets, so you can get a smaller file without learning FFmpeg. Pick a preset, see the estimated result, and export.',
+      'FastCompress shrinks video files using readable presets. Pick where the video is going, like Discord or email, set a target size if you need one, and get a smaller file that fits. No watermark, no account, no FFmpeg know-how.',
     status: 'In development',
     whoFor: [
-      'Anyone who needs smaller video files',
+      'Anyone whose video is too big to send',
       'Creators uploading to size-limited platforms',
       'People who want compression without technical setup',
     ],
     whatItDoes: [
-      'Compress video with simple presets',
-      'See readable size estimates and results',
-      'Reduce file size without FFmpeg know-how',
+      'Compress video with plain-English presets',
+      'Hit target sizes for Discord and email',
+      'Show a clear before-and-after result summary',
     ],
   },
   {
@@ -627,7 +632,7 @@ function ProductSectionHeading({ eyebrow, title, description }: ProductSectionHe
   );
 }
 
-type ProductLandingVariant = 'fastcast' | 'fastplay' | 'fastclip';
+type ProductLandingVariant = 'fastcast' | 'fastplay' | 'fastclip' | 'fastcompress';
 
 type ProductShellProps = {
   children: ReactNode;
@@ -1893,6 +1898,402 @@ export function FastClipProductPage() {
             <p className="product-section-description mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
               While FastClip is in development, FastCast and FastPlay are available now. Both are free, native Windows
               tools from the same Fast Series.
+            </p>
+            <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href="/fast-series" className="product-button product-button-primary cta-primary">
+                <Zap className="h-5 w-5" />
+                Explore the Fast Series
+              </a>
+              <a href={githubProfileUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-secondary cta-secondary">
+                <Github className="h-5 w-5" />
+                Follow on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </ProductShell>
+  );
+}
+
+const fastCompressSteps: Array<{ num: string; title: string; body: string }> = [
+  {
+    num: '01',
+    title: 'Pick a video',
+    body: 'Choose a local file. MP4, AVI, MOV, MKV, WebM, FLV, and WMV are supported.',
+  },
+  {
+    num: '02',
+    title: 'Pick a destination',
+    body: 'Presets are named after where the video is going: Discord, Email Safe, YouTube Upload, Archive, or a plain quality level.',
+  },
+  {
+    num: '03',
+    title: 'Check the plan',
+    body: 'A plan summary shows the selected file, output path, and target size before anything encodes. Unrealistic targets get a warning up front.',
+  },
+  {
+    num: '04',
+    title: 'Compress',
+    body: 'FFmpeg runs locally with a progress bar and cancel. The result summary shows original size, output size, and percent saved.',
+  },
+];
+
+const fastCompressFeatures: FeatureItem[] = [
+  {
+    title: 'Plain-English presets',
+    body: 'Smaller File, Balanced, and High Quality cover the size and quality tradeoff without bitrate math.',
+    Icon: SlidersHorizontal,
+  },
+  {
+    title: 'Platform presets',
+    body: 'Discord, Email Safe, YouTube Upload, and Archive encode for the place the video is actually going.',
+    Icon: Target,
+  },
+  {
+    title: 'Target-size planning',
+    body: 'Discord and Email Safe presets plan toward a size cap, with an editable target MB field when you need a different number.',
+    Icon: Gauge,
+  },
+  {
+    title: 'Plan before you encode',
+    body: 'See the file details, output path, and target size before compression starts. No surprises at the end.',
+    Icon: ListChecks,
+  },
+  {
+    title: 'Clear results',
+    body: 'Every run ends with original size, output size, and percent saved, so you know it worked before you send the file.',
+    Icon: FileDown,
+  },
+  {
+    title: 'No watermark, no account',
+    body: 'The free version puts nothing on your video and never asks you to sign in.',
+    Icon: BadgeCheck,
+  },
+  {
+    title: 'Resolution presets',
+    body: '1080p, 720p, and 480p at 30 fps when downscaling is the right way to shrink the file.',
+    Icon: FileVideo,
+  },
+  {
+    title: 'CLI mode',
+    body: 'Every preset is scriptable from the command line for quick automation.',
+    Icon: Terminal,
+  },
+];
+
+const fastCompressFaqs = [
+  {
+    question: 'What is FastCompress?',
+    answer:
+      'FastCompress is a dead-simple Windows video compressor. Pick where the video is going, like Discord or email, and it produces a smaller file that fits, using FFmpeg locally on your machine.',
+  },
+  {
+    question: 'Does FastCompress upload my videos?',
+    answer:
+      'No. Compression runs entirely on your machine through FFmpeg. There are no uploads, no cloud services, and no account.',
+  },
+  {
+    question: 'Does FastCompress add a watermark?',
+    answer: 'No. The free version has no watermark and no account requirement.',
+  },
+  {
+    question: 'What formats does FastCompress support?',
+    answer: 'MP4, AVI, MOV, MKV, WebM, FLV, and WMV input files, compressed to H.264 output.',
+  },
+  {
+    question: 'How does the Discord preset work?',
+    answer:
+      'Target-size presets like Discord and Email Safe plan the encode toward a size cap, and the target MB field is editable if your limit is different. FastCompress warns you up front when a target is unrealistic for the source.',
+  },
+  {
+    question: 'Is FastCompress a HandBrake alternative?',
+    answer:
+      'For the common case of making a file small enough to send, yes: FastCompress trades HandBrake depth for plain-English presets. HandBrake and raw FFmpeg are still better when you need full control over codecs, filters, and batch pipelines.',
+  },
+  {
+    question: 'When can I download FastCompress?',
+    answer:
+      'FastCompress is in development and there is no public download yet. FastCast and FastPlay are available today, and FastCompress will be announced on the Fast Series page when it ships.',
+  },
+  {
+    question: 'Will FastCompress be free?',
+    answer:
+      'Basic compression stays free: one video at a time, all presets, editable target sizes, no watermark. A one-time FastCompress Pro license is planned for workflow features like batch compression, folder watch, saved presets, and GPU encoding. No subscription is planned.',
+  },
+];
+
+export function FastCompressProductPage() {
+  const product = productBySlug.fastcompress;
+
+  return (
+    <ProductShell
+      variant="fastcompress"
+      brand="FastCompress"
+      brandIconUrl="/assets/FastCompress/FastCompress_Icon.png"
+      navLinks={[
+        { href: '#how', label: 'How it works' },
+        { href: '#features', label: 'Features' },
+        { href: '#compare', label: 'Compare' },
+        { href: '#pricing', label: 'Pricing' },
+        { href: '#faq', label: 'FAQ' },
+        { href: '/fast-series', label: 'Fast Series' },
+      ]}
+      footer={
+        <>
+          <p>FastCompress is in development. Source is currently private.</p>
+          <p>
+            FastCompress by <a href={githubProfileUrl} target="_blank" rel="noopener noreferrer">Calvin Sturm</a> / Sturm Technologies LLC
+            <span aria-hidden="true"> · </span>
+            <a href="/fast-series">Fast Series</a>
+          </p>
+        </>
+      }
+    >
+      <ProductHero
+        product={product}
+        eyebrow="Simple video compression for Windows"
+        title="Shrink videos to fit, without learning FFmpeg"
+        subtitle="FastCompress turns a too-big video into a file that fits Discord, email, or an upload limit in a few clicks."
+        description="FastCompress is a dead-simple native Windows compressor. Pick where the video is going, check the plan, and compress. Presets speak plain English, target sizes are editable, and everything runs locally through FFmpeg. No watermark, no account, no uploads."
+        primaryLabel="Explore the Fast Series"
+        primaryHref="/fast-series"
+        secondaryLabel="Follow on GitHub"
+        secondaryHref={githubProfileUrl}
+        meta="In development · Windows 10/11 x64 · No watermark, no account"
+        subMeta="No public download yet. FastCast and FastPlay are available now."
+        heroIconUrl="/assets/FastCompress/FastCompress_Icon.png"
+        heroIconAlt="FastCompress app icon"
+        PrimaryIcon={Zap}
+        preview={
+          <div
+            className="fastcompress-preview product-preview"
+            role="img"
+            aria-label="Illustration of the FastCompress workflow: a selected video, the Discord preset with a 10 megabyte target, and a result summary showing the compressed size."
+          >
+            <div className="fastcompress-row fastcompress-file">
+              <span className="fastcompress-file-name">raid-night_highlights.mp4</span>
+              <span className="fastcompress-file-size">212.4 MB</span>
+            </div>
+            <div className="fastcompress-chips">
+              {['Discord', 'Email Safe', 'YouTube Upload', 'Archive', 'Balanced'].map((preset) => (
+                <span
+                  key={preset}
+                  className={preset === 'Discord' ? 'fastcompress-chip fastcompress-chip-active' : 'fastcompress-chip'}
+                >
+                  {preset}
+                </span>
+              ))}
+            </div>
+            <div className="fastcompress-row fastcompress-target">
+              <span>Target size</span>
+              <span className="fastcompress-target-value">10 MB</span>
+            </div>
+            <div className="fastcompress-progress">
+              <span style={{ width: '100%' }} />
+            </div>
+            <div className="fastcompress-row fastcompress-result">
+              <span className="fastcompress-result-label">Done</span>
+              <span className="fastcompress-result-value">212.4 MB → 9.8 MB · saved 95%</span>
+            </div>
+          </div>
+        }
+      />
+
+      <section id="how" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="How it works"
+            title="Pick a video, pick a destination, compress"
+            description="No bitrate math, no codec settings, no command line required. The preset already knows what the destination needs."
+          />
+          <div className="fastclip-step-grid">
+            {fastCompressSteps.map((step) => (
+              <article key={step.num} className="fastclip-step">
+                <span className="fastclip-step-num">{step.num}</span>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="features" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="Features"
+            title="One job: make the file small enough"
+            description="FastCompress is a compressor, not an editor. There is no trimming, no timeline, and no cloud. It takes a video that is too big and gives you one that fits."
+          />
+          <FeatureGrid items={fastCompressFeatures} />
+        </div>
+      </section>
+
+      <section id="privacy" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-split-grid grid gap-8 lg:grid-cols-2">
+          <div className="product-copy-block">
+            <ProductSectionHeading eyebrow="Local-first" title="Your video never leaves your machine" />
+            <div className="product-prose mt-6 space-y-4 text-base leading-relaxed text-slate-700">
+              <p className="font-semibold text-slate-900">
+                No uploads. No cloud services. No account. No watermark.
+              </p>
+              <p>
+                Online compressors make you upload the file, wait in a queue, and trust a server with your footage.
+                FastCompress runs FFmpeg on your own hardware, so a private video stays private and a big file does
+                not need to crawl through your upload bandwidth twice.
+              </p>
+            </div>
+          </div>
+          <div className="grid gap-4">
+            <article className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <Minimize2 className="h-6 w-6 text-slate-700" />
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">A compressor, not an editor</h3>
+              <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
+                There is no trimming, editing, or format conversion workflow. If the clip needs cutting first, cut it
+                in the tool you already use, then let FastCompress make it fit.
+              </p>
+            </article>
+            <article className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <LockKeyhole className="h-6 w-6 text-slate-700" />
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">In development</h3>
+              <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
+                FastCompress is being built in Rust as a native Windows app. The source is currently private, and
+                there is no public download yet.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="compare" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="Compare"
+            title="Where FastCompress fits"
+            description="Online compressors want your upload. HandBrake and FFmpeg want your attention. FastCompress just wants the file to fit."
+          />
+          <div className="mt-8 grid gap-5 sm:grid-cols-2">
+            <article className="product-panel product-audience-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <h3 className="text-lg font-semibold text-slate-900">FastCompress is a good fit if you want</h3>
+              <div className="mt-5">
+                <BulletedList
+                  items={[
+                    'A video under the Discord or email size cap today',
+                    'Compression without uploading the file anywhere',
+                    'Presets named after destinations, not codecs',
+                    'An editable target size when the cap is unusual',
+                    'A clear before-and-after result summary',
+                    'No watermark and no account, ever',
+                  ]}
+                />
+              </div>
+            </article>
+            <article className="product-panel product-audience-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <h3 className="text-lg font-semibold text-slate-900">HandBrake or FFmpeg is still better if you need</h3>
+              <div className="mt-5">
+                <BulletedList
+                  items={[
+                    'Full control over codecs, filters, and containers',
+                    'Batch pipelines and complex automation today',
+                    'HEVC, AV1, and advanced encoder tuning',
+                    'Subtitle, chapter, and audio track handling',
+                    'Cross-platform support',
+                    'Deep video engineering workflows',
+                  ]}
+                />
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-split-grid grid gap-8 lg:grid-cols-2">
+          <div className="product-copy-block">
+            <ProductSectionHeading eyebrow="Pricing" title="Compression stays free. Pro unlocks workflow." />
+            <div className="product-prose mt-6 space-y-4 text-base leading-relaxed text-slate-700">
+              <p>
+                The planned model keeps the core job free forever: one video at a time, every preset, editable target
+                sizes, and no watermark. A one-time FastCompress Pro license adds the workflow features heavy users
+                want.
+              </p>
+              <p>
+                There are no cloud costs behind FastCompress, so there is no subscription and no credit meter. Pay
+                once or do not pay at all.
+              </p>
+              <p className="text-sm text-slate-500">Final pricing will be announced when FastCompress ships.</p>
+            </div>
+          </div>
+          <div className="grid gap-4">
+            <article className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <h3 className="text-lg font-semibold text-slate-900">Free (planned)</h3>
+              <div className="mt-4">
+                <BulletedList
+                  items={[
+                    'One video at a time',
+                    'All platform, quality, and resolution presets',
+                    'Editable target MB for size-capped presets',
+                    'No watermark, no account',
+                    'CLI mode',
+                  ]}
+                />
+              </div>
+            </article>
+            <article className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <h3 className="text-lg font-semibold text-slate-900">FastCompress Pro (planned)</h3>
+              <div className="mt-4">
+                <BulletedList
+                  items={[
+                    'One-time license, yours for good',
+                    'Batch compression, queue, and folder watch',
+                    'Saved and custom presets',
+                    'GPU fast mode (NVENC, QSV, AMF)',
+                    'Parallel processing and export reports',
+                  ]}
+                />
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="facts" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading eyebrow="Facts" title="FastCompress facts" description="A quick reference for the essentials." />
+          <FactsTable
+            rows={[
+              ['Product', 'FastCompress'],
+              ['Developer', 'Calvin Sturm (Sturm Technologies LLC)'],
+              ['Category', 'Video compressor'],
+              ['Platform', 'Windows 10 and later, 64-bit'],
+              ['Status', 'In development, no public download yet'],
+              ['Input formats', 'MP4, AVI, MOV, MKV, WebM, FLV, WMV'],
+              ['Output', 'H.264 video compressed toward the selected preset or target size'],
+              ['Presets', 'Smaller File, Balanced, High Quality, Discord, Email Safe, YouTube Upload, Archive, 1080p/720p/480p 30 fps'],
+              ['Processing', '100% local through FFmpeg: no uploads, no cloud, no account'],
+              ['Technology', 'Rust, native Windows GUI, FFmpeg'],
+              ['Best for', 'Getting a video under a size limit without learning compression'],
+              ['Not designed for', 'Editing, trimming, advanced codec control, or batch pipelines (batch is planned for Pro)'],
+            ]}
+          />
+        </div>
+      </section>
+
+      <section id="faq" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading eyebrow="FAQ" title="FastCompress questions" />
+          <FaqList faqs={fastCompressFaqs} />
+        </div>
+      </section>
+
+      <section className="product-section product-section-cta border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <div className="product-cta-panel cta-panel p-8 text-center sm:p-10">
+            <h2 className="product-section-title font-display text-3xl text-slate-900 sm:text-4xl">FastCompress is on the way</h2>
+            <p className="product-section-description mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
+              While FastCompress is in development, FastCast and FastPlay are available now. Both are free, native
+              Windows tools from the same Fast Series.
             </p>
             <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <a href="/fast-series" className="product-button product-button-primary cta-primary">

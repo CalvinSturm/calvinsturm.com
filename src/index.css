@@ -2637,21 +2637,21 @@ html.dark .border-blue-600 {
   font-size: 0.9rem;
 }
 
-.product-landing-fastclip .fastclip-step-grid {
+.product-landing .fastclip-step-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
   margin-top: 34px;
 }
 
-.product-landing-fastclip .fastclip-step {
+.product-landing .fastclip-step {
   border: 1px solid var(--product-border);
   border-radius: var(--product-radius);
   background: var(--product-surface-alpha);
   padding: 20px;
 }
 
-.product-landing-fastclip .fastclip-step-num {
+.product-landing .fastclip-step-num {
   display: block;
   color: var(--product-accent);
   font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
@@ -2660,12 +2660,12 @@ html.dark .border-blue-600 {
   letter-spacing: 0.08em;
 }
 
-.product-landing-fastclip .fastclip-step h3 {
+.product-landing .fastclip-step h3 {
   margin: 10px 0 8px;
   font-size: 1.05rem;
 }
 
-.product-landing-fastclip .fastclip-step p {
+.product-landing .fastclip-step p {
   margin: 0;
   color: var(--product-muted);
   font-size: 0.92rem;
@@ -2926,7 +2926,7 @@ html.dark .border-blue-600 {
     max-width: 560px;
   }
 
-  .product-landing-fastclip .fastclip-step-grid {
+  .product-landing .fastclip-step-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -2943,7 +2943,7 @@ html.dark .border-blue-600 {
     width: 100%;
   }
 
-  .product-landing-fastclip .fastclip-step-grid,
+  .product-landing .fastclip-step-grid,
   .product-landing-fastclip .fastclip-mode-grid {
     grid-template-columns: 1fr;
   }
@@ -2955,6 +2955,315 @@ html.dark .border-blue-600 {
 
   .fastclip-preview {
     flex-direction: column;
+  }
+}
+
+/* ---- FastCompress microsite variant --------------------------------------- */
+.product-landing-fastcompress {
+  --product-bg: #0b0a12;
+  --product-surface: #14121e;
+  --product-surface-2: #191627;
+  --product-surface-alpha: rgba(20, 18, 30, 0.78);
+  --product-surface-2-alpha: rgba(25, 22, 39, 0.92);
+  --product-border: #2a2540;
+  --product-border-soft: rgba(42, 37, 64, 0.78);
+  --product-border-hover: rgba(198, 93, 255, 0.55);
+  --product-preview-border: rgba(198, 93, 255, 0.24);
+  --product-text: #f3f1f9;
+  --product-muted: #a8a3c0;
+  --product-faint: #7d789b;
+  --product-accent: #c65dff;
+  --product-accent-2: #de8bff;
+  --product-accent-hover: #d27dff;
+  --product-button-text: #1b0426;
+  --product-code: #efd9ff;
+  --product-radius: 10px;
+  --product-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  background:
+    radial-gradient(circle at top right, rgba(198, 93, 255, 0.1), transparent 30rem),
+    linear-gradient(180deg, #0d0c16 0%, var(--product-bg) 40rem);
+  color: var(--product-text);
+  line-height: 1.6;
+}
+
+.product-landing-fastcompress .product-site-header,
+.product-landing-fastcompress .section-shell,
+.product-landing-fastcompress .product-site-footer {
+  width: min(1120px, calc(100% - 40px));
+  max-width: none;
+  padding-inline: 0;
+}
+
+.product-landing-fastcompress .product-site-header {
+  padding: 24px 0;
+}
+
+.product-landing-fastcompress .product-hero {
+  padding-top: 44px !important;
+  padding-bottom: 34px !important;
+  border-top: 0 !important;
+}
+
+.product-landing-fastcompress .product-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
+  align-items: center;
+  gap: 48px;
+  margin-top: 0 !important;
+}
+
+.product-landing-fastcompress .product-hero-copy {
+  max-width: 660px;
+  min-width: 0;
+}
+
+.product-landing-fastcompress .product-icon-badge {
+  overflow: hidden;
+  background: transparent !important;
+  box-shadow: 0 0 0 1px var(--product-border);
+}
+
+.product-landing-fastcompress .product-icon-status {
+  display: flex !important;
+  margin-bottom: 24px;
+}
+
+.product-landing-fastcompress .product-eyebrow {
+  display: none;
+}
+
+.product-landing-fastcompress .product-hero-title {
+  margin-bottom: 18px;
+  font-size: clamp(2.5rem, 5.2vw, 4.2rem) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.015em !important;
+}
+
+.product-landing-fastcompress .product-hero-subtitle {
+  max-width: 640px;
+  color: var(--product-text) !important;
+  font-size: clamp(1.2rem, 2.2vw, 1.55rem) !important;
+  line-height: 1.3 !important;
+}
+
+.product-landing-fastcompress .product-hero-description {
+  max-width: 640px;
+  margin-bottom: 30px;
+  font-size: 1.04rem !important;
+}
+
+.product-landing-fastcompress .product-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.product-landing-fastcompress .product-meta {
+  color: var(--product-faint) !important;
+  font-size: 0.95rem;
+}
+
+.product-landing-fastcompress .product-sub-meta {
+  margin-top: 6px;
+  color: var(--product-faint) !important;
+  font-size: 0.9rem;
+}
+
+.product-landing-fastcompress .product-section {
+  padding-top: 76px !important;
+  padding-bottom: 76px !important;
+}
+
+.product-landing-fastcompress .product-section-title {
+  margin-bottom: 18px;
+  font-size: clamp(1.75rem, 3vw, 2.4rem) !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0 !important;
+}
+
+.product-landing-fastcompress .product-section-description,
+.product-landing-fastcompress .product-prose p {
+  max-width: 720px;
+}
+
+.product-landing-fastcompress .product-split-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+  gap: 44px;
+  align-items: start;
+}
+
+.product-landing-fastcompress .product-feature-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.product-landing-fastcompress .product-feature-card {
+  padding: 20px !important;
+}
+
+.product-landing-fastcompress .product-cta-panel {
+  text-align: left !important;
+}
+
+.product-landing-fastcompress .product-site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  justify-content: space-between;
+  border-top: 1px solid var(--product-border-soft);
+  padding: 28px 0 40px;
+  font-size: 0.9rem;
+}
+
+.fastcompress-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+}
+
+.fastcompress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.fastcompress-file {
+  border: 1px solid var(--product-border);
+  border-radius: 8px;
+  background: rgba(20, 18, 30, 0.85);
+  padding: 10px 14px;
+}
+
+.fastcompress-file-name {
+  overflow: hidden;
+  color: var(--product-text);
+  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.8rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fastcompress-file-size {
+  flex-shrink: 0;
+  color: var(--product-faint);
+  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.78rem;
+}
+
+.fastcompress-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fastcompress-chip {
+  border: 1px solid var(--product-border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  color: var(--product-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.fastcompress-chip-active {
+  border-color: rgba(198, 93, 255, 0.55);
+  background: rgba(198, 93, 255, 0.14);
+  color: var(--product-accent-2);
+}
+
+.fastcompress-target {
+  color: var(--product-muted);
+  font-size: 0.8rem;
+}
+
+.fastcompress-target-value {
+  border: 1px solid var(--product-border);
+  border-radius: 6px;
+  background: rgba(20, 18, 30, 0.85);
+  padding: 4px 10px;
+  color: var(--product-text);
+  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.78rem;
+}
+
+.fastcompress-progress {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.fastcompress-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #c65dff, #de8bff);
+}
+
+.fastcompress-result {
+  border: 1px solid rgba(198, 93, 255, 0.35);
+  border-radius: 8px;
+  background: rgba(198, 93, 255, 0.08);
+  padding: 10px 14px;
+}
+
+.fastcompress-result-label {
+  color: var(--product-accent-2);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fastcompress-result-value {
+  color: var(--product-text);
+  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 900px) {
+  .product-landing-fastcompress .product-site-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .product-landing-fastcompress .product-nav-links {
+    flex-wrap: wrap;
+    gap: 10px 16px;
+  }
+
+  .product-landing-fastcompress .product-hero-grid,
+  .product-landing-fastcompress .product-split-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-landing-fastcompress .product-hero {
+    padding-top: 34px !important;
+  }
+
+  .product-landing-fastcompress .product-preview {
+    max-width: 560px;
+  }
+}
+
+@media (max-width: 560px) {
+  .product-landing-fastcompress .product-site-header,
+  .product-landing-fastcompress .section-shell,
+  .product-landing-fastcompress .product-site-footer {
+    width: calc(100% - 28px);
+  }
+
+  .product-landing-fastcompress .product-hero-actions,
+  .product-landing-fastcompress .product-button {
+    width: 100%;
+  }
+
+  .product-landing-fastcompress .product-section {
+    padding-top: 54px !important;
+    padding-bottom: 54px !important;
   }
 }
 
