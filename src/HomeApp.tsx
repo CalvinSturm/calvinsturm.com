@@ -17,6 +17,7 @@ import {
   Zap,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { HomeHeader, HomeFooter } from './HomeChrome.tsx';
 
 type Spotlight = {
@@ -449,6 +450,7 @@ export default function HomeApp() {
       </main>
 
       <HomeFooter />
+      <SpeedInsights />
     </div>
   );
 }

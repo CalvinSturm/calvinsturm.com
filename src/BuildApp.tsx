@@ -26,6 +26,7 @@ import {
   X,
   Zap,
 } from 'lucide-react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 const navItems = [
   ['Why', '#what-we-build'],
@@ -733,6 +734,7 @@ export default function BuildApp() {
           <a href="#request-build" className="inline-flex min-h-[52px] flex-1 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-4 text-base font-semibold text-slate-900"><Calendar className="h-5 w-5" />Start</a>
         </div>
       </div>
+      <SpeedInsights />
     </div>
   );
 }

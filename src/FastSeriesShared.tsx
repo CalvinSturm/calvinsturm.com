@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import {
   ArrowLeft,
   ArrowRight,
@@ -661,6 +662,7 @@ function ProductShell({ children, variant, brand, navLinks, footer, brandIconUrl
       <footer className="product-site-footer">
         {footer}
       </footer>
+      <SpeedInsights />
     </div>
   );
 }

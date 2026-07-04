@@ -33,6 +33,7 @@ import {
   Zap,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 type Project = {
   name: string;
@@ -676,6 +677,7 @@ export default function ProjectsApp() {
           </div>
         </div>
       </footer>
+      <SpeedInsights />
     </div>
   );
 }

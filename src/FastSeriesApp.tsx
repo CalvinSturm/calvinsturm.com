@@ -9,6 +9,7 @@ import {
   Scissors,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { HomeHeader, HomeFooter } from './HomeChrome.tsx';
 
 type PipelineStep = {
@@ -279,6 +280,7 @@ export default function FastSeriesApp() {
       </main>
 
       <HomeFooter />
+      <SpeedInsights />
     </div>
   );
 }
