@@ -8,6 +8,7 @@ import {
   Clapperboard,
   Code2,
   Cpu,
+  Crop,
   Download,
   ExternalLink,
   FileVideo,
@@ -15,6 +16,7 @@ import {
   HardDrive,
   House,
   Keyboard,
+  ListChecks,
   LockKeyhole,
   Menu,
   Mic,
@@ -26,9 +28,11 @@ import {
   ShieldCheck,
   Scissors,
   Sparkles,
+  Subtitles,
   Sun,
   TriangleAlert,
   Video,
+  WifiOff,
   X,
   Zap,
 } from 'lucide-react';
@@ -111,20 +115,20 @@ export const products: Product[] = [
     slug: 'fastclip',
     name: 'FastClip',
     Icon: Scissors,
-    tagline: 'Find and export highlight clips from longer videos.',
-    valueProp: 'A creator workflow for pulling highlights out of long videos.',
+    tagline: 'Turn long videos into vertical clips, locally.',
+    valueProp: 'A fully local Windows app that finds highlights in long videos and exports ready-to-post 9:16 clips.',
     what:
-      'FastClip helps you review long recordings and pull out the moments worth keeping. Mark highlights as you go, then export them for editing or sharing.',
+      'FastClip imports a long local video, analyzes it with on-device signals, proposes ranked highlight candidates, and exports 1080×1920 vertical MP4s with optional burned-in captions. Footage never leaves your machine.',
     status: 'In development',
     whoFor: [
       'Sports, action, and highlight workflows',
       'Creators repurposing long videos for social',
-      'Anyone clipping moments from long footage',
+      'Anyone who wants clips without uploading footage',
     ],
     whatItDoes: [
-      'Review long videos quickly',
-      'Mark and collect highlight moments',
-      'Export clips for editing or sharing',
+      'Propose ranked highlight clips automatically',
+      'Review and adjust candidates in a focused desktop UI',
+      'Export 9:16 vertical MP4s with optional captions',
     ],
   },
   {
@@ -600,6 +604,7 @@ export function ProductPage({ product }: { product: Product }) {
   );
 }
 
+const githubProfileUrl = 'https://github.com/CalvinSturm';
 const fastCastReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 const fastPlayReleaseUrl = 'https://github.com/CalvinSturm/FastPlay/releases/latest';
@@ -622,7 +627,7 @@ function ProductSectionHeading({ eyebrow, title, description }: ProductSectionHe
   );
 }
 
-type ProductLandingVariant = 'fastcast' | 'fastplay';
+type ProductLandingVariant = 'fastcast' | 'fastplay' | 'fastclip';
 
 type ProductShellProps = {
   children: ReactNode;
@@ -689,8 +694,16 @@ type ProductHeroProps = {
   subMeta?: string;
   heroIconUrl?: string;
   heroIconAlt?: string;
+  PrimaryIcon?: LucideIcon;
+  SecondaryIcon?: LucideIcon;
   preview: ReactNode;
 };
+
+function heroLinkProps(href: string) {
+  return href.startsWith('http')
+    ? { target: '_blank' as const, rel: 'noopener noreferrer' }
+    : {};
+}
 
 function ProductHero({
   product,
@@ -707,6 +720,8 @@ function ProductHero({
   subMeta,
   heroIconUrl,
   heroIconAlt,
+  PrimaryIcon = Download,
+  SecondaryIcon = Github,
   preview,
 }: ProductHeroProps) {
   return (
@@ -737,12 +752,12 @@ function ProductHero({
           <p className="product-hero-subtitle mt-5 max-w-2xl text-xl leading-relaxed text-slate-700">{subtitle}</p>
           <p className="product-hero-description mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">{description}</p>
           <div className="product-hero-actions mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a href={primaryHref} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary">
-              <Download className="h-5 w-5" />
+            <a href={primaryHref} {...heroLinkProps(primaryHref)} className="product-button product-button-primary cta-primary">
+              <PrimaryIcon className="h-5 w-5" />
               {primaryLabel}
             </a>
-            <a href={secondaryHref} target="_blank" rel="noopener noreferrer" className="product-button product-button-secondary cta-secondary">
-              <Github className="h-5 w-5" />
+            <a href={secondaryHref} {...heroLinkProps(secondaryHref)} className="product-button product-button-secondary cta-secondary">
+              <SecondaryIcon className="h-5 w-5" />
               {secondaryLabel}
               <ArrowUpRight className="h-4 w-4" />
             </a>
@@ -1417,6 +1432,476 @@ export function FastPlayProductPage() {
               <a href={fastPlaySourceUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-secondary cta-secondary">
                 <Github className="h-5 w-5" />
                 GitHub repository
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </ProductShell>
+  );
+}
+
+const fastClipSteps: Array<{ num: string; title: string; body: string }> = [
+  {
+    num: '01',
+    title: 'Import',
+    body: 'Point FastClip at a long local video. It probes the file and creates a resumable project without copying or modifying your source.',
+  },
+  {
+    num: '02',
+    title: 'Analyze',
+    body: 'On-device signals like speech density, audio energy, and dead air find the moments worth keeping. No cloud, no credits.',
+  },
+  {
+    num: '03',
+    title: 'Review',
+    body: 'A ranked candidate list shows every proposed clip. Preview them, adjust them, and pick the ones you want.',
+  },
+  {
+    num: '04',
+    title: 'Export',
+    body: 'Selected clips render to 1080×1920 vertical MP4s, with captions burned in if you want them.',
+  },
+];
+
+const fastClipFeatures: FeatureItem[] = [
+  {
+    title: 'Fully local pipeline',
+    body: 'Analysis, transcription, and export all run on your machine. No uploads, no cloud services, no analytics.',
+    Icon: WifiOff,
+  },
+  {
+    title: 'Automatic candidate clips',
+    body: 'Variable-duration highlight windows are proposed from acoustic and structural signals, then ranked by speech density, audio energy, dead air, duration fit, and hook openings.',
+    Icon: Sparkles,
+  },
+  {
+    title: 'Four workflow modes',
+    body: 'Speech, ActionSports, MusicMontage, and ManualPrivate select scoring weights and caption defaults to match the footage.',
+    Icon: ListChecks,
+  },
+  {
+    title: 'Deterministic 9:16 export',
+    body: 'Center-crop to 1080×1920 MP4 (H.264/AAC) with the same result every time. No surprise re-renders.',
+    Icon: Crop,
+  },
+  {
+    title: 'Optional burned-in captions',
+    body: 'Caption plans compile to burned-in subtitles with three built-in styles, in Auto, Force, or None modes.',
+    Icon: Subtitles,
+  },
+  {
+    title: 'Local transcription',
+    body: 'Captions are driven by whisper.cpp running on your hardware. Audio never leaves your machine.',
+    Icon: Mic,
+  },
+  {
+    title: 'Hardware encoding',
+    body: 'Exports prefer FFmpeg h264_nvenc and fall back to libx264 automatically when NVENC is not available.',
+    Icon: Cpu,
+  },
+  {
+    title: 'Safe project folders',
+    body: 'Each source gets a versioned .fastclip project folder. Source media is referenced by path, never copied or modified.',
+    Icon: HardDrive,
+  },
+];
+
+const fastClipModes: Array<{ name: string; body: string }> = [
+  {
+    name: 'Speech',
+    body: 'Talking videos, podcasts, streams, and lessons. Weighs speech density and hook openings, with captions on by default.',
+  },
+  {
+    name: 'ActionSports',
+    body: 'Sports and action footage. Weighs audio energy spikes and crowd moments over dialogue.',
+  },
+  {
+    name: 'MusicMontage',
+    body: 'Music and montage sources. Favors sustained energy and rhythm over speech.',
+  },
+  {
+    name: 'ManualPrivate',
+    body: 'Makes no content assumptions and never reads transcript text. For footage you want scored with generic signals only.',
+  },
+];
+
+const fastClipFaqs = [
+  {
+    question: 'What is FastClip?',
+    answer:
+      'FastClip is a Windows app that turns long local videos into ready-to-post 9:16 vertical clips. It analyzes footage on your machine, proposes ranked highlight candidates, and exports 1080×1920 MP4s with optional burned-in captions.',
+  },
+  {
+    question: 'Does FastClip upload my footage?',
+    answer:
+      'No. FastClip is fully local. Analysis, transcription, and export run on your machine, with no uploads, accounts, or analytics. Source files are referenced by path and never copied or modified.',
+  },
+  {
+    question: 'Is FastClip an alternative to cloud AI clipping tools?',
+    answer:
+      'FastClip is a local-first alternative to tools like OpusClip, Kapwing, and CapCut for the core clipping job: there are no per-minute credits and footage never leaves your machine. Cloud tools are still better if you need team collaboration, auto-posting, or mobile editing.',
+  },
+  {
+    question: 'Is FastClip a video editor?',
+    answer:
+      'No. FastClip is intentionally not a nonlinear editor: there is no multi-track timeline and no general-purpose compositing. It does one job: find, review, and export vertical highlight clips.',
+  },
+  {
+    question: 'How do captions work?',
+    answer:
+      'Captions are optional. Local transcription via whisper.cpp drives caption plans that are burned in as subtitles, with clean_white, bold_yellow, and creator_pop built-in styles and Auto, Force, and None caption modes.',
+  },
+  {
+    question: 'When can I download FastClip?',
+    answer:
+      'FastClip is in development and there is no public download yet. FastCast and FastPlay are available today, and FastClip will be announced on the Fast Series page when it ships.',
+  },
+  {
+    question: 'Will FastClip be free?',
+    answer:
+      'The plan is a free version for analyzing footage and previewing every candidate clip, with a one-time FastClip Pro license for bulk export and premium caption styles. No subscription and no monthly credits are planned.',
+  },
+];
+
+export function FastClipProductPage() {
+  const product = productBySlug.fastclip;
+
+  return (
+    <ProductShell
+      variant="fastclip"
+      brand="FastClip"
+      brandIconUrl="/assets/FastClip/FastClip_Icon.png"
+      navLinks={[
+        { href: '#how', label: 'How it works' },
+        { href: '#features', label: 'Features' },
+        { href: '#privacy', label: 'Privacy' },
+        { href: '#pricing', label: 'Pricing' },
+        { href: '#faq', label: 'FAQ' },
+        { href: '/fast-series', label: 'Fast Series' },
+      ]}
+      footer={
+        <>
+          <p>FastClip is in development. Source is currently private.</p>
+          <p>
+            FastClip by <a href={githubProfileUrl} target="_blank" rel="noopener noreferrer">Calvin Sturm</a> / Sturm Technologies LLC
+            <span aria-hidden="true"> · </span>
+            <a href="/fast-series">Fast Series</a>
+          </p>
+        </>
+      }
+    >
+      <ProductHero
+        product={product}
+        eyebrow="Local vertical clip generator for Windows"
+        title="Turn long videos into vertical clips, locally"
+        subtitle="FastClip finds the highlights in long local videos and exports ready-to-post 9:16 clips with optional captions."
+        description="FastClip is a native Windows app that imports a source video, analyzes it with on-device signals, proposes ranked candidate clips, and lets you review and export 1080×1920 MP4s. No uploads, no accounts, no monthly credits: your footage never leaves your machine."
+        primaryLabel="Explore the Fast Series"
+        primaryHref="/fast-series"
+        secondaryLabel="Follow on GitHub"
+        secondaryHref={githubProfileUrl}
+        meta="In development · Windows 10/11 x64 · Local-only processing"
+        subMeta="No public download yet. FastCast and FastPlay are available now."
+        heroIconUrl="/assets/FastClip/FastClip_Icon.png"
+        heroIconAlt="FastClip app icon"
+        PrimaryIcon={Zap}
+        preview={
+          <div
+            className="fastclip-preview product-preview"
+            role="img"
+            aria-label="Illustration of the FastClip review workflow: a ranked list of candidate clips next to a vertical 9:16 export preview."
+          >
+            <div className="fastclip-preview-main">
+              <div className="fastclip-preview-header">
+                <span className="fastclip-preview-file">saturday-game_full.mp4</span>
+                <span className="fastclip-preview-mode">ActionSports</span>
+              </div>
+              <ul className="fastclip-candidates">
+                {[
+                  ['Clip 01', '12:41 - 13:04', 92],
+                  ['Clip 02', '31:17 - 31:52', 87],
+                  ['Clip 03', '54:02 - 54:21', 81],
+                  ['Clip 04', '1:07:48 - 1:08:11', 76],
+                ].map(([name, range, score]) => (
+                  <li key={name} className="fastclip-candidate">
+                    <span className="fastclip-candidate-name">{name}</span>
+                    <span className="fastclip-candidate-range">{range}</span>
+                    <span className="fastclip-candidate-score">
+                      <span style={{ width: `${score}%` }} />
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <p className="fastclip-preview-footer">14 candidates found · 4 selected for export</p>
+            </div>
+            <div className="fastclip-phone">
+              <div className="fastclip-phone-screen">
+                <span className="fastclip-phone-play" />
+                <span className="fastclip-phone-caption">AND HE TAKES THE LEAD</span>
+              </div>
+              <span className="fastclip-phone-label">1080×1920</span>
+            </div>
+          </div>
+        }
+      />
+
+      <section id="how" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="How it works"
+            title="Import, analyze, review, export"
+            description="FastClip is built around one loop. It proposes the clips, you make the calls, and everything happens on your machine."
+          />
+          <div className="fastclip-step-grid">
+            {fastClipSteps.map((step) => (
+              <article key={step.num} className="fastclip-step">
+                <span className="fastclip-step-num">{step.num}</span>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="features" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="Features"
+            title="An automated clipping pipeline, not another editor"
+            description="FastClip is intentionally not a nonlinear editor. There is no multi-track timeline and no compositing: it finds clips, you review them, and it exports clean vertical MP4s."
+          />
+          <FeatureGrid items={fastClipFeatures} />
+        </div>
+      </section>
+
+      <section id="modes" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="Workflow modes"
+            title="Scoring that matches the footage"
+            description="Each mode selects highlight scoring weights and default caption behavior, so a podcast is not scored like a hockey game."
+          />
+          <div className="fastclip-mode-grid">
+            {fastClipModes.map((mode) => (
+              <article key={mode.name} className="fastclip-mode">
+                <h3>{mode.name}</h3>
+                <p>{mode.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="captions" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-split-grid grid gap-8 lg:grid-cols-2">
+          <div className="product-copy-block">
+            <ProductSectionHeading eyebrow="Captions" title="Burned-in captions, transcribed on your hardware" />
+            <div className="product-prose mt-6 space-y-4 text-base leading-relaxed text-slate-700">
+              <p>
+                Captions are optional and fully local. Transcription runs through whisper.cpp on your machine, drives a
+                caption plan you can regenerate, and gets burned into the export as subtitles.
+              </p>
+              <p>
+                Caption modes are <code>Auto</code>, <code>Force</code>, and <code>None</code>, so speech footage gets
+                captions by default and montage footage stays clean.
+              </p>
+              <p>FastClip does not download or bundle models: you choose the local Whisper model it uses.</p>
+            </div>
+          </div>
+          <div className="fastclip-caption-samples">
+            <div className="fastclip-caption-sample">
+              <span className="fastclip-caption-demo fastclip-caption-clean">Clean and readable</span>
+              <span className="fastclip-caption-name">clean_white</span>
+            </div>
+            <div className="fastclip-caption-sample">
+              <span className="fastclip-caption-demo fastclip-caption-bold">BOLD AND LOUD</span>
+              <span className="fastclip-caption-name">bold_yellow</span>
+            </div>
+            <div className="fastclip-caption-sample">
+              <span className="fastclip-caption-demo fastclip-caption-pop">
+                POP THE <em>KEY</em> WORD
+              </span>
+              <span className="fastclip-caption-name">creator_pop</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="privacy" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-split-grid grid gap-8 lg:grid-cols-2">
+          <div className="product-copy-block">
+            <ProductSectionHeading eyebrow="Privacy" title="Local-first by design" />
+            <div className="product-prose mt-6 space-y-4 text-base leading-relaxed text-slate-700">
+              <p className="font-semibold text-slate-900">
+                No uploads. No cloud services. No accounts. No analytics.
+              </p>
+              <p>
+                Source media never leaves your machine and is never copied or modified. Projects reference it by
+                absolute path, and everything FastClip generates stays in a project folder you can delete.
+              </p>
+              <p>
+                The ManualPrivate workflow mode goes further: it makes no content assumptions and never reads
+                transcript text at all.
+              </p>
+            </div>
+          </div>
+          <div className="grid gap-4">
+            <article className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <Scissors className="h-6 w-6 text-slate-700" />
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">A clip generator, not an editor</h3>
+              <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
+                There is no timeline, no compositing, and no general-purpose editing model. If a clip needs real
+                editing, export it and finish it in the editor you already use.
+              </p>
+            </article>
+            <article className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <LockKeyhole className="h-6 w-6 text-slate-700" />
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">In development</h3>
+              <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
+                FastClip is being built in Rust with a Tauri and React shell. The source is currently private, and
+                there is no public download yet.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="compare" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading
+            eyebrow="Compare"
+            title="Where FastClip fits"
+            description="Cloud AI clipping tools are subscription ecosystems built around uploads and credits. FastClip keeps the core job on your machine."
+          />
+          <div className="mt-8 grid gap-5 sm:grid-cols-2">
+            <article className="product-panel product-audience-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <h3 className="text-lg font-semibold text-slate-900">FastClip is a good fit if you want</h3>
+              <div className="mt-5">
+                <BulletedList
+                  items={[
+                    'Clips from long footage without uploading it anywhere',
+                    'No per-minute credits or processing quotas',
+                    'Sports, speech, and music-aware highlight scoring',
+                    'Deterministic 9:16 exports you can rerun',
+                    'Captions transcribed locally, not in the cloud',
+                    'A focused tool instead of a full editor',
+                  ]}
+                />
+              </div>
+            </article>
+            <article className="product-panel product-audience-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <h3 className="text-lg font-semibold text-slate-900">Cloud tools are still better if you need</h3>
+              <div className="mt-5">
+                <BulletedList
+                  items={[
+                    'Team collaboration and shared workspaces',
+                    'Auto-posting and publishing schedules',
+                    'Editing from a phone or browser',
+                    'Cloud storage for your library',
+                    'AI b-roll, reframing, and effects pipelines',
+                    'Mac or Linux support today',
+                  ]}
+                />
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-split-grid grid gap-8 lg:grid-cols-2">
+          <div className="product-copy-block">
+            <ProductSectionHeading eyebrow="Pricing" title="Free to try, pay once. No subscription planned." />
+            <div className="product-prose mt-6 space-y-4 text-base leading-relaxed text-slate-700">
+              <p>
+                The planned model is simple: the free version analyzes your footage and shows every candidate clip it
+                finds, with a per-project export limit. A one-time FastClip Pro license unlocks the rest.
+              </p>
+              <p>
+                There are no cloud costs behind FastClip, so there is no reason to charge monthly. No credits, no
+                metering, no account required.
+              </p>
+              <p className="text-sm text-slate-500">Final pricing will be announced when FastClip ships.</p>
+            </div>
+          </div>
+          <div className="grid gap-4">
+            <article className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <h3 className="text-lg font-semibold text-slate-900">Free (planned)</h3>
+              <div className="mt-4">
+                <BulletedList
+                  items={[
+                    'Import and analyze local videos',
+                    'Preview every candidate clip',
+                    'All four workflow modes',
+                    'Export a few clips per project',
+                    'clean_white caption style',
+                  ]}
+                />
+              </div>
+            </article>
+            <article className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
+              <h3 className="text-lg font-semibold text-slate-900">FastClip Pro (planned)</h3>
+              <div className="mt-4">
+                <BulletedList
+                  items={[
+                    'One-time license, yours for good',
+                    'Unlimited exports and bulk Export All',
+                    'Premium caption styles',
+                    'Same local-only processing',
+                  ]}
+                />
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="facts" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading eyebrow="Facts" title="FastClip facts" description="A quick reference for the essentials." />
+          <FactsTable
+            rows={[
+              ['Product', 'FastClip'],
+              ['Developer', 'Calvin Sturm (Sturm Technologies LLC)'],
+              ['Category', 'Vertical clip generator / highlight clipper'],
+              ['Platform', 'Windows 10 and later, 64-bit'],
+              ['Status', 'In development, no public download yet'],
+              ['Output', '9:16 vertical MP4, 1080×1920, H.264/AAC'],
+              ['Captions', 'Optional burned-in captions via local whisper.cpp transcription'],
+              ['Processing', '100% local: no uploads, no cloud services, no analytics'],
+              ['Technology', 'Rust, Tauri, React, FFmpeg, whisper.cpp'],
+              ['Best for', 'Creators turning long recordings into short vertical clips without uploading footage'],
+              ['Not designed for', 'Multi-track editing, compositing, or replacing a full editor'],
+            ]}
+          />
+        </div>
+      </section>
+
+      <section id="faq" className="product-section border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <ProductSectionHeading eyebrow="FAQ" title="FastClip questions" />
+          <FaqList faqs={fastClipFaqs} />
+        </div>
+      </section>
+
+      <section className="product-section product-section-cta border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell">
+          <div className="product-cta-panel cta-panel p-8 text-center sm:p-10">
+            <h2 className="product-section-title font-display text-3xl text-slate-900 sm:text-4xl">FastClip is on the way</h2>
+            <p className="product-section-description mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
+              While FastClip is in development, FastCast and FastPlay are available now. Both are free, native Windows
+              tools from the same Fast Series.
+            </p>
+            <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href="/fast-series" className="product-button product-button-primary cta-primary">
+                <Zap className="h-5 w-5" />
+                Explore the Fast Series
+              </a>
+              <a href={githubProfileUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-secondary cta-secondary">
+                <Github className="h-5 w-5" />
+                Follow on GitHub
               </a>
             </div>
           </div>
