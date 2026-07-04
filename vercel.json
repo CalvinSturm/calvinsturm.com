@@ -9,6 +9,11 @@
       "source": "/LocalAgent",
       "destination": "/localagent",
       "permanent": true
+    },
+    {
+      "source": "/FaceForge",
+      "destination": "/faceforge",
+      "permanent": true
     }
   ],
   "rewrites": [

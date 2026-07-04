@@ -17,6 +17,7 @@ import {
   Package,
   PawPrint,
   PlayCircle,
+  ScanFace,
   Scissors,
   Search,
   ShieldCheck,
@@ -113,6 +114,14 @@ const experiments: Experiment[] = [
     stars: 28,
     url: '/localagent',
     Icon: Cpu,
+  },
+  {
+    name: 'FaceForge',
+    tagline: 'Privacy-first, local-only Windows app for AI face blur and video redaction, optimized for NVIDIA RTX GPUs.',
+    language: 'Python',
+    stars: 0,
+    url: '/faceforge',
+    Icon: ScanFace,
   },
   {
     name: 'rave',
@@ -346,8 +355,8 @@ export default function ProjectsApp() {
             <p className="home-eyebrow">Under the hood</p>
             <h2 id="experiments-heading">Engineering systems and experiments</h2>
             <p className="pj-section-sub">
-              Infrastructure, research, and side builds that inform the products. These are public on GitHub: read
-              the code, run it yourself.
+              Infrastructure, research, and side builds that inform the products. Most are public on GitHub: read
+              the code, run it yourself. The bigger systems have their own pages.
             </p>
           </div>
 

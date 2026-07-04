@@ -6558,3 +6558,17 @@ textarea.svc-input {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---- FaceForge project page (dark brand style) ---- */
+.ff-hero-brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.ff-hero-brand img {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  box-shadow: 0 0 0 1px var(--hl-border);
+}
