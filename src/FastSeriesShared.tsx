@@ -600,7 +600,7 @@ export function ProductPage({ product }: { product: Product }) {
   );
 }
 
-const fastCastReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.3.2';
+const fastCastReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 const fastPlayReleaseUrl = 'https://github.com/CalvinSturm/FastPlay/releases/latest';
 const fastPlaySourceUrl = 'https://github.com/CalvinSturm/FastPlay';
@@ -906,7 +906,7 @@ export function FastCastProductPage() {
         title="FastCast"
         subtitle="A native Windows screen recorder and live streaming app."
         description="FastCast helps creators record locally and stream to custom RTMP/RTMPS endpoints with desktop audio, microphone capture, and a webcam overlay. It is built as a simpler OBS alternative for focused single-scene recordings: choose a monitor or window, pick your audio, and record MP4 or go live without setting up scenes first."
-        primaryLabel="Download FastCast v0.3.2"
+        primaryLabel="Download FastCast for Windows"
         primaryHref={fastCastReleaseUrl}
         secondaryLabel="View release notes"
         secondaryHref={fastCastReleaseUrl}
