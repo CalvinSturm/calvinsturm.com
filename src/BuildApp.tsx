@@ -12,7 +12,6 @@ import {
   Cpu,
   Gauge,
   Globe,
-  House,
   Layers,
   Menu,
   MessageSquare,
@@ -234,10 +233,6 @@ export default function BuildApp() {
                 <Code2 className="h-3.5 w-3.5 text-amber-500" />
                 Projects
               </a>
-              <a href="/tech-support" className="nav-link inline-flex items-center gap-1.5 whitespace-nowrap text-slate-700">
-                <House className="h-3.5 w-3.5 text-amber-500" />
-                In-home tech support
-              </a>
             </nav>
 
             <div className="hidden items-center gap-3 lg:flex">
@@ -290,10 +285,6 @@ export default function BuildApp() {
               <a href="/projects" className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-base font-medium text-slate-700 hover:bg-slate-100">
                 <Code2 className="h-4 w-4 text-amber-500" />
                 Projects
-              </a>
-              <a href="/tech-support" className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-base font-medium text-slate-700 hover:bg-slate-100">
-                <House className="h-4 w-4 text-amber-500" />
-                In-home tech support
               </a>
               <div className="pt-4 pb-2">
                 <button
@@ -700,7 +691,7 @@ export default function BuildApp() {
                   <li key={href}><a href={href} className="hover:text-slate-900">{label}</a></li>
                 ))}
                 <li><a href="/projects" className="hover:text-slate-900">Projects</a></li>
-                <li><a href="/tech-support" className="hover:text-slate-900">In-home tech support</a></li>
+                <li><a href="/tech-support" className="hover:text-slate-900">Local tech support</a></li>
               </ul>
             </div>
             <div>

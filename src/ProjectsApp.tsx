@@ -10,7 +10,6 @@ import {
   FileVideo,
   Gamepad2,
   Github,
-  House,
   Languages,
   LineChart,
   Menu,
@@ -287,10 +286,6 @@ export default function ProjectsApp() {
                 <Sparkles className="h-3.5 w-3.5 text-amber-500" />
                 Websites &amp; Software
               </a>
-              <a href="/tech-support" className="nav-link inline-flex items-center gap-1.5 text-slate-700">
-                <House className="h-3.5 w-3.5 text-amber-500" />
-                In-home tech support
-              </a>
             </nav>
 
             <div className="hidden items-center gap-3 md:flex">
@@ -340,13 +335,6 @@ export default function ProjectsApp() {
               >
                 <Sparkles className="h-4 w-4 text-amber-500" />
                 Websites &amp; Software
-              </a>
-              <a
-                href="/tech-support"
-                className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
-              >
-                <House className="h-4 w-4 text-amber-500" />
-                In-home tech support
               </a>
               <div className="pt-4 pb-2 space-y-2">
                 <button
@@ -630,7 +618,7 @@ export default function ProjectsApp() {
                 <li><a href="/fastplay" className="hover:text-slate-900">FastPlay</a></li>
                 <li><a href="/roadmap" className="hover:text-slate-900">Product roadmap</a></li>
                 <li><a href="/build" className="hover:text-slate-900">Websites &amp; software</a></li>
-                <li><a href="/tech-support" className="hover:text-slate-900">In-home tech support</a></li>
+                <li><a href="/tech-support" className="hover:text-slate-900">Local tech support</a></li>
                 <li><a href="https://github.com/CalvinSturm" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub profile</a></li>
               </ul>
             </div>

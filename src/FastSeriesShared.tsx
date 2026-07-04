@@ -16,7 +16,6 @@ import {
   Gauge,
   Github,
   HardDrive,
-  House,
   Keyboard,
   ListChecks,
   LockKeyhole,
@@ -289,13 +288,6 @@ function SiteHeader() {
                 {label}
               </a>
             ))}
-            <a
-              href="/tech-support"
-              className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100"
-            >
-              <House className="h-4 w-4 text-amber-500" />
-              In-home tech support
-            </a>
             <div className="pt-4 pb-2 space-y-2">
               <button
                 onClick={() => setIsDark(!isDark)}
@@ -354,6 +346,7 @@ function SiteFooter() {
             <ul className="space-y-2 text-sm text-slate-600">
               <li><a href="/projects" className="hover:text-slate-900">Projects</a></li>
               <li><a href="/build" className="hover:text-slate-900">Websites &amp; software</a></li>
+              <li><a href="/tech-support" className="hover:text-slate-900">Local tech support</a></li>
               <li><a href="https://github.com/CalvinSturm" target="_blank" rel="noopener noreferrer" className="hover:text-slate-900">GitHub profile</a></li>
               <li><a href="mailto:calvinsturm@gmail.com" className="hover:text-slate-900">calvinsturm@gmail.com</a></li>
             </ul>
