@@ -124,7 +124,7 @@ export const products: Product[] = [
     valueProp: 'A fully local Windows app that finds highlights in long videos and exports ready-to-post 9:16 clips.',
     what:
       'FastClip imports a long local video, analyzes it with on-device signals, proposes ranked highlight candidates, and exports 1080×1920 vertical MP4s with optional burned-in captions. Footage never leaves your machine.',
-    status: 'In development',
+    status: 'Open Beta',
     whoFor: [
       'Sports, action, and highlight workflows',
       'Creators repurposing long videos for social',
@@ -144,7 +144,7 @@ export const products: Product[] = [
     valueProp: 'A dead-simple Windows video compressor with presets for Discord, email, and YouTube.',
     what:
       'FastCompress shrinks video files using readable presets. Pick where the video is going, like Discord or email, set a target size if you need one, and get a smaller file that fits. No watermark, no account, no FFmpeg know-how.',
-    status: 'In development',
+    status: 'Beta',
     whoFor: [
       'Anyone whose video is too big to send',
       'Creators uploading to size-limited platforms',
@@ -395,6 +395,10 @@ export function FastSeriesHub() {
               playback, clipping, compression, and short-form production. Each one is small, focused, and built to
               do one job well.
             </p>
+            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
+              Four tools are downloadable today: FastCast, FastClip, and FastCompress in public beta, and FastPlay
+              free under the MIT License. FastShorts is experimental and still taking shape.
+            </p>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-500">
               Built by Calvin Sturm through Sturm Technologies LLC. GitHub remains the source and release backend.
             </p>
@@ -607,6 +611,10 @@ const githubProfileUrl = 'https://github.com/CalvinSturm';
 const fastCastReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 const fastPlayReleaseUrl = 'https://github.com/CalvinSturm/FastPlay/releases/latest';
+const fastClipReleaseUrl = 'https://github.com/CalvinSturm/FastClip-Releases/releases/latest';
+const fastClipAllReleasesUrl = 'https://github.com/CalvinSturm/FastClip-Releases/releases';
+const fastCompressReleaseUrl = 'https://github.com/CalvinSturm/FastCompress-Releases/releases/latest';
+const fastCompressAllReleasesUrl = 'https://github.com/CalvinSturm/FastCompress-Releases/releases';
 const fastPlaySourceUrl = 'https://github.com/CalvinSturm/FastPlay';
 const fastPlayReleaseNotesUrl = 'https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.1.md';
 
@@ -1554,7 +1562,7 @@ const fastClipFaqs = [
   {
     question: 'When can I download FastClip?',
     answer:
-      'FastClip is in development and there is no public download yet. FastCast and FastPlay are available today, and FastClip will be announced on the Fast Series page when it ships.',
+      'FastClip is in open beta. The latest Windows build is available now on GitHub Releases, and updates are announced on the Fast Series page.',
   },
   {
     question: 'Will FastClip be free?',
@@ -1581,7 +1589,7 @@ export function FastClipProductPage() {
       ]}
       footer={
         <>
-          <p>FastClip is in development. Source is currently private.</p>
+          <p>FastClip is in open beta. Source is currently private; public builds are on <a href={fastClipAllReleasesUrl} target="_blank" rel="noopener noreferrer">GitHub Releases</a>.</p>
           <p>
             FastClip by <a href={githubProfileUrl} target="_blank" rel="noopener noreferrer">Calvin Sturm</a> / Sturm Technologies LLC
             <span aria-hidden="true"> · </span>
@@ -1596,15 +1604,14 @@ export function FastClipProductPage() {
         title="Turn long videos into vertical clips, locally"
         subtitle="FastClip finds the highlights in long local videos and exports ready-to-post 9:16 clips with optional captions."
         description="FastClip is a native Windows app that imports a source video, analyzes it with on-device signals, proposes ranked candidate clips, and lets you review and export 1080×1920 MP4s. No uploads, no accounts, no monthly credits: your footage never leaves your machine."
-        primaryLabel="Explore the Fast Series"
-        primaryHref="/fast-series"
-        secondaryLabel="Follow on GitHub"
-        secondaryHref={githubProfileUrl}
-        meta="In development · Windows 10/11 x64 · Local-only processing"
-        subMeta="No public download yet. FastCast and FastPlay are available now."
+        primaryLabel="Download FastClip for Windows"
+        primaryHref={fastClipReleaseUrl}
+        secondaryLabel="View all releases"
+        secondaryHref={fastClipAllReleasesUrl}
+        meta="Open beta · Windows 10/11 x64 · Local-only processing"
+        subMeta="Public beta builds are hosted on GitHub Releases."
         heroIconUrl="/assets/FastClip/FastClip_Icon.png"
         heroIconAlt="FastClip app icon"
-        PrimaryIcon={Zap}
         preview={
           <div
             className="fastclip-preview product-preview"
@@ -1757,10 +1764,10 @@ export function FastClipProductPage() {
             </article>
             <article className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
               <LockKeyhole className="h-6 w-6 text-slate-700" />
-              <h3 className="mt-4 text-lg font-semibold text-slate-900">In development</h3>
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">Open beta</h3>
               <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
-                FastClip is being built in Rust with a Tauri and React shell. The source is currently private, and
-                there is no public download yet.
+                FastClip is built in Rust with a Tauri and React shell. The source is currently private; public beta
+                builds are hosted on GitHub Releases.
               </p>
             </article>
           </div>
@@ -1866,7 +1873,7 @@ export function FastClipProductPage() {
               ['Developer', 'Calvin Sturm (Sturm Technologies LLC)'],
               ['Category', 'Vertical clip generator / highlight clipper'],
               ['Platform', 'Windows 10 and later, 64-bit'],
-              ['Status', 'In development, no public download yet'],
+              ['Status', 'Open beta, public builds on GitHub Releases'],
               ['Output', '9:16 vertical MP4, 1080×1920, H.264/AAC'],
               ['Captions', 'Optional burned-in captions via local whisper.cpp transcription'],
               ['Processing', '100% local: no uploads, no cloud services, no analytics'],
@@ -1888,19 +1895,20 @@ export function FastClipProductPage() {
       <section className="product-section product-section-cta border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
           <div className="product-cta-panel cta-panel p-8 text-center sm:p-10">
-            <h2 className="product-section-title font-display text-3xl text-slate-900 sm:text-4xl">FastClip is on the way</h2>
+            <h2 className="product-section-title font-display text-3xl text-slate-900 sm:text-4xl">Try the FastClip open beta</h2>
             <p className="product-section-description mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
-              While FastClip is in development, FastCast and FastPlay are available now. Both are free, native Windows
+              The first public FastClip beta for Windows is available now on GitHub Releases. FastCast and FastPlay
+              are also available today: both are free, native Windows
               tools from the same Fast Series.
             </p>
             <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href="/fast-series" className="product-button product-button-primary cta-primary">
+              <a href={fastClipReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary">
+                <Download className="h-5 w-5" />
+                Download FastClip
+              </a>
+              <a href="/fast-series" className="product-button product-button-secondary cta-secondary">
                 <Zap className="h-5 w-5" />
                 Explore the Fast Series
-              </a>
-              <a href={githubProfileUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-secondary cta-secondary">
-                <Github className="h-5 w-5" />
-                Follow on GitHub
               </a>
             </div>
           </div>
@@ -2008,7 +2016,7 @@ const fastCompressFaqs = [
   {
     question: 'When can I download FastCompress?',
     answer:
-      'FastCompress is in development and there is no public download yet. FastCast and FastPlay are available today, and FastCompress will be announced on the Fast Series page when it ships.',
+      'FastCompress is in beta. The latest Windows build is available now on GitHub Releases, and updates are announced on the Fast Series page.',
   },
   {
     question: 'Will FastCompress be free?',
@@ -2035,7 +2043,7 @@ export function FastCompressProductPage() {
       ]}
       footer={
         <>
-          <p>FastCompress is in development. Source is currently private.</p>
+          <p>FastCompress is in beta. Source is currently private; public builds are on <a href={fastCompressAllReleasesUrl} target="_blank" rel="noopener noreferrer">GitHub Releases</a>.</p>
           <p>
             FastCompress by <a href={githubProfileUrl} target="_blank" rel="noopener noreferrer">Calvin Sturm</a> / Sturm Technologies LLC
             <span aria-hidden="true"> · </span>
@@ -2050,15 +2058,14 @@ export function FastCompressProductPage() {
         title="Shrink videos to fit, without learning FFmpeg"
         subtitle="FastCompress turns a too-big video into a file that fits Discord, email, or an upload limit in a few clicks."
         description="FastCompress is a dead-simple native Windows compressor. Pick where the video is going, check the plan, and compress. Presets speak plain English, target sizes are editable, and everything runs locally through FFmpeg. No watermark, no account, no uploads."
-        primaryLabel="Explore the Fast Series"
-        primaryHref="/fast-series"
-        secondaryLabel="Follow on GitHub"
-        secondaryHref={githubProfileUrl}
-        meta="In development · Windows 10/11 x64 · No watermark, no account"
-        subMeta="No public download yet. FastCast and FastPlay are available now."
+        primaryLabel="Download FastCompress for Windows"
+        primaryHref={fastCompressReleaseUrl}
+        secondaryLabel="View all releases"
+        secondaryHref={fastCompressAllReleasesUrl}
+        meta="Beta · Windows 10/11 x64 · No watermark, no account"
+        subMeta="Public beta builds are hosted on GitHub Releases."
         heroIconUrl="/assets/FastCompress/FastCompress_Icon.png"
         heroIconAlt="FastCompress app icon"
-        PrimaryIcon={Zap}
         preview={
           <div
             className="fastcompress-preview product-preview"
@@ -2150,10 +2157,10 @@ export function FastCompressProductPage() {
             </article>
             <article className="product-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
               <LockKeyhole className="h-6 w-6 text-slate-700" />
-              <h3 className="mt-4 text-lg font-semibold text-slate-900">In development</h3>
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">Beta</h3>
               <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
-                FastCompress is being built in Rust as a native Windows app. The source is currently private, and
-                there is no public download yet.
+                FastCompress is built in Rust as a native Windows app. The source is currently private; public beta
+                builds are hosted on GitHub Releases.
               </p>
             </article>
           </div>
@@ -2261,7 +2268,7 @@ export function FastCompressProductPage() {
               ['Developer', 'Calvin Sturm (Sturm Technologies LLC)'],
               ['Category', 'Video compressor'],
               ['Platform', 'Windows 10 and later, 64-bit'],
-              ['Status', 'In development, no public download yet'],
+              ['Status', 'Beta, public builds on GitHub Releases'],
               ['Input formats', 'MP4, AVI, MOV, MKV, WebM, FLV, WMV'],
               ['Output', 'H.264 video compressed toward the selected preset or target size'],
               ['Presets', 'Smaller File, Balanced, High Quality, Discord, Email Safe, YouTube Upload, Archive, 1080p/720p/480p 30 fps'],
@@ -2284,19 +2291,19 @@ export function FastCompressProductPage() {
       <section className="product-section product-section-cta border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
           <div className="product-cta-panel cta-panel p-8 text-center sm:p-10">
-            <h2 className="product-section-title font-display text-3xl text-slate-900 sm:text-4xl">FastCompress is on the way</h2>
+            <h2 className="product-section-title font-display text-3xl text-slate-900 sm:text-4xl">Try the FastCompress beta</h2>
             <p className="product-section-description mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
-              While FastCompress is in development, FastCast and FastPlay are available now. Both are free, native
-              Windows tools from the same Fast Series.
+              The first public FastCompress beta for Windows is available now on GitHub Releases. FastCast and
+              FastPlay are also available today: both are free, native Windows tools from the same Fast Series.
             </p>
             <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href="/fast-series" className="product-button product-button-primary cta-primary">
+              <a href={fastCompressReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary">
+                <Download className="h-5 w-5" />
+                Download FastCompress
+              </a>
+              <a href="/fast-series" className="product-button product-button-secondary cta-secondary">
                 <Zap className="h-5 w-5" />
                 Explore the Fast Series
-              </a>
-              <a href={githubProfileUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-secondary cta-secondary">
-                <Github className="h-5 w-5" />
-                Follow on GitHub
               </a>
             </div>
           </div>
@@ -2406,7 +2413,7 @@ const fastShortsFaqs = [
   {
     question: 'When can I use FastShorts?',
     answer:
-      'FastShorts is experimental and the source is currently private. There is no public download yet. FastCast and FastPlay are available today, and FastShorts will be announced on the Fast Series page when it is ready.',
+      'FastShorts is experimental and the source is currently private. There is no public download yet. FastCast, FastPlay, FastClip, and FastCompress are available today, and FastShorts will be announced on the Fast Series page when it is ready.',
   },
 ];
 
@@ -2447,7 +2454,7 @@ export function FastShortsProductPage() {
         secondaryLabel="Follow on GitHub"
         secondaryHref={githubProfileUrl}
         meta="Experimental · Windows 10/11 x64 · Local pipeline, optional cloud steps"
-        subMeta="No public download yet. FastCast and FastPlay are available now."
+        subMeta="No public download yet. Four other Fast Series tools are downloadable today."
         heroIconUrl="/assets/FastShorts/FastShorts_Icon.png"
         heroIconAlt="FastShorts app icon"
         PrimaryIcon={Zap}
@@ -2629,8 +2636,8 @@ export function FastShortsProductPage() {
           <div className="product-cta-panel cta-panel p-8 text-center sm:p-10">
             <h2 className="product-section-title font-display text-3xl text-slate-900 sm:text-4xl">FastShorts is taking shape</h2>
             <p className="product-section-description mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600">
-              While FastShorts is experimental, FastCast and FastPlay are available now. Both are free, native
-              Windows tools from the same Fast Series.
+              While FastShorts is experimental, the rest of the Fast Series is downloadable today: FastCast,
+              FastPlay, FastClip, and FastCompress are all available now as native Windows tools.
             </p>
             <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <a href="/fast-series" className="product-button product-button-primary cta-primary">

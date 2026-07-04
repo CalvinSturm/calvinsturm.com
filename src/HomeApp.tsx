@@ -83,7 +83,7 @@ const gridProducts: GridProduct[] = [
     name: 'FastClip',
     Icon: Scissors,
     line: 'AI-assisted clip extraction for finding usable highlights from longer videos.',
-    status: 'In development',
+    status: 'Open Beta',
     useCase: 'Clipping',
   },
   {
@@ -91,7 +91,7 @@ const gridProducts: GridProduct[] = [
     name: 'FastCompress',
     Icon: Minimize2,
     line: 'Simple Windows video compression for smaller files without complicated setup.',
-    status: 'In development',
+    status: 'Beta',
     useCase: 'Compression',
   },
   {
@@ -136,7 +136,7 @@ const trustPoints = [
   {
     Icon: FolderGit2,
     title: 'Public releases where possible',
-    body: 'FastPlay is open source under the MIT License. FastCast publishes release artifacts, SHA-256 checksums, and clear beta notes on GitHub release pages.',
+    body: 'FastPlay is open source under the MIT License. FastCast, FastClip, and FastCompress publish beta builds, SHA-256 checksums, and release notes on public GitHub release pages.',
   },
   {
     Icon: ShieldCheck,
@@ -244,7 +244,7 @@ export default function HomeApp() {
         <section className="home-section home-shell" aria-labelledby="spotlight-heading">
           <div className="home-section-head">
             <p className="home-eyebrow">Flagship tools</p>
-            <h2 id="spotlight-heading">Start with the two that ship today</h2>
+            <h2 id="spotlight-heading">Start with the flagship tools</h2>
           </div>
 
           <div className="home-spot-grid">
@@ -285,10 +285,17 @@ export default function HomeApp() {
                 <ArrowRight className="h-3.5 w-3.5" />
               </strong>
             </a>
-            <a href="/fast-series">
-              <span>Building a shorts workflow?</span>
+            <a href="/fastclip">
+              <span>Cutting clips from long videos?</span>
               <strong>
-                Fast Series
+                FastClip
+                <ArrowRight className="h-3.5 w-3.5" />
+              </strong>
+            </a>
+            <a href="/fastcompress">
+              <span>Shrinking a video to send?</span>
+              <strong>
+                FastCompress
                 <ArrowRight className="h-3.5 w-3.5" />
               </strong>
             </a>
