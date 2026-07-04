@@ -68,20 +68,24 @@ const builds: BuildCard[] = [
   },
   {
     name: 'FastClip',
-    status: 'In development',
+    status: 'Open beta',
     description:
       'Turns long videos into vertical clips locally: ranked highlights, 9:16 crops, and optional captions via on-device transcription.',
     tags: ['Rust', 'Tauri', 'FFmpeg', 'whisper.cpp'],
     pageHref: '/fastclip',
+    repoHref: 'https://github.com/CalvinSturm/FastClip-Releases',
+    repoLabel: 'Public releases',
     Icon: Scissors,
   },
   {
     name: 'FastCompress',
-    status: 'In development',
+    status: 'Beta',
     description:
       'Practical video compression for creators. Plain-English presets for Discord, email, and YouTube, with local FFmpeg processing.',
     tags: ['Rust', 'FFmpeg', 'Native GUI'],
     pageHref: '/fastcompress',
+    repoHref: 'https://github.com/CalvinSturm/FastCompress-Releases',
+    repoLabel: 'Public releases',
     Icon: Minimize2,
   },
   {
@@ -97,6 +101,7 @@ const builds: BuildCard[] = [
 
 const statusStyles: Record<string, string> = {
   'Open beta': 'bg-emerald-100 text-emerald-800',
+  Beta: 'bg-emerald-100 text-emerald-800',
   'Early build': 'bg-amber-100 text-amber-800',
   'In development': 'bg-sky-100 text-sky-800',
   Experimental: 'bg-purple-100 text-purple-800',
