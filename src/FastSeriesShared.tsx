@@ -1249,7 +1249,9 @@ export function FastPlayProductPage() {
         preview={
           <figure className="product-preview overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
             <img
-              src="https://github.com/user-attachments/assets/ac8ae5f1-b4e3-42ca-b21e-c20c1c5de5c0"
+              src="/assets/FastPlay/FastPlay_gif.gif"
+              width={800}
+              height={450}
               alt="FastPlay fast Windows video player playing a local video file with timeline scrubbing controls."
               className="h-auto w-full"
             />
