@@ -22,6 +22,7 @@ export default defineConfig(({mode}) => {
           build: path.resolve(__dirname, 'build.html'),
           techSupport: path.resolve(__dirname, 'tech-support.html'),
           projects: path.resolve(__dirname, 'projects.html'),
+          localagent: path.resolve(__dirname, 'localagent.html'),
           fastSeries: path.resolve(__dirname, 'fast-series.html'),
           roadmap: path.resolve(__dirname, 'roadmap.html'),
           fastcast: path.resolve(__dirname, 'fastcast.html'),

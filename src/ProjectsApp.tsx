@@ -111,7 +111,7 @@ const experiments: Experiment[] = [
     tagline: 'Local-first agent runtime for MCP workflows, with explicit trust controls, replayable runs, and built-in evals.',
     language: 'Rust',
     stars: 28,
-    url: 'https://github.com/CalvinSturm/LocalAgent',
+    url: '/localagent',
     Icon: Cpu,
   },
   {
@@ -353,7 +353,12 @@ export default function ProjectsApp() {
 
           <div className="pj-exp-grid">
             {experiments.map(({ name, tagline, language, stars, url, Icon }) => (
-              <a key={name} href={url} target="_blank" rel="noopener noreferrer" className="pj-exp-card">
+              <a
+                key={name}
+                href={url}
+                {...(url.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                className="pj-exp-card"
+              >
                 <div className="pj-exp-top">
                   <span className="home-grid-icon">
                     <Icon className="h-4 w-4" />
