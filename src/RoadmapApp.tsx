@@ -1,4 +1,5 @@
 import { ArrowRight, ArrowUpRight, Github, Milestone } from 'lucide-react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { HomeHeader, HomeFooter } from './HomeChrome.tsx';
 
 // All shipped items below are backed by release tags, release notes, or
@@ -536,6 +537,7 @@ export default function RoadmapApp() {
       </main>
 
       <HomeFooter />
+      <SpeedInsights />
     </div>
   );
 }

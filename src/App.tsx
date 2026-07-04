@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import {
   ArrowRight,
@@ -643,6 +644,7 @@ export default function App() {
           <a href="#request-help" className="inline-flex min-h-[52px] flex-1 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-4 text-base font-semibold text-slate-900"><Calendar className="h-5 w-5" />Callback</a>
         </div>
       </div>
+      <SpeedInsights />
     </div>
   );
 }
