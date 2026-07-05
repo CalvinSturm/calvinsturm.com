@@ -24,6 +24,46 @@ const installGuideUrl = 'https://github.com/CalvinSturm/LocalAgent/blob/main/doc
 
 const statusChips = ['Public repo', 'Rust', 'MCP workflows', 'Local-first', 'Alpha'] as const;
 
+/* ---- Live run console (decorative, looping event stream) ---- */
+type LogKind = 'boot' | 'scan' | 'ok' | 'idle' | 'plan' | 'tool' | 'warn' | 'hold' | 'artifact' | 'done';
+
+const runLog: Array<{ t: string; kind: LogKind; tag: string; msg: string }> = [
+  { t: '09:24:01', kind: 'boot', tag: 'boot', msg: 'localagent v0.6.0-alpha.1' },
+  { t: '09:24:01', kind: 'scan', tag: 'detect', msg: 'scanning local providers' },
+  { t: '09:24:02', kind: 'ok', tag: 'provider', msg: 'ollama reachable · llama3.1:8b' },
+  { t: '09:24:02', kind: 'ok', tag: 'provider', msg: 'lm studio reachable' },
+  { t: '09:24:02', kind: 'idle', tag: 'provider', msg: 'llama.cpp not running' },
+  { t: '09:24:03', kind: 'plan', tag: 'plan', msg: '4 steps · read → edit → validate → report' },
+  { t: '09:24:03', kind: 'tool', tag: 'tool', msg: 'read_file  src/runtime/mod.rs' },
+  { t: '09:24:04', kind: 'tool', tag: 'tool', msg: 'lsp.hover  RunContext' },
+  { t: '09:24:05', kind: 'warn', tag: 'trust gate', msg: 'shell.write requested by step 3' },
+  { t: '09:24:05', kind: 'hold', tag: 'approval', msg: 'awaiting operator' },
+  { t: '09:24:08', kind: 'ok', tag: 'approved', msg: 'workdir-scoped · cargo check' },
+  { t: '09:24:12', kind: 'ok', tag: 'validate', msg: 'rustc 0 errors · clippy clean' },
+  { t: '09:24:12', kind: 'artifact', tag: 'artifact', msg: 'run/2026-07-05T09-24/events.jsonl' },
+  { t: '09:24:12', kind: 'artifact', tag: 'replay', msg: '12 events · fully reconstructable' },
+  { t: '09:24:12', kind: 'done', tag: 'done', msg: 'run complete · exit 0' },
+];
+
+const glyph: Record<LogKind, string> = {
+  boot: '●',
+  scan: '⤢',
+  ok: '✓',
+  idle: '○',
+  plan: '◇',
+  tool: '→',
+  warn: '⚠',
+  hold: '⏸',
+  artifact: '⭑',
+  done: '◼',
+};
+
+const providers: Array<{ Icon: LucideIcon; name: string; detail: string; state: 'ready' | 'idle' }> = [
+  { Icon: Server, name: 'Ollama', detail: 'llama3.1:8b · localhost:11434', state: 'ready' },
+  { Icon: Cpu, name: 'LM Studio', detail: 'OpenAI-compatible · localhost:1234', state: 'ready' },
+  { Icon: Terminal, name: 'llama.cpp server', detail: 'OpenAI-compatible endpoint', state: 'idle' },
+];
+
 const whyCards: Array<{ Icon: LucideIcon; title: string; body: string }> = [
   {
     Icon: Compass,
@@ -47,12 +87,6 @@ const whyCards: Array<{ Icon: LucideIcon; title: string; body: string }> = [
   },
 ];
 
-const providers: Array<{ Icon: LucideIcon; name: string }> = [
-  { Icon: Server, name: 'Ollama' },
-  { Icon: Cpu, name: 'LM Studio' },
-  { Icon: Terminal, name: 'llama.cpp server' },
-];
-
 const safetyBullets = [
   'Shell and write access disabled unless explicitly enabled',
   'Narrower workdir-scoped shell mode available',
@@ -70,48 +104,92 @@ const goodFits: Array<{ Icon: LucideIcon; title: string }> = [
 
 export default function LocalAgentApp() {
   return (
-    <div className="home-landing">
+    <div className="home-landing la-page">
       <HomeHeader />
 
       <main id="main-content">
         {/* ---- Hero ---- */}
-        <section className="home-shell pj-hero">
-          <p className="home-eyebrow">Local-first AI systems</p>
-          <h1>LocalAgent</h1>
-          <p className="home-hero-sub">
-            A local-first agent runtime for MCP workflows with explicit trust controls, replayable runs, and
-            inspectable logs.
-          </p>
-          <p className="la-hero-body">
-            LocalAgent is built for the hard part of local agents: connecting on-machine LLMs to tools in a way
-            that stays guided, auditable, and operationally clear. It is designed for developers who want local
-            model workflows without handing side effects to a black box.
-          </p>
-          <div className="home-hero-actions">
-            <a href={repoUrl} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-primary">
-              <Github className="h-4 w-4" />
-              View on GitHub
-            </a>
-            <a href={releasesUrl} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-ghost">
-              Releases
-              <ArrowUpRight className="h-4 w-4" />
-            </a>
-            <a href="/projects" className="home-btn home-btn-ghost">
-              Back to Projects
-            </a>
+        <section className="home-shell la-hero">
+          <div className="la-hero-grid">
+            <div className="la-hero-copy">
+              <div className="la-status-line">
+                <span className="la-status-dot" />
+                <span>runtime</span>
+                <span className="la-status-sep">/</span>
+                <span>local-first</span>
+                <span className="la-status-sep">/</span>
+                <span>MCP</span>
+              </div>
+              <h1>LocalAgent</h1>
+              <p className="home-hero-sub">
+                A local-first agent runtime for MCP workflows with explicit trust controls, replayable runs, and
+                inspectable logs.
+              </p>
+              <p className="la-hero-body">
+                LocalAgent is built for the hard part of local agents: connecting on-machine LLMs to tools in a way
+                that stays guided, auditable, and operationally clear. It is designed for developers who want local
+                model workflows without handing side effects to a black box.
+              </p>
+              <div className="home-hero-actions">
+                <a href={repoUrl} target="_blank" rel="noopener noreferrer" className="la-run-btn">
+                  <Github className="h-4 w-4" />
+                  View on GitHub
+                </a>
+                <a href={releasesUrl} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-ghost">
+                  Releases
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
+                <a href="/projects" className="home-btn home-btn-ghost">
+                  Back to Projects
+                </a>
+              </div>
+              <ul className="home-spot-chips la-chips">
+                {statusChips.map((chip) => (
+                  <li key={chip}>{chip}</li>
+                ))}
+              </ul>
+              <p className="home-hero-meta">Alpha-stage developer tooling · MIT License · Built in Rust</p>
+            </div>
+
+            {/* Live run console */}
+            <div className="la-console" aria-hidden="true">
+              <div className="la-console-bar">
+                <span className="home-console-dots">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <span className="la-console-title">localagent · run</span>
+                <span className="la-console-live">
+                  <span className="la-live-dot" />
+                  LIVE
+                </span>
+              </div>
+              <div className="la-console-scroll">
+                <div className="la-console-feed">
+                  {[...runLog, ...runLog].map((line, i) => (
+                    <div key={i} className={`la-line la-line-${line.kind}`}>
+                      <span className="la-line-t">{line.t}</span>
+                      <span className="la-line-g">{glyph[line.kind]}</span>
+                      <span className="la-line-tag">{line.tag}</span>
+                      <span className="la-line-msg">{line.msg}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="la-console-fade" />
+              </div>
+              <div className="la-console-prompt">
+                <span className="la-prompt-sign">localagent&nbsp;›</span>
+                <span className="la-prompt-caret" />
+              </div>
+            </div>
           </div>
-          <ul className="home-spot-chips la-chips">
-            {statusChips.map((chip) => (
-              <li key={chip}>{chip}</li>
-            ))}
-          </ul>
-          <p className="home-hero-meta">Alpha-stage developer tooling · MIT License · Built in Rust</p>
         </section>
 
         {/* ---- Why it exists ---- */}
         <section className="home-section home-shell" aria-labelledby="why-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Why it exists</p>
+            <p className="la-eyebrow">Why it exists</p>
             <h2 id="why-heading">The friction is operational, not the model</h2>
             <p className="pj-section-sub">
               Most local-agent friction is not the model. It is setup, trust, tool access, recovery, and knowing
@@ -120,9 +198,9 @@ export default function LocalAgentApp() {
               after the fact.
             </p>
           </div>
-          <div className="home-trust-grid">
+          <div className="home-trust-grid la-why-grid">
             {whyCards.map(({ Icon, title, body }) => (
-              <article key={title} className="home-trust-card">
+              <article key={title} className="home-trust-card la-why-card">
                 <Icon className="home-trust-icon h-5 w-5" />
                 <h3>{title}</h3>
                 <p>{body}</p>
@@ -134,28 +212,47 @@ export default function LocalAgentApp() {
         {/* ---- Supported providers ---- */}
         <section className="home-section home-shell" aria-labelledby="providers-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Supported local providers</p>
+            <p className="la-eyebrow">Supported local providers</p>
             <h2 id="providers-heading">Built around local and OpenAI-compatible providers</h2>
             <p className="pj-section-sub">
-              LocalAgent is designed around local and OpenAI-compatible provider workflows, including:
+              On startup LocalAgent probes for on-machine model servers, so you know what is reachable before a run
+              begins.
             </p>
           </div>
-          <ul className="pj-cap-grid">
-            {providers.map(({ Icon, name }) => (
-              <li key={name} className="pj-cap">
-                <span className="home-grid-icon">
-                  <Icon className="h-5 w-5" />
-                </span>
-                {name}
-              </li>
-            ))}
-          </ul>
+          <div className="la-provider-panel">
+            <div className="la-provider-head">
+              <span>
+                <Terminal className="h-3.5 w-3.5" /> localagent doctor
+              </span>
+              <span className="la-provider-scanning">
+                <span className="la-scan-dot" />
+                probing endpoints
+              </span>
+            </div>
+            <ul className="la-provider-list">
+              {providers.map(({ Icon, name, detail, state }) => (
+                <li key={name} className={`la-provider la-provider-${state}`}>
+                  <span className="home-grid-icon">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <span className="la-provider-name">
+                    {name}
+                    <span className="la-provider-detail">{detail}</span>
+                  </span>
+                  <span className="la-provider-state">
+                    <span className="la-provider-pulse" />
+                    {state === 'ready' ? 'reachable' : 'not running'}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
 
-        {/* ---- Safety model ---- */}
+        {/* ---- Safety model + trust gate ---- */}
         <section className="home-section home-shell" aria-labelledby="safety-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Safety model</p>
+            <p className="la-eyebrow">Safety model</p>
             <h2 id="safety-heading">Useful without hiding risk</h2>
             <p className="pj-section-sub">
               The goal is not to remove every restriction. The goal is to make local agents useful without hiding
@@ -163,20 +260,42 @@ export default function LocalAgentApp() {
               preserves evidence from runs so the operator can review what happened.
             </p>
           </div>
-          <ul className="la-bullets">
-            {safetyBullets.map((bullet) => (
-              <li key={bullet}>
-                <CheckCircle2 className="h-4 w-4" />
-                {bullet}
-              </li>
-            ))}
-          </ul>
+          <div className="la-safety-grid">
+            <ul className="la-bullets">
+              {safetyBullets.map((bullet) => (
+                <li key={bullet}>
+                  <CheckCircle2 className="h-4 w-4" />
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+
+            {/* Animated trust gate */}
+            <div className="la-gate" aria-hidden="true">
+              <div className="la-gate-head">
+                <ShieldCheck className="h-4 w-4" />
+                trust gate
+              </div>
+              <p className="la-gate-req">
+                step 3 requests <code>shell.write</code>
+                <br />
+                scope <code>workdir</code> · cmd <code>cargo check</code>
+              </p>
+              <div className="la-gate-bar">
+                <span className="la-gate-fill" />
+              </div>
+              <div className="la-gate-status">
+                <span className="la-gate-pending">⏸ awaiting operator</span>
+                <span className="la-gate-approved">✓ approved · scoped</span>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ---- Developer workflow ---- */}
         <section className="home-section home-shell" aria-labelledby="workflow-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Developer workflow</p>
+            <p className="la-eyebrow">Developer workflow</p>
             <h2 id="workflow-heading">Install, run, and check your provider</h2>
           </div>
           <div className="la-term">
@@ -219,7 +338,7 @@ export default function LocalAgentApp() {
         {/* ---- Current release focus ---- */}
         <section className="home-section home-shell" aria-labelledby="release-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Current release focus</p>
+            <p className="la-eyebrow">Current release focus</p>
             <h2 id="release-heading">Reliable, inspectable coding-agent runs</h2>
             <p className="pj-section-sub">
               Recent LocalAgent work focuses on making coding-agent runs more reliable and inspectable: structured
@@ -238,12 +357,12 @@ export default function LocalAgentApp() {
         {/* ---- Good fit for ---- */}
         <section className="home-section home-shell" aria-labelledby="fit-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Good fit for</p>
+            <p className="la-eyebrow">Good fit for</p>
             <h2 id="fit-heading">Who gets the most out of it</h2>
           </div>
-          <ul className="pj-cap-grid la-grid-2">
+          <ul className="la-fit-grid">
             {goodFits.map(({ Icon, title }) => (
-              <li key={title} className="pj-cap">
+              <li key={title} className="la-fit">
                 <span className="home-grid-icon">
                   <Icon className="h-5 w-5" />
                 </span>
@@ -256,7 +375,7 @@ export default function LocalAgentApp() {
         {/* ---- Not trying to be ---- */}
         <section className="home-section home-shell" aria-labelledby="not-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Not trying to be</p>
+            <p className="la-eyebrow">Not trying to be</p>
             <h2 id="not-heading">Scope, stated plainly</h2>
           </div>
           <div className="la-not">
@@ -270,7 +389,7 @@ export default function LocalAgentApp() {
 
         {/* ---- Final CTA ---- */}
         <section className="home-final home-shell" aria-labelledby="final-heading">
-          <div className="home-final-panel">
+          <div className="home-final-panel la-final-panel">
             <Cpu className="home-final-icon h-6 w-6" aria-hidden="true" />
             <h2 id="final-heading">Run local agents with more control</h2>
             <p>
@@ -278,7 +397,7 @@ export default function LocalAgentApp() {
               tooling.
             </p>
             <div className="home-hero-actions home-final-actions">
-              <a href={repoUrl} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-primary">
+              <a href={repoUrl} target="_blank" rel="noopener noreferrer" className="la-run-btn">
                 <Github className="h-4 w-4" />
                 View LocalAgent on GitHub
               </a>

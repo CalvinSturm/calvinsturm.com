@@ -38,9 +38,9 @@ export function HomeHeader() {
 
       <header className="home-header">
         <div className="home-shell home-header-inner">
-          <a href="/" className="home-brand" aria-label="Calvin Sturm home">
+          <a href="/" className="home-brand" aria-label="Sturm home">
             <img src="/sturm-mark.svg" alt="Sturm Technologies" width={30} height={30} />
-            <span>Calvin Sturm</span>
+            <span>Sturm</span>
           </a>
 
           <nav className="home-nav" aria-label="Primary">
