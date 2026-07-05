@@ -1761,6 +1761,7 @@ html.dark .border-blue-600 {
 .product-landing .product-hero-subtitle,
 .product-landing .product-section-title,
 .product-landing .product-card-title,
+.product-landing .product-faq-summary,
 .product-landing h3 {
   color: var(--product-text) !important;
 }
