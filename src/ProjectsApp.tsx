@@ -7,6 +7,7 @@ import {
   Code2,
   Cpu,
   FileVideo,
+  Film,
   FolderGit2,
   Gamepad2,
   Github,
@@ -122,6 +123,14 @@ const experiments: Experiment[] = [
     stars: 0,
     url: '/faceforge',
     Icon: ScanFace,
+  },
+  {
+    name: 'VideoForge',
+    tagline: 'Local-first Windows app for cleaning up, upscaling, reframing, and exporting video on your own NVIDIA GPU. Nine-stage pipeline, three engine routes.',
+    language: 'Rust + Python',
+    stars: 0,
+    url: '/videoforge',
+    Icon: Film,
   },
   {
     name: 'rave',

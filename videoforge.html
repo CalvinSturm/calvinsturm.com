@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" class="home-page">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#060907" />
+    <meta name="color-scheme" content="dark" />
+    <style>
+      html{background:#060907}
+      .home-static-fallback{margin:0 auto;max-width:760px;padding:110px 24px 64px;font-family:"Segoe UI",-apple-system,system-ui,sans-serif;color:#e4f2e9;line-height:1.65}
+      .home-static-fallback .kicker{margin:0 0 14px;color:#00e676;font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+      .home-static-fallback h1{margin:0;font-size:clamp(2.2rem,5.4vw,3.4rem);font-weight:700;line-height:1.1;letter-spacing:-.02em}
+      .home-static-fallback .sub{margin:20px 0 0;max-width:36rem;color:#8fa39a;font-size:1.1rem}
+      .home-static-fallback .links{margin:30px 0 0}
+      .home-static-fallback a{margin-right:22px;color:#00e676;font-weight:700;text-decoration:none}
+      .home-static-fallback a:hover{text-decoration:underline}
+    </style>
+
+    <title>VideoForge | Local AI video upscaling for Windows by Calvin Sturm</title>
+    <meta name="description" content="VideoForge is a local-first Windows app for cleaning up, upscaling, reframing, and exporting video on your own NVIDIA GPU. A nine-stage pipeline from import to export, no cloud rendering." />
+    <meta name="author" content="Calvin Sturm" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.calvinsturm.com/videoforge" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Calvin Sturm" />
+    <meta property="og:title" content="VideoForge | Local AI video upscaling for Windows by Calvin Sturm" />
+    <meta property="og:description" content="A local-first Windows app for cleaning up, upscaling, reframing, and exporting video on your own NVIDIA GPU. A nine-stage pipeline from import to export, no cloud rendering." />
+    <meta property="og:url" content="https://www.calvinsturm.com/videoforge" />
+    <meta property="og:image" content="https://www.calvinsturm.com/assets/VideoForge/VideoForge_icon.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="VideoForge app icon" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="VideoForge | Local AI video upscaling for Windows by Calvin Sturm" />
+    <meta name="twitter:description" content="A local-first Windows app for cleaning up, upscaling, reframing, and exporting video on your own NVIDIA GPU. No cloud rendering." />
+    <meta name="twitter:image" content="https://www.calvinsturm.com/assets/VideoForge/VideoForge_icon.png" />
+
+    <link rel="icon" type="image/x-icon" href="/assets/VideoForge/videoforge_icon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.calvinsturm.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://www.calvinsturm.com/projects" },
+        { "@type": "ListItem", "position": 3, "name": "VideoForge", "item": "https://www.calvinsturm.com/videoforge" }
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "VideoForge",
+      "description": "VideoForge is a local-first Windows desktop application for cleaning up, upscaling, reframing, and exporting video without sending footage to the cloud. It combines a Rust orchestration layer, a Python inference engine, and an optional GPU-native Rust video engine behind a Tauri desktop app and React UI.",
+      "url": "https://www.calvinsturm.com/videoforge",
+      "image": "https://www.calvinsturm.com/assets/VideoForge/VideoForge_icon.png",
+      "softwareVersion": "v0.1.0",
+      "operatingSystem": "Windows 10, Windows 11",
+      "applicationCategory": "MultimediaApplication",
+      "applicationSubCategory": "AI video upscaling and restoration, creator tool, desktop software",
+      "author": {
+        "@type": "Person",
+        "name": "Calvin Sturm",
+        "url": "https://github.com/CalvinSturm"
+      }
+    }
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <main class="home-static-fallback">
+        <section>
+          <p class="kicker">Local AI video tools</p>
+          <h1>VideoForge</h1>
+          <p class="sub">A local-first Windows app for cleaning up, upscaling, reframing, and exporting video on your own NVIDIA GPU. A nine-stage pipeline from import to export, no cloud rendering.</p>
+          <p class="links">
+            <a href="/projects">Back to Projects</a>
+            <a href="/roadmap">Roadmap</a>
+          </p>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/src/videoforge.tsx"></script>
+  </body>
+</html>

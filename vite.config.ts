@@ -24,6 +24,7 @@ export default defineConfig(({mode}) => {
           projects: path.resolve(__dirname, 'projects.html'),
           localagent: path.resolve(__dirname, 'localagent.html'),
           faceforge: path.resolve(__dirname, 'faceforge.html'),
+          videoforge: path.resolve(__dirname, 'videoforge.html'),
           fastSeries: path.resolve(__dirname, 'fast-series.html'),
           roadmap: path.resolve(__dirname, 'roadmap.html'),
           fastcast: path.resolve(__dirname, 'fastcast.html'),

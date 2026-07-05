@@ -14,6 +14,11 @@
       "source": "/FaceForge",
       "destination": "/faceforge",
       "permanent": true
+    },
+    {
+      "source": "/VideoForge",
+      "destination": "/videoforge",
+      "permanent": true
     }
   ],
   "rewrites": [

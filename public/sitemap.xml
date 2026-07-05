@@ -67,6 +67,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://www.calvinsturm.com/videoforge</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.calvinsturm.com/build</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>monthly</changefreq>
