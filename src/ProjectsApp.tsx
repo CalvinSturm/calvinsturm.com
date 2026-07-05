@@ -117,7 +117,7 @@ const experiments: Experiment[] = [
   },
   {
     name: 'FaceForge',
-    tagline: 'Privacy-first, local-only Windows app for AI face blur and video redaction, optimized for NVIDIA RTX GPUs.',
+    tagline: 'Privacy-first, local-only Windows app for AI face blur and video redaction, optimized for NVIDIA RTX GPUs. Public alpha available.',
     language: 'Python',
     stars: 0,
     url: '/faceforge',

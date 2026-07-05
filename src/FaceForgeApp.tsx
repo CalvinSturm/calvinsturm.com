@@ -5,9 +5,9 @@ import {
   Download,
   Eye,
   EyeOff,
+  FileText,
   GraduationCap,
   HardDrive,
-  Mail,
   MousePointerClick,
   ScanFace,
   Sparkles,
@@ -17,8 +17,8 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import { HomeHeader, HomeFooter } from './HomeChrome.tsx';
 
-const releaseHref = 'https://github.com/CalvinSturm/FaceForge-Releases/releases/latest';
-const contactHref = 'mailto:calvinsturm@gmail.com?subject=FaceForge%20release%20updates';
+const downloadHref = 'https://calvinsturm.itch.io/faceforge';
+const releaseNotesHref = 'https://github.com/CalvinSturm/FaceForge-Releases/releases/tag/v0.1.0-alpha';
 
 const statusChips = ['Windows 10/11', 'NVIDIA RTX + CUDA', 'Local-only', 'Blur-first', 'Public alpha'] as const;
 
@@ -114,13 +114,13 @@ export default function FaceForgeApp() {
             consent-based Pro workflow, and it is not positioned as a generic deepfake tool.
           </p>
           <div className="home-hero-actions">
-            <a href={releaseHref} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-primary">
+            <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-primary">
               <Download className="h-4 w-4" />
-              Download FaceForge
+              Download Alpha
             </a>
-            <a href={contactHref} className="home-btn home-btn-ghost">
-              <Mail className="h-4 w-4" />
-              Release updates
+            <a href={releaseNotesHref} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-ghost">
+              <FileText className="h-4 w-4" />
+              Release notes / checksum
             </a>
             <a href="/projects" className="home-btn home-btn-ghost">
               Back to Projects
@@ -132,7 +132,8 @@ export default function FaceForgeApp() {
             ))}
           </ul>
           <p className="home-hero-meta">
-            Public alpha download · Source private during development · Hosted on GitHub Releases
+            Windows/NVIDIA public alpha. The download is hosted through itch.io; checksum and release notes are on
+            GitHub.
           </p>
         </section>
 
@@ -237,19 +238,27 @@ export default function FaceForgeApp() {
         <section className="home-section home-shell" aria-labelledby="status-heading">
           <div className="home-section-head">
             <p className="home-eyebrow">Current status</p>
-            <h2 id="status-heading">Public alpha available</h2>
+            <h2 id="status-heading">FaceForge v0.1.0 Alpha</h2>
             <p className="pj-section-sub">
-              FaceForge is in active development, and the latest public Windows build is available on GitHub
-              Releases. The current release tier is FaceForge Free: a portable desktop bundle centered on the
-              privacy-first blur flow, with face replacement, enhancement, and alternate-backend controls kept as
-              advanced and Pro surfaces. Source is private during development, and public builds are distributed
-              from the release feed.
+              The first public alpha is available for Windows/NVIDIA testers. FaceForge focuses on local face blur
+              and video redaction, with consent-based face replacement as an advanced workflow. The current release
+              tier is FaceForge Free: a portable desktop bundle centered on the privacy-first blur flow, with face
+              replacement, enhancement, and alternate-backend controls kept as advanced and Pro surfaces.
+            </p>
+            <p className="pj-section-sub">
+              The alpha is distributed through itch.io. The GitHub release contains release notes, SHA-256 checksum
+              verification, and support links. The NVIDIA ZIP is hosted externally because the CUDA runtime exceeds
+              GitHub and itch.io file size limits.
             </p>
           </div>
           <div className="home-hero-actions">
-            <a href={releaseHref} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-primary">
+            <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-primary">
               <Download className="h-4 w-4" />
-              Download latest release
+              Download Alpha
+            </a>
+            <a href={releaseNotesHref} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-ghost">
+              <FileText className="h-4 w-4" />
+              Release notes / checksum
             </a>
           </div>
         </section>
@@ -294,12 +303,13 @@ export default function FaceForgeApp() {
             <h2 id="final-heading">Redact faces without uploading footage</h2>
             <p>
               FaceForge is being built in the open enough to hold it accountable: privacy-first defaults, local
-              processing, and honest limits. The latest public build is available from the FaceForge release feed.
+              processing, and honest limits. The v0.1.0 public alpha is available for Windows/NVIDIA testers on
+              itch.io, with release notes and checksums on GitHub.
             </p>
             <div className="home-hero-actions home-final-actions">
-              <a href={releaseHref} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-primary">
+              <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-primary">
                 <Download className="h-4 w-4" />
-                Download FaceForge
+                Download Alpha
               </a>
               <a href="/projects" className="home-btn home-btn-ghost">
                 Browse all projects
