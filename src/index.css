@@ -6570,18 +6570,599 @@ textarea.svc-input {
   }
 }
 
-/* ---- FaceForge project page (dark brand style) ---- */
+/* ---- FaceForge project page (studio inspector style) ----
+   Unique identity: neutral charcoal studio base, electric blue accent,
+   and UI motifs lifted from the app itself (titlebar, inspector sliders,
+   segmented controls, timeline strip, Start Export button). */
+.ff-page {
+  --hl-bg: #101214;
+  --hl-surface: rgba(255, 255, 255, 0.03);
+  --hl-surface-2: rgba(255, 255, 255, 0.06);
+  --hl-border: rgba(160, 172, 186, 0.15);
+  --hl-border-hover: rgba(160, 172, 186, 0.34);
+  --hl-text: #e7ebf0;
+  --hl-muted: #99a3ae;
+  --hl-faint: #6b7581;
+  --hl-accent: #2d7ff9;
+  --hl-accent-deep: #1f66d6;
+  --hl-accent-ink: #f4f8ff;
+  --ff-panel: #17191c;
+  --ff-panel-2: #1d2024;
+  --ff-glow: rgba(45, 127, 249, 0.45);
+  background:
+    radial-gradient(50rem 28rem at 76% -10rem, rgba(45, 127, 249, 0.1), transparent 65%),
+    radial-gradient(38rem 24rem at 6% 24rem, rgba(45, 127, 249, 0.045), transparent 60%),
+    var(--hl-bg);
+}
+
+.ff-page .home-header {
+  background: rgba(16, 18, 20, 0.86);
+}
+
+/* Hero */
+.ff-hero {
+  padding: 84px 0 8px;
+}
+
+.ff-titlebar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin-bottom: 28px;
+  border: 1px solid var(--hl-border);
+  border-radius: 8px;
+  background: var(--ff-panel);
+  padding: 8px 14px;
+  font-size: 0.74rem;
+  letter-spacing: 0.03em;
+  color: var(--hl-faint);
+}
+
+.ff-titlebar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--hl-text);
+  font-weight: 700;
+}
+
+.ff-titlebar-brand img {
+  border-radius: 3px;
+}
+
+.ff-titlebar-menu,
+.ff-titlebar-view {
+  display: inline-flex;
+  gap: 12px;
+}
+
+.ff-titlebar-view {
+  margin-left: auto;
+  gap: 4px;
+}
+
+.ff-titlebar-view span {
+  border-radius: 5px;
+  padding: 3px 10px;
+}
+
+.ff-titlebar-view .ff-titlebar-active {
+  background: var(--hl-accent);
+  color: var(--hl-accent-ink);
+  font-weight: 600;
+}
+
+.ff-titlebar-theme {
+  padding-left: 14px;
+  border-left: 1px solid var(--hl-border);
+}
+
 .ff-hero-brand {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 20px;
 }
 
 .ff-hero-brand img {
-  width: 64px;
-  height: 64px;
-  border-radius: 14px;
-  box-shadow: 0 0 0 1px var(--hl-border);
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px var(--hl-border),
+    0 0 34px rgba(45, 127, 249, 0.3);
+}
+
+.ff-hero-brand h1 {
+  font-size: clamp(2.4rem, 5.6vw, 3.6rem);
+  letter-spacing: -0.02em;
+}
+
+.ff-hero-body {
+  max-width: 44rem;
+  margin-top: 18px;
+  color: var(--hl-muted);
+  line-height: 1.75;
+}
+
+.ff-hero-meta {
+  margin-top: 18px;
+  color: var(--hl-faint);
+  font-size: 0.88rem;
+}
+
+/* Start Export button: the app's blue commit action */
+.ff-export-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #4a93ff, var(--hl-accent) 55%, var(--hl-accent-deep));
+  color: var(--hl-accent-ink);
+  padding: 12px 24px;
+  font-size: 0.96rem;
+  font-weight: 700;
+  box-shadow:
+    0 0 0 1px rgba(45, 127, 249, 0.5),
+    0 8px 28px rgba(45, 127, 249, 0.26);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.ff-export-btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px rgba(45, 127, 249, 0.65),
+    0 10px 34px rgba(45, 127, 249, 0.4);
+}
+
+/* Status chips */
+.ff-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ff-chips li {
+  border: 1px solid var(--hl-border);
+  border-radius: 6px;
+  background: var(--ff-panel);
+  padding: 6px 12px;
+  color: var(--hl-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* Section typography */
+.ff-eyebrow {
+  margin-bottom: 14px;
+  color: var(--hl-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ff-section-sub {
+  margin-top: 14px;
+  color: var(--hl-muted);
+  line-height: 1.7;
+}
+
+.ff-section-sub + .ff-section-sub {
+  margin-top: 12px;
+}
+
+/* Cards */
+.ff-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ff-card-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ff-card {
+  border: 1px solid var(--hl-border);
+  border-radius: 10px;
+  background: var(--ff-panel);
+  padding: 22px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.ff-card:hover {
+  border-color: rgba(45, 127, 249, 0.45);
+  box-shadow: 0 0 24px rgba(45, 127, 249, 0.1);
+}
+
+.ff-card-icon {
+  color: var(--hl-accent);
+}
+
+.ff-card h3 {
+  margin-top: 14px;
+  font-size: 1.02rem;
+}
+
+.ff-card p {
+  margin-top: 8px;
+  color: var(--hl-muted);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+/* Workflow steps */
+.ff-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.ff-step {
+  border: 1px solid var(--hl-border);
+  border-radius: 10px;
+  background: var(--ff-panel);
+  padding: 22px;
+}
+
+.ff-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 26px;
+  border-radius: 6px;
+  background: rgba(45, 127, 249, 0.14);
+  color: var(--hl-accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.ff-step h3 {
+  margin-top: 14px;
+  font-size: 1.02rem;
+}
+
+.ff-step p {
+  margin-top: 8px;
+  color: var(--hl-muted);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+/* Timeline strip */
+.ff-timeline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  border: 1px solid var(--hl-border);
+  border-radius: 10px;
+  background: var(--ff-panel);
+  padding: 12px 16px;
+}
+
+.ff-timeline-label,
+.ff-timeline-code {
+  flex-shrink: 0;
+  color: var(--hl-faint);
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+}
+
+.ff-timeline-strip {
+  position: relative;
+  display: flex;
+  flex: 1;
+  gap: 2px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.ff-timeline-cell {
+  flex: 1;
+  height: 26px;
+  background: linear-gradient(180deg, #262c34, #1a1f26);
+}
+
+.ff-timeline-cell:nth-child(3n) {
+  background: linear-gradient(180deg, #2b3947, #1e2833);
+}
+
+.ff-timeline-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 22%;
+  width: 2px;
+  background: var(--hl-accent);
+  box-shadow: 0 0 10px var(--ff-glow);
+}
+
+/* Segmented controls */
+.ff-seg {
+  display: flex;
+  gap: 4px;
+  border: 1px solid var(--hl-border);
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.32);
+  padding: 4px;
+}
+
+.ff-seg span {
+  flex: 1;
+  border-radius: 5px;
+  padding: 6px 12px;
+  color: var(--hl-faint);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.ff-seg .ff-seg-on {
+  background: var(--hl-accent);
+  color: var(--hl-accent-ink);
+  box-shadow: 0 0 14px rgba(45, 127, 249, 0.35);
+}
+
+.ff-seg-hero {
+  max-width: 380px;
+  margin-bottom: 22px;
+}
+
+/* Inspector panel */
+.ff-inspector {
+  max-width: 620px;
+  border: 1px solid var(--hl-border);
+  border-radius: 12px;
+  background: var(--ff-panel);
+  padding: 20px 24px 24px;
+}
+
+.ff-inspector-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hl-border);
+  color: var(--hl-text);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.ff-inspector-scope {
+  color: var(--hl-faint);
+  font-size: 0.74rem;
+  font-weight: 500;
+}
+
+.ff-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ff-slider-row + .ff-slider-row {
+  margin-top: 14px;
+}
+
+.ff-slider-label {
+  flex-shrink: 0;
+  width: 132px;
+  color: var(--hl-muted);
+  font-size: 0.8rem;
+}
+
+.ff-slider-track {
+  position: relative;
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: #2a2e34;
+}
+
+.ff-slider-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 3px;
+  background: var(--hl-accent);
+}
+
+.ff-slider-thumb {
+  position: absolute;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #dfe9f7;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px rgba(45, 127, 249, 0.5);
+}
+
+.ff-slider-value {
+  flex-shrink: 0;
+  min-width: 44px;
+  color: var(--hl-text);
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.ff-inspector-segs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.ff-inspector-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--hl-faint);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Bullets */
+.ff-bullets {
+  display: grid;
+  gap: 12px;
+  max-width: 46rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ff-bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--hl-muted);
+  line-height: 1.6;
+}
+
+.ff-bullets svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+  color: var(--hl-accent);
+}
+
+/* Good fit grid */
+.ff-fit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ff-fit {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--hl-border);
+  border-radius: 10px;
+  background: var(--ff-panel);
+  padding: 16px 18px;
+  color: var(--hl-muted);
+  line-height: 1.5;
+}
+
+.ff-fit-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: rgba(45, 127, 249, 0.12);
+  color: var(--hl-accent);
+}
+
+/* Scope note */
+.ff-not {
+  max-width: 46rem;
+  border: 1px dashed var(--hl-border-hover);
+  border-radius: 10px;
+  background: var(--ff-panel);
+  padding: 24px 26px;
+}
+
+.ff-not p {
+  color: var(--hl-muted);
+  line-height: 1.7;
+}
+
+/* Final panel */
+.ff-final-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--hl-border);
+  border-radius: 18px;
+  background:
+    radial-gradient(42rem 20rem at 50% -8rem, rgba(45, 127, 249, 0.14), transparent 68%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  padding: 64px 32px;
+  text-align: center;
+}
+
+.ff-final-panel h2 {
+  margin-top: 18px;
+  font-size: clamp(1.7rem, 3.2vw, 2.3rem);
+  letter-spacing: -0.025em;
+}
+
+.ff-final-panel p {
+  max-width: 36rem;
+  margin: 14px auto 0;
+  color: var(--hl-muted);
+  font-size: 1.02rem;
+}
+
+.ff-final-icon {
+  color: var(--hl-accent);
+  filter: drop-shadow(0 0 10px var(--ff-glow));
+}
+
+@media (max-width: 900px) {
+  .ff-card-grid-3,
+  .ff-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .ff-card-grid,
+  .ff-card-grid-3,
+  .ff-steps,
+  .ff-fit-grid,
+  .ff-inspector-segs {
+    grid-template-columns: 1fr;
+  }
+
+  .ff-hero-brand img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .ff-titlebar-menu,
+  .ff-titlebar-theme {
+    display: none;
+  }
+
+  .ff-titlebar-view {
+    margin-left: 0;
+  }
+
+  .ff-slider-label {
+    width: 104px;
+  }
+
+  .ff-timeline-code {
+    display: none;
+  }
 }
 
 /* ---- VideoForge project page (forge console style) ----

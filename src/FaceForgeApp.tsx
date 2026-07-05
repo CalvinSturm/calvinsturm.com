@@ -69,6 +69,22 @@ const processSteps = [
   ['03', 'Start Export', 'The redacted video renders on your GPU and lands next to your files.'],
 ] as const;
 
+type InspectorSlider = {
+  label: string;
+  value: string;
+  fill: number;
+};
+
+const inspectorSliders: InspectorSlider[] = [
+  { label: 'Blur Strength', value: '0.80', fill: 80 },
+  { label: 'Blend Width', value: '6 px', fill: 24 },
+  { label: 'Mask Softness', value: '0.30', fill: 30 },
+  { label: 'Enhancement Mix', value: '1.00', fill: 100 },
+];
+
+const maskSegments = ['Whole face', 'Face + neck', 'Custom regions'] as const;
+const qualitySegments = ['Auto', 'Strong', 'Fast'] as const;
+
 const safetyBullets = [
   'Footage, logs, and diagnostics stay on your machine',
   'Blur and redaction is the default, beginner-facing workflow',
@@ -91,30 +107,49 @@ const goodFits: Array<{ Icon: LucideIcon; title: string }> = [
   { Icon: HardDrive, title: 'Anyone anonymizing local video without cloud uploads' },
 ];
 
+const timelineCells = Array.from({ length: 18 }, (_, i) => i);
+
 export default function FaceForgeApp() {
   return (
-    <div className="home-landing">
+    <div className="home-landing ff-page">
       <HomeHeader />
 
       <main id="main-content">
         {/* ---- Hero ---- */}
-        <section className="home-shell pj-hero">
-          <p className="home-eyebrow">Privacy-first video tools</p>
+        <section className="home-shell ff-hero">
+          <div className="ff-titlebar" aria-hidden="true">
+            <span className="ff-titlebar-brand">
+              <img src="/assets/FaceForge/FaceForge_icon.png" alt="" width={16} height={16} />
+              FaceForge
+            </span>
+            <span className="ff-titlebar-project">Project: Unsaved</span>
+            <span className="ff-titlebar-menu">
+              <span>Open</span>
+              <span>Save</span>
+              <span>Presets</span>
+            </span>
+            <span className="ff-titlebar-view">
+              <span>Simple</span>
+              <span>User</span>
+              <span className="ff-titlebar-active">Advanced</span>
+            </span>
+            <span className="ff-titlebar-theme">Theme: Studio</span>
+          </div>
           <div className="ff-hero-brand">
-            <img src="/assets/FaceForge/FaceForge_icon.png" alt="FaceForge app icon" width={64} height={64} />
+            <img src="/assets/FaceForge/FaceForge_icon.png" alt="FaceForge app icon" width={72} height={72} />
             <h1>FaceForge</h1>
           </div>
           <p className="home-hero-sub">
             A privacy-first, local-only Windows app for AI face blur and video redaction, optimized for NVIDIA RTX
             GPUs.
           </p>
-          <p className="la-hero-body">
+          <p className="ff-hero-body">
             FaceForge is built for people who need to anonymize faces in local media without uploading footage
             anywhere. The default workflow is blur and redaction. Face replacement exists as an advanced,
             consent-based Pro workflow, and it is not positioned as a generic deepfake tool.
           </p>
           <div className="home-hero-actions">
-            <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-primary">
+            <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="ff-export-btn">
               <Download className="h-4 w-4" />
               Download Alpha
             </a>
@@ -126,12 +161,12 @@ export default function FaceForgeApp() {
               Back to Projects
             </a>
           </div>
-          <ul className="home-spot-chips la-chips">
+          <ul className="ff-chips">
             {statusChips.map((chip) => (
               <li key={chip}>{chip}</li>
             ))}
           </ul>
-          <p className="home-hero-meta">
+          <p className="ff-hero-meta">
             Windows/NVIDIA public alpha. The download is hosted through itch.io; checksum and release notes are on
             GitHub.
           </p>
@@ -140,18 +175,18 @@ export default function FaceForgeApp() {
         {/* ---- Why it exists ---- */}
         <section className="home-section home-shell" aria-labelledby="why-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Why it exists</p>
+            <p className="ff-eyebrow">Why it exists</p>
             <h2 id="why-heading">Redaction without uploads</h2>
-            <p className="pj-section-sub">
+            <p className="ff-section-sub">
               Most face-blur tools are cloud services: you hand over the footage to protect the people in it.
               FaceForge takes the opposite approach. Detection, blurring, enhancement, and export all run on your
               own GPU, so the media that needs protecting never leaves the machine.
             </p>
           </div>
-          <div className="home-trust-grid">
+          <div className="ff-card-grid">
             {whyCards.map(({ Icon, title, body }) => (
-              <article key={title} className="home-trust-card">
-                <Icon className="home-trust-icon h-5 w-5" />
+              <article key={title} className="ff-card">
+                <Icon className="ff-card-icon h-5 w-5" />
                 <h3>{title}</h3>
                 <p>{body}</p>
               </article>
@@ -162,34 +197,45 @@ export default function FaceForgeApp() {
         {/* ---- How it works ---- */}
         <section className="home-section home-shell" aria-labelledby="workflow-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">How it works</p>
+            <p className="ff-eyebrow">How it works</p>
             <h2 id="workflow-heading">Video in, redacted video out</h2>
           </div>
-          <ol className="svc-steps">
+          <ol className="ff-steps">
             {processSteps.map(([step, title, desc]) => (
-              <li key={step} className="svc-step">
-                <span className="svc-step-num">{step}</span>
+              <li key={step} className="ff-step">
+                <span className="ff-step-num">{step}</span>
                 <h3>{title}</h3>
                 <p>{desc}</p>
               </li>
             ))}
           </ol>
+          <div className="ff-timeline" aria-hidden="true">
+            <span className="ff-timeline-label">TIMELINE</span>
+            <div className="ff-timeline-strip">
+              {timelineCells.map((i) => (
+                <span key={i} className="ff-timeline-cell" />
+              ))}
+              <span className="ff-timeline-playhead" />
+            </div>
+            <span className="ff-timeline-code">00:00:00:00</span>
+          </div>
         </section>
 
         {/* ---- Face selection modes ---- */}
         <section className="home-section home-shell" aria-labelledby="modes-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Face selection</p>
+            <p className="ff-eyebrow">Face selection</p>
             <h2 id="modes-heading">Three modes, from zero-friction to precise</h2>
           </div>
-          <div className="home-grid">
+          <div className="ff-seg ff-seg-hero" aria-hidden="true">
+            <span className="ff-seg-on">Auto</span>
+            <span>All Faces</span>
+            <span>Locked Face</span>
+          </div>
+          <div className="ff-card-grid ff-card-grid-3">
             {faceModes.map(({ Icon, title, body }) => (
-              <article key={title} className="home-grid-card">
-                <div className="home-grid-top">
-                  <span className="home-grid-icon">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                </div>
+              <article key={title} className="ff-card">
+                <Icon className="ff-card-icon h-5 w-5" />
                 <h3>{title}</h3>
                 <p>{body}</p>
               </article>
@@ -197,18 +243,69 @@ export default function FaceForgeApp() {
           </div>
         </section>
 
+        {/* ---- Inspector ---- */}
+        <section className="home-section home-shell" aria-labelledby="inspector-heading">
+          <div className="home-section-head">
+            <p className="ff-eyebrow">The inspector</p>
+            <h2 id="inspector-heading">Tuned with studio controls, not checkboxes</h2>
+            <p className="ff-section-sub">
+              Blur strength, mask boundaries, edge softness, and enhancement are continuous controls in a studio-style
+              inspector. Set what to mask, pick a quality mode, and preview Original, Processed, or Split before you
+              commit to an export.
+            </p>
+          </div>
+          <div className="ff-inspector" aria-hidden="true">
+            <div className="ff-inspector-head">
+              <span>Inspector</span>
+              <span className="ff-inspector-scope">Global settings</span>
+            </div>
+            {inspectorSliders.map(({ label, value, fill }) => (
+              <div key={label} className="ff-slider-row">
+                <span className="ff-slider-label">{label}</span>
+                <span className="ff-slider-track">
+                  <span className="ff-slider-fill" style={{ width: `${fill}%` }} />
+                  <span className="ff-slider-thumb" style={{ left: `${fill}%` }} />
+                </span>
+                <span className="ff-slider-value">{value}</span>
+              </div>
+            ))}
+            <div className="ff-inspector-segs">
+              <div>
+                <span className="ff-inspector-label">What to mask</span>
+                <div className="ff-seg">
+                  {maskSegments.map((seg, i) => (
+                    <span key={seg} className={i === 0 ? 'ff-seg-on' : undefined}>
+                      {seg}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <span className="ff-inspector-label">Quality</span>
+                <div className="ff-seg">
+                  {qualitySegments.map((seg, i) => (
+                    <span key={seg} className={i === 0 ? 'ff-seg-on' : undefined}>
+                      {seg}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ---- Consent and privacy model ---- */}
         <section className="home-section home-shell" aria-labelledby="safety-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Consent and privacy model</p>
+            <p className="ff-eyebrow">Consent and privacy model</p>
             <h2 id="safety-heading">Local by default, consent-gated by design</h2>
-            <p className="pj-section-sub">
+            <p className="ff-section-sub">
               App state, logs, cache, and support artifacts live in local per-user folders, and diagnostics are
               exported only when you choose to. The capable-but-risky feature, face replacement, is deliberately
               gated rather than deliberately easy.
             </p>
           </div>
-          <ul className="la-bullets">
+          <ul className="ff-bullets">
             {safetyBullets.map((bullet) => (
               <li key={bullet}>
                 <CheckCircle2 className="h-4 w-4" />
@@ -221,13 +318,13 @@ export default function FaceForgeApp() {
         {/* ---- System requirements ---- */}
         <section className="home-section home-shell" aria-labelledby="requirements-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">System requirements</p>
+            <p className="ff-eyebrow">System requirements</p>
             <h2 id="requirements-heading">Built for RTX-class Windows machines</h2>
           </div>
-          <ul className="la-bullets">
+          <ul className="ff-bullets">
             {requirements.map((req) => (
               <li key={req}>
-                <CheckCircle2 className="h-4 w-4" />
+                <Cpu className="h-4 w-4" />
                 {req}
               </li>
             ))}
@@ -237,22 +334,22 @@ export default function FaceForgeApp() {
         {/* ---- Current status ---- */}
         <section className="home-section home-shell" aria-labelledby="status-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Current status</p>
+            <p className="ff-eyebrow">Current status</p>
             <h2 id="status-heading">FaceForge v0.1.0 Alpha</h2>
-            <p className="pj-section-sub">
+            <p className="ff-section-sub">
               The first public alpha is available for Windows/NVIDIA testers. FaceForge focuses on local face blur
               and video redaction, with consent-based face replacement as an advanced workflow. The current release
               tier is FaceForge Free: a portable desktop bundle centered on the privacy-first blur flow, with face
               replacement, enhancement, and alternate-backend controls kept as advanced and Pro surfaces.
             </p>
-            <p className="pj-section-sub">
+            <p className="ff-section-sub">
               The alpha is distributed through itch.io. The GitHub release contains release notes, SHA-256 checksum
               verification, and support links. The NVIDIA ZIP is hosted externally because the CUDA runtime exceeds
               GitHub and itch.io file size limits.
             </p>
           </div>
           <div className="home-hero-actions">
-            <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-primary">
+            <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="ff-export-btn">
               <Download className="h-4 w-4" />
               Download Alpha
             </a>
@@ -266,13 +363,13 @@ export default function FaceForgeApp() {
         {/* ---- Good fit for ---- */}
         <section className="home-section home-shell" aria-labelledby="fit-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Good fit for</p>
+            <p className="ff-eyebrow">Good fit for</p>
             <h2 id="fit-heading">Who it is for</h2>
           </div>
-          <ul className="pj-cap-grid la-grid-2">
+          <ul className="ff-fit-grid">
             {goodFits.map(({ Icon, title }) => (
-              <li key={title} className="pj-cap">
-                <span className="home-grid-icon">
+              <li key={title} className="ff-fit">
+                <span className="ff-fit-icon">
                   <Icon className="h-5 w-5" />
                 </span>
                 {title}
@@ -284,10 +381,10 @@ export default function FaceForgeApp() {
         {/* ---- Not trying to be ---- */}
         <section className="home-section home-shell" aria-labelledby="not-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">Not trying to be</p>
+            <p className="ff-eyebrow">Not trying to be</p>
             <h2 id="not-heading">Scope, stated plainly</h2>
           </div>
-          <div className="la-not">
+          <div className="ff-not">
             <p>
               FaceForge is not a cloud service and not a generic deepfake tool. Face replacement stays behind
               consent acknowledgement and rights to the media involved, and the free tier is about hiding faces,
@@ -298,8 +395,8 @@ export default function FaceForgeApp() {
 
         {/* ---- Final CTA ---- */}
         <section className="home-final home-shell" aria-labelledby="final-heading">
-          <div className="home-final-panel">
-            <EyeOff className="home-final-icon h-6 w-6" aria-hidden="true" />
+          <div className="ff-final-panel">
+            <EyeOff className="ff-final-icon h-6 w-6" aria-hidden="true" />
             <h2 id="final-heading">Redact faces without uploading footage</h2>
             <p>
               FaceForge is being built in the open enough to hold it accountable: privacy-first defaults, local
@@ -307,9 +404,9 @@ export default function FaceForgeApp() {
               itch.io, with release notes and checksums on GitHub.
             </p>
             <div className="home-hero-actions home-final-actions">
-              <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-primary">
+              <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="ff-export-btn">
                 <Download className="h-4 w-4" />
-                Download Alpha
+                Start Export: Download Alpha
               </a>
               <a href="/projects" className="home-btn home-btn-ghost">
                 Browse all projects
