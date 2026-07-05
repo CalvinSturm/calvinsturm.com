@@ -99,7 +99,7 @@ export const products: Product[] = [
     valueProp: 'A minimal native Windows video player built for responsive playback.',
     what:
       'FastPlay is a lightweight native Windows video player focused on responsive playback and quick seeking. It opens fast and stays out of your way when you just need to review footage.',
-    status: 'Early build',
+    status: 'Released',
     whoFor: [
       'Anyone reviewing footage or media on Windows',
       'Editors doing quick playback checks',
@@ -889,6 +889,11 @@ const fastCastFaqs = [
     answer: 'No. Stream keys are not saved to disk.',
   },
   {
+    question: 'Is FastCast free?',
+    answer:
+      'FastCast Free is free during the Open Beta and covers 1080p30 recording and streaming. A one-time FastCast Pro license unlocks 1440p and 4K recording, 60 fps capture, and advanced encoder controls. No subscription and no account.',
+  },
+  {
     question: 'Is FastCast signed?',
     answer:
       'FastCast is currently unsigned during Open Beta, so Windows SmartScreen may show an Unknown Publisher warning.',
@@ -924,15 +929,15 @@ export function FastCastProductPage() {
     >
       <ProductHero
         product={product}
-        eyebrow="Native Windows screen recorder"
-        title="FastCast"
-        subtitle="A native Windows screen recorder and live streaming app."
-        description="FastCast helps creators record locally and stream to custom RTMP/RTMPS endpoints with desktop audio, microphone capture, and a webcam overlay. It is built as a simpler OBS alternative for focused single-scene recordings: choose a monitor or window, pick your audio, and record MP4 or go live without setting up scenes first."
+        eyebrow="FastCast · Native Windows screen recorder"
+        title="Record or stream without setting up OBS scenes"
+        subtitle="FastCast is a native Windows recorder for local MP4 capture, webcam overlay, desktop and microphone audio, and RTMP/RTMPS livestreaming."
+        description="Built as a simpler OBS alternative for focused single-scene recordings: choose a monitor or window, pick your audio, add an optional webcam overlay, and record MP4 or go live without setting up scenes first."
         primaryLabel="Download FastCast for Windows"
         primaryHref={fastCastReleaseUrl}
         secondaryLabel="View release notes"
         secondaryHref={fastCastReleaseUrl}
-        meta="Windows 10/11 x64 · Portable ZIP · Free during Open Beta"
+        meta="Windows 10/11 x64 · Portable ZIP · Free version, optional Pro license"
         heroIconUrl="/assets/FastCast/FastCast_Icon.png"
         heroIconAlt="FastCast app icon"
         preview={
@@ -959,7 +964,7 @@ export function FastCastProductPage() {
           </div>
           <aside className="product-panel product-release-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
             <h3>Current release</h3>
-            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.3.2</p>
+            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.4.0</p>
             <p className="product-panel-copy mt-3 text-sm leading-relaxed text-slate-600">
               The latest public build is hosted on GitHub Releases. FastCast does not download or install updates
               automatically.
@@ -1003,12 +1008,12 @@ export function FastCastProductPage() {
               <ShieldCheck className="h-6 w-6 text-emerald-600" />
               <h3 className="mt-4 text-lg font-semibold text-slate-900">Verify the download</h3>
               <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
-                Download <code>FastCast-0.3.2-win-x64.zip</code> from the latest release. An optional{' '}
+                Download <code>FastCast-0.4.0-win-x64.zip</code> from the latest release. An optional{' '}
                 <code>.sha256</code> sidecar is included for integrity checks.
               </p>
               <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Expected SHA-256</p>
               <code className="mt-2 block break-all rounded-xl bg-slate-100 p-3 text-xs text-slate-700">
-                fb48f1edc0798753f8a06a2c5aca5ccf39f135b4ba4da38d20e1b7386542a29e
+                2efa178e8e184e23f4ab8b5b20612db70652ca30f757c2a95299354517c48b9e
               </code>
             </article>
             <article className="product-panel product-warning-panel rounded-2xl border border-amber-200/70 bg-amber-50 p-6">
@@ -1026,10 +1031,12 @@ export function FastCastProductPage() {
       <section id="beta" className="product-section product-section-beta border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell product-split-grid grid gap-8 lg:grid-cols-2">
           <div className="product-copy-block">
-            <ProductSectionHeading eyebrow="Open Beta status" title="Free during beta, with known gaps called out" />
+            <ProductSectionHeading eyebrow="Open Beta status" title="FastCast Free stays free. Pro unlocks more." />
             <p className="product-section-description mt-5 text-base leading-relaxed text-slate-600">
-              FastCast is currently free during Open Beta. A Pro version may be added later for advanced creator
-              features, but there is no Pro tier, license, or account system today.
+              FastCast Free covers simple 1080p30 recording and streaming: monitor or window capture, mic and desktop
+              audio, webcam overlay, and custom RTMP/RTMPS streaming. A one-time FastCast Pro license unlocks
+              higher-resolution recording (1440p and 4K), 60 fps capture where your hardware supports it, and advanced
+              encoder controls. Activation is local-first: no accounts, no telemetry.
             </p>
             <div className="product-panel mt-7 rounded-2xl border border-slate-200 bg-white p-6">
               <LockKeyhole className="h-6 w-6 text-slate-700" />
@@ -1604,7 +1611,7 @@ export function FastClipProductPage() {
         product={product}
         eyebrow="Local vertical clip generator for Windows"
         title="Turn long videos into vertical clips, locally"
-        subtitle="FastClip finds the highlights in long local videos and exports ready-to-post 9:16 clips with optional captions."
+        subtitle="FastClip scans long local videos for likely highlight moments, then lets you review and export ready-to-post 9:16 clips with optional captions."
         description="FastClip is a native Windows app that imports a source video, analyzes it with on-device signals, proposes ranked candidate clips, and lets you review and export 1080×1920 MP4s. No uploads, no accounts, no monthly credits: your footage never leaves your machine."
         primaryLabel="Download FastClip for Windows"
         primaryHref={fastClipReleaseUrl}
@@ -1659,7 +1666,7 @@ export function FastClipProductPage() {
           <ProductSectionHeading
             eyebrow="How it works"
             title="Import, analyze, review, export"
-            description="FastClip is built around one loop. It proposes the clips, you make the calls, and everything happens on your machine."
+            description="FastClip exists for creators with long recordings who need the good moments without scrubbing for an hour. It is built around one loop: it proposes the clips, you make the calls, and everything happens on your machine."
           />
           <div className="fastclip-step-grid">
             {fastClipSteps.map((step) => (
@@ -1831,7 +1838,7 @@ export function FastClipProductPage() {
                 There are no cloud costs behind FastClip, so there is no reason to charge monthly. No credits, no
                 metering, no account required.
               </p>
-              <p className="text-sm text-slate-500">Final pricing will be announced when FastClip ships.</p>
+              <p className="text-sm text-slate-500">Final pricing will be announced when FastClip leaves beta.</p>
             </div>
           </div>
           <div className="grid gap-4">
@@ -2058,7 +2065,7 @@ export function FastCompressProductPage() {
         product={product}
         eyebrow="Simple video compression for Windows"
         title="Shrink videos to fit, without learning FFmpeg"
-        subtitle="FastCompress turns a too-big video into a file that fits Discord, email, or an upload limit in a few clicks."
+        subtitle="FastCompress turns a too-big video into a file that fits Discord, email, YouTube, or an archive limit. No watermark, no upload, no account."
         description="FastCompress is a dead-simple native Windows compressor. Pick where the video is going, check the plan, and compress. Presets speak plain English, target sizes are editable, and everything runs locally through FFmpeg. No watermark, no account, no uploads."
         primaryLabel="Download FastCompress for Windows"
         primaryHref={fastCompressReleaseUrl}
@@ -2108,7 +2115,7 @@ export function FastCompressProductPage() {
           <ProductSectionHeading
             eyebrow="How it works"
             title="Pick a video, pick a destination, compress"
-            description="No bitrate math, no codec settings, no command line required. The preset already knows what the destination needs."
+            description="FastCompress exists for the annoying moment when a video is too large to send. No bitrate math, no codec settings, no command line required: the preset already knows what the destination needs."
           />
           <div className="fastclip-step-grid">
             {fastCompressSteps.map((step) => (
@@ -2225,7 +2232,7 @@ export function FastCompressProductPage() {
                 There are no cloud costs behind FastCompress, so there is no subscription and no credit meter. Pay
                 once or do not pay at all.
               </p>
-              <p className="text-sm text-slate-500">Final pricing will be announced when FastCompress ships.</p>
+              <p className="text-sm text-slate-500">Final pricing will be announced when FastCompress leaves beta.</p>
             </div>
           </div>
           <div className="grid gap-4">

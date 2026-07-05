@@ -42,7 +42,7 @@ const pipeline: PipelineStep[] = [
     name: 'FastClip',
     href: '/fastclip',
     desc: 'Pull usable highlights out of long recordings.',
-    status: 'In development',
+    status: 'Open Beta',
     Icon: Scissors,
   },
   {
@@ -50,7 +50,7 @@ const pipeline: PipelineStep[] = [
     name: 'FastCompress',
     href: '/fastcompress',
     desc: 'Shrink files with readable presets, no FFmpeg know-how.',
-    status: 'In development',
+    status: 'Beta',
     Icon: Minimize2,
   },
   {
@@ -90,7 +90,7 @@ const flagships: Flagship[] = [
       'RTMP/RTMPS streaming',
       'Hardware H.264 encoding',
     ],
-    meta: 'Windows 10/11 x64 · Portable ZIP · Free during Open Beta',
+    meta: 'v0.4.0 · Windows 10/11 x64 · Free version, optional Pro license',
     cta: 'Explore FastCast',
   },
   {
@@ -111,9 +111,45 @@ const flagships: Flagship[] = [
     meta: 'v0.4.1 · Windows 10+ · MIT License',
     cta: 'Explore FastPlay',
   },
+  {
+    slug: 'fastclip',
+    name: 'FastClip',
+    iconUrl: '/assets/FastClip/FastClip_Icon.png',
+    status: 'Open Beta',
+    description:
+      'Turns long local videos into vertical clips. On-device signals propose ranked highlight candidates; you review them and export 1080×1920 MP4s with optional burned-in captions. Footage never leaves your machine.',
+    chips: [
+      'Ranked highlight candidates',
+      'Local-only analysis',
+      '9:16 vertical export',
+      'Burned-in captions',
+      'whisper.cpp transcription',
+      'Hardware encoding',
+    ],
+    meta: 'Windows 10/11 x64 · Local-only processing · Free during beta',
+    cta: 'Explore FastClip',
+  },
+  {
+    slug: 'fastcompress',
+    name: 'FastCompress',
+    iconUrl: '/assets/FastCompress/FastCompress_Icon.png',
+    status: 'Beta',
+    description:
+      'Dead-simple video compression. Pick where the video is going, like Discord or email, check the plan, and get a smaller file that fits. Runs locally through FFmpeg with no watermark and no account.',
+    chips: [
+      'Destination presets',
+      'Editable target size',
+      'Plan before encode',
+      'No watermark',
+      'Local FFmpeg',
+      'CLI mode',
+    ],
+    meta: 'Windows 10/11 x64 · No watermark, no account · Free during beta',
+    cta: 'Explore FastCompress',
+  },
 ];
 
-const inDevelopment = pipeline.slice(2);
+const experimental = pipeline.slice(4);
 
 export default function FastSeriesApp() {
   return (
@@ -131,12 +167,12 @@ export default function FastSeriesApp() {
             files on your machine.
           </p>
           <div className="home-hero-actions">
-            <a href="/fastcast" className="home-btn home-btn-primary">
-              Explore FastCast
+            <a href="#available" className="home-btn home-btn-primary">
+              See the available tools
               <ArrowRight className="h-4 w-4" />
             </a>
-            <a href="/fastplay" className="home-btn home-btn-ghost">
-              Explore FastPlay
+            <a href="/roadmap" className="home-btn home-btn-ghost">
+              View the roadmap
             </a>
           </div>
           <p className="home-hero-meta">Windows 10/11 · Local-first · Releases on GitHub</p>
@@ -166,12 +202,12 @@ export default function FastSeriesApp() {
           </ol>
         </section>
 
-        {/* ---- Flagship cards ---- */}
-        <section className="home-section home-shell" aria-labelledby="flagship-heading">
+        {/* ---- Available now ---- */}
+        <section id="available" className="home-section home-shell" aria-labelledby="flagship-heading">
           <div className="home-section-head home-section-head-split">
             <div>
               <p className="home-eyebrow">Available now</p>
-              <h2 id="flagship-heading">The two that ship today</h2>
+              <h2 id="flagship-heading">Four tools ship today</h2>
             </div>
             <a href="/roadmap" className="home-inline-link">
               View the roadmap
@@ -202,14 +238,14 @@ export default function FastSeriesApp() {
           </div>
         </section>
 
-        {/* ---- In development ---- */}
+        {/* ---- Experimental ---- */}
         <section className="home-section home-shell" aria-labelledby="indev-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">On the bench</p>
-            <h2 id="indev-heading">Three more tools, statuses stated plainly</h2>
+            <p className="home-eyebrow">Experimental</p>
+            <h2 id="indev-heading">One more tool, still taking shape</h2>
           </div>
           <div className="home-grid fs-indev-grid">
-            {inDevelopment.map((p) => (
+            {experimental.map((p) => (
               <a key={p.name} href={p.href} className="home-grid-card">
                 <div className="home-grid-top">
                   <span className="home-grid-icon">
@@ -227,7 +263,8 @@ export default function FastSeriesApp() {
             ))}
           </div>
           <p className="fs-indev-note">
-            No launch dates promised. Each product page says what works today and what does not exist yet.
+            FastShorts has no public download yet and no promised launch date. Its product page says what works
+            today and what does not exist yet.
           </p>
         </section>
 
@@ -241,8 +278,8 @@ export default function FastSeriesApp() {
               <div>
                 <h2>Releases and source live on GitHub</h2>
                 <p>
-                  FastPlay is open source under the MIT License. FastCast publishes release artifacts, SHA-256
-                  checksums, and beta notes on its public releases repository.
+                  FastPlay is open source under the MIT License. FastCast, FastClip, and FastCompress publish
+                  release artifacts, SHA-256 checksums, and beta notes on public releases repositories.
                 </p>
               </div>
             </div>
@@ -264,14 +301,17 @@ export default function FastSeriesApp() {
         <section className="home-final home-shell" aria-labelledby="final-heading">
           <div className="home-final-panel">
             <h2 id="final-heading">Start with the tools that ship today</h2>
-            <p>Record with FastCast, review with FastPlay, and watch the rest of the pipeline fill in.</p>
+            <p>
+              Record with FastCast, review with FastPlay, clip with FastClip, and shrink the file with FastCompress.
+              Four native Windows tools, one workflow.
+            </p>
             <div className="home-hero-actions home-final-actions">
-              <a href="/fastcast" className="home-btn home-btn-primary">
-                Explore FastCast
+              <a href="#available" className="home-btn home-btn-primary">
+                See the available tools
                 <ArrowRight className="h-4 w-4" />
               </a>
-              <a href="/fastplay" className="home-btn home-btn-ghost">
-                Explore FastPlay
+              <a href="/roadmap" className="home-btn home-btn-ghost">
+                View the roadmap
               </a>
             </div>
           </div>

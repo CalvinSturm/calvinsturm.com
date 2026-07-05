@@ -44,7 +44,7 @@ const spotlights: Spotlight[] = [
     slug: 'fastplay',
     name: 'FastPlay',
     iconUrl: '/assets/FastPlay/fastplay.png',
-    status: 'Free · MIT License',
+    status: 'Released',
     description:
       'Fast lightweight Windows video player for local files, built for responsive playback, seeking, and simple native Windows use.',
     chips: ['Instant open', 'Responsive seek', 'Hardware decode', 'Keyboard-driven'],
@@ -170,8 +170,8 @@ export default function HomeApp() {
                 Explore the Fast Series
                 <ArrowRight className="h-4 w-4" />
               </a>
-              <a href="/projects" className="home-btn home-btn-ghost">
-                View Projects
+              <a href="/fast-series#available" className="home-btn home-btn-ghost">
+                Download available tools
               </a>
             </div>
             <p className="home-hero-meta">Windows 10/11 · Local-first tools · Releases on GitHub</p>
@@ -447,8 +447,8 @@ export default function HomeApp() {
                 Explore Fast Series
                 <ArrowRight className="h-4 w-4" />
               </a>
-              <a href="/projects" className="home-btn home-btn-ghost">
-                View Projects
+              <a href="/fast-series#available" className="home-btn home-btn-ghost">
+                Download available tools
               </a>
             </div>
           </div>

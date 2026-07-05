@@ -55,7 +55,7 @@ const builds: BuildCard[] = [
   },
   {
     name: 'FastPlay',
-    status: 'Early build',
+    status: 'Released',
     description:
       'Lightweight local video player for Windows. Fast startup, responsive seeking, hardware-accelerated decode. Free and open source.',
     tags: ['Rust', 'FFmpeg', 'D3D11', 'WASAPI'],

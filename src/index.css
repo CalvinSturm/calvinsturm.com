@@ -1985,10 +1985,10 @@ html.dark .border-blue-600 {
   --product-text: #eef4fb;
   --product-muted: #9badc2;
   --product-faint: #718297;
-  --product-accent: #45f0b9;
-  --product-accent-2: #68a7ff;
-  --product-accent-hover: #63ffd0;
-  --product-button-text: #04100d;
+  --product-accent: #68a7ff;
+  --product-accent-2: #45f0b9;
+  --product-accent-hover: #8ec0ff;
+  --product-button-text: #05101f;
   --product-code: #dce9ff;
   --product-radius: 8px;
   --product-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
@@ -2149,11 +2149,11 @@ html.dark .border-blue-600 {
   --product-text: #e4e4e8;
   --product-muted: #8a8a96;
   --product-faint: #8a8a96;
-  --product-accent: #6c8cff;
-  --product-accent-2: #6c8cff;
-  --product-accent-hover: #8aa4ff;
-  --product-button-text: #fff;
-  --product-code: #d6dcff;
+  --product-accent: #45f0b9;
+  --product-accent-2: #45f0b9;
+  --product-accent-hover: #6ff5cc;
+  --product-button-text: #062018;
+  --product-code: #d6ffe9;
   --product-radius: 10px;
   --product-shadow: none;
   background: var(--product-bg);
@@ -3285,8 +3285,10 @@ html.home-page body {
   --hl-accent: #f6c453;
   --hl-accent-deep: #f0a63b;
   --hl-accent-ink: #221302;
-  --hl-cast: #45f0b9;
-  --hl-play: #7d9bff;
+  --hl-cast: #7d9bff;
+  --hl-play: #45f0b9;
+  --hl-clip: #ffa245;
+  --hl-compress: #c98bff;
   --hl-radius: 14px;
   --hl-radius-sm: 10px;
   min-height: 100vh;
@@ -3675,7 +3677,7 @@ html.home-page body {
   align-items: center;
   gap: 7px;
   margin-left: auto;
-  border: 1px solid rgba(69, 240, 185, 0.3);
+  border: 1px solid rgba(125, 155, 255, 0.3);
   border-radius: 9999px;
   color: var(--hl-cast);
   font-family: "Cascadia Code", Consolas, monospace;
@@ -3713,7 +3715,7 @@ html.home-page body {
   position: absolute;
   inset: 0 38% 0 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, rgba(125, 155, 255, 0.55), var(--hl-play));
+  background: linear-gradient(90deg, rgba(69, 240, 185, 0.55), var(--hl-play));
 }
 
 .home-console-row {
@@ -3815,6 +3817,14 @@ html.home-page body {
 
 .home-spot-fastplay {
   --spot-accent: var(--hl-play);
+}
+
+.home-spot-fastclip {
+  --spot-accent: var(--hl-clip);
+}
+
+.home-spot-fastcompress {
+  --spot-accent: var(--hl-compress);
 }
 
 .home-spot-card:hover {
@@ -4649,7 +4659,7 @@ html.home-page body {
 
 .rm-chip-planned::before {
   background: transparent;
-  box-shadow: inset 0 0 0 1.5px var(--hl-play);
+  box-shadow: inset 0 0 0 1.5px #7d9bff;
 }
 
 .rm-chip-research {

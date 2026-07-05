@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, Github, Milestone } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Clapperboard, Github, Milestone, Minimize2, Scissors } from 'lucide-react';
 import { HomeHeader, HomeFooter } from './HomeChrome.tsx';
 
 // All shipped items below are backed by release tags, release notes, or
@@ -24,12 +24,24 @@ type TimelineItem = {
 
 const fastCastTimeline: TimelineItem[] = [
   {
-    version: 'v0.3.3',
+    version: 'v0.4.0',
     date: 'July 2026',
     status: 'Open Beta',
     tone: 'current',
-    title: 'Current Open Beta build',
-    body: 'The latest public build on the FastCast release feed: a portable ZIP for Windows 10/11 x64 with a SHA-256 checksum for verifying the download.',
+    title: 'FastCast Pro activation',
+    body: 'Introduced one-time Creator Pro licenses: Pro unlocks 1440p/4K recording, 60 fps capture, and advanced encoder controls, while FastCast Free stays free for 1080p30 recording and streaming. Activation is local-first, with no accounts and no telemetry.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.4.0',
+      label: 'Release page',
+    },
+  },
+  {
+    version: 'v0.3.3',
+    date: 'July 2026',
+    status: 'Shipped',
+    tone: 'shipped',
+    title: 'Webcam overlay control and UI polish',
+    body: 'Added webcam overlay hide/show during active recording, refined the dark UI layout, and fixed the Stream card platform button overlap.',
     link: {
       href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.3.3',
       label: 'Release page',
@@ -216,8 +228,8 @@ const laterItems = [
   {
     product: 'FastCast',
     accent: 'cast',
-    title: 'Pro tier (candidate)',
-    body: 'A paid Pro version for advanced creator features may be added later. There is no Pro tier, license, or account system today, and the Open Beta is free.',
+    title: 'Pro feature expansion',
+    body: 'FastCast Pro shipped in v0.4.0 as a one-time Creator Pro license unlocking 1440p/4K recording and 60 fps capture. Further Pro features are evaluated against beta feedback; nothing beyond what is in the app today is promised.',
   },
   {
     product: 'Both',
@@ -341,18 +353,18 @@ export default function RoadmapApp() {
         {/* ---- Hero ---- */}
         <section className="home-shell rm-hero">
           <p className="home-eyebrow">Product roadmap</p>
-          <h1>FastCast and FastPlay roadmap</h1>
+          <h1>Fast Series roadmap</h1>
           <p className="home-hero-sub">
-            A public timeline for the native Windows recording and playback tools in the Fast Series: what has
-            shipped, what is being worked on now, and what comes next.
+            A public timeline for the native Windows creator tools in the Fast Series: what ships today, what is in
+            beta, and what comes next.
           </p>
           <div className="home-hero-actions">
-            <a href="/fastcast" className="home-btn home-btn-primary">
-              Explore FastCast
+            <a href="/fast-series" className="home-btn home-btn-primary">
+              Explore the Fast Series
               <ArrowRight className="h-4 w-4" />
             </a>
-            <a href="/fastplay" className="home-btn home-btn-ghost">
-              Explore FastPlay
+            <a href="/fast-series#available" className="home-btn home-btn-ghost">
+              Download available tools
             </a>
           </div>
           <p className="home-hero-meta rm-note">
@@ -363,7 +375,7 @@ export default function RoadmapApp() {
         {/* ---- Product summary cards ---- */}
         <section className="home-section home-shell" aria-labelledby="rm-products-heading">
           <div className="home-section-head">
-            <p className="home-eyebrow">The two products</p>
+            <p className="home-eyebrow">The five tools</p>
             <h2 id="rm-products-heading">Where each one stands today</h2>
           </div>
           <div className="home-spot-grid">
@@ -384,7 +396,7 @@ export default function RoadmapApp() {
                 and microphone audio, and RTMP/RTMPS streaming. Source code is private; releases, checksums, and
                 notes are public.
               </p>
-              <p className="fs-spot-meta">v0.3.3 · Windows 10/11 x64 · Portable ZIP · Free during Open Beta</p>
+              <p className="fs-spot-meta">v0.4.0 · Windows 10/11 x64 · Portable ZIP · Free version, optional Pro license</p>
               <div className="rm-spot-links">
                 <a href="/fastcast" className="home-spot-cta">
                   FastCast product page
@@ -429,6 +441,52 @@ export default function RoadmapApp() {
               </div>
             </article>
           </div>
+
+          <div className="home-grid rm-more-grid" style={{ marginTop: '20px' }}>
+            {[
+              {
+                name: 'FastClip',
+                href: '/fastclip',
+                status: 'Open Beta',
+                tone: 'current' as ChipTone,
+                Icon: Scissors,
+                desc: 'Turns long local videos into ranked highlight candidates and exports 9:16 vertical clips. Local-only processing.',
+              },
+              {
+                name: 'FastCompress',
+                href: '/fastcompress',
+                status: 'Beta',
+                tone: 'current' as ChipTone,
+                Icon: Minimize2,
+                desc: 'Shrinks videos to fit Discord, email, or upload limits with destination presets. No watermark, no account.',
+              },
+              {
+                name: 'FastShorts',
+                href: '/fastshorts',
+                status: 'Experimental',
+                tone: 'research' as ChipTone,
+                Icon: Clapperboard,
+                desc: 'Local pipeline that turns a written story into a narrated, captioned vertical short. No public download yet.',
+              },
+            ].map(({ name, href, status, tone, Icon, desc }) => (
+              <a key={name} href={href} className="home-grid-card">
+                <div className="home-grid-top">
+                  <span className="home-grid-icon">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <StatusChip status={status} tone={tone} />
+                </div>
+                <h3>{name}</h3>
+                <p>{desc}</p>
+                <div className="home-grid-foot">
+                  <span className="home-spot-cta">
+                    Product page
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
         </section>
 
         {/* ---- Shipped timeline ---- */}
@@ -439,7 +497,8 @@ export default function RoadmapApp() {
             <p className="rm-section-sub">
               Newest first. Every entry below is backed by a tagged release, published release notes, or the
               project changelog. FastCast versions before v0.3.1 were internal milestones and have no public
-              downloads.
+              downloads. FastClip and FastCompress join the timeline when their first public builds land on their
+              release feeds.
             </p>
           </div>
           <div className="rm-lanes">
@@ -516,19 +575,16 @@ export default function RoadmapApp() {
             <Milestone className="home-final-icon h-6 w-6" aria-hidden="true" />
             <h2 id="rm-final-heading">Follow the Fast Series as it ships</h2>
             <p>
-              Both products publish real releases with real notes. Try what exists today and watch this page as
-              the rest lands.
+              Every tool publishes real releases with real notes. Try what exists today and watch this page as the
+              rest lands.
             </p>
             <div className="home-hero-actions home-final-actions">
-              <a href="/fastcast" className="home-btn home-btn-primary">
-                Explore FastCast
+              <a href="/fast-series" className="home-btn home-btn-primary">
+                Explore the Fast Series
                 <ArrowRight className="h-4 w-4" />
               </a>
-              <a href="/fastplay" className="home-btn home-btn-ghost">
-                Explore FastPlay
-              </a>
-              <a href="/projects" className="home-btn home-btn-ghost">
-                View Projects
+              <a href="/fast-series#available" className="home-btn home-btn-ghost">
+                Download available tools
               </a>
             </div>
           </div>
