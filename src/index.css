@@ -1762,6 +1762,7 @@ html.dark .border-blue-600 {
 .product-landing .product-section-title,
 .product-landing .product-card-title,
 .product-landing .product-faq-summary,
+.product-landing .product-prose p.font-semibold,
 .product-landing h3 {
   color: var(--product-text) !important;
 }
@@ -1770,6 +1771,8 @@ html.dark .border-blue-600 {
 .product-landing .product-section-description,
 .product-landing .product-card-copy,
 .product-landing .product-panel-copy,
+.product-landing .product-prose,
+.product-landing .product-prose p,
 .product-landing .product-faq-answer,
 .product-landing .product-bullet-list li,
 .product-landing .product-fact-label,
