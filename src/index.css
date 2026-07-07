@@ -2340,6 +2340,10 @@ html.dark .border-blue-600 {
   display: block;
 }
 
+.product-landing-fastplay .product-format-audience-grid > * + * {
+  margin-top: 40px;
+}
+
 .product-landing-fastplay .product-format-tag {
   border-radius: 6px !important;
   padding: 8px 18px !important;
