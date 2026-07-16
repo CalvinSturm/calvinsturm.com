@@ -55,7 +55,7 @@ const fastPlayGuides = createProductGuides({
   indexEyebrow: 'FastPlay guides',
   indexTitle: 'FastPlay Guides: Fix Windows Video Playback Problems',
   indexLede:
-    'Practical guides to specific Windows video playback problems: HDR that looks wrong, files that refuse to open, codecs Windows does not ship with, and faster ways to review footage. Each guide explains the cause, gives fixes you can try with any player, and shows where FastPlay helps.',
+    'Practical guides to specific Windows video playback problems: HDR that looks wrong, files that refuse to open, codecs Windows does not ship with, playback that stutters, and faster ways to review footage. Each guide explains the cause, gives fixes you can try with any player, and shows where FastPlay helps.',
   indexFinalCtaHeading: 'Skip the codec hunt',
   indexFinalCtaBody:
     'FastPlay is a free, open-source Windows video player with hardware-accelerated decode, HDR-to-SDR tone mapping, and keyboard-first controls. One MSI installer, no codec packs.',

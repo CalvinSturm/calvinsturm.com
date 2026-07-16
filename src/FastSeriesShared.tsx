@@ -1109,7 +1109,7 @@ export function FastCastProductPage() {
           <ProductSectionHeading
             eyebrow="Guides"
             title="Learn Windows screen recording"
-            description="Focused guides to the recording questions FastCast gets asked about most: capturing screen and webcam together, what 4K 60 FPS really requires, keeping recordings smooth, and an honest comparison with OBS."
+            description="Focused guides to the recording questions FastCast gets asked about most: capturing screen and webcam together, what 4K 60 FPS really requires, keeping recordings smooth, fixing black or silent recordings, and an honest comparison with OBS."
           />
           <div className="guide-grid">
             {fastCastGuides.map((guide) => (
@@ -1512,7 +1512,7 @@ export function FastPlayProductPage() {
           <ProductSectionHeading
             eyebrow="Guides"
             title="Fix Windows playback problems"
-            description="Focused guides to the problems FastPlay gets asked about most: HDR that looks washed out, MOV files that will not open, missing HEVC codecs, and reviewing long footage faster."
+            description="Focused guides to the problems FastPlay gets asked about most: HDR that looks washed out, MOV files that will not open, missing HEVC codecs, playback that stutters, and reviewing long footage faster."
           />
           <div className="guide-grid">
             {fastPlayGuides.map((guide) => (

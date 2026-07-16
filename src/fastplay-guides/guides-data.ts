@@ -3,32 +3,17 @@
 // guides), and the FastPlay product page guide section. Add new guides here
 // first; the index and related-guide lists pick them up automatically.
 
-export const siteOrigin = 'https://www.calvinsturm.com';
+import type { GuideMeta } from '../product-guides/ProductGuides.tsx';
+
 export const fastPlayPath = '/fastplay';
 export const guidesIndexPath = '/fastplay/guides';
 
 export const fastPlayDownloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/latest';
 export const fastPlaySourceUrl = 'https://github.com/CalvinSturm/FastPlay';
 
-export type GuideCategory = 'HDR & Color' | 'Formats & Codecs' | 'Workflow';
+export type GuideCategory = 'HDR & Color' | 'Formats & Codecs' | 'Playback Performance' | 'Workflow';
 
-export type GuideMeta = {
-  slug: string;
-  /** H1 and document title of the article. */
-  title: string;
-  /** Short label used in cards, breadcrumbs, and related-guide lists. */
-  shortTitle: string;
-  /** Card blurb; also mirrors the meta description in the HTML entry. */
-  description: string;
-  category: GuideCategory;
-  /** ISO dates, shown on the article and mirrored in Article JSON-LD. */
-  published: string;
-  updated: string;
-  /** Slugs of two or three genuinely related guides. */
-  related: string[];
-};
-
-export const guides: GuideMeta[] = [
+export const guides: Array<GuideMeta & { category: GuideCategory }> = [
   {
     slug: 'hdr-video-windows',
     title: 'How to Play HDR Video on Windows',
@@ -60,7 +45,18 @@ export const guides: GuideMeta[] = [
     category: 'Formats & Codecs',
     published: '2026-07-15',
     updated: '2026-07-15',
-    related: ['mov-not-playing-windows', 'hdr-video-windows'],
+    related: ['mov-not-playing-windows', 'video-stuttering-windows', 'hdr-video-windows'],
+  },
+  {
+    slug: 'video-stuttering-windows',
+    title: 'Why Video Playback Stutters on Windows (and How to Fix It)',
+    shortTitle: 'Fix stuttering video playback',
+    description:
+      'Why video stutters or drops frames on Windows: software decode of heavy codecs, slow drives, display judder, background load, and the fixes that work.',
+    category: 'Playback Performance',
+    published: '2026-07-16',
+    updated: '2026-07-16',
+    related: ['hevc-player-windows', 'mov-not-playing-windows', 'video-review-workflow'],
   },
   {
     slug: 'hdr-looks-washed-out',
@@ -82,7 +78,7 @@ export const guides: GuideMeta[] = [
     category: 'Workflow',
     published: '2026-07-15',
     updated: '2026-07-15',
-    related: ['hevc-player-windows', 'mov-not-playing-windows'],
+    related: ['video-stuttering-windows', 'hevc-player-windows', 'mov-not-playing-windows'],
   },
 ];
 

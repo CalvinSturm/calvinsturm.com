@@ -12,7 +12,7 @@ export const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-rele
 export const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 export const fastCastSiteUrl = 'https://calvinsturm.github.io/FastCast-releases/';
 
-export type GuideCategory = 'Recording Basics' | 'Quality & Performance' | 'Comparisons';
+export type GuideCategory = 'Recording Basics' | 'Quality & Performance' | 'Troubleshooting' | 'Comparisons';
 
 export const guides: Array<GuideMeta & { category: GuideCategory }> = [
   {
@@ -57,7 +57,18 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
     category: 'Quality & Performance',
     published: '2026-07-15',
     updated: '2026-07-15',
-    related: ['record-4k-60fps-windows', 'how-to-record-screen-windows'],
+    related: ['record-4k-60fps-windows', 'screen-recording-black-screen-no-audio', 'how-to-record-screen-windows'],
+  },
+  {
+    slug: 'screen-recording-black-screen-no-audio',
+    title: 'Screen Recording Black Screen or No Audio on Windows: Fixes',
+    shortTitle: 'Fix black or silent recordings',
+    description:
+      'Why Windows screen recordings come out black or silent: protected content, wrong capture source, muted or wrong audio device, and the checks that catch them.',
+    category: 'Troubleshooting',
+    published: '2026-07-16',
+    updated: '2026-07-16',
+    related: ['how-to-record-screen-windows', 'screen-recording-without-lag'],
   },
   {
     slug: 'obs-alternative-windows',

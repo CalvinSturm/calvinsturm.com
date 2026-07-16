@@ -54,7 +54,7 @@ const fastCastGuides = createProductGuides({
   indexEyebrow: 'FastCast guides',
   indexTitle: 'FastCast Guides: Windows Screen Recording, Explained',
   indexLede:
-    'Practical guides to Windows screen recording: capturing your screen and webcam, keeping recordings smooth, understanding what 4K 60 FPS really requires, and deciding honestly between FastCast and OBS. Each guide works with any recorder and shows where FastCast fits.',
+    'Practical guides to Windows screen recording: capturing your screen and webcam, keeping recordings smooth, fixing black or silent recordings, understanding what 4K 60 FPS really requires, and deciding honestly between FastCast and OBS. Each guide works with any recorder and shows where FastCast fits.',
   indexFinalCtaHeading: 'Record without the setup maze',
   indexFinalCtaBody:
     'FastCast is a native Windows screen recorder and streamer: pick a monitor or window, choose your audio, add an optional webcam overlay, and record MP4 or go live over RTMP. Free during Open Beta.',
