@@ -110,6 +110,13 @@ export function HomeFooter() {
             </a>
           ))}
         </nav>
+        <nav aria-label="Guides">
+          <h3>Guides</h3>
+          <a href="/fastcast/guides">Screen recording</a>
+          <a href="/fastplay/guides">Video playback</a>
+          <a href="/fastclip/guides">Vertical clips</a>
+          <a href="/fastcompress/guides">Video compression</a>
+        </nav>
         <nav aria-label="Explore">
           <h3>Explore</h3>
           <a href="/roadmap">Product roadmap</a>

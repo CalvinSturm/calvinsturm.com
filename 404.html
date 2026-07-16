@@ -1,38 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header class="site-header">
-        <div class="container header-inner">
-            <a href="index.html" class="logo">Calvin Sturm</a>
-            <nav class="main-nav">
-                <a href="index.html">Home</a>
-                <a href="projects.html">Projects</a>
-                <a href="build.html">Build</a>
-                <a href="techwiz/index.html">Tech Wiz</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-            </nav>
-        </div>
-    </header>
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1>404</h1>
-                <p class="subhead">That page could not be found.</p>
-                <a href="index.html" class="btn btn-primary">Go home</a>
-            </div>
-        </section>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0d12" />
+    <meta name="color-scheme" content="dark" />
+    <title>Page not found | Calvin Sturm</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/sturm-mark.svg" />
+    <style>
+      html{background:#0b0d12}
+      body{margin:0}
+      .home-static-fallback{margin:0 auto;max-width:760px;padding:110px 24px 64px;font-family:"Segoe UI",-apple-system,system-ui,sans-serif;color:#edf1f8;line-height:1.65}
+      .home-static-fallback .kicker{margin:0 0 14px;color:#f6c453;font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+      .home-static-fallback h1{margin:0;font-size:clamp(2.2rem,5.4vw,3.4rem);font-weight:700;line-height:1.1;letter-spacing:-.02em}
+      .home-static-fallback .sub{margin:20px 0 0;max-width:34rem;color:#9aa6bb;font-size:1.1rem}
+      .home-static-fallback .links{margin:30px 0 0}
+      .home-static-fallback a{margin-right:22px;color:#f6c453;font-weight:700;text-decoration:none}
+      .home-static-fallback a:hover{text-decoration:underline}
+    </style>
+  </head>
+  <body>
+    <main class="home-static-fallback">
+      <section>
+        <p class="kicker">Sturm Technologies</p>
+        <h1>Page not found</h1>
+        <p class="sub">That page does not exist or has moved. The tools and guides below are the most useful places to go next.</p>
+        <p class="links">
+          <a href="/">Home</a>
+          <a href="/fast-series">Fast Series</a>
+          <a href="/fastcast">FastCast</a>
+          <a href="/fastplay">FastPlay</a>
+          <a href="/projects">Projects</a>
+        </p>
+      </section>
     </main>
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 Sturm Technologies LLC</p>
-        </div>
-    </footer>
-</body>
+  </body>
 </html>

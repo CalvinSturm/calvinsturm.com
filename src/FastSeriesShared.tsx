@@ -44,6 +44,8 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import { guides as fastPlayGuides, guidePath as fastPlayGuidePath } from './fastplay-guides/guides-data';
 import { guides as fastCastGuides, guidePath as fastCastGuidePath } from './fastcast-guides/guides-data';
+import { guides as fastClipGuides, guidePath as fastClipGuidePath } from './fastclip-guides/guides-data';
+import { guides as fastCompressGuides, guidePath as fastCompressGuidePath } from './fastcompress-guides/guides-data';
 import { trackCtaClick } from './lib/analytics';
 
 // Conversion tracking for release-hosted CTAs. GitHub release links are the
@@ -332,7 +334,7 @@ function SiteFooter() {
   return (
     <footer className="border-t border-slate-200 py-14">
       <div className="section-shell">
-        <div className="grid gap-10 md:grid-cols-3">
+        <div className="grid gap-10 md:grid-cols-4">
           <div>
             <div className="mb-3 flex items-center gap-2.5">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white">
@@ -354,6 +356,15 @@ function SiteFooter() {
                   <a href={`/${p.slug}`} className="hover:text-slate-900">{p.name}</a>
                 </li>
               ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="mb-3 text-sm font-semibold text-slate-900">Guides</h3>
+            <ul className="space-y-2 text-sm text-slate-600">
+              <li><a href="/fastcast/guides" className="hover:text-slate-900">Screen recording</a></li>
+              <li><a href="/fastplay/guides" className="hover:text-slate-900">Video playback</a></li>
+              <li><a href="/fastclip/guides" className="hover:text-slate-900">Vertical clips</a></li>
+              <li><a href="/fastcompress/guides" className="hover:text-slate-900">Video compression</a></li>
             </ul>
           </div>
           <div>
@@ -1692,6 +1703,7 @@ export function FastClipProductPage() {
         { href: '#features', label: 'Features' },
         { href: '#privacy', label: 'Privacy' },
         { href: '#pricing', label: 'Pricing' },
+        { href: '#guides', label: 'Guides' },
         { href: '#faq', label: 'FAQ' },
         { href: '/fast-series', label: 'Fast Series' },
       ]}
@@ -1700,6 +1712,8 @@ export function FastClipProductPage() {
           <p>FastClip is in open beta. Source is currently private; public builds are on <a href={fastClipAllReleasesUrl} target="_blank" rel="noopener noreferrer">GitHub Releases</a>.</p>
           <p>
             FastClip by <a href={githubProfileUrl} target="_blank" rel="noopener noreferrer">Calvin Sturm</a> / Sturm Technologies LLC
+            <span aria-hidden="true"> · </span>
+            <a href="/fastclip/guides">FastClip guides</a>
             <span aria-hidden="true"> · </span>
             <a href="/fast-series">Fast Series</a>
           </p>
@@ -1993,6 +2007,35 @@ export function FastClipProductPage() {
         </div>
       </section>
 
+      <section id="guides" className="product-section product-section-guides border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-guide">
+          <ProductSectionHeading
+            eyebrow="Guides"
+            title="Learn the local clipping workflow"
+            description="Practical guides to turning long recordings into short-form clips on Windows: finding the moments, reframing for 9:16, and adding captions without uploading footage anywhere."
+          />
+          <div className="guide-grid">
+            {fastClipGuides.map((guide) => (
+              <a key={guide.slug} href={fastClipGuidePath(guide.slug)} className="guide-card">
+                <p className="guide-card-category">{guide.category}</p>
+                <h3>{guide.shortTitle}</h3>
+                <p className="guide-card-copy">{guide.description}</p>
+                <span className="guide-card-more">
+                  Read the guide
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </a>
+            ))}
+          </div>
+          <p className="mt-8">
+            <a href="/fastclip/guides" className="product-panel-link inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+              Browse all FastClip guides
+              <ArrowUpRight className="h-4 w-4 text-amber-500" />
+            </a>
+          </p>
+        </div>
+      </section>
+
       <section id="faq" className="product-section border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell">
           <ProductSectionHeading eyebrow="FAQ" title="FastClip questions" />
@@ -2146,6 +2189,7 @@ export function FastCompressProductPage() {
         { href: '#features', label: 'Features' },
         { href: '#compare', label: 'Compare' },
         { href: '#pricing', label: 'Pricing' },
+        { href: '#guides', label: 'Guides' },
         { href: '#faq', label: 'FAQ' },
         { href: '/fast-series', label: 'Fast Series' },
       ]}
@@ -2154,6 +2198,8 @@ export function FastCompressProductPage() {
           <p>FastCompress is in beta. Source is currently private; public builds are on <a href={fastCompressAllReleasesUrl} target="_blank" rel="noopener noreferrer">GitHub Releases</a>.</p>
           <p>
             FastCompress by <a href={githubProfileUrl} target="_blank" rel="noopener noreferrer">Calvin Sturm</a> / Sturm Technologies LLC
+            <span aria-hidden="true"> · </span>
+            <a href="/fastcompress/guides">FastCompress guides</a>
             <span aria-hidden="true"> · </span>
             <a href="/fast-series">Fast Series</a>
           </p>
@@ -2386,6 +2432,35 @@ export function FastCompressProductPage() {
               ['Not designed for', 'Editing, trimming, advanced codec control, or batch pipelines (batch is planned for Pro)'],
             ]}
           />
+        </div>
+      </section>
+
+      <section id="guides" className="product-section product-section-guides border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-guide">
+          <ProductSectionHeading
+            eyebrow="Guides"
+            title="Learn how to get videos under size limits"
+            description="Practical guides to the too-big-to-send problem: what Discord and email limits actually allow, why long videos collapse when squeezed, and how to hit a target size cleanly."
+          />
+          <div className="guide-grid">
+            {fastCompressGuides.map((guide) => (
+              <a key={guide.slug} href={fastCompressGuidePath(guide.slug)} className="guide-card">
+                <p className="guide-card-category">{guide.category}</p>
+                <h3>{guide.shortTitle}</h3>
+                <p className="guide-card-copy">{guide.description}</p>
+                <span className="guide-card-more">
+                  Read the guide
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </a>
+            ))}
+          </div>
+          <p className="mt-8">
+            <a href="/fastcompress/guides" className="product-panel-link inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+              Browse all FastCompress guides
+              <ArrowUpRight className="h-4 w-4 text-amber-500" />
+            </a>
+          </p>
         </div>
       </section>
 
