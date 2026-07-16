@@ -42,6 +42,8 @@ import {
   Zap,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { guides as fastPlayGuides, guidePath as fastPlayGuidePath } from './fastplay-guides/guides-data';
+import { guides as fastCastGuides, guidePath as fastCastGuidePath } from './fastcast-guides/guides-data';
 
 // ---- Product data -----------------------------------------------------------
 // External links stay product-specific: public sites/downloads are linked when
@@ -912,6 +914,7 @@ export function FastCastProductPage() {
         { href: '#privacy', label: 'Privacy' },
         { href: '#verify', label: 'Verify' },
         { href: '#beta', label: 'Open Beta' },
+        { href: '#guides', label: 'Guides' },
         { href: '/roadmap', label: 'Roadmap' },
         { href: fastCastAllReleasesUrl, label: 'Releases' },
       ]}
@@ -923,6 +926,8 @@ export function FastCastProductPage() {
             <a href={fastCastAllReleasesUrl} target="_blank" rel="noopener noreferrer">All releases</a>
             <span aria-hidden="true"> / </span>
             <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer">Latest release</a>
+            <span aria-hidden="true"> / </span>
+            <a href="/fastcast/guides">FastCast guides</a>
           </p>
         </>
       }
@@ -1062,6 +1067,35 @@ export function FastCastProductPage() {
               />
             </div>
           </div>
+        </div>
+      </section>
+
+      <section id="guides" className="product-section product-section-guides border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-guide">
+          <ProductSectionHeading
+            eyebrow="Guides"
+            title="Learn Windows screen recording"
+            description="Focused guides to the recording questions FastCast gets asked about most: capturing screen and webcam together, what 4K 60 FPS really requires, keeping recordings smooth, and an honest comparison with OBS."
+          />
+          <div className="guide-grid">
+            {fastCastGuides.map((guide) => (
+              <a key={guide.slug} href={fastCastGuidePath(guide.slug)} className="guide-card">
+                <p className="guide-card-category">{guide.category}</p>
+                <h3>{guide.shortTitle}</h3>
+                <p className="guide-card-copy">{guide.description}</p>
+                <span className="guide-card-more">
+                  Read the guide
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </a>
+            ))}
+          </div>
+          <p className="mt-8">
+            <a href="/fastcast/guides" className="product-panel-link inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+              Browse all FastCast guides
+              <ArrowUpRight className="h-4 w-4 text-amber-500" />
+            </a>
+          </p>
         </div>
       </section>
 
@@ -1212,6 +1246,7 @@ export function FastPlayProductPage() {
         { href: '#features', label: 'Features' },
         { href: '#architecture', label: 'Architecture' },
         { href: '#vlc', label: 'vs VLC' },
+        { href: '#guides', label: 'Guides' },
         { href: '#faq', label: 'FAQ' },
         { href: '/roadmap', label: 'Roadmap' },
         { href: fastPlaySourceUrl, label: 'GitHub' },
@@ -1231,6 +1266,8 @@ export function FastPlayProductPage() {
           </p>
           <p>
             FastPlay by <a href="https://github.com/CalvinSturm" target="_blank" rel="noopener noreferrer">Calvin Sturm</a>
+            <span aria-hidden="true"> · </span>
+            <a href="/fastplay/guides">Guides</a>
             <span aria-hidden="true"> · </span>
             <a href={fastPlaySourceUrl} target="_blank" rel="noopener noreferrer">Source on GitHub</a>
             <span aria-hidden="true"> · </span>
@@ -1423,6 +1460,35 @@ export function FastPlayProductPage() {
               </tbody>
             </table>
           </div>
+        </div>
+      </section>
+
+      <section id="guides" className="product-section product-section-guides border-t border-slate-200 py-14 lg:py-20">
+        <div className="section-shell product-guide">
+          <ProductSectionHeading
+            eyebrow="Guides"
+            title="Fix Windows playback problems"
+            description="Focused guides to the problems FastPlay gets asked about most: HDR that looks washed out, MOV files that will not open, missing HEVC codecs, and reviewing long footage faster."
+          />
+          <div className="guide-grid">
+            {fastPlayGuides.map((guide) => (
+              <a key={guide.slug} href={fastPlayGuidePath(guide.slug)} className="guide-card">
+                <p className="guide-card-category">{guide.category}</p>
+                <h3>{guide.shortTitle}</h3>
+                <p className="guide-card-copy">{guide.description}</p>
+                <span className="guide-card-more">
+                  Read the guide
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </a>
+            ))}
+          </div>
+          <p className="mt-8 text-center">
+            <a href="/fastplay/guides" className="product-panel-link inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+              Browse all FastPlay guides
+              <ArrowUpRight className="h-4 w-4 text-amber-500" />
+            </a>
+          </p>
         </div>
       </section>
 

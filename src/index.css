@@ -8406,3 +8406,349 @@ textarea.svc-input {
     display: none;
   }
 }
+
+/* ---- Product guides (FastPlay, FastCast) ------------------------------------------------------
+   Article and index pages under /fastplay/guides. They mount inside
+   .product-landing-fastplay so they inherit the FastPlay console theme;
+   these rules add the reading layout: breadcrumbs, article prose, TOC,
+   guide cards, and restrained CTA panels. */
+
+.product-guide .guide-shell {
+  width: min(760px, calc(100% - 48px));
+  margin-inline: auto;
+  padding: 48px 0 80px;
+}
+
+.product-guide .guide-breadcrumbs {
+  font-size: 13px;
+  color: var(--product-muted);
+}
+
+.product-guide .guide-breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.product-guide .guide-breadcrumbs li + li::before {
+  content: "/";
+  margin-right: 6px;
+  color: var(--product-border-hover);
+}
+
+.product-guide .guide-breadcrumbs a {
+  color: var(--product-muted);
+  text-decoration: none;
+}
+
+.product-guide .guide-breadcrumbs a:hover {
+  color: var(--product-accent);
+}
+
+.product-guide .guide-breadcrumbs [aria-current="page"] {
+  color: var(--product-text);
+}
+
+.product-guide .guide-header {
+  margin-top: 36px;
+}
+
+.product-guide .guide-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  color: var(--product-accent);
+  font-family: "SF Mono", "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.product-guide .guide-header h1 {
+  margin: 0 0 18px;
+  color: var(--product-text);
+  font-size: clamp(30px, 4.6vw, 44px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.product-guide .guide-lede {
+  margin: 0 0 14px;
+  color: var(--product-muted);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.product-guide .guide-dates {
+  margin: 0;
+  color: var(--product-faint);
+  font-family: "SF Mono", "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-size: 13px;
+}
+
+/* CTA panels: visible but restrained. */
+.product-guide .guide-cta {
+  border: 1px solid var(--product-border);
+  border-radius: var(--product-radius);
+  background: var(--product-surface-alpha);
+  padding: 22px 24px;
+}
+
+.product-guide .guide-cta-top {
+  margin-top: 32px;
+}
+
+.product-guide .guide-cta-note {
+  margin: 0 0 16px;
+  color: var(--product-muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.product-guide .guide-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.product-guide .guide-cta-meta {
+  margin: 14px 0 0;
+  color: var(--product-faint);
+  font-family: "SF Mono", "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-size: 12px;
+}
+
+.product-guide .guide-cta-inline {
+  margin: 28px 0 0;
+  border-left: 3px solid var(--product-accent);
+}
+
+.product-guide .guide-cta-inline .guide-cta-note {
+  margin-bottom: 10px;
+}
+
+.product-guide .guide-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--product-accent);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.product-guide .guide-cta-link:hover {
+  color: var(--product-accent-hover);
+}
+
+.product-guide .guide-cta-final {
+  margin-top: 56px;
+  padding: 30px 28px;
+  text-align: center;
+}
+
+.product-guide .guide-cta-final h2 {
+  margin: 0 0 12px;
+  color: var(--product-text);
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.product-guide .guide-cta-final .guide-cta-note {
+  max-width: 540px;
+  margin-inline: auto;
+}
+
+.product-guide .guide-cta-final .guide-cta-actions {
+  justify-content: center;
+}
+
+/* Table of contents */
+.product-guide .guide-toc {
+  margin-top: 32px;
+  border: 1px solid var(--product-border);
+  border-radius: var(--product-radius);
+  padding: 18px 22px;
+}
+
+.product-guide .guide-toc h2 {
+  margin: 0 0 10px;
+  color: var(--product-faint);
+  font-family: "SF Mono", "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.product-guide .guide-toc ol {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--product-muted);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.product-guide .guide-toc a {
+  color: var(--product-muted);
+  text-decoration: none;
+}
+
+.product-guide .guide-toc a:hover {
+  color: var(--product-accent);
+}
+
+/* Article prose */
+.product-guide .guide-section {
+  margin-top: 48px;
+}
+
+.product-guide .guide-section h2 {
+  margin: 0 0 16px;
+  color: var(--product-text);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 76px;
+}
+
+.product-guide .guide-section p,
+.product-guide .guide-section li {
+  color: var(--product-muted);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.product-guide .guide-section p {
+  margin: 0 0 16px;
+}
+
+.product-guide .guide-section p:last-child {
+  margin-bottom: 0;
+}
+
+.product-guide .guide-section ul,
+.product-guide .guide-section ol {
+  margin: 0 0 16px;
+  padding-left: 24px;
+  display: grid;
+  gap: 10px;
+}
+
+.product-guide .guide-section ul {
+  list-style: disc;
+}
+
+.product-guide .guide-section ol {
+  list-style: decimal;
+}
+
+.product-guide .guide-section li::marker {
+  color: var(--product-accent);
+}
+
+.product-guide .guide-section strong {
+  color: var(--product-text);
+  font-weight: 700;
+}
+
+.product-guide .guide-section a {
+  color: var(--product-text);
+  text-decoration: underline;
+  text-decoration-color: var(--product-accent);
+  text-underline-offset: 3px;
+}
+
+.product-guide .guide-section a:hover {
+  color: var(--product-accent);
+}
+
+/* Related guides + index cards */
+.product-guide .guide-related,
+.product-guide .guide-index-group {
+  margin-top: 56px;
+}
+
+.product-guide .guide-related h2,
+.product-guide .guide-index-group h2 {
+  margin: 0 0 20px;
+  color: var(--product-text);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.product-guide .guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.product-guide .guide-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--product-border);
+  border-radius: var(--product-radius);
+  background: var(--product-surface-alpha);
+  padding: 22px;
+  text-decoration: none;
+  transition: border-color 160ms ease;
+}
+
+.product-guide .guide-card:hover {
+  border-color: var(--product-border-hover);
+}
+
+.product-guide .guide-card-category {
+  margin: 0;
+  color: var(--product-accent);
+  font-family: "SF Mono", "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.product-guide .guide-card h3 {
+  margin: 0;
+  color: var(--product-text);
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.product-guide .guide-card-copy {
+  margin: 0;
+  color: var(--product-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.product-guide .guide-card-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 6px;
+  color: var(--product-accent);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+@media (max-width: 560px) {
+  .product-guide .guide-shell {
+    width: calc(100% - 40px);
+    padding-top: 32px;
+  }
+
+  .product-guide .guide-cta-actions,
+  .product-guide .guide-cta-actions .product-button {
+    width: 100%;
+  }
+}

@@ -14,15 +14,87 @@
   </url>
   <url>
     <loc>https://www.calvinsturm.com/fastcast</loc>
-    <lastmod>2026-07-04</lastmod>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/how-to-record-screen-windows</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/obs-alternative-windows</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/record-screen-and-webcam</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/record-4k-60fps-windows</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/screen-recording-without-lag</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.calvinsturm.com/fastplay</loc>
-    <lastmod>2026-07-04</lastmod>
+    <lastmod>2026-07-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastplay/guides</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastplay/guides/hdr-video-windows</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastplay/guides/mov-not-playing-windows</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastplay/guides/hevc-player-windows</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastplay/guides/hdr-looks-washed-out</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastplay/guides/video-review-workflow</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.calvinsturm.com/fastclip</loc>
