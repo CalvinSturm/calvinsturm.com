@@ -618,7 +618,7 @@ const fastClipAllReleasesUrl = 'https://github.com/CalvinSturm/FastClip-Releases
 const fastCompressReleaseUrl = 'https://github.com/CalvinSturm/FastCompress-Releases/releases/latest';
 const fastCompressAllReleasesUrl = 'https://github.com/CalvinSturm/FastCompress-Releases/releases';
 const fastPlaySourceUrl = 'https://github.com/CalvinSturm/FastPlay';
-const fastPlayReleaseNotesUrl = 'https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.1.md';
+const fastPlayReleaseNotesUrl = 'https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.2.md';
 
 type ProductSectionHeadingProps = {
   eyebrow?: string;
@@ -1167,6 +1167,16 @@ const fastPlayFeatures: FeatureItem[] = [
     body: 'Handles resize, DPI, audio endpoint churn, device recovery, and software decode fallback while preserving the D3D11 present path.',
     Icon: ShieldCheck,
   },
+  {
+    title: 'HDR tone mapping',
+    body: 'HDR10 (PQ) and HLG video is tone-mapped to SDR in a custom pixel shader, so HDR footage looks natural on any monitor with no settings.',
+    Icon: Sun,
+  },
+  {
+    title: 'Audio-only files',
+    body: 'MP3, FLAC, WAV, OGG, AAC, M4A, and OPUS files play with the same fast open, responsive seek, and queue behavior as video.',
+    Icon: Music,
+  },
 ];
 
 const fastPlayControls: Array<[string, string]> = [
@@ -1242,7 +1252,7 @@ export function FastPlayProductPage() {
       brand="FastPlay"
       brandIconUrl="/assets/FastPlay/fastplay.png"
       navLinks={[
-        { href: '#release', label: 'v0.4.1' },
+        { href: '#release', label: 'v0.4.2' },
         { href: '#features', label: 'Features' },
         { href: '#architecture', label: 'Architecture' },
         { href: '#vlc', label: 'vs VLC' },
@@ -1286,7 +1296,7 @@ export function FastPlayProductPage() {
         primaryHref={fastPlayReleaseUrl}
         secondaryLabel="View source on GitHub"
         secondaryHref={fastPlaySourceUrl}
-        meta="v0.4.1 · Windows 10+ · MIT License"
+        meta="v0.4.2 · Windows 10+ · MIT License"
         subMeta="Windows x64 local playback. No streaming, media library, or plugin system."
         heroIconUrl="/assets/FastPlay/fastplay.png"
         heroIconAlt="FastPlay app icon"
@@ -1308,14 +1318,14 @@ export function FastPlayProductPage() {
           <article className="product-panel product-release-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)] sm:p-8">
             <ProductSectionHeading
               eyebrow="Current release"
-              title="New in v0.4.1: smoother shutdown and steadier audio"
-              description="A stability and playback-robustness release. FastPlay now closes instantly without the occasional shutdown stall, and keeps audio realtime on heavy 4K60 files that fall back to software video decode."
+              title="New in v0.4.2: HDR playback and audio-only files"
+              description="A media-compatibility and correctness release. FastPlay now tone-maps HDR10 and HLG video to SDR so it looks right on any monitor, plays audio-only files, and fixes three playback bugs."
             />
             <div className="product-release-list mt-7 grid gap-4 md:grid-cols-3">
               {[
-                ['Crash-free close', 'Skips fragile in-process GPU teardown at exit, so closing the window is instant instead of occasionally stalling.'],
-                ['Steady 4K60 audio', 'An independent audio decode worker keeps sound realtime even when video falls back to software decode.'],
-                ['Reliable resume', 'Shutdown still persists recent-file and resume state before exiting.'],
+                ['HDR tone mapping', 'HDR10 (PQ) and HLG video plays with natural color on a regular monitor, tone-mapped to SDR in a custom pixel shader.'],
+                ['Audio-only playback', 'MP3, FLAC, WAV, OGG, AAC, M4A, and OPUS files now open and play, with the same seek and queue behavior as video.'],
+                ['Playback fixes', 'Audio no longer goes permanently silent after scrubbing early in a file, zooming rotated video no longer stretches, and rapid queue switching no longer crashes.'],
               ].map(([title, body]) => (
                 <div key={title} className="product-release-item rounded-xl bg-slate-50 p-4">
                   <h3 className="font-semibold text-slate-900">{title}</h3>
@@ -1324,7 +1334,7 @@ export function FastPlayProductPage() {
               ))}
             </div>
             <a href={fastPlayReleaseNotesUrl} target="_blank" rel="noopener noreferrer" className="product-panel-link mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
-              Read v0.4.1 release notes
+              Read v0.4.2 release notes
               <ArrowUpRight className="h-4 w-4 text-amber-500" />
             </a>
           </article>
@@ -1373,7 +1383,7 @@ export function FastPlayProductPage() {
               description="FFmpeg-backed demux and decode support for everyday local media files."
             />
             <div className="mt-6 flex flex-wrap gap-2">
-              {['.mp4', '.mkv', '.mov', '.avi', '.webm', '.m4v', '.wmv', '.mp3', '.flac', '.wav', '.srt subtitles'].map((format) => (
+              {['.mp4', '.mkv', '.mov', '.avi', '.webm', '.m4v', '.wmv', '.mp3', '.flac', '.wav', '.ogg', '.m4a', '.opus', '.srt subtitles'].map((format) => (
                 <span key={format} className="product-format-tag rounded-full border border-slate-200 bg-white px-4 py-2 font-mono text-sm text-slate-600">
                   {format}
                 </span>

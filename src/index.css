@@ -2160,7 +2160,11 @@ html.dark .border-blue-600 {
   --product-code: #d6ffe9;
   --product-radius: 10px;
   --product-shadow: none;
-  background: var(--product-bg);
+  background:
+    radial-gradient(1100px 540px at 50% -160px, rgba(69, 240, 185, 0.14), transparent 70%),
+    radial-gradient(900px 620px at 88% -220px, rgba(82, 140, 255, 0.09), transparent 70%),
+    linear-gradient(180deg, #0c0f0e 0%, var(--product-bg) 640px),
+    var(--product-bg);
   color: var(--product-text);
   line-height: 1.6;
   padding-top: 56px;
@@ -2238,6 +2242,11 @@ html.dark .border-blue-600 {
   font-size: clamp(36px, 5vw, 56px) !important;
   font-weight: 700 !important;
   line-height: 1.1 !important;
+  background: linear-gradient(180deg, #f7f8fa 0%, #dfe1e6 48%, #a2a6b3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent !important;
 }
 
 .product-landing-fastplay .product-hero-subtitle,
@@ -2376,6 +2385,38 @@ html.dark .border-blue-600 {
   max-width: 760px;
   margin: 0 auto 20px;
   line-height: 2;
+}
+
+/* FastPlay gradient accents: a quiet mint wash on the release and CTA panels,
+   and a gradient rule under the fixed header. Overrides need !important to
+   beat the shared product-panel background rule. */
+.product-landing-fastplay .product-release-panel {
+  background:
+    linear-gradient(155deg, rgba(69, 240, 185, 0.08) 0%, rgba(69, 240, 185, 0.02) 34%, rgba(19, 19, 24, 0) 60%),
+    var(--product-surface-alpha) !important;
+  border-color: rgba(69, 240, 185, 0.18) !important;
+}
+
+.product-landing-fastplay .product-cta-panel {
+  background:
+    radial-gradient(640px 260px at 50% -80px, rgba(69, 240, 185, 0.12), transparent 70%),
+    linear-gradient(180deg, #14161b 0%, #101116 100%) !important;
+  border-color: rgba(69, 240, 185, 0.2) !important;
+}
+
+.product-landing-fastplay .product-site-header {
+  border-bottom: none;
+}
+
+.product-landing-fastplay .product-site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(69, 240, 185, 0.35) 30%, rgba(82, 140, 255, 0.3) 70%, transparent 100%);
+  pointer-events: none;
 }
 
 @media (max-width: 900px) {

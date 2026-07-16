@@ -108,7 +108,7 @@ const flagships: Flagship[] = [
       'Recent files and resume',
       'Free and open source',
     ],
-    meta: 'v0.4.1 · Windows 10+ · MIT License',
+    meta: 'v0.4.2 · Windows 10+ · MIT License',
     cta: 'Explore FastPlay',
   },
   {

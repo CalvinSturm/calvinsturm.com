@@ -99,10 +99,22 @@ const fastCastTimeline: TimelineItem[] = [
 
 const fastPlayTimeline: TimelineItem[] = [
   {
-    version: 'v0.4.1',
-    date: 'June 2026',
+    version: 'v0.4.2',
+    date: 'July 2026',
     status: 'Current release',
     tone: 'current',
+    title: 'HDR playback and audio-only files',
+    body: 'HDR10 and HLG video is tone-mapped to SDR in a custom pixel shader, audio-only formats like MP3 and FLAC now play, and three playback bugs are fixed: silent audio after early scrubbing, stretched rotated zoom, and a crash when switching queue items quickly.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.2.md',
+      label: 'Release notes',
+    },
+  },
+  {
+    version: 'v0.4.1',
+    date: 'June 2026',
+    status: 'Shipped',
+    tone: 'shipped',
     title: 'Stability and shutdown reliability',
     body: 'Fixed an intermittent crash or freeze when closing the window, and kept audio steady on heavy 4K60 files that fall back to software video decoding.',
     link: {
@@ -427,7 +439,7 @@ export default function RoadmapApp() {
                 hardware-accelerated decode, and keyboard-driven controls. Free and open source under the MIT
                 License.
               </p>
-              <p className="fs-spot-meta">v0.4.1 · Windows 10+ · MSI installer · MIT License</p>
+              <p className="fs-spot-meta">v0.4.2 · Windows 10+ · MSI installer · MIT License</p>
               <div className="rm-spot-links">
                 <a href="/fastplay" className="home-spot-cta">
                   FastPlay product page
