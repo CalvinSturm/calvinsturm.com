@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { HomeHeader, HomeFooter } from './HomeChrome.tsx';
+import { trackCtaClick } from './lib/analytics';
 
 const repoUrl = 'https://github.com/CalvinSturm/LocalAgent';
 const releasesUrl = 'https://github.com/CalvinSturm/LocalAgent/releases';
@@ -122,20 +123,33 @@ export default function LocalAgentApp() {
               </div>
               <h1>LocalAgent</h1>
               <p className="home-hero-sub">
-                A local-first agent runtime for MCP workflows with explicit trust controls, replayable runs, and
-                inspectable logs.
+                Run an AI coding agent on your own machine, with your own local models. No cloud account, no
+                code leaving your computer.
               </p>
               <p className="la-hero-body">
-                LocalAgent is built for the hard part of local agents: connecting on-machine LLMs to tools in a way
-                that stays guided, auditable, and operationally clear. It is designed for developers who want local
-                model workflows without handing side effects to a black box.
+                LocalAgent by Sturm Technologies is an open-source agent runtime that connects on-machine LLMs
+                (Ollama, LM Studio, llama.cpp) to tools through MCP. It handles the hard operational part: explicit
+                trust controls before anything writes or runs, replayable runs, and logs you can actually inspect
+                afterward.
               </p>
               <div className="home-hero-actions">
-                <a href={repoUrl} target="_blank" rel="noopener noreferrer" className="la-run-btn">
+                <a
+                  href={repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="la-run-btn"
+                  onClick={() => trackCtaClick('localagent', 'github_clicked', 'hero', repoUrl)}
+                >
                   <Github className="h-4 w-4" />
                   View on GitHub
                 </a>
-                <a href={releasesUrl} target="_blank" rel="noopener noreferrer" className="home-btn home-btn-ghost">
+                <a
+                  href={releasesUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="home-btn home-btn-ghost"
+                  onClick={() => trackCtaClick('localagent', 'release_clicked', 'hero', releasesUrl)}
+                >
                   Releases
                   <ArrowUpRight className="h-4 w-4" />
                 </a>

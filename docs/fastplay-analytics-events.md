@@ -1,3 +1,7 @@
+> **Superseded (2026-07-16):** analytics are now implemented site-wide via
+> Vercel Web Analytics. See `analytics-events.md` for the canonical event
+> reference; the notes below are the original planning doc.
+
 # FastPlay guides: recommended analytics events
 
 The site currently has no analytics provider, so no tracking was added with the

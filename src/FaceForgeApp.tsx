@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { HomeHeader, HomeFooter } from './HomeChrome.tsx';
+import { trackCtaClick } from './lib/analytics';
 
 const downloadHref = 'https://calvinsturm.itch.io/faceforge';
 const releaseNotesHref = 'https://github.com/CalvinSturm/FaceForge-Releases/releases/tag/v0.1.0-alpha';
@@ -140,8 +141,8 @@ export default function FaceForgeApp() {
             <h1>FaceForge</h1>
           </div>
           <p className="home-hero-sub">
-            A privacy-first, local-only Windows app for AI face blur and video redaction, optimized for NVIDIA RTX
-            GPUs.
+            Blur faces in a video without uploading it anywhere. FaceForge is a local-only Windows app for AI face
+            blur and video redaction, optimized for NVIDIA RTX GPUs.
           </p>
           <p className="ff-hero-body">
             FaceForge is built for people who need to anonymize faces in local media without uploading footage
@@ -149,7 +150,7 @@ export default function FaceForgeApp() {
             consent-based Pro workflow, and it is not positioned as a generic deepfake tool.
           </p>
           <div className="home-hero-actions">
-            <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="ff-export-btn">
+            <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="ff-export-btn" onClick={() => trackCtaClick('faceforge', 'download_clicked', 'hero', downloadHref)}>
               <Download className="h-4 w-4" />
               Download Alpha
             </a>
@@ -349,7 +350,7 @@ export default function FaceForgeApp() {
             </p>
           </div>
           <div className="home-hero-actions">
-            <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="ff-export-btn">
+            <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="ff-export-btn" onClick={() => trackCtaClick('faceforge', 'download_clicked', 'inline', downloadHref)}>
               <Download className="h-4 w-4" />
               Download Alpha
             </a>
@@ -404,7 +405,7 @@ export default function FaceForgeApp() {
               itch.io, with release notes and checksums on GitHub.
             </p>
             <div className="home-hero-actions home-final-actions">
-              <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="ff-export-btn">
+              <a href={downloadHref} target="_blank" rel="noopener noreferrer" className="ff-export-btn" onClick={() => trackCtaClick('faceforge', 'download_clicked', 'final', downloadHref)}>
                 <Download className="h-4 w-4" />
                 Start Export: Download Alpha
               </a>

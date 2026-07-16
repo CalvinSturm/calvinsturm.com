@@ -44,6 +44,19 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import { guides as fastPlayGuides, guidePath as fastPlayGuidePath } from './fastplay-guides/guides-data';
 import { guides as fastCastGuides, guidePath as fastCastGuidePath } from './fastcast-guides/guides-data';
+import { trackCtaClick } from './lib/analytics';
+
+// Conversion tracking for release-hosted CTAs. GitHub release links are the
+// closest thing to a download conversion the site can observe directly.
+function isGitHubUrl(href: string): boolean {
+  return href.startsWith('https://github.com/');
+}
+
+function trackProductCta(productSlug: string, ctaLocation: string, href: string): void {
+  if (!isGitHubUrl(href)) return;
+  const action = href.includes('/releases') ? 'download_clicked' : 'github_clicked';
+  trackCtaClick(productSlug, action, ctaLocation, href);
+}
 
 // ---- Product data -----------------------------------------------------------
 // External links stay product-specific: public sites/downloads are linked when
@@ -761,11 +774,21 @@ function ProductHero({
           <p className="product-hero-subtitle mt-5 max-w-2xl text-xl leading-relaxed text-slate-700">{subtitle}</p>
           <p className="product-hero-description mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">{description}</p>
           <div className="product-hero-actions mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a href={primaryHref} {...heroLinkProps(primaryHref)} className="product-button product-button-primary cta-primary">
+            <a
+              href={primaryHref}
+              {...heroLinkProps(primaryHref)}
+              className="product-button product-button-primary cta-primary"
+              onClick={() => trackProductCta(product.slug, 'hero', primaryHref)}
+            >
               <PrimaryIcon className="h-5 w-5" />
               {primaryLabel}
             </a>
-            <a href={secondaryHref} {...heroLinkProps(secondaryHref)} className="product-button product-button-secondary cta-secondary">
+            <a
+              href={secondaryHref}
+              {...heroLinkProps(secondaryHref)}
+              className="product-button product-button-secondary cta-secondary"
+              onClick={() => trackProductCta(product.slug, 'hero_secondary', secondaryHref)}
+            >
               <SecondaryIcon className="h-5 w-5" />
               {secondaryLabel}
               <ArrowUpRight className="h-4 w-4" />
@@ -1115,7 +1138,7 @@ export function FastCastProductPage() {
               description of what happened.
             </p>
             <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary">
+              <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary" onClick={() => trackProductCta('fastcast', 'final', fastCastReleaseUrl)}>
                 <Download className="h-5 w-5" />
                 Download latest release
               </a>
@@ -1517,7 +1540,7 @@ export function FastPlayProductPage() {
               Free, open source, MIT licensed. Built for Windows 10 and later.
             </p>
             <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href={fastPlayReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary">
+              <a href={fastPlayReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary" onClick={() => trackProductCta('fastplay', 'final', fastPlayReleaseUrl)}>
                 <Download className="h-5 w-5" />
                 Download MSI installer
               </a>
@@ -1987,7 +2010,7 @@ export function FastClipProductPage() {
               tools from the same Fast Series.
             </p>
             <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href={fastClipReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary">
+              <a href={fastClipReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary" onClick={() => trackProductCta('fastclip', 'final', fastClipReleaseUrl)}>
                 <Download className="h-5 w-5" />
                 Download FastClip
               </a>
@@ -2382,7 +2405,7 @@ export function FastCompressProductPage() {
               FastPlay are also available today: both are free, native Windows tools from the same Fast Series.
             </p>
             <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href={fastCompressReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary">
+              <a href={fastCompressReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary" onClick={() => trackProductCta('fastcompress', 'final', fastCompressReleaseUrl)}>
                 <Download className="h-5 w-5" />
                 Download FastCompress
               </a>

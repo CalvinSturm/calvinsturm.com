@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { ArrowRight, BookOpen, Download } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { trackCtaClick, trackEvent } from '../lib/analytics';
 
 // Config-driven guide system shared by the per-product guide hubs
 // (src/fastplay-guides, src/fastcast-guides). Each product binds its own
@@ -135,7 +137,7 @@ export function createProductGuides(config: ProductGuidesConfig) {
     );
   }
 
-  function DownloadCta({ compact = false }: { compact?: boolean }) {
+  function DownloadCta({ compact = false, ctaLocation = compact ? 'top' : 'final' }: { compact?: boolean; ctaLocation?: string }) {
     const SecondaryIcon = config.SecondaryCtaIcon;
     return (
       <div className={compact ? 'guide-cta-actions' : 'product-hero-actions guide-cta-actions'}>
@@ -144,11 +146,16 @@ export function createProductGuides(config: ProductGuidesConfig) {
           target="_blank"
           rel="noopener noreferrer"
           className="product-button product-button-primary"
+          onClick={() => trackCtaClick(config.variant, 'download_clicked', ctaLocation, config.downloadUrl)}
         >
           <Download className="h-5 w-5" aria-hidden="true" />
           {config.downloadLabel}
         </a>
-        <a href={config.productPath} className="product-button product-button-secondary">
+        <a
+          href={config.productPath}
+          className="product-button product-button-secondary"
+          onClick={() => trackCtaClick(config.variant, 'guide_product_cta_clicked', ctaLocation, config.productPath)}
+        >
           <SecondaryIcon className="h-5 w-5" aria-hidden="true" />
           {config.secondaryCtaLabel}
         </a>
@@ -177,6 +184,7 @@ export function createProductGuides(config: ProductGuidesConfig) {
           target="_blank"
           rel="noopener noreferrer"
           className="guide-cta-link"
+          onClick={() => trackCtaClick(config.variant, 'download_clicked', 'inline', config.downloadUrl)}
         >
           {config.downloadLabel} for Windows
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -213,7 +221,18 @@ export function createProductGuides(config: ProductGuidesConfig) {
 
   function GuideCard({ guide }: { guide: GuideMeta }) {
     return (
-      <a href={config.guidePath(guide.slug)} className="guide-card">
+      <a
+        href={config.guidePath(guide.slug)}
+        className="guide-card"
+        onClick={() =>
+          trackEvent(`${config.variant}_related_guide_clicked`, {
+            product: config.variant,
+            source_path: typeof location !== 'undefined' ? location.pathname : '',
+            guide_slug: guide.slug,
+            destination: config.guidePath(guide.slug),
+          })
+        }
+      >
         <p className="guide-card-category">{guide.category}</p>
         <h3>{guide.shortTitle}</h3>
         <p className="guide-card-copy">{guide.description}</p>
@@ -250,6 +269,15 @@ export function createProductGuides(config: ProductGuidesConfig) {
     children,
   }: GuideLayoutProps) {
     const meta = guideBySlug[slug];
+
+    useEffect(() => {
+      trackEvent(`${config.variant}_guide_viewed`, {
+        product: config.variant,
+        guide_slug: slug,
+        source_path: typeof location !== 'undefined' ? location.pathname : '',
+        referrer_path: typeof document !== 'undefined' ? document.referrer : '',
+      });
+    }, [slug]);
 
     return (
       <GuideChrome>
@@ -297,6 +325,15 @@ export function createProductGuides(config: ProductGuidesConfig) {
   }
 
   function GuidesIndexPage() {
+    useEffect(() => {
+      trackEvent(`${config.variant}_guide_viewed`, {
+        product: config.variant,
+        guide_slug: 'index',
+        source_path: typeof location !== 'undefined' ? location.pathname : '',
+        referrer_path: typeof document !== 'undefined' ? document.referrer : '',
+      });
+    }, []);
+
     return (
       <GuideChrome>
         <div className="guide-shell">
