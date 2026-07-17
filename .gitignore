@@ -31,3 +31,6 @@ Thumbs.db
 
 # Stray ChatGPT-generated images
 assets/ChatGPT Image*
+
+# Raw video sources (keep out of the repo; web-encoded copies live in public/assets)
+assets/*.mp4
