@@ -1354,12 +1354,18 @@ export function FastPlayProductPage() {
         heroIconAlt="FastPlay app icon"
         preview={
           <figure className="product-preview overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
-            <img
-              src="/assets/FastPlay/FastPlay_gif.gif"
-              width={800}
-              height={450}
-              alt="FastPlay fast Windows video player playing a local video file with timeline scrubbing controls."
+            <video
+              src="/assets/FastPlay/fastplay-demo.mp4"
+              poster="/assets/FastPlay/fastplay-demo-poster.jpg"
               className="h-auto w-full"
+              width="1600"
+              height="900"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="FastPlay demo: opening a video from Explorer, scrubbing the timeline, going fullscreen, and zooming in at the cursor."
             />
           </figure>
         }
