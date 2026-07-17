@@ -10,6 +10,7 @@ export const guidesIndexPath = '/fastcast/guides';
 
 export const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 export const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
+export const fastCastProCheckoutUrl = 'https://sturmtech.lemonsqueezy.com/checkout/buy/2f7a5399-c954-43e3-9361-f33fb6853484';
 export const fastCastSiteUrl = 'https://calvinsturm.github.io/FastCast-releases/';
 
 export type GuideCategory = 'Recording Basics' | 'Quality & Performance' | 'Troubleshooting' | 'Comparisons';
@@ -34,7 +35,7 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
       'How to combine screen capture with a webcam overlay for tutorials, courses, and demos: layout choices, audio setup, framing, and how FastCast handles it.',
     category: 'Recording Basics',
     published: '2026-07-15',
-    updated: '2026-07-15',
+    updated: '2026-07-16',
     related: ['how-to-record-screen-windows', 'screen-recording-without-lag'],
   },
   {
@@ -45,7 +46,7 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
       'What 4K 60 FPS screen recording actually demands from your GPU, encoder, and disk, plus how FastCast Pro handles high-resolution, high-framerate capture.',
     category: 'Quality & Performance',
     published: '2026-07-15',
-    updated: '2026-07-15',
+    updated: '2026-07-16',
     related: ['screen-recording-without-lag', 'how-to-record-screen-windows'],
   },
   {

@@ -31,6 +31,7 @@ list without needing property filters.
 | `<product>_guide_viewed` | A `/<product>/guides/*` page loads (`guide_slug` is the article slug, or `index` for the hub page). Products: `fastcast`, `fastplay`, `fastclip`, `fastcompress`. | `product`, `guide_slug`, `source_path`, `referrer_path` |
 | `<product>_guide_product_cta_clicked` | The secondary CTA on a guide (link to the product page) is clicked. | `product`, `source_path`, `cta_location`, `destination` |
 | `<product>_related_guide_clicked` | A guide card (related-guides list or guides index) is clicked. | `product`, `source_path`, `guide_slug` (target), `destination` |
+| `fastcast_pro_clicked` | The FastCast Pro checkout link (Lemon Squeezy) is clicked, on the product page (`cta_location: pricing`) or inside a guide (`inline`). | `product`, `source_path`, `cta_location`, `destination` |
 
 ### Property conventions
 
@@ -43,13 +44,13 @@ list without needing property filters.
 
 ## Known measurement limitations (do not fake these)
 
-- **Purchase completion cannot be measured from the website.** FastCast Pro
-  activates inside the app via Lemon Squeezy and there is no public checkout
-  URL, so there is no `checkout_opened` or purchase event. GitHub release
-  download counts and itch.io dashboards are the closest conversion
-  denominators.
-- **`pricing_cta_clicked` is reserved but unused**: pricing sections currently
-  contain no links.
+- **Purchase completion cannot be measured from the website.** The public
+  FastCast Pro checkout link (Lemon Squeezy) makes checkout *clicks* trackable
+  (`fastcast_pro_clicked`), but the purchase itself completes on Lemon
+  Squeezy and activation happens inside the app, so completed sales come from
+  the Lemon Squeezy dashboard, not site analytics.
+- **`pricing_cta_clicked` is retired**: the pricing CTA shipped as
+  `fastcast_pro_clicked` to follow the `<product>_<action>` convention.
 - **`signup_submitted` is reserved but unused**: the site has no email or beta
   signup form.
 - Download clicks measure intent, not completed installs; GitHub does the

@@ -1,7 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { GuideLayout, GuideSection, InlineCta } from './GuideLayout.tsx';
-import { guidePath } from './guides-data';
+import { fastCastProCheckoutUrl, guidePath } from './guides-data';
+import { trackCtaClick } from '../lib/analytics';
 import '../index.css';
 
 const toc = [
@@ -135,8 +136,17 @@ function Article() {
         <p>
           FastCast Free records and streams at 1080p30. A one-time FastCast Pro license unlocks
           1440p and 4K recording plus 60 FPS capture where your hardware supports them, along with
-          advanced encoder controls. Activation happens inside the app (via Lemon Squeezy) with no
-          account and no subscription, and an offline grace period covers activated devices.
+          advanced encoder controls. You can{' '}
+          <a
+            href={fastCastProCheckoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackCtaClick('fastcast', 'pro_clicked', 'inline', fastCastProCheckoutUrl)}
+          >
+            buy a FastCast Pro license
+          </a>{' '}
+          and activate it inside the app with no account and no subscription; an offline grace
+          period covers activated devices.
         </p>
         <InlineCta>
           Not sure your machine can sustain 4K60? Download FastCast free, run the test procedure

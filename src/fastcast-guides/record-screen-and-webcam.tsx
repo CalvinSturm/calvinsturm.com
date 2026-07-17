@@ -99,6 +99,13 @@ function Article() {
             rather than expecting scene switching mid-take.
           </li>
         </ul>
+        <p>
+          FastCast supports both arrangements: the standard screen-plus-overlay look and a
+          camera-first &quot;Camera + screen&quot; layout that puts your webcam full-frame with
+          the screen as the inset, which suits commentary and reaction takes where you are the
+          main content. The live preview updates as you switch layouts and drag the inset, so
+          what you see before pressing Record is the composition you get.
+        </p>
       </GuideSection>
 
       <GuideSection id="craft" title="Lighting, framing, and delivery">

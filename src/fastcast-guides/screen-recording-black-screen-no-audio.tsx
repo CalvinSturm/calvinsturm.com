@@ -161,6 +161,11 @@ function Article() {
           <li>Record the 30-second test, play it back, then record for real.</li>
         </ol>
         <p>
+          FastCast also checks your back after the take: the finished file is validated, and the
+          Last recording card warns if the desktop audio capture produced no frames, so a silent
+          track gets flagged even if you skip the playback check.
+        </p>
+        <p>
           If something still goes wrong, FastCast's Save Support Bundle button collects redacted
           local logs you can send with a bug report; nothing is uploaded automatically.
         </p>

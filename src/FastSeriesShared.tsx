@@ -43,7 +43,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { guides as fastPlayGuides, guidePath as fastPlayGuidePath } from './fastplay-guides/guides-data';
-import { guides as fastCastGuides, guidePath as fastCastGuidePath } from './fastcast-guides/guides-data';
+import { guides as fastCastGuides, guidePath as fastCastGuidePath, fastCastProCheckoutUrl } from './fastcast-guides/guides-data';
 import { guides as fastClipGuides, guidePath as fastClipGuidePath } from './fastclip-guides/guides-data';
 import { guides as fastCompressGuides, guidePath as fastCompressGuidePath } from './fastcompress-guides/guides-data';
 import { trackCtaClick } from './lib/analytics';
@@ -1076,6 +1076,18 @@ export function FastCastProductPage() {
               audio, webcam overlay, and custom RTMP/RTMPS streaming. A one-time FastCast Pro license unlocks
               higher-resolution recording (1440p and 4K), 60 fps capture where your hardware supports it, and advanced
               encoder controls. Activation is local-first: no accounts, no telemetry.
+            </p>
+            <p className="mt-5">
+              <a
+                href={fastCastProCheckoutUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="product-panel-link inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900"
+                onClick={() => trackCtaClick('fastcast', 'pro_clicked', 'pricing', fastCastProCheckoutUrl)}
+              >
+                Buy a FastCast Pro license
+                <ArrowUpRight className="h-4 w-4 text-amber-500" />
+              </a>
             </p>
             <div className="product-panel mt-7 rounded-2xl border border-slate-200 bg-white p-6">
               <LockKeyhole className="h-6 w-6 text-slate-700" />
