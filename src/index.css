@@ -1852,7 +1852,8 @@ html.dark .border-blue-600 {
   pointer-events: none;
 }
 
-.product-preview img {
+.product-preview img,
+.product-preview video {
   display: block;
   width: 100%;
   height: auto;
@@ -2023,7 +2024,9 @@ html.dark .border-blue-600 {
 
 .product-landing-fastcast .product-hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 470px);
+  /* Preview column sized for the 16:9 demo video (was 470px for the old
+     portrait screenshot); keeps the in-app UI legible at desktop widths. */
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 640px);
   align-items: center;
   gap: 48px;
   margin-top: 0 !important;
