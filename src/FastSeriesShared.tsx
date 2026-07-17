@@ -1352,14 +1352,14 @@ export function FastPlayProductPage() {
               src="/assets/FastPlay/fastplay-demo.mp4"
               poster="/assets/FastPlay/fastplay-demo-poster.jpg"
               className="h-auto w-full"
-              width="1600"
-              height="900"
+              width="544"
+              height="988"
               autoPlay
               muted
               loop
               playsInline
               preload="metadata"
-              aria-label="FastPlay demo: opening a video from Explorer, scrubbing the timeline, going fullscreen, and zooming in at the cursor."
+              aria-label="FastPlay demo: a sunset beach video opens instantly, plays with timeline scrubbing, and ends on the keyboard controls overlay."
             />
           </figure>
         }

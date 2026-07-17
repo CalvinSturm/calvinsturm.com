@@ -2282,7 +2282,9 @@ html.dark .border-blue-600 {
 }
 
 .product-landing-fastplay .product-preview {
-  margin-top: 60px;
+  /* Portrait demo video: constrain and center instead of full-width. */
+  max-width: 440px;
+  margin: 60px auto 0;
 }
 
 .product-landing-fastplay .product-section {
