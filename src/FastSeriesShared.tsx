@@ -981,12 +981,18 @@ export function FastCastProductPage() {
         heroIconAlt="FastCast app icon"
         preview={
           <figure className="product-preview overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
-            <img
-              src="https://calvinsturm.github.io/FastCast-releases/assets/fastcast-gui-v0.3.2.png"
-              alt="FastCast Open Beta interface showing capture, audio, webcam, stream, and recording controls."
+            <video
+              src="/assets/FastCast/fastcast-demo.mp4"
+              poster="/assets/FastCast/fastcast-demo-poster.jpg"
               className="h-auto w-full"
-              width="700"
-              height="957"
+              width="1600"
+              height="900"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="FastCast demo: picking a capture source and streaming preset, recording the screen, then playing the finished MP4 in FastPlay."
             />
           </figure>
         }
