@@ -103,7 +103,9 @@ function Article() {
         <p>
           A webcam track turns a screen capture into a presentation: viewers follow better when
           they can see you. FastCast can place your webcam as a picture-in-picture overlay on top
-          of the screen capture, which is the standard look for tutorials and commentary.
+          of the screen capture, which is the standard look for tutorials and commentary, and
+          since v0.5.0 you can switch between screen and camera layouts mid-recording with{' '}
+          <code>Ctrl+Alt+1-4</code>.
         </p>
         <p>
           Keep the overlay in a corner that does not cover the interface you are demonstrating.

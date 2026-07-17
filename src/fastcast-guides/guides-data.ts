@@ -24,7 +24,7 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
       'A practical Windows screen-recording walkthrough: picking a monitor or window, capturing mic and system audio, adding a webcam, and finding the finished MP4.',
     category: 'Recording Basics',
     published: '2026-07-15',
-    updated: '2026-07-15',
+    updated: '2026-07-16',
     related: ['record-screen-and-webcam', 'screen-recording-without-lag', 'obs-alternative-windows'],
   },
   {

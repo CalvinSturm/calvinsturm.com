@@ -93,18 +93,18 @@ function Article() {
             bottom edge. Walk through your actual demo once and watch where the action goes.
           </li>
           <li>
-            <strong>Plan the layout before recording.</strong> FastCast is a single-scene
-            recorder: set up the screen, webcam overlay, and audio the way you want them, then
-            record the take. If you want a different arrangement, set it up and record again
-            rather than expecting scene switching mid-take.
+            <strong>Plan the opening layout, then switch freely.</strong> Since v0.5.0, FastCast
+            has four live layouts (screen only, screen + camera, camera + screen, and camera
+            only) and you can switch between them at any moment, even mid-recording or
+            mid-stream, with <code>Ctrl+Alt+1-4</code>. Start the take in the layout the
+            intro needs and change it as the content shifts.
           </li>
         </ul>
         <p>
-          FastCast supports both arrangements: the standard screen-plus-overlay look and a
-          camera-first &quot;Camera + screen&quot; layout that puts your webcam full-frame with
+          The camera-first &quot;Camera + screen&quot; layout puts your webcam full-frame with
           the screen as the inset, which suits commentary and reaction takes where you are the
-          main content. The live preview updates as you switch layouts and drag the inset, so
-          what you see before pressing Record is the composition you get.
+          main content. The live preview updates as you switch layouts and drag the inset, and
+          your layout and webcam placement are remembered across restarts.
         </p>
       </GuideSection>
 
@@ -165,8 +165,9 @@ function Article() {
             <a href={guidePath('obs-alternative-windows')}>the FastCast vs OBS comparison</a>).
           </li>
           <li>
-            FastCast has no scene system, so there are no saved multi-layout scenes to switch
-            between. Treat each layout as its own take.
+            FastCast has no scene system with multiple mixed sources. The four built-in
+            screen/camera layouts switch live, but you cannot compose custom scenes from
+            arbitrary sources the way OBS does.
           </li>
           <li>
             Advanced camera looks (chroma key backgrounds, filters, color correction) are not

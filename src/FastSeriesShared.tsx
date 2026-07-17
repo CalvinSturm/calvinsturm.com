@@ -901,12 +901,12 @@ function FaqList({ faqs }: { faqs: Array<{ question: string; answer: ReactNode }
 const fastCastFeatures: FeatureItem[] = [
   { title: 'Monitor or window capture', Icon: MonitorPlay },
   { title: 'Desktop audio plus microphone', Icon: Mic },
-  { title: 'Webcam picture-in-picture overlay', Icon: Video },
+  { title: 'Live layouts: screen, camera, or both, switchable mid-recording', Icon: Video },
   { title: 'Local MP4 recording', Icon: HardDrive },
   { title: 'RTMP and RTMPS livestreaming', Icon: Radio },
   { title: 'Hardware H.264 tested on NVIDIA and AMD', Icon: Cpu },
   { title: 'Passthrough, 1080p, or 720p output', Icon: FileVideo },
-  { title: 'Global Start/Stop hotkey: Ctrl+Alt+F9', Icon: Keyboard },
+  { title: 'Hotkeys: Ctrl+Alt+F9 record, Ctrl+Alt+1-4 layouts', Icon: Keyboard },
 ];
 
 const fastCastFaqs = [
@@ -1003,7 +1003,7 @@ export function FastCastProductPage() {
           </div>
           <aside className="product-panel product-release-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
             <h3>Current release</h3>
-            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.4.0</p>
+            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.5.0</p>
             <p className="product-panel-copy mt-3 text-sm leading-relaxed text-slate-600">
               The latest public build is hosted on GitHub Releases. FastCast does not download or install updates
               automatically.
@@ -1047,12 +1047,12 @@ export function FastCastProductPage() {
               <ShieldCheck className="h-6 w-6 text-emerald-600" />
               <h3 className="mt-4 text-lg font-semibold text-slate-900">Verify the download</h3>
               <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
-                Download <code>FastCast-0.4.0-win-x64.zip</code> from the latest release. An optional{' '}
+                Download <code>FastCast-0.5.0-win-x64.zip</code> from the latest release. An optional{' '}
                 <code>.sha256</code> sidecar is included for integrity checks.
               </p>
               <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Expected SHA-256</p>
               <code className="mt-2 block break-all rounded-xl bg-slate-100 p-3 text-xs text-slate-700">
-                2efa178e8e184e23f4ab8b5b20612db70652ca30f757c2a95299354517c48b9e
+                9d0c68cf90c813bee405903b4e413430dbb7808a0c0d57fe8c1ccfedcda94790
               </code>
             </article>
             <article className="product-panel product-warning-panel rounded-2xl border border-amber-200/70 bg-amber-50 p-6">
