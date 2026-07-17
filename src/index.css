@@ -2024,9 +2024,7 @@ html.dark .border-blue-600 {
 
 .product-landing-fastcast .product-hero-grid {
   display: grid;
-  /* Preview column sized for the 16:9 demo video (was 470px for the old
-     portrait screenshot); keeps the in-app UI legible at desktop widths. */
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 640px);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 470px);
   align-items: center;
   gap: 48px;
   margin-top: 0 !important;

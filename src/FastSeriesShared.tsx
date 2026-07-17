@@ -981,18 +981,12 @@ export function FastCastProductPage() {
         heroIconAlt="FastCast app icon"
         preview={
           <figure className="product-preview overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
-            <video
-              src="/assets/FastCast/fastcast-demo.mp4"
-              poster="/assets/FastCast/fastcast-demo-poster.jpg"
+            <img
+              src="/assets/FastCast/fastcast-app-v0.4.png"
+              alt="FastCast v0.4 in Ready state: live preview of a captured browser window, with capture, stream, audio and webcam, and advanced encoder panels."
               className="h-auto w-full"
-              width="1600"
-              height="900"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-label="FastCast demo: picking a capture source and streaming preset, recording the screen, then playing the finished MP4 in FastPlay."
+              width="695"
+              height="1104"
             />
           </figure>
         }
