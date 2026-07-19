@@ -24,10 +24,34 @@ type TimelineItem = {
 
 const fastCastTimeline: TimelineItem[] = [
   {
+    version: 'v0.5.1',
+    date: 'July 2026',
+    status: 'Current release',
+    tone: 'current',
+    title: 'Command-line recording control',
+    body: 'Added fastcastc so scripts, Stream Deck buttons, and schedulers can start or stop recording through the same guarded actions as the app and global hotkey, including optional monitor selection and script-friendly exit codes.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.5.1',
+      label: 'Release page',
+    },
+  },
+  {
+    version: 'v0.5.0',
+    date: 'July 2026',
+    status: 'Shipped',
+    tone: 'shipped',
+    title: 'Live layouts and a faster interface',
+    body: 'Added screen and camera layouts that can switch during recording or streaming, layout hotkeys, microphone gain, a last-recording panel, better small-screen sizing, and substantially faster software encoding.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.5.0',
+      label: 'Release page',
+    },
+  },
+  {
     version: 'v0.4.0',
     date: 'July 2026',
-    status: 'Open Beta',
-    tone: 'current',
+    status: 'Shipped',
+    tone: 'shipped',
     title: 'FastCast Pro activation',
     body: 'Introduced one-time Creator Pro licenses: Pro unlocks 1440p/4K recording, 60 fps capture, and advanced encoder controls, while FastCast Free stays free for 1080p30 recording and streaming. Activation is local-first, with no accounts and no telemetry.',
     link: {
@@ -99,10 +123,34 @@ const fastCastTimeline: TimelineItem[] = [
 
 const fastPlayTimeline: TimelineItem[] = [
   {
-    version: 'v0.4.2',
+    version: 'v0.4.4',
     date: 'July 2026',
     status: 'Current release',
     tone: 'current',
+    title: 'Full-range PQ and 120 fps playback',
+    body: 'Full-range PQ/BT.2020 video now opens and plays through the HDR path, and a smoother audio master clock removes the structural frame loss that affected 120 fps playback on high-refresh displays.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.4.md',
+      label: 'Release notes',
+    },
+  },
+  {
+    version: 'v0.4.3',
+    date: 'July 2026',
+    status: 'Shipped',
+    tone: 'shipped',
+    title: 'Native HDR output',
+    body: 'HDR10 PQ and HLG now present natively on HDR-active displays, with HDR10 static metadata, HDR-aware overlays and screenshots, and the existing tone-map path retained for SDR displays.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.3.md',
+      label: 'Release notes',
+    },
+  },
+  {
+    version: 'v0.4.2',
+    date: 'July 2026',
+    status: 'Shipped',
+    tone: 'shipped',
     title: 'HDR playback and audio-only files',
     body: 'HDR10 and HLG video is tone-mapped to SDR in a custom pixel shader, audio-only formats like MP3 and FLAC now play, and three playback bugs are fixed: silent audio after early scrubbing, stretched rotated zoom, and a crash when switching queue items quickly.',
     link: {
@@ -408,7 +456,7 @@ export default function RoadmapApp() {
                 and microphone audio, and RTMP/RTMPS streaming. Source code is private; releases, checksums, and
                 notes are public.
               </p>
-              <p className="fs-spot-meta">v0.4.0 · Windows 10/11 x64 · Portable ZIP · Free version, optional Pro license</p>
+              <p className="fs-spot-meta">v0.5.1 · Windows 10/11 x64 · Portable ZIP · Free version, optional Pro license</p>
               <div className="rm-spot-links">
                 <a href="/fastcast" className="home-spot-cta">
                   FastCast product page
@@ -439,7 +487,7 @@ export default function RoadmapApp() {
                 hardware-accelerated decode, and keyboard-driven controls. Free and open source under the MIT
                 License.
               </p>
-              <p className="fs-spot-meta">v0.4.2 · Windows 10+ · MSI installer · MIT License</p>
+              <p className="fs-spot-meta">v0.4.4 · Windows 10+ · MSI installer · MIT License</p>
               <div className="rm-spot-links">
                 <a href="/fastplay" className="home-spot-cta">
                   FastPlay product page

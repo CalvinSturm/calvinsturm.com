@@ -634,15 +634,17 @@ export function ProductPage({ product }: { product: Product }) {
 }
 
 const githubProfileUrl = 'https://github.com/CalvinSturm';
+const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.5.1/FastCast-0.5.1-win-x64.zip';
 const fastCastReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
+const fastPlayDownloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/download/v0.4.4/fastplay-0.4.4-x86_64.msi';
 const fastPlayReleaseUrl = 'https://github.com/CalvinSturm/FastPlay/releases/latest';
 const fastClipReleaseUrl = 'https://github.com/CalvinSturm/FastClip-Releases/releases/latest';
 const fastClipAllReleasesUrl = 'https://github.com/CalvinSturm/FastClip-Releases/releases';
 const fastCompressReleaseUrl = 'https://github.com/CalvinSturm/FastCompress-Releases/releases/latest';
 const fastCompressAllReleasesUrl = 'https://github.com/CalvinSturm/FastCompress-Releases/releases';
 const fastPlaySourceUrl = 'https://github.com/CalvinSturm/FastPlay';
-const fastPlayReleaseNotesUrl = 'https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.2.md';
+const fastPlayReleaseNotesUrl = 'https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.4.md';
 
 type ProductSectionHeadingProps = {
   eyebrow?: string;
@@ -907,6 +909,7 @@ const fastCastFeatures: FeatureItem[] = [
   { title: 'Hardware H.264 tested on NVIDIA and AMD', Icon: Cpu },
   { title: 'Passthrough, 1080p, or 720p output', Icon: FileVideo },
   { title: 'Hotkeys: Ctrl+Alt+F9 record, Ctrl+Alt+1-4 layouts', Icon: Keyboard },
+  { title: 'Command-line recording control with fastcastc', Icon: Terminal },
 ];
 
 const fastCastFaqs = [
@@ -973,10 +976,10 @@ export function FastCastProductPage() {
         subtitle="FastCast is a native Windows recorder for local MP4 capture, webcam overlay, desktop and microphone audio, and RTMP/RTMPS livestreaming."
         description="Built as a simpler OBS alternative for focused single-scene recordings: choose a monitor or window, pick your audio, add an optional webcam overlay, and record MP4 or go live without setting up scenes first."
         primaryLabel="Download FastCast for Windows"
-        primaryHref={fastCastReleaseUrl}
+        primaryHref={fastCastDownloadUrl}
         secondaryLabel="View release notes"
         secondaryHref={fastCastReleaseUrl}
-        meta="Windows 10/11 x64 · Portable ZIP · Free version, optional Pro license"
+        meta="v0.5.1 · Windows 10/11 x64 · Portable ZIP · Free version, optional Pro license"
         heroIconUrl="/assets/FastCast/FastCast_Icon.png"
         heroIconAlt="FastCast app icon"
         preview={
@@ -1003,10 +1006,10 @@ export function FastCastProductPage() {
           </div>
           <aside className="product-panel product-release-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
             <h3>Current release</h3>
-            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.5.0</p>
+            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.5.1</p>
             <p className="product-panel-copy mt-3 text-sm leading-relaxed text-slate-600">
-              The latest public build is hosted on GitHub Releases. FastCast does not download or install updates
-              automatically.
+              This release adds command-line recording control through <code>fastcastc</code> for scripts, Stream Deck
+              buttons, and schedulers. FastCast does not download or install updates automatically.
             </p>
             <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-panel-link mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
               Open release page
@@ -1047,12 +1050,12 @@ export function FastCastProductPage() {
               <ShieldCheck className="h-6 w-6 text-emerald-600" />
               <h3 className="mt-4 text-lg font-semibold text-slate-900">Verify the download</h3>
               <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
-                Download <code>FastCast-0.5.0-win-x64.zip</code> from the latest release. An optional{' '}
+                Download <code>FastCast-0.5.1-win-x64.zip</code> from the latest release. An optional{' '}
                 <code>.sha256</code> sidecar is included for integrity checks.
               </p>
               <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Expected SHA-256</p>
               <code className="mt-2 block break-all rounded-xl bg-slate-100 p-3 text-xs text-slate-700">
-                9d0c68cf90c813bee405903b4e413430dbb7808a0c0d57fe8c1ccfedcda94790
+                1c890d9de1f8da1ddfc70a654e8d9b08e7fd62b8fc11e8e38d82cb334f2f2c88
               </code>
             </article>
             <article className="product-panel product-warning-panel rounded-2xl border border-amber-200/70 bg-amber-50 p-6">
@@ -1161,7 +1164,7 @@ export function FastCastProductPage() {
               description of what happened.
             </p>
             <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary" onClick={() => trackProductCta('fastcast', 'final', fastCastReleaseUrl)}>
+              <a href={fastCastDownloadUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary" onClick={() => trackProductCta('fastcast', 'final', fastCastDownloadUrl)}>
                 <Download className="h-5 w-5" />
                 Download latest release
               </a>
@@ -1214,9 +1217,14 @@ const fastPlayFeatures: FeatureItem[] = [
     Icon: ShieldCheck,
   },
   {
-    title: 'HDR tone mapping',
-    body: 'HDR10 (PQ) and HLG video is tone-mapped to SDR in a custom pixel shader, so HDR footage looks natural on any monitor with no settings.',
+    title: 'Native HDR and SDR tone mapping',
+    body: 'HDR10 (PQ) and HLG present natively on HDR-active displays and tone-map to SDR on regular displays. Full-range PQ files are supported.',
     Icon: Sun,
+  },
+  {
+    title: 'High-frame-rate playback',
+    body: 'A smoothly advancing audio clock lets 120 fps video present at full cadence on a high-refresh display instead of dropping one frame in six.',
+    Icon: Gauge,
   },
   {
     title: 'Audio-only files',
@@ -1298,7 +1306,7 @@ export function FastPlayProductPage() {
       brand="FastPlay"
       brandIconUrl="/assets/FastPlay/fastplay.png"
       navLinks={[
-        { href: '#release', label: 'v0.4.2' },
+        { href: '#release', label: 'v0.4.4' },
         { href: '#features', label: 'Features' },
         { href: '#architecture', label: 'Architecture' },
         { href: '#vlc', label: 'vs VLC' },
@@ -1339,10 +1347,10 @@ export function FastPlayProductPage() {
         subtitle="FastPlay opens local videos quickly, seeks responsively, uses hardware-accelerated decode, and stays out of the way."
         description="FastPlay is a simple native Windows app for local file playback. It is not trying to replace every advanced VLC feature; it focuses on fast startup, smooth scrubbing, responsive controls, and a lightweight everyday playback experience."
         primaryLabel="Download FastPlay for Windows"
-        primaryHref={fastPlayReleaseUrl}
+        primaryHref={fastPlayDownloadUrl}
         secondaryLabel="View source on GitHub"
         secondaryHref={fastPlaySourceUrl}
-        meta="v0.4.2 · Windows 10+ · MIT License"
+        meta="v0.4.4 · Windows 10+ · MIT License"
         subMeta="Windows x64 local playback. No streaming, media library, or plugin system."
         heroIconUrl="/assets/FastPlay/fastplay.png"
         heroIconAlt="FastPlay app icon"
@@ -1370,14 +1378,14 @@ export function FastPlayProductPage() {
           <article className="product-panel product-release-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)] sm:p-8">
             <ProductSectionHeading
               eyebrow="Current release"
-              title="New in v0.4.2: HDR playback and audio-only files"
-              description="A media-compatibility and correctness release. FastPlay now tone-maps HDR10 and HLG video to SDR so it looks right on any monitor, plays audio-only files, and fixes three playback bugs."
+              title="New in v0.4.4: full-range PQ and 120 fps playback"
+              description="A playback-correctness release. Full-range PQ video from tools such as Topaz Video AI now opens correctly, and high-frame-rate video presents at full cadence on high-refresh displays."
             />
             <div className="product-release-list mt-7 grid gap-4 md:grid-cols-3">
               {[
-                ['HDR tone mapping', 'HDR10 (PQ) and HLG video plays with natural color on a regular monitor, tone-mapped to SDR in a custom pixel shader.'],
-                ['Audio-only playback', 'MP3, FLAC, WAV, OGG, AAC, M4A, and OPUS files now open and play, with the same seek and queue behavior as video.'],
-                ['Playback fixes', 'Audio no longer goes permanently silent after scrubbing early in a file, zooming rotated video no longer stretches, and rapid queue switching no longer crashes.'],
+                ['Full-range PQ playback', 'Full-range H.264 with genuine PQ and BT.2020 signaling now plays through the HDR path instead of failing to open.'],
+                ['120 fps pacing', 'The audio master clock now advances smoothly between hardware counter updates, removing the structural frame loss at high frame rates.'],
+                ['Native HDR or SDR output', 'PQ content presents natively on an HDR-active display and tone-maps to SDR otherwise, with the same safety checks for unsupported color combinations.'],
               ].map(([title, body]) => (
                 <div key={title} className="product-release-item rounded-xl bg-slate-50 p-4">
                   <h3 className="font-semibold text-slate-900">{title}</h3>
@@ -1386,7 +1394,7 @@ export function FastPlayProductPage() {
               ))}
             </div>
             <a href={fastPlayReleaseNotesUrl} target="_blank" rel="noopener noreferrer" className="product-panel-link mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
-              Read v0.4.2 release notes
+              Read v0.4.4 release notes
               <ArrowUpRight className="h-4 w-4 text-amber-500" />
             </a>
           </article>
@@ -1569,7 +1577,7 @@ export function FastPlayProductPage() {
               Free, open source, MIT licensed. Built for Windows 10 and later.
             </p>
             <div className="product-hero-actions mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <a href={fastPlayReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary" onClick={() => trackProductCta('fastplay', 'final', fastPlayReleaseUrl)}>
+              <a href={fastPlayDownloadUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-primary cta-primary" onClick={() => trackProductCta('fastplay', 'final', fastPlayDownloadUrl)}>
                 <Download className="h-5 w-5" />
                 Download MSI installer
               </a>
