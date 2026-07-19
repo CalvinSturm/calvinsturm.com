@@ -40,8 +40,8 @@ function Article() {
           </li>
           <li>
             <strong>Consider FastCast</strong> if OBS feels like a broadcast studio when you just
-            need a recording: one screen or window, mic and desktop audio, an optional webcam
-            overlay, and an MP4 (or a simple RTMP stream) at the end.
+            need a recording: one screen or window, mic and desktop audio, four focused
+            screen/camera layouts, and an MP4 (or a simple RTMP stream) at the end.
           </li>
         </ul>
         <p>
@@ -68,19 +68,22 @@ function Article() {
       <GuideSection id="what-fastcast-is-for" title="What FastCast is designed for">
         <p>
           FastCast starts from the opposite end: the common path should not require setup. There
-          is one scene, and the choices are the ones the job actually requires:
+          is one focused capture session, and the choices are the ones the job actually requires:
         </p>
         <ul>
           <li>Capture a monitor or a specific window.</li>
           <li>Capture microphone and desktop audio.</li>
-          <li>Optionally add a webcam picture-in-picture overlay.</li>
+          <li>
+            Use screen only, screen with camera inset, camera with screen inset, or camera only;
+            switch among them live with the configured layout hotkeys.
+          </li>
           <li>Record a local MP4, or stream to a custom RTMP/RTMPS endpoint.</li>
           <li>Start and stop globally with <code>Ctrl+Alt+F9</code>.</li>
         </ul>
         <p>
-          It is a single portable executable with no runtime to install, and it is deliberately
-          quiet: no telemetry, no accounts, no background polling, and stream keys are never saved
-          to disk.
+          The portable ZIP contains the GUI and its small command-line controller, with no runtime
+          to install. FastCast is deliberately quiet: no telemetry, no accounts, no background
+          polling, and stream keys are never saved to disk.
         </p>
       </GuideSection>
 
@@ -106,8 +109,9 @@ function Article() {
         <ul>
           <li>
             <strong>Scenes and compositing.</strong> OBS: full scene system, unlimited sources,
-            filters, chroma key, transitions. FastCast: one scene, screen plus optional webcam
-            overlay, no filters or chroma key. This is the single biggest difference.
+            filters, chroma key, transitions. FastCast: four live screen/camera layouts that can
+            switch during a take, but no arbitrary sources, filters, or chroma key. This is the
+            single biggest difference.
           </li>
           <li>
             <strong>Encoders.</strong> Both use hardware H.264 encoding. FastCast's hardware path
@@ -141,9 +145,9 @@ function Article() {
         </ul>
         <p><strong>FastCast may fit better if you:</strong></p>
         <ul>
-          <li>Record tutorials, demos, bug reports, or meetings with at most one webcam overlay</li>
+          <li>Record tutorials, demos, bug reports, or meetings with one screen and one camera</li>
           <li>Stream occasionally to one platform and are happy pasting a stream key</li>
-          <li>Prefer a portable single executable over an installed production suite</li>
+          <li>Prefer a portable two-executable bundle over an installed production suite</li>
           <li>Want the recording workflow to be a few clicks with nothing to pre-build</li>
         </ul>
         <InlineCta>

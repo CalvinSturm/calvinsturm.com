@@ -62,8 +62,10 @@ function Article() {
         </p>
         <p>
           FastCast uses hardware H.264 encoding, tested on NVIDIA and AMD GPUs, and falls back to
-          a software encoder that works but is much slower. If you are recording on a machine
-          without a supported hardware encoder, keep expectations modest and keep resolution down.
+          a software encoder that works but is much slower. FastCast 0.5.0 made that software
+          conversion path roughly five times faster than 0.4.0 on AVX2-capable systems, but it
+          still cannot match supported hardware encoding. Without a supported hardware encoder,
+          keep expectations modest and keep resolution down.
         </p>
       </GuideSection>
 

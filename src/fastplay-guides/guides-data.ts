@@ -19,10 +19,10 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
     title: 'How to Play HDR Video on Windows',
     shortTitle: 'Play HDR video on Windows',
     description:
-      'What HDR video needs to play correctly on Windows, why HDR files often look wrong in common players, and how FastPlay tone-maps HDR10 and HLG to SDR.',
+      'What HDR video needs to play correctly on Windows, why HDR files often look wrong, and how FastPlay chooses native HDR output or SDR tone mapping.',
     category: 'HDR & Color',
     published: '2026-07-15',
-    updated: '2026-07-15',
+    updated: '2026-07-19',
     related: ['hdr-looks-washed-out', 'hevc-player-windows', 'mov-not-playing-windows'],
   },
   {
@@ -66,7 +66,7 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
       'The real reasons HDR footage looks gray or faded on Windows: missing tone mapping, the Windows HDR toggle, and display limits, plus how to tell them apart.',
     category: 'HDR & Color',
     published: '2026-07-15',
-    updated: '2026-07-15',
+    updated: '2026-07-19',
     related: ['hdr-video-windows', 'hevc-player-windows'],
   },
   {
@@ -79,6 +79,28 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
     published: '2026-07-15',
     updated: '2026-07-15',
     related: ['video-stuttering-windows', 'hevc-player-windows', 'mov-not-playing-windows'],
+  },
+  {
+    slug: 'play-120-fps-video-windows',
+    title: 'How to Play 120 FPS Video Smoothly on Windows',
+    shortTitle: 'Play 120 FPS video smoothly',
+    description:
+      'How display refresh rate, decoding, storage, and playback timing affect 120 FPS video—and how to diagnose choppy high-frame-rate playback on Windows.',
+    category: 'Playback Performance',
+    published: '2026-07-19',
+    updated: '2026-07-19',
+    related: ['video-stuttering-windows', 'hevc-player-windows', 'video-review-workflow'],
+  },
+  {
+    slug: 'add-srt-subtitles-video-windows',
+    title: 'How to Add SRT Subtitles to a Video on Windows',
+    shortTitle: 'Add SRT subtitles to a video',
+    description:
+      'How to load an external SRT subtitle file beside an MP4, MOV, or other local video on Windows, plus filename, encoding, and troubleshooting tips.',
+    category: 'Workflow',
+    published: '2026-07-19',
+    updated: '2026-07-19',
+    related: ['video-review-workflow', 'mov-not-playing-windows', 'hevc-player-windows'],
   },
 ];
 

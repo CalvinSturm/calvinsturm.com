@@ -137,7 +137,7 @@ function Article() {
 
       <GuideSection id="fastcast-workflow" title="The FastCast workflow">
         <ol>
-          <li>Run <code>fastcast.exe</code> (single portable executable, nothing to install).</li>
+          <li>Run <code>fastcast.exe</code> from the portable ZIP; nothing needs installing.</li>
           <li>Choose the monitor or window to capture.</li>
           <li>Enable the webcam picture-in-picture overlay.</li>
           <li>Select microphone and, if needed, desktop audio.</li>

@@ -94,8 +94,9 @@ function Article() {
         </ul>
         <p>
           FastCast captures microphone and desktop audio, and you pick your sources before
-          recording. If you plan to narrate over game or app audio, do a short combined test first
-          to confirm the balance sounds right.
+          recording. Watch the live mic meter, adjust the persisted gain control from -12 dB to
+          +12 dB, and back it down if the clipping warning appears. If you plan to narrate over
+          game or app audio, do a short combined test first to confirm the balance sounds right.
         </p>
       </GuideSection>
 
@@ -152,7 +153,9 @@ function Article() {
           <li>
             <strong>Find the file.</strong> Recorders save to a fixed default folder unless you
             change it. FastCast saves MP4 files to its <code>recordings</code> folder by default,
-            and a Browse control lets you pick a different destination before recording.
+            and a Browse control lets you pick a different destination before recording. After
+            stopping, the Last recording panel shows validation status, file size, and any warning;
+            use Open or Show in folder without hunting through File Explorer.
           </li>
         </ol>
         <p>
@@ -166,12 +169,21 @@ function Article() {
       <GuideSection id="fastcast-workflow" title="The FastCast workflow">
         <p>FastCast compresses all of the above into one screen with no scene setup:</p>
         <ol>
-          <li>Unzip and run <code>fastcast.exe</code>; it is a single self-contained program.</li>
+          <li>
+            Unzip and run <code>fastcast.exe</code>. The portable ZIP also includes{' '}
+            <code>fastcastc.exe</code> for scripted control.
+          </li>
           <li>Choose your screen or window and your audio sources.</li>
           <li>Toggle the webcam overlay if you want it.</li>
           <li>Press Record, do the take, stop with <code>Ctrl+Alt+F9</code>.</li>
           <li>Grab the MP4 from your recordings folder.</li>
         </ol>
+        <p>
+          For automation, keep FastCast running and call{' '}
+          <code>fastcastc --start-record</code> or <code>fastcastc --stop-record</code> from
+          PowerShell. The controller uses the same guarded action as the Record button and global
+          hotkey.
+        </p>
         <InlineCta>
           FastCast is free during Open Beta and records with hardware H.264 encoding on supported
           GPUs. Download, unzip, record.

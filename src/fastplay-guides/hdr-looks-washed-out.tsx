@@ -26,9 +26,9 @@ function Article() {
           player, the Windows HDR toggle, or the display itself.
         </>
       }
-      topCtaNote="FastPlay tone-maps HDR10 and HLG video to SDR automatically, so HDR clips look natural on a regular monitor without touching Windows settings."
+      topCtaNote="FastPlay presents HDR10 and HLG natively on an HDR-active display and tone-maps them automatically on SDR, avoiding the raw-HDR-on-SDR washed-out failure."
       finalCtaHeading="Stop squinting at gray footage"
-      finalCtaBody="FastPlay is a free, open-source Windows player that decodes HDR HEVC files and tone-maps them to SDR with highlight roll-off and BT.2020 to BT.709 conversion. No configuration required."
+      finalCtaBody="FastPlay is a free, open-source Windows player that chooses native HDR or SDR tone mapping for the monitor containing the player when the file opens."
     >
       <GuideSection id="quick-diagnosis" title="Quick diagnosis">
         <p>Three questions separate the causes:</p>
@@ -68,8 +68,8 @@ function Article() {
           do it at all. Switching players is a legitimate fix, not a workaround.
         </p>
         <InlineCta>
-          FastPlay does this conversion automatically in a pixel shader whenever it sees HDR10 or
-          HLG content. Open the same file and compare.
+          FastPlay chooses automatically: native output when the destination display is HDR-active,
+          or pixel-shader tone mapping when it is SDR. Open the same file and compare.
         </InlineCta>
       </GuideSection>
 
@@ -115,11 +115,11 @@ function Article() {
 
       <GuideSection id="how-fastplay-helps" title="How FastPlay handles it">
         <p>
-          FastPlay takes the most common failure off the table. HDR10 (PQ) and HLG content is
-          always tone-mapped to SDR in a pixel shader: highlights above diffuse white are rolled
-          off rather than clipped, and the BT.2020 gamut is converted to BT.709. That happens
-          regardless of the Windows HDR toggle and on any monitor, so an iPhone HDR clip or drone
-          recording looks like what you shot.
+          FastPlay takes the most common failure off the table by selecting a presentation path
+          when the file opens. On an HDR-capable display with Windows HDR enabled, HDR10 (PQ) and
+          HLG present natively through a 10-bit PQ swapchain. On SDR, highlights are tone-mapped
+          instead of clipped and BT.2020 is converted to BT.709. Full-range PQ files—including
+          some Topaz Video AI HDR Enhanced exports—are supported as of version 0.4.4.
         </p>
         <p>
           Since HDR files are usually HEVC, it also matters that FastPlay decodes HEVC itself with
@@ -131,14 +131,14 @@ function Article() {
       <GuideSection id="limits" title="Limits and caveats">
         <ul>
           <li>
-            FastPlay does not output native HDR. On a good HDR display where you want true HDR
-            presentation, use the Windows built-in players with the HEVC extensions and the HDR
-            toggle enabled.
+            FastPlay chooses HDR or SDR when the file opens, using the monitor containing its
+            window. If you move the window to another monitor, reopen the file to reevaluate the
+            display; otherwise the image can look wrong.
           </li>
           <li>
-            The tone mapping is fixed: no exposure or curve controls, and mastering-display and
-            content-light metadata are ignored. It is built to make footage look right, not to be
-            a grading reference.
+            SDR tone mapping is fixed, with no exposure or curve controls. Native HDR uses the
+            stream's static metadata, but FastPlay is built for playback rather than reference
+            grading.
           </li>
           <li>
             FastPlay cannot fix desktop-wide washout. If everything looks faded, work through the

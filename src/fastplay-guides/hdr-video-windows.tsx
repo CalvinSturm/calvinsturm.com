@@ -25,9 +25,9 @@ function Article() {
           or plays with gray, flat, washed-out color.
         </>
       }
-      topCtaNote="FastPlay is a free, open-source Windows player that decodes HDR10 and HLG video and tone-maps it to SDR, so HDR footage looks right on a normal monitor with no codec packs and no settings."
+      topCtaNote="FastPlay is a free, open-source Windows player that presents HDR10 and HLG natively when Windows HDR is active, then automatically tone-maps the same files on an SDR display."
       finalCtaHeading="Play your HDR footage now"
-      finalCtaBody="Download the MSI, open the file, and FastPlay handles decode and tone mapping automatically. If it does not work for your footage, it cost you nothing."
+      finalCtaBody="Download the MSI and open the file. FastPlay chooses native HDR or SDR tone mapping from the display containing its window when the file opens."
     >
       <GuideSection id="what-hdr-needs" title="What HDR playback actually needs">
         <p>
@@ -87,15 +87,15 @@ function Article() {
             plain BT.709 SDR, your problem is a codec or display issue instead.
           </li>
           <li>
-            <strong>Use a player that tone-maps.</strong> The simplest fix on an ordinary SDR
-            monitor. FastPlay does this automatically; VLC and mpv can also tone-map, though they
-            may need configuration.
+            <strong>Use a player that chooses the right presentation path.</strong> On an HDR-active
+            display, FastPlay presents HDR10 and HLG natively. On an SDR display—or when Windows
+            HDR is off—it tone-maps automatically. VLC and mpv can also handle HDR, though they may
+            need configuration.
           </li>
           <li>
-            <strong>For true HDR output, use the built-in path.</strong> If you have an HDR display
-            and want real HDR, enable &quot;Use HDR&quot; in Windows display settings and install
-            the HEVC Video Extensions so Media Player / Movies &amp; TV can decode the file. Those
-            apps can pass HDR through to the display.
+            <strong>For true HDR output, enable Windows HDR first.</strong> Open Settings &gt; System
+            &gt; Display, select the monitor, and turn on &quot;Use HDR.&quot; Then move FastPlay to
+            that monitor and reopen the file so the presentation mode is selected again.
           </li>
           <li>
             <strong>Balance the desktop.</strong> With Windows HDR on, use the &quot;SDR content
@@ -107,19 +107,19 @@ function Article() {
           </li>
         </ol>
         <InlineCta>
-          If you just need HDR files to look correct on a normal monitor, a tone-mapping player is
-          the one-step fix. FastPlay ships its own FFmpeg-based decoding, so no Store codecs are
-          needed either.
+          FastPlay ships its own FFmpeg-based decoding, so no Store codec pack is needed. The same
+          file can play in native HDR on an HDR-active monitor or tone-mapped SDR elsewhere.
         </InlineCta>
       </GuideSection>
 
       <GuideSection id="how-fastplay-helps" title="How FastPlay plays HDR">
         <p>
-          FastPlay treats HDR as a solved presentation problem rather than a settings page. When it
-          detects HDR10 (PQ) or HLG content, it tone-maps to SDR in a pixel shader: highlights
-          above diffuse white are rolled off instead of clipping, and the BT.2020 gamut is
-          converted to BT.709 for your display. The result is footage that looks like footage, not
-          gray haze, on any monitor and regardless of the Windows HDR toggle.
+          FastPlay selects its HDR path when each file opens, using the monitor that contains the
+          player window. On an HDR-capable monitor with Windows HDR active, HDR10 (PQ) and HLG use
+          a 10-bit PQ swapchain for native presentation. On an SDR monitor, or when Windows HDR is
+          disabled, FastPlay tone-maps brightness and converts BT.2020 color to BT.709 in a pixel
+          shader. Version 0.4.4 also handles full-range PQ files such as some Topaz Video AI HDR
+          Enhanced exports.
         </p>
         <p>
           Decoding is handled the same way as everything else in FastPlay: FFmpeg demux and decode
@@ -132,14 +132,13 @@ function Article() {
       <GuideSection id="limits" title="Limits and caveats">
         <ul>
           <li>
-            FastPlay does not do native HDR passthrough. Even on an HDR monitor, playback is
-            tone-mapped SDR. If you want true HDR output on an HDR display, use the Windows
-            built-in players with the HEVC extensions installed.
+            HDR or SDR mode is chosen when the file opens. If you move the player between monitors
+            during playback, reopen the file so FastPlay reevaluates the destination display.
           </li>
           <li>
-            The tone mapping is fixed. There are no exposure or curve controls, and
-            mastering-display and content-light metadata are ignored. For critical color work,
-            evaluate on a reference setup.
+            SDR tone mapping is fixed, with no exposure or curve controls. Native HDR passes HDR10
+            static metadata to the display, but FastPlay is still a viewing tool rather than a
+            grading reference.
           </li>
           <li>
             FastPlay plays local files only and covers common formats via FFmpeg; uncommon or

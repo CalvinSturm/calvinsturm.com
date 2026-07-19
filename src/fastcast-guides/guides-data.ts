@@ -24,7 +24,7 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
       'A practical Windows screen-recording walkthrough: picking a monitor or window, capturing mic and system audio, adding a webcam, and finding the finished MP4.',
     category: 'Recording Basics',
     published: '2026-07-15',
-    updated: '2026-07-16',
+    updated: '2026-07-19',
     related: ['record-screen-and-webcam', 'screen-recording-without-lag', 'obs-alternative-windows'],
   },
   {
@@ -35,7 +35,7 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
       'How to combine screen capture with a webcam overlay for tutorials, courses, and demos: layout choices, audio setup, framing, and how FastCast handles it.',
     category: 'Recording Basics',
     published: '2026-07-15',
-    updated: '2026-07-16',
+    updated: '2026-07-19',
     related: ['how-to-record-screen-windows', 'screen-recording-without-lag'],
   },
   {
@@ -57,7 +57,7 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
       'Why recordings stutter or slow the machine down: encoder choice, resolution and framerate load, disk speed, and the settings that actually reduce the strain.',
     category: 'Quality & Performance',
     published: '2026-07-15',
-    updated: '2026-07-15',
+    updated: '2026-07-19',
     related: ['record-4k-60fps-windows', 'screen-recording-black-screen-no-audio', 'how-to-record-screen-windows'],
   },
   {
@@ -79,8 +79,30 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
       'An honest OBS and FastCast comparison: what OBS does that FastCast will not, where a single-scene recorder is simpler, and which tool fits which user.',
     category: 'Comparisons',
     published: '2026-07-15',
-    updated: '2026-07-15',
+    updated: '2026-07-19',
     related: ['how-to-record-screen-windows', 'record-4k-60fps-windows'],
+  },
+  {
+    slug: 'command-line-screen-recording-windows',
+    title: 'How to Start and Stop Screen Recording from the Command Line',
+    shortTitle: 'Command-line screen recording',
+    description:
+      'Start and stop FastCast recordings from PowerShell or a script with fastcastc, select a monitor, check exit codes, and troubleshoot controller errors.',
+    category: 'Recording Basics',
+    published: '2026-07-19',
+    updated: '2026-07-19',
+    related: ['how-to-record-screen-windows', 'screen-recording-without-lag', 'screen-recording-black-screen-no-audio'],
+  },
+  {
+    slug: 'stream-to-youtube-rtmps-windows',
+    title: 'How to Stream to YouTube with RTMPS on Windows',
+    shortTitle: 'Stream to YouTube with RTMPS',
+    description:
+      'Set up a YouTube Live stream with a custom encoder, paste the RTMPS ingest URL and stream key into FastCast, and run a safe private test.',
+    category: 'Recording Basics',
+    published: '2026-07-19',
+    updated: '2026-07-19',
+    related: ['how-to-record-screen-windows', 'screen-recording-without-lag', 'record-screen-and-webcam'],
   },
 ];
 
