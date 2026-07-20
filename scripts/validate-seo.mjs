@@ -31,6 +31,11 @@ if (inputFiles.length === 0) {
 // 404.html is built but intentionally noindexed and canonical-free.
 const NON_INDEXABLE = new Set(['404.html']);
 
+// These product pages render with React, but crawlers may inspect the HTML
+// shell without running JavaScript. Keep their hero H1 available in the source
+// document; React replaces the fallback when the app mounts.
+const CLIENT_RENDERED_H1_SHELLS = new Set(['fastcast.html', 'fastplay.html']);
+
 function routeForFile(file) {
   if (file === 'index.html') return '/';
   return '/' + file.replace(/\.html$/, '');
@@ -58,6 +63,13 @@ for (const page of pages) {
     if (!title) errors.push(`${file}: empty <title>`);
     if (titles.has(title)) errors.push(`Duplicate title "${title}" in ${file} and ${titles.get(title)}`);
     titles.set(title, file);
+  }
+
+  if (CLIENT_RENDERED_H1_SHELLS.has(file)) {
+    const h1Matches = [...html.matchAll(/<h1(?:\s[^>]*)?>[\s\S]*?<\/h1>/gi)];
+    if (h1Matches.length !== 1) {
+      errors.push(`${file}: expected exactly one source HTML <h1>, found ${h1Matches.length}`);
+    }
   }
 
   if (/name="robots"[^>]*noindex/.test(html) && page.indexable) {
