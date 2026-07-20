@@ -985,11 +985,11 @@ export function FastCastProductPage() {
         preview={
           <figure className="product-preview overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 shadow-[0_30px_80px_rgba(17,24,39,0.18)]">
             <img
-              src="/assets/FastCast/fastcast-app-v0.5.png"
-              alt="FastCast v0.5 in Ready state: live preview of a captured browser window, with capture, stream, audio and webcam, and advanced encoder panels."
+              src="/assets/FastCast/fastcast-app-v0.5.1.png"
+              alt="FastCast v0.5.1 in Ready state with a live browser preview, source and streaming controls, recent recordings, and record and go-live actions."
               className="h-auto w-full"
-              width="700"
-              height="1107"
+              width="730"
+              height="792"
             />
           </figure>
         }
