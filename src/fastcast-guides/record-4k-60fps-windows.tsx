@@ -1,5 +1,4 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { mountGuide } from '../product-guides/mountGuide.tsx';
 import { GuideLayout, GuideSection, InlineCta } from './GuideLayout.tsx';
 import { fastCastProCheckoutUrl, guidePath } from './guides-data';
 import { trackCtaClick } from '../lib/analytics';
@@ -15,7 +14,7 @@ const toc = [
   { id: 'limits', label: 'Limitations' },
 ];
 
-function Article() {
+export function GuidePage() {
   return (
     <GuideLayout
       slug="record-4k-60fps-windows"
@@ -178,8 +177,4 @@ function Article() {
   );
 }
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Article />
-  </StrictMode>,
-);
+mountGuide(<GuidePage />);
