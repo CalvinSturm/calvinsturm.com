@@ -9,9 +9,11 @@
 //  5. Sitemap URLs and built routes match one-to-one (with a small allowlist).
 //  6. Literal internal hrefs in HTML and TSX resolve to built routes.
 //  7. Guide publication dates are valid ISO dates, not in the future.
+//  8. FastPlay FAQ structured data matches the visible shared FAQ content.
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { fastPlayFaqs } from '../src/fastplay-faqs.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const ORIGIN = 'https://www.calvinsturm.com';
@@ -29,7 +31,9 @@ if (inputFiles.length === 0) {
 }
 
 // 404.html is built but intentionally noindexed and canonical-free.
-const NON_INDEXABLE = new Set(['404.html']);
+// fastplay-v2.html is a design preview of /fastplay: it is noindexed and
+// canonicalised to the real product page, so it is not a route of its own.
+const NON_INDEXABLE = new Set(['404.html', 'fastplay-v2.html']);
 
 // These product pages render with React, but crawlers may inspect the HTML
 // shell without running JavaScript. Keep their hero H1 available in the source
@@ -123,6 +127,34 @@ for (const page of pages) {
   }
 }
 
+// ---- visible FAQ / structured-data parity ----
+const fastPlayPage = pages.find((page) => page.file === 'fastplay.html');
+if (!fastPlayPage) {
+  errors.push('fastplay.html: page missing from Vite inputs');
+} else {
+  const faqSchemas = [];
+  for (const [, block] of fastPlayPage.html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    try {
+      const schema = JSON.parse(block);
+      if (schema['@type'] === 'FAQPage') faqSchemas.push(schema);
+    } catch {
+      // The per-page JSON-LD check above reports the parse error.
+    }
+  }
+
+  if (faqSchemas.length !== 1) {
+    errors.push(`fastplay.html: expected exactly one FAQPage schema, found ${faqSchemas.length}`);
+  } else {
+    const schemaFaqs = faqSchemas[0].mainEntity?.map((entry) => ({
+      question: entry.name,
+      answer: entry.acceptedAnswer?.text,
+    }));
+    if (JSON.stringify(schemaFaqs) !== JSON.stringify(fastPlayFaqs)) {
+      errors.push('fastplay.html: FAQPage schema does not match src/fastplay-faqs.mjs');
+    }
+  }
+}
+
 // ---- sitemap consistency ----
 const sitemap = readFileSync(join(root, 'public', 'sitemap.xml'), 'utf8');
 const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
@@ -171,6 +203,14 @@ for (const src of linkSources) {
 }
 
 // ---- analytics event-name sanity ----
+const CTA_ACTIONS = new Set([
+  'download_clicked',
+  'github_clicked',
+  'guide_product_cta_clicked',
+  'pro_clicked',
+  'release_clicked',
+]);
+
 for (const src of collectFiles(join(root, 'src'), ['.tsx', '.ts'])) {
   const content = readFileSync(src, 'utf8');
   for (const [, name] of content.matchAll(/trackEvent\(\s*[`']([^`'$]+)[`']/g)) {
@@ -181,6 +221,8 @@ for (const src of collectFiles(join(root, 'src'), ['.tsx', '.ts'])) {
   for (const [, action] of content.matchAll(/trackCtaClick\([^,]+,\s*'([^']+)'/g)) {
     if (!/^[a-z][a-z0-9_]*$/.test(action)) {
       errors.push(`${src.slice(root.length + 1)}: non-snake_case event action "${action}"`);
+    } else if (!CTA_ACTIONS.has(action)) {
+      errors.push(`${src.slice(root.length + 1)}: undocumented CTA event action "${action}"`);
     }
   }
 }

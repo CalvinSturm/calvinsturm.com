@@ -1,0 +1,1049 @@
+/* FastPlay v2 landing page: self-contained, scoped under .fpv2 */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+.fpv2 {
+  --ink: #f4f4f5;
+  --ink-dim: #a1a1aa;
+  --ink-faint: #6b6b73;
+  --bg: #0a0a0c;
+  --bg-lift: #131318;
+  --bg-lift-2: #161720;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --accent: #45f0b9;
+  --accent-soft: rgba(69, 240, 185, 0.14);
+  --shell: min(1200px, 100% - 2.5rem);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  font-family: Inter, -apple-system, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+.fpv2 *,
+.fpv2 *::before,
+.fpv2 *::after {
+  box-sizing: border-box;
+}
+
+.fpv2 h1,
+.fpv2 h2,
+.fpv2 h3,
+.fpv2 p,
+.fpv2 figure,
+.fpv2 ul {
+  margin: 0;
+}
+
+.fpv2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.fpv2 ul {
+  padding: 0;
+  list-style: none;
+}
+
+.fpv2-shell {
+  width: var(--shell);
+  margin-inline: auto;
+}
+
+/* ---------- shared type ---------- */
+
+.fpv2-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.fpv2-display {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+}
+
+.fpv2-title {
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  font-size: clamp(2rem, 4.6vw, 3.5rem);
+}
+
+.fpv2-lede {
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--ink-dim);
+  font-weight: 350;
+  max-width: 46ch;
+}
+
+.fpv2-section {
+  padding: clamp(5rem, 12vh, 9rem) 0;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+
+/* ---------- reveal ---------- */
+
+.fpv2-reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+
+.fpv2-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- nav ---------- */
+
+.fpv2-nav {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  backdrop-filter: blur(18px) saturate(140%);
+  background: rgba(10, 10, 12, 0.72);
+  border-bottom: 1px solid transparent;
+  transition:
+    border-color 0.4s var(--ease),
+    background 0.4s var(--ease);
+}
+
+.fpv2-nav.is-stuck {
+  border-bottom-color: var(--line);
+  background: rgba(10, 10, 12, 0.9);
+}
+
+.fpv2-nav-inner {
+  width: var(--shell);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: 60px;
+}
+
+.fpv2-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  font-size: 0.95rem;
+  flex: none;
+}
+
+.fpv2-brand img {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+}
+
+.fpv2-nav-links {
+  display: flex;
+  gap: 1.4rem;
+  margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.fpv2-nav-links::-webkit-scrollbar {
+  display: none;
+}
+
+.fpv2-nav-links a {
+  font-size: 0.83rem;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  padding: 0.35rem 0;
+  position: relative;
+  transition: color 0.3s var(--ease);
+}
+
+.fpv2-nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: right 0.4s var(--ease);
+}
+
+.fpv2-nav-links a:hover,
+.fpv2-nav-links a.is-active {
+  color: var(--ink);
+}
+
+.fpv2-nav-links a.is-active::after,
+.fpv2-nav-links a:hover::after {
+  right: 0;
+}
+
+/* ---------- buttons ---------- */
+
+.fpv2-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--ease),
+    background 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.fpv2-btn-primary {
+  background: var(--accent);
+  color: #062018;
+  box-shadow: 0 10px 40px rgba(69, 240, 185, 0.22);
+}
+
+.fpv2-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 50px rgba(69, 240, 185, 0.32);
+}
+
+.fpv2-btn-ghost {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.fpv2-btn-ghost:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.fpv2-btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+}
+
+/* ---------- scroll-scrubbed film hero ---------- */
+
+/* The section is tall; the stage inside it is pinned. Scrolling through the
+   extra height is what drives video.currentTime. */
+.fpv2-film {
+  position: relative;
+  height: 300vh;
+}
+
+/* Offset by the sticky nav so the pinned stage never sits underneath it. */
+.fpv2-film-stage {
+  position: sticky;
+  top: 60px;
+  height: calc(100vh - 60px);
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.fpv2-film-glow {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 100%;
+  background:
+    radial-gradient(60% 60% at 28% 32%, rgba(69, 240, 185, 0.15), transparent 70%),
+    radial-gradient(50% 50% at 78% 50%, rgba(80, 130, 255, 0.11), transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+  animation: fpv2-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes fpv2-drift {
+  from {
+    transform: translate3d(-2%, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(3%, 4%, 0) scale(1.08);
+  }
+}
+
+.fpv2-film-grid {
+  position: relative;
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  grid-template-columns: 1fr;
+  align-items: center;
+  width: var(--shell);
+  margin-inline: auto;
+}
+
+@media (min-width: 940px) {
+  .fpv2-film-grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+}
+
+.fpv2-film-title {
+  margin-top: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-size: clamp(2.4rem, 6.2vw, 4.7rem);
+}
+
+.fpv2-film-title-accent {
+  color: var(--accent);
+}
+
+.fpv2-film-lede {
+  margin-top: 1.4rem;
+}
+
+.fpv2-film-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.fpv2-film-meta {
+  margin-top: 1.4rem;
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+  max-width: 44ch;
+}
+
+/* the pinned video panel */
+
+.fpv2-film-panel {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 380px);
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background: #000;
+  box-shadow: 0 50px 120px rgba(0, 0, 0, 0.65);
+  transition: transform 0.6s var(--ease);
+}
+
+@media (min-width: 940px) {
+  .fpv2-film-panel {
+    width: min(100%, 430px);
+  }
+}
+
+.fpv2-film-panel video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fpv2-film-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 10, 12, 0.45), transparent 40%);
+  pointer-events: none;
+}
+
+.fpv2-film-readout {
+  position: absolute;
+  left: 0.85rem;
+  bottom: 0.85rem;
+  z-index: 2;
+  display: flex;
+  gap: 0.75rem;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-dim);
+  background: rgba(10, 10, 12, 0.66);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+}
+
+.fpv2-film-readout b {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* chapter rail */
+
+.fpv2-film-rail {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  bottom: clamp(1.25rem, 4vh, 2.5rem);
+  width: var(--shell);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.fpv2-film-tick {
+  flex: 1;
+  height: 2px;
+  background: var(--line-strong);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.fpv2-film-tick i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(var(--fill, 0));
+}
+
+.fpv2-film-cue {
+  flex: none;
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  transition: opacity 0.5s var(--ease);
+}
+
+@media (max-width: 939px) {
+  .fpv2-film {
+    height: 260vh;
+  }
+
+  .fpv2-film-stage {
+    min-height: 0;
+  }
+
+  .fpv2-film-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .fpv2-film-panel {
+    width: min(58%, 260px);
+    order: -1;
+  }
+}
+
+/* Reduced motion / no-pin fallback: the section collapses to a normal hero and
+   the video simply loops. */
+.fpv2-film.is-static {
+  height: auto;
+}
+
+.fpv2-film.is-static .fpv2-film-stage {
+  position: relative;
+  height: auto;
+  min-height: 0;
+  padding-block: clamp(3rem, 9vh, 6rem);
+}
+
+.fpv2-film.is-static .fpv2-film-rail,
+.fpv2-film.is-static .fpv2-film-readout {
+  display: none;
+}
+
+/* ---------- stat band ---------- */
+
+.fpv2-stats {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border-block: 1px solid var(--line);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 820px) {
+  .fpv2-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.fpv2-stat {
+  background: var(--bg);
+  padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1rem, 2vw, 1.75rem);
+}
+
+.fpv2-stat-value {
+  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.fpv2-stat-value sub {
+  font-size: 0.34em;
+  font-weight: 600;
+  letter-spacing: 0;
+  vertical-align: baseline;
+  bottom: 0;
+  margin-left: 0.15em;
+  color: var(--accent);
+}
+
+.fpv2-stat-label {
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--ink-dim);
+  line-height: 1.45;
+}
+
+/* ---------- HDR compare ---------- */
+
+.fpv2-compare {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  aspect-ratio: 16 / 10;
+  cursor: ew-resize;
+  user-select: none;
+  touch-action: none;
+  background: #000;
+}
+
+.fpv2-compare img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.fpv2-compare-flat {
+  filter: saturate(0.55) contrast(0.78) brightness(1.12);
+}
+
+.fpv2-compare-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.fpv2-compare-clip img {
+  filter: saturate(1.16) contrast(1.1);
+}
+
+.fpv2-compare-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 22px rgba(69, 240, 185, 0.75);
+}
+
+.fpv2-compare-knob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #062018;
+  display: grid;
+  place-items: center;
+}
+
+.fpv2-compare-tag {
+  position: absolute;
+  bottom: 1rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(10, 10, 12, 0.72);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+}
+
+/* ---------- feature cards ---------- */
+
+.fpv2-features {
+  display: grid;
+  gap: 1rem;
+  margin-top: 3.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+}
+
+.fpv2-feature {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 1.6rem;
+  background: var(--bg-lift);
+  overflow: hidden;
+  transition:
+    border-color 0.4s var(--ease),
+    transform 0.4s var(--ease);
+}
+
+.fpv2-feature::before {
+  content: '';
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  left: var(--mx, 50%);
+  top: var(--my, 50%);
+  translate: -50% -50%;
+  background: radial-gradient(circle, rgba(69, 240, 185, 0.14), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  pointer-events: none;
+}
+
+.fpv2-feature:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-4px);
+}
+
+.fpv2-feature:hover::before {
+  opacity: 1;
+}
+
+.fpv2-feature-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+  margin-bottom: 1.1rem;
+}
+
+.fpv2-feature h3 {
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.fpv2-feature p {
+  margin-top: 0.6rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ink-dim);
+  font-weight: 350;
+}
+
+/* ---------- keyboard controls (v1 two-column table treatment) ---------- */
+
+.fpv2-controls-wrapper {
+  margin-top: 3rem;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--bg-lift);
+}
+
+.fpv2-controls-table {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.fpv2-controls-table thead tr {
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-lift-2);
+}
+
+.fpv2-controls-table th {
+  padding: 0.85rem 1.25rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+}
+
+.fpv2-controls-table tbody tr {
+  border-bottom: 1px solid var(--line);
+  transition: background 0.45s var(--ease);
+}
+
+.fpv2-controls-table tbody tr:last-child {
+  border-bottom: 0;
+}
+
+.fpv2-controls-table tbody tr.is-lit {
+  background: rgba(69, 240, 185, 0.07);
+}
+
+.fpv2-controls-key {
+  white-space: nowrap;
+  padding: 0.8rem 1.25rem;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  font-size: 0.85rem;
+  color: var(--ink);
+  transition: color 0.45s var(--ease);
+}
+
+.fpv2-controls-table tbody tr.is-lit .fpv2-controls-key {
+  color: var(--accent);
+}
+
+.fpv2-controls-action {
+  padding: 0.8rem 1.25rem;
+  color: var(--ink-dim);
+  line-height: 1.45;
+}
+
+/* ---------- marquee ---------- */
+
+.fpv2-marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  padding-block: 0.5rem;
+}
+
+.fpv2-marquee-row {
+  display: flex;
+  gap: 0.75rem;
+  width: max-content;
+  animation: fpv2-scroll 34s linear infinite;
+}
+
+.fpv2-marquee:hover .fpv2-marquee-row {
+  animation-play-state: paused;
+}
+
+@keyframes fpv2-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.fpv2-chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.6rem 1.1rem;
+  font-family: ui-monospace, 'Cascadia Code', monospace;
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+  background: var(--bg-lift);
+  white-space: nowrap;
+}
+
+/* ---------- split compare (vs VLC) ---------- */
+
+.fpv2-split {
+  display: grid;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+@media (min-width: 800px) {
+  .fpv2-split {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.fpv2-split-card {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: clamp(1.5rem, 3vw, 2.1rem);
+  background: var(--bg-lift);
+}
+
+.fpv2-split-card.is-accent {
+  border-color: rgba(69, 240, 185, 0.35);
+  background: linear-gradient(180deg, rgba(69, 240, 185, 0.07), var(--bg-lift) 55%);
+}
+
+.fpv2-split-card h3 {
+  font-size: 1.15rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.fpv2-split-card ul {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.fpv2-split-card li {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  color: var(--ink-dim);
+  line-height: 1.5;
+}
+
+.fpv2-split-card li svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--ink-faint);
+}
+
+.fpv2-split-card.is-accent li svg {
+  color: var(--accent);
+}
+
+/* ---------- specs table ---------- */
+
+.fpv2-specs {
+  margin-top: 3rem;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.fpv2-spec-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+  gap: 1rem;
+  padding: 1rem clamp(1rem, 2.5vw, 1.6rem);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+
+.fpv2-spec-row:last-child {
+  border-bottom: 0;
+}
+
+.fpv2-spec-row dt {
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding-top: 2px;
+}
+
+.fpv2-spec-row dd {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* ---------- faq ---------- */
+
+.fpv2-faq {
+  margin-top: 3rem;
+  border-top: 1px solid var(--line);
+}
+
+.fpv2-faq details {
+  border-bottom: 1px solid var(--line);
+}
+
+.fpv2-faq summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 1.4rem 2.5rem 1.4rem 0;
+  position: relative;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  transition: color 0.3s var(--ease);
+}
+
+.fpv2-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.fpv2-faq summary:hover {
+  color: var(--accent);
+}
+
+.fpv2-faq summary::after {
+  content: '';
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  border-right: 1.5px solid var(--accent);
+  border-bottom: 1.5px solid var(--accent);
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform 0.35s var(--ease);
+}
+
+.fpv2-faq details[open] summary::after {
+  transform: translateY(-20%) rotate(-135deg);
+}
+
+.fpv2-faq-body {
+  padding: 0 3rem 1.5rem 0;
+  color: var(--ink-dim);
+  line-height: 1.68;
+  font-weight: 350;
+  font-size: 0.95rem;
+  animation: fpv2-open 0.45s var(--ease);
+}
+
+@keyframes fpv2-open {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* ---------- guides ---------- */
+
+.fpv2-guides {
+  display: grid;
+  gap: 1rem;
+  margin-top: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+}
+
+.fpv2-guide {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.4rem;
+  background: var(--bg-lift);
+  transition:
+    border-color 0.4s var(--ease),
+    transform 0.4s var(--ease);
+}
+
+.fpv2-guide:hover {
+  border-color: rgba(69, 240, 185, 0.45);
+  transform: translateY(-3px);
+}
+
+.fpv2-guide-cat {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.fpv2-guide h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+}
+
+.fpv2-guide p {
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+  line-height: 1.55;
+  font-weight: 350;
+}
+
+.fpv2-guide-more {
+  margin-top: auto;
+  padding-top: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* ---------- closing cta ---------- */
+
+.fpv2-cta {
+  position: relative;
+  text-align: center;
+  padding: clamp(5rem, 16vh, 10rem) 0;
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+}
+
+.fpv2-cta-glow {
+  position: absolute;
+  left: 50%;
+  bottom: -40%;
+  translate: -50% 0;
+  width: min(1000px, 130%);
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(69, 240, 185, 0.18), transparent 62%);
+  pointer-events: none;
+}
+
+.fpv2-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2.25rem;
+}
+
+/* ---------- footer ---------- */
+
+.fpv2-footer {
+  border-top: 1px solid var(--line);
+  padding: 2.5rem 0 3.5rem;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  display: grid;
+  gap: 0.9rem;
+}
+
+.fpv2-footer a:hover {
+  color: var(--ink);
+}
+
+.fpv2-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.1rem;
+}
+
+/* ---------- progress rail ---------- */
+
+.fpv2-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
+  z-index: 70;
+  transform-origin: left;
+  width: 100%;
+  transform: scaleX(0);
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .fpv2 *,
+  .fpv2 *::before,
+  .fpv2 *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .fpv2-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

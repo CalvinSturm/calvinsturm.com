@@ -1,10 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { FastCastProductPage } from './FastSeriesShared.tsx';
+import { FastCastV2 } from './FastCastV2.tsx';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <FastCastProductPage />
+    <FastCastV2 />
   </StrictMode>,
 );
