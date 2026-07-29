@@ -10,7 +10,7 @@ export const guidesIndexPath = '/fastcast/guides';
 
 export const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 export const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
-export const fastCastProCheckoutUrl = 'https://sturmtech.lemonsqueezy.com/checkout/buy/2f7a5399-c954-43e3-9361-f33fb6853484';
+export const fastCastProCheckoutUrl = 'https://calvinstorm.gumroad.com/l/fastcast';
 export const fastCastSiteUrl = 'https://calvinsturm.github.io/FastCast-releases/';
 
 export type GuideCategory = 'Recording Basics' | 'Quality & Performance' | 'Troubleshooting' | 'Comparisons';
