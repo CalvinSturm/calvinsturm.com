@@ -24,10 +24,22 @@ type TimelineItem = {
 
 const fastCastTimeline: TimelineItem[] = [
   {
-    version: 'v0.5.1',
+    version: 'v0.6.0',
     date: 'July 2026',
     status: 'Current release',
     tone: 'current',
+    title: 'A compact dashboard by default',
+    body: 'Made the compact view the default: a large live preview over Sources, Destination, and Recent files, so a screen, an app, audio, and a microphone can all be chosen without opening Advanced. Added an FPS control and mute icons with a level meter, stopped Windows drawing its yellow capture border around FastCast sessions, and moved FastCast Pro to Gumroad while existing Lemon Squeezy keys keep working.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.6.0',
+      label: 'Release page',
+    },
+  },
+  {
+    version: 'v0.5.1',
+    date: 'July 2026',
+    status: 'Shipped',
+    tone: 'shipped',
     title: 'Command-line recording control',
     body: 'Added fastcastc so scripts, Stream Deck buttons, and schedulers can start or stop recording through the same guarded actions as the app and global hotkey, including optional monitor selection and script-friendly exit codes.',
     link: {
@@ -456,7 +468,7 @@ export default function RoadmapApp() {
                 and microphone audio, and RTMP/RTMPS streaming. Source code is private; releases, checksums, and
                 notes are public.
               </p>
-              <p className="fs-spot-meta">v0.5.1 · Windows 10/11 x64 · Portable ZIP · Free version, optional Pro license</p>
+              <p className="fs-spot-meta">v0.6.0 · Windows 10/11 x64 · Portable ZIP · Free version, optional Pro license</p>
               <div className="rm-spot-links">
                 <a href="/fastcast" className="home-spot-cta">
                   FastCast product page

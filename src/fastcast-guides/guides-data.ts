@@ -43,7 +43,7 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
     title: 'How to Record 4K 60 FPS Video on Windows',
     shortTitle: 'Record 4K 60 FPS on Windows',
     description:
-      'What 4K 60 FPS screen recording actually demands from your GPU, encoder, and disk, plus how FastCast Pro handles high-resolution, high-framerate capture.',
+      'What your computer needs for smooth 4K 60 FPS recording, and how to choose settings that avoid dropped frames.',
     category: 'Quality & Performance',
     published: '2026-07-15',
     updated: '2026-07-16',
@@ -54,7 +54,7 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
     title: 'How to Reduce Lag While Screen Recording on Windows',
     shortTitle: 'Reduce screen-recording lag',
     description:
-      'Why recordings stutter or slow the machine down: encoder choice, resolution and framerate load, disk speed, and the settings that actually reduce the strain.',
+      'Why recordings stutter or slow the machine down: recording quality, frame rate, hardware load, storage speed, and the settings that reduce strain.',
     category: 'Quality & Performance',
     published: '2026-07-15',
     updated: '2026-07-19',
@@ -76,7 +76,7 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
     title: 'A Simpler OBS Alternative for Windows Screen Recording',
     shortTitle: 'A simpler OBS alternative',
     description:
-      'An honest OBS and FastCast comparison: what OBS does that FastCast will not, where a single-scene recorder is simpler, and which tool fits which user.',
+      'An honest OBS and FastCast comparison: what OBS does that FastCast will not, where a simpler screen recorder is the better fit, and how to choose between them.',
     category: 'Comparisons',
     published: '2026-07-15',
     updated: '2026-07-19',

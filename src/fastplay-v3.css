@@ -490,6 +490,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .fastplay-v3 .fastcast-v2-hero-copy {
+    top: auto;
+  }
+
   .fastplay-v3 .fastcast-v2-hero-product {
     bottom: auto;
   }

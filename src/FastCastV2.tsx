@@ -1,74 +1,99 @@
-import { useEffect, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
-import {
-  ArrowRight,
-  ArrowUpRight,
-  AudioLines,
-  Check,
-  ChevronDown,
-  CircleDot,
-  Download,
-  Github,
-  LockKeyhole,
-  Mic,
-  MonitorUp,
-  Radio,
-  ShieldCheck,
-  Sparkles,
-  Video,
-  Webcam,
-} from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import { guides as fastCastGuides, guidePath as fastCastGuidePath, fastCastProCheckoutUrl } from './fastcast-guides/guides-data';
 import { trackCtaClick } from './lib/analytics';
+import { useReducedMotion } from './lib/useReducedMotion';
 import './fastcast-v2.css';
 
-const downloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.5.1/FastCast-0.5.1-win-x64.zip';
+const downloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.6.0/FastCast-0.6.0-win-x64.zip';
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const allReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 
-type StoryChapter = {
-  label: string;
-  eyebrow: string;
-  title: string;
-  body: string;
-  Icon: LucideIcon;
-  focus: CSSProperties;
-};
+// The page is laid out like a rack of broadcast units. Every band carries a
+// three-letter patch label on its left rail, so the labels have to describe the
+// band rather than count it: the reader is scanning a panel, not a checklist.
+type Rail = { code: string; name: string };
 
-const storyChapters: StoryChapter[] = [
+// Setup paths for the same job: record the screen with mic and webcam, then
+// keep the file. Both lists are the real click path, not a strawman. OBS gets
+// its due right underneath.
+const obsPath = [
+  'Create a scene',
+  'Add a Display Capture source',
+  'Add a Video Capture Device for the webcam',
+  'Add an Audio Input Capture for the mic',
+  'Resize and stack the sources on the canvas',
+  'Open Settings, then Output, and choose an encoder and bitrate',
+  'Set the recording path and file format',
+  'Close settings and check your levels',
+  'Press Start Recording',
+];
+
+const fastCastPath = [
+  'Pick a display or a single window',
+  'Pick your mic and desktop audio, webcam if you want one',
+  'Press Start recording',
+];
+
+// Plain-language capability rows. Each one names something you do, with the
+// hotkey or destination that makes it real. No architecture talk.
+const panelRows = [
   {
-    label: 'Capture',
-    eyebrow: '01 · Choose the picture',
-    title: 'Your screen. Your window. Ready.',
-    body: 'Pick a monitor or a single window, set the frame rate, and choose where the finished MP4 should land.',
-    Icon: MonitorUp,
-    focus: { left: '3.25%', top: '66.25%', width: '29.9%', height: '20.7%' },
+    name: 'Screen or single window',
+    body: 'Record a whole monitor or just one running app, so the rest of your desktop never makes it into the file.',
+    spec: 'Monitor · Window',
   },
   {
-    label: 'Audio',
-    eyebrow: '02 · Build the mix',
-    title: 'Desktop, mic, and camera together.',
-    body: 'Capture system audio, add your microphone, and bring in a webcam without assembling a scene graph first.',
-    Icon: AudioLines,
-    focus: { left: '5.45%', top: '77.15%', width: '25.45%', height: '6.7%' },
+    name: 'Mic and desktop audio',
+    body: 'A live level meter sits between the two mute buttons, and you can mute either one with a keyboard shortcut that works from anywhere.',
+    spec: 'Ctrl+Alt+F10 / F11',
   },
   {
-    label: 'Live',
-    eyebrow: '03 · Record or go live',
-    title: 'One setup. Two destinations.',
-    body: 'Save a local MP4 or send the same focused setup to YouTube, Twitch, Kick, or a custom RTMP/RTMPS endpoint.',
-    Icon: Radio,
-    focus: { left: '34.7%', top: '66.25%', width: '30%', height: '20.7%' },
+    name: 'Webcam on top',
+    body: 'Turn the camera on and switch between screen, camera, and combined layouts while you are recording.',
+    spec: '4 layouts',
   },
   {
-    label: 'Control',
-    eyebrow: '04 · Start with confidence',
-    title: 'Recording controls stay close.',
-    body: 'Start a local recording or go live from one command bar, with the current FastCast plan and upgrade path always visible.',
-    Icon: CircleDot,
-    focus: { left: '3.25%', top: '88.35%', width: '93.1%', height: '8.85%' },
+    name: 'A finished MP4',
+    body: 'Recordings are saved as H.264 MP4 files, ready to upload or edit as soon as recording ends.',
+    spec: 'MP4 / H.264',
   },
+  {
+    name: 'The same setup, live',
+    body: 'Use the same setup to stream to YouTube, Twitch, Kick, or another streaming service. There is no second scene to build for going live.',
+    spec: 'RTMP / RTMPS',
+  },
+  {
+    name: 'Start and stop from anywhere',
+    body: 'Recording starts and stops without switching windows, so the first and last seconds of the take are not you hunting for the button.',
+    spec: 'Ctrl+Alt+F9',
+  },
+];
+
+// Mirrors the registration table in the app (crates/fastcast-app/src/hotkeys.rs).
+// Start/stop and the two mutes are fixed global registrations; the four layout
+// keys follow the selected scheme. Re-check that file before editing these.
+const globalKeys = [
+  { keys: ['Ctrl', 'Alt', 'F9'], action: 'Start or stop recording' },
+  { keys: ['Ctrl', 'Alt', 'F10'], action: 'Mute or unmute the microphone' },
+  { keys: ['Ctrl', 'Alt', 'F11'], action: 'Mute or unmute desktop audio' },
+  { keys: ['Ctrl', 'Alt', '1'], action: 'Screen only' },
+  { keys: ['Ctrl', 'Alt', '2'], action: 'Screen with camera' },
+  { keys: ['Ctrl', 'Alt', '3'], action: 'Camera with screen' },
+  { keys: ['Ctrl', 'Alt', '4'], action: 'Camera only' },
+];
+
+const windowKeys = [
+  { keys: ['F2'], action: 'Switch simple or detailed view' },
+  { keys: ['H'], hold: true, action: 'Show every shortcut on screen' },
+];
+
+// Spec plate under the hero copy. Reads like the label on the back of a unit.
+const specPlate = [
+  { key: 'Capture', value: 'Monitor · Window · Webcam' },
+  { key: 'Audio', value: 'Desktop + microphone' },
+  { key: 'Output', value: 'MP4 / H.264' },
+  { key: 'Stream', value: 'YouTube · Twitch · Kick · RTMP/RTMPS' },
+  { key: 'System', value: 'Windows 10 / 11 · 64-bit' },
 ];
 
 // These mirror the FAQPage JSON-LD in fastcast.html one for one. Structured
@@ -91,7 +116,7 @@ const fastCastFaqs = [
   {
     question: 'Is FastCast free?',
     answer:
-      'FastCast Free is free during the Open Beta and covers 1080p30 recording and streaming. A one-time FastCast Pro license unlocks 1440p and 4K recording, 60 fps capture, and advanced encoder controls. No subscription and no account.',
+      'FastCast Free covers 1080p recording and streaming at 30 fps, with no subscription and no account. A one-time FastCast Pro license unlocks 1440p and 4K recording, 60 fps capture, and advanced encoder controls.',
   },
   {
     question: 'Is FastCast signed?',
@@ -100,594 +125,520 @@ const fastCastFaqs = [
   },
 ];
 
-const capabilityCards = [
-  { metric: '1080p30', label: 'included in FastCast Free', Icon: Video },
-  { metric: '4 layouts', label: 'screen, camera, and combined views', Icon: Webcam },
-  { metric: 'RTMPS', label: 'secure streaming to custom destinations', Icon: Radio },
-  { metric: '0 accounts', label: 'local-first activation and capture', Icon: LockKeyhole },
-];
-
-/** Fraction of a chapter's scroll band spent crossfading into the next one. */
-const CHAPTER_FADE = 0.18;
-
-function clamp(value: number, min = 0, max = 1) {
-  return Math.min(max, Math.max(min, value));
-}
-
-function prefersReducedMotion() {
-  return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
-
 function trackDownload(location: string, href = downloadUrl) {
   trackCtaClick('fastcast', 'download_clicked', location, href);
 }
 
-function usePageProgress(progressRef: React.RefObject<HTMLDivElement | null>) {
+/**
+ * The one moving part on the page: a timecode in the tally bar counting how
+ * long this tab has been open. It writes straight to the node at 10 Hz instead
+ * of through state, so the rest of the page never re-renders, and it does not
+ * run at all when the visitor asks for reduced motion.
+ */
+function useSessionTimecode(ref: React.RefObject<HTMLSpanElement | null>, enabled: boolean) {
   useEffect(() => {
-    let frame = 0;
+    if (!enabled) return;
+    const start = performance.now();
 
-    const update = () => {
-      frame = 0;
-      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const progress = clamp(window.scrollY / max);
-      progressRef.current?.style.setProperty('--page-progress', progress.toFixed(4));
-    };
+    const pad = (value: number) => String(Math.floor(value)).padStart(2, '0');
 
-    const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
-
-    return () => {
-      window.removeEventListener('scroll', requestUpdate);
-      window.removeEventListener('resize', requestUpdate);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [progressRef]);
-}
-
-function useHeroProgress(heroRef: React.RefObject<HTMLElement | null>) {
-  useEffect(() => {
-    let frame = 0;
-
-    const update = () => {
-      frame = 0;
-      const node = heroRef.current;
+    const tick = () => {
+      const node = ref.current;
       if (!node) return;
-
-      const rect = node.getBoundingClientRect();
-      const rawTravel = node.offsetHeight - window.innerHeight;
-      const progress = rawTravel <= 1 ? 0 : clamp(-rect.top / rawTravel);
-      const eased = 1 - Math.pow(1 - progress, 3);
-
-      node.style.setProperty('--hero-progress', progress.toFixed(4));
-      node.style.setProperty('--hero-scale', (0.72 + eased * 0.28).toFixed(4));
-      node.style.setProperty('--hero-y', `${(1 - eased) * 9}vh`);
-      node.style.setProperty('--hero-rotate', `${(1 - eased) * -2.8}deg`);
-      node.style.setProperty('--hero-copy-opacity', clamp(1 - progress * 1.75).toFixed(4));
-      node.style.setProperty('--hero-copy-y', `${progress * -7}vh`);
-      node.style.setProperty('--hero-screen-glow', (0.25 + eased * 0.75).toFixed(4));
+      const elapsed = (performance.now() - start) / 1000;
+      node.textContent = `${pad(elapsed / 3600)}:${pad((elapsed / 60) % 60)}:${pad(elapsed % 60)}:${pad((elapsed % 1) * 30)}`;
     };
 
-    const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
-
-    return () => {
-      window.removeEventListener('scroll', requestUpdate);
-      window.removeEventListener('resize', requestUpdate);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [heroRef]);
+    tick();
+    const timer = window.setInterval(tick, 100);
+    return () => window.clearInterval(timer);
+  }, [ref, enabled]);
 }
 
-function useStoryProgress(
-  storyRef: React.RefObject<HTMLElement | null>,
-  setActiveChapter: React.Dispatch<React.SetStateAction<number>>,
-) {
-  useEffect(() => {
-    let frame = 0;
-    let currentChapter = -1;
-
-    const update = () => {
-      frame = 0;
-      const node = storyRef.current;
-      if (!node) return;
-
-      const rect = node.getBoundingClientRect();
-      const rawTravel = node.offsetHeight - window.innerHeight;
-      const progress = rawTravel <= 1 ? 0 : clamp(-rect.top / rawTravel);
-      const phase = progress * storyChapters.length;
-      const chapter = Math.min(storyChapters.length - 1, Math.floor(phase));
-      const local = clamp(phase - chapter);
-
-      node.style.setProperty('--story-progress', progress.toFixed(4));
-      node.style.setProperty('--chapter-progress', local.toFixed(4));
-      node.style.setProperty('--story-screen-scale', (0.92 + Math.sin(progress * Math.PI) * 0.045).toFixed(4));
-
-      // Sequential crossfade rather than a distance falloff: the outgoing
-      // panel clears before the incoming one arrives, so two blocks of text
-      // never render on top of each other mid-transition.
-      const fade =
-        local > 1 - CHAPTER_FADE ? (local - (1 - CHAPTER_FADE)) / CHAPTER_FADE : 0;
-
-      const panels = node.querySelectorAll<HTMLElement>('[data-story-panel]');
-      panels.forEach((panel, index) => {
-        let opacity = 0;
-        let offset = 24;
-
-        if (index === chapter) {
-          opacity = clamp(1 - fade * 2);
-          offset = fade * -24;
-        } else if (index === chapter + 1) {
-          opacity = clamp(fade * 2 - 1);
-          offset = (1 - fade) * 24;
-        }
-
-        panel.style.setProperty('--panel-opacity', opacity.toFixed(3));
-        panel.style.setProperty('--panel-y', `${offset}px`);
-      });
-
-      if (chapter !== currentChapter) {
-        currentChapter = chapter;
-        setActiveChapter(chapter);
-      }
-    };
-
-    const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
-
-    return () => {
-      window.removeEventListener('scroll', requestUpdate);
-      window.removeEventListener('resize', requestUpdate);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [setActiveChapter, storyRef]);
-}
-
-function useRevealOnScroll() {
-  useEffect(() => {
-    const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
-    if (!('IntersectionObserver' in window)) {
-      elements.forEach((element) => element.classList.add('is-visible'));
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            (entry.target as HTMLElement).classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.16, rootMargin: '0px 0px -8% 0px' },
-    );
-
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
-}
-
-function StoryScreen({ activeChapter }: { activeChapter: number }) {
+function KeyCombo({ keys, hold }: { keys: string[]; hold?: boolean }) {
   return (
-    <div className="fastcast-v2-story-device" aria-hidden="true">
-      <div className="fastcast-v2-story-halo" />
-      <div className="fastcast-v2-screen-frame">
-        <img
-          className="fastcast-v2-screen-shot"
-          src="/assets/FastCast/fastcast-default-view.png"
-          alt=""
-          width="729"
-          height="792"
-          loading="eager"
-        />
-        <div
-          className="fastcast-v2-screen-focus"
-          style={storyChapters[activeChapter].focus}
-        />
-      </div>
-    </div>
+    <span className="fc-combo">
+      {keys.map((key, index) => (
+        <span key={key}>
+          {index > 0 ? <i aria-hidden="true">+</i> : null}
+          <kbd>{key}</kbd>
+        </span>
+      ))}
+      {hold ? <em>hold</em> : null}
+    </span>
+  );
+}
+
+function RailLabel({ code, name }: Rail) {
+  return (
+    <p className="fc-rail" aria-hidden="true">
+      <b>{code}</b>
+      <span>{name}</span>
+    </p>
   );
 }
 
 export function FastCastV2() {
-  const pageRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLElement>(null);
-  const storyRef = useRef<HTMLElement>(null);
-  const [activeChapter, setActiveChapter] = useState(0);
-  // Under reduced motion every chapter is laid out at once, so none of them
-  // should be hidden from assistive tech.
-  const [isStatic, setIsStatic] = useState(false);
+  const timecodeRef = useRef<HTMLSpanElement>(null);
+  const reducedMotion = useReducedMotion();
 
-  useEffect(() => {
-    setIsStatic(prefersReducedMotion());
-  }, []);
-
-  usePageProgress(pageRef);
-  useHeroProgress(heroRef);
-  useStoryProgress(storyRef, setActiveChapter);
-  useRevealOnScroll();
-
-  const jumpToChapter = (index: number) => {
-    const node = storyRef.current;
-    if (!node) return;
-    const travel = Math.max(0, node.offsetHeight - window.innerHeight);
-    if (travel <= 1 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setActiveChapter(index);
-      return;
-    }
-    const target = node.offsetTop + travel * ((index + 0.02) / storyChapters.length);
-    window.scrollTo({ top: target, behavior: 'smooth' });
-  };
+  useSessionTimecode(timecodeRef, !reducedMotion);
 
   return (
-    <div className="fastcast-v2" ref={pageRef}>
-      <a className="fastcast-v2-skip" href="#fastcast-main">Skip to main content</a>
-      <div className="fastcast-v2-progress" aria-hidden="true"><span /></div>
+    <div className={`fc${reducedMotion ? ' fc-still' : ''}`}>
+      <a className="fc-skip" href="#fastcast-main">Skip to main content</a>
 
-      <header className="fastcast-v2-nav">
-        <a className="fastcast-v2-brand" href="#fastcast-main" aria-label="FastCast home">
-          <img src="/assets/FastCast/FastCast_Icon.png" alt="" width="34" height="34" />
-          <span>FastCast</span>
-          <span className="fastcast-v2-beta">Open Beta</span>
+      <header className="fc-bar">
+        <a className="fc-mark" href="#fastcast-main" aria-label="FastCast home">
+          <span className="fc-tally" aria-hidden="true" />
+          <img src="/assets/FastCast/FastCast_Icon.png" alt="" width="30" height="30" />
+          FastCast
         </a>
         <nav aria-label="FastCast page sections">
-          <a href="#story">Overview</a>
-          <a href="#privacy">Privacy</a>
+          <a href="#compare">Vs OBS</a>
+          <a href="#panel">What it does</a>
+          <a href="#keys">Shortcuts</a>
+          <a href="#pricing">Pricing</a>
           <a href="#guides">Guides</a>
           <a href="#faq">FAQ</a>
-          <a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">Release notes</a>
         </nav>
-        <a
-          className="fastcast-v2-nav-cta"
-          href={downloadUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackDownload('nav')}
-        >
-          Download
-          <Download size={16} />
-        </a>
+        <div className="fc-bar-right">
+          {/* A frozen counter reads as a broken clock, so the still version of
+              the tally bar shows the build instead of the session timecode. */}
+          {reducedMotion ? (
+            <span className="fc-timecode" aria-hidden="true">
+              FastCast <span>0.6.0 · Windows 64-bit</span>
+            </span>
+          ) : (
+            <span className="fc-timecode" aria-hidden="true">
+              Session <span ref={timecodeRef}>00:00:00:00</span>
+            </span>
+          )}
+          <a
+            className="fc-btn fc-btn-rec"
+            href={downloadUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackDownload('nav')}
+          >
+            Download
+          </a>
+        </div>
       </header>
 
       <main id="fastcast-main">
-        <section className="fastcast-v2-hero-track" ref={heroRef} aria-labelledby="fastcast-v2-title">
-          <div className="fastcast-v2-hero-sticky">
-            <div className="fastcast-v2-ambient" aria-hidden="true">
-              <span className="fastcast-v2-orbit fastcast-v2-orbit-a" />
-              <span className="fastcast-v2-orbit fastcast-v2-orbit-b" />
-              <span className="fastcast-v2-orbit fastcast-v2-orbit-c" />
-            </div>
+        <section className="fc-unit fc-hero" aria-labelledby="fastcast-v2-title">
+          <div className="fc-unit-inner">
+            <RailLabel code="PGM" name="Program" />
+            <div className="fc-hero-grid">
+              <div className="fc-hero-copy">
+                <p className="fc-eyebrow">Windows screen recorder and streamer</p>
+                {/* Must stay word-for-word identical to the fallback <h1> in
+                    fastcast.html so a non-JS crawl and a rendered crawl agree. */}
+                <h1 id="fastcast-v2-title">Record your screen without building a scene</h1>
+                <p className="fc-lede">
+                  Open FastCast, pick a display and a mic, press record. When you want to go live, the
+                  same setup streams to YouTube, Twitch, Kick, or another streaming service.
+                </p>
+                <div className="fc-actions">
+                  <a
+                    className="fc-btn fc-btn-rec fc-btn-lg"
+                    href={downloadUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackDownload('hero')}
+                  >
+                    Download for Windows
+                  </a>
+                  <a className="fc-btn fc-btn-ghost fc-btn-lg" href="#compare">
+                    Coming from OBS? <span aria-hidden="true">↓</span>
+                  </a>
+                </div>
+                <p className="fc-fineprint">
+                  v0.6.0 · Portable ZIP · Free · No account
+                </p>
 
-            <div className="fastcast-v2-hero-copy">
-              <p className="fastcast-v2-kicker"><span /> Native Windows capture</p>
-              {/* Must stay word-for-word identical to the fallback <h1> in
-                  fastcast.html so a non-JS crawl and a rendered crawl agree. */}
-              <h1 id="fastcast-v2-title">
-                Record or stream without <br />setting up OBS scenes
-              </h1>
-              <p>
-                A focused screen recorder for local MP4 capture, webcam, desktop and microphone audio,
-                and RTMP/RTMPS livestreaming. No OBS scenes to build first.
+                <dl className="fc-plate">
+                  {specPlate.map((row) => (
+                    <div key={row.key}>
+                      <dt>{row.key}</dt>
+                      <dd>{row.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+
+              {/* The screenshot carries its own titlebar, resolution readout,
+                  and level meters, so the frame around it stays a plain edge.
+                  Anything more reads as a second app wrapped around the app. */}
+              <figure className="fc-monitor">
+                <div className="fc-monitor-frame">
+                  {/* WebP for the page, PNG kept as the fallback and as the file
+                      og:image and the JSON-LD screenshot point at. */}
+                  <picture>
+                    <source srcSet="/assets/FastCast/fastcast-default-view.webp" type="image/webp" />
+                    <img
+                      src="/assets/FastCast/fastcast-default-view.png"
+                      alt="The FastCast window on Windows: a live preview of the screen being captured, with Sources, Destination, and Recent files below it, and a Start recording button"
+                      width="728"
+                      height="790"
+                      fetchPriority="high"
+                    />
+                  </picture>
+                </div>
+                <figcaption>FastCast at launch. Nothing to set up before this screen.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section id="compare" className="fc-unit fc-compare" aria-labelledby="compare-title">
+          <div className="fc-unit-inner">
+            <RailLabel code="A/B" name="Compare" />
+            <div className="fc-unit-body">
+              <h2 id="compare-title">
+                Same recording. <em>Two setup paths.</em>
+              </h2>
+              <p className="fc-unit-lede">
+                Record your screen, your mic, and your webcam, then keep the file. Here is what you
+                click to get there.
               </p>
-              <div className="fastcast-v2-hero-actions">
+
+              <div className="fc-ab">
+                <article className="fc-ch">
+                  <header>
+                    <span className="fc-ch-id">CH A</span>
+                    <h3>OBS Studio</h3>
+                    <span className="fc-ch-count">{obsPath.length} steps</span>
+                  </header>
+                  <ol>
+                    {obsPath.map((step, index) => (
+                      <li key={step}>
+                        <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                        {step}
+                      </li>
+                    ))}
+                  </ol>
+                </article>
+
+                <article className="fc-ch fc-ch-live">
+                  <header>
+                    <span className="fc-ch-id">CH B</span>
+                    <h3>FastCast</h3>
+                    <span className="fc-ch-count">{fastCastPath.length} steps</span>
+                  </header>
+                  <ol>
+                    {fastCastPath.map((step, index) => (
+                      <li key={step}>
+                        <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                        {step}
+                      </li>
+                    ))}
+                  </ol>
+                  <p className="fc-ch-note">
+                    Every one of those controls is on the first screen. Nothing is hidden in a
+                    settings menu.
+                  </p>
+                </article>
+              </div>
+
+              <p className="fc-honest">
+                <b>Keep OBS for the rest.</b> It is a full broadcast studio and it earns those steps:
+                scene switching, plugins, filters, multistreaming, and productions with a director.
+                FastCast is for the recording you want to start in the next ten seconds.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="panel" className="fc-unit fc-panel" aria-labelledby="panel-title">
+          <div className="fc-unit-inner">
+            <RailLabel code="PNL" name="Controls" />
+            <div className="fc-unit-body">
+              <h2 id="panel-title">
+                Everything you need <em>to record</em>
+              </h2>
+              <p className="fc-unit-lede">
+                Capture your screen, audio, and webcam without digging through menus.
+              </p>
+
+              <ul className="fc-rows">
+                {panelRows.map((row) => (
+                  <li key={row.name}>
+                    <h3>{row.name}</h3>
+                    <p>{row.body}</p>
+                    <span className="fc-rows-spec">{row.spec}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section className="fc-unit fc-advanced" aria-labelledby="advanced-title">
+          <div className="fc-unit-inner">
+            <RailLabel code="EXP" name="Expanded" />
+            <div className="fc-unit-body fc-advanced-grid">
+              <div>
+                <h2 id="advanced-title">
+                  Press <em>F2</em> for advanced controls
+                </h2>
+                <p className="fc-unit-lede">
+                  FastCast starts compact. Press F2 to put every capture and streaming control on one
+                  screen. Press it again to go back to the simple view.
+                </p>
+                <ul className="fc-ticks">
+                  <li>Encoder, resolution, frame rate, and scaling</li>
+                  <li>YouTube, Twitch, Kick, or a custom RTMP/RTMPS URL</li>
+                  <li>Layout shortcuts, app updates, and Pro activation</li>
+                </ul>
+                <p className="fc-fineprint">Simple by default. Detailed on demand.</p>
+              </div>
+              <figure className="fc-shot">
+                <div className="fc-monitor-frame">
+                  <picture>
+                    <source srcSet="/assets/FastCast/fastcast-advanced-view.webp" type="image/webp" />
+                    <img
+                      src="/assets/FastCast/fastcast-advanced-view.png"
+                      alt="FastCast expanded view with capture, audio, streaming, encoder, output, and layout controls laid out on one screen"
+                      width="726"
+                      height="1124"
+                      loading="lazy"
+                    />
+                  </picture>
+                </div>
+                <figcaption>Expanded view · F2</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section id="keys" className="fc-unit fc-keys" aria-labelledby="keys-title">
+          <div className="fc-unit-inner">
+            <RailLabel code="KEY" name="Shortcuts" />
+            <div className="fc-unit-body">
+              <h2 id="keys-title">
+                Control FastCast <em>without leaving your app</em>
+              </h2>
+              <p className="fc-unit-lede">
+                Start or stop recording, mute audio, and switch layouts with shortcuts that work
+                while FastCast is behind your game, your call, or your editor.
+              </p>
+
+              <div className="fc-keygrid">
+                <div className="fc-keygroup">
+                  <p className="fc-keygroup-name">Anywhere</p>
+                  <ul>
+                    {globalKeys.map((row) => (
+                      <li key={row.action}>
+                        <KeyCombo keys={row.keys} />
+                        <span>{row.action}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="fc-keygroup">
+                  <p className="fc-keygroup-name">In the FastCast window</p>
+                  <ul>
+                    {windowKeys.map((row) => (
+                      <li key={row.action}>
+                        <KeyCombo keys={row.keys} hold={row.hold} />
+                        <span>{row.action}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="fc-keynote">
+                    If a game already uses the number keys, you can move the four layout shortcuts to
+                    Ctrl+Shift+1 through 4 or turn them off. Start, stop, and the two mutes stay where
+                    they are.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="privacy" className="fc-unit fc-local" aria-labelledby="local-title">
+          <div className="fc-unit-inner">
+            <RailLabel code="LCL" name="Local" />
+            <div className="fc-unit-body">
+              <h2 id="local-title">
+                Nothing leaves the machine <em>unless you send it</em>
+              </h2>
+              <ul className="fc-facts">
+                <li>
+                  <b>No account required</b>
+                  <span>Download FastCast and start recording without creating an account or signing in.</span>
+                </li>
+                <li>
+                  <b>No automatic data collection</b>
+                  <span>FastCast does not collect usage data, upload crash reports, or check for updates unless you ask it to.</span>
+                </li>
+                <li>
+                  <b>Stream keys are not saved</b>
+                  <span>FastCast uses your stream key only while the app is open and does not save it.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="pricing" className="fc-unit fc-license" aria-labelledby="license-title">
+          <div className="fc-unit-inner">
+            <RailLabel code="LIC" name="License" />
+            <div className="fc-unit-body">
+              <h2 id="license-title">
+                Free to record. <em>Pay once for 4K, 60 fps, and more control.</em>
+              </h2>
+
+              <div className="fc-plans">
+                <article>
+                  <p className="fc-plan-name">FastCast Free</p>
+                  <p className="fc-plan-price">$0</p>
+                  <p className="fc-plan-line">
+                    1080p recording and streaming at 30 fps. Free with no subscription.
+                  </p>
+                  <ul className="fc-ticks">
+                    <li>Monitor or window capture</li>
+                    <li>Desktop audio and microphone</li>
+                    <li>Webcam and live layouts</li>
+                    <li>Streaming to YouTube, Twitch, or Kick</li>
+                  </ul>
+                  <a
+                    className="fc-btn fc-btn-ghost"
+                    href={downloadUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackDownload('pricing')}
+                  >
+                    Download Free <span aria-hidden="true">→</span>
+                  </a>
+                </article>
+
+                <article className="fc-plan-pro">
+                  <p className="fc-plan-name">
+                    FastCast Pro <span className="fc-chip">One-time</span>
+                  </p>
+                  <p className="fc-plan-price">4K · 60 fps</p>
+                  <p className="fc-plan-line">For recordings people will scrub through frame by frame.</p>
+                  <ul className="fc-ticks">
+                    <li>1440p and 4K recording</li>
+                    <li>60 fps capture where your hardware supports it</li>
+                    <li>Fine-tune recording quality and file size</li>
+                    <li>No subscription and no account</li>
+                  </ul>
+                  <a
+                    className="fc-btn fc-btn-rec"
+                    href={fastCastProCheckoutUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackCtaClick('fastcast', 'pro_clicked', 'pricing', fastCastProCheckoutUrl)}
+                  >
+                    Get FastCast Pro <span aria-hidden="true">→</span>
+                  </a>
+                </article>
+              </div>
+
+              <p className="fc-fineprint">
+                FastCast is unsigned during the Open Beta, so Windows SmartScreen may show an Unknown
+                Publisher warning the first time you run it.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="guides" className="fc-unit fc-guides" aria-labelledby="guides-title">
+          <div className="fc-unit-inner">
+            <RailLabel code="DOC" name="Guides" />
+            <div className="fc-unit-body">
+              <div className="fc-unit-head">
+                <h2 id="guides-title">
+                  Recording problems, <em>written down</em>
+                </h2>
+                <a className="fc-link" href="/fastcast/guides">
+                  All guides <span aria-hidden="true">→</span>
+                </a>
+              </div>
+              <ul className="fc-doclist">
+                {fastCastGuides.slice(0, 6).map((guide) => (
+                  <li key={guide.slug}>
+                    <a href={fastCastGuidePath(guide.slug)}>
+                      <span className="fc-doc-cat">{guide.category}</span>
+                      <span className="fc-doc-body">
+                        <h3>{guide.shortTitle}</h3>
+                        <p>{guide.description}</p>
+                      </span>
+                      <span className="fc-doc-arrow" aria-hidden="true">→</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" className="fc-unit fc-faq" aria-labelledby="faq-title">
+          <div className="fc-unit-inner">
+            <RailLabel code="FAQ" name="Questions" />
+            <div className="fc-unit-body">
+              <h2 id="faq-title">Questions people ask first</h2>
+              <div className="fc-faq-list">
+                {fastCastFaqs.map(({ question, answer }) => (
+                  <details key={question}>
+                    <summary>{question}</summary>
+                    <p>{answer}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="fc-unit fc-end">
+          <div className="fc-unit-inner">
+            <RailLabel code="REC" name="Ready" />
+            <div className="fc-unit-body fc-end-body">
+              <h2>Press record in ten seconds</h2>
+              <p className="fc-unit-lede">FastCast v0.6.0 for Windows 10 and 11, 64-bit. Portable ZIP,
+                no installer.</p>
+              <div className="fc-actions">
                 <a
-                  className="fastcast-v2-button fastcast-v2-button-primary"
+                  className="fc-btn fc-btn-rec fc-btn-lg"
                   href={downloadUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackDownload('hero')}
+                  onClick={() => trackDownload('final')}
                 >
-                  Download for Windows
-                  <ArrowRight size={18} />
+                  Download FastCast
                 </a>
-                <a className="fastcast-v2-button fastcast-v2-button-ghost" href="#story">
-                  See how it works
-                  <ChevronDown size={18} />
-                </a>
-              </div>
-              <p className="fastcast-v2-meta">v0.5.1 · Windows 10/11 x64 · Portable ZIP · Free version available</p>
-            </div>
-
-            <div className="fastcast-v2-hero-product" aria-hidden="true">
-              <div className="fastcast-v2-product-glow" />
-              <img
-                src="/assets/FastCast/fastcast-default-view.png"
-                alt=""
-                width="729"
-                height="792"
-                fetchPriority="high"
-              />
-            </div>
-
-            <div className="fastcast-v2-scroll-cue" aria-hidden="true">
-              <span>Scroll to enter FastCast</span>
-              <i />
-            </div>
-          </div>
-        </section>
-
-        <section className="fastcast-v2-intro" aria-label="FastCast product summary">
-          <div className="fastcast-v2-shell">
-            <p className="fastcast-v2-section-kicker" data-reveal>One focused capture path</p>
-            <h2 data-reveal>From desktop to destination<br />without the scene-building detour.</h2>
-            <p className="fastcast-v2-intro-copy" data-reveal>
-              Choose what to capture, mix the sound, add an optional camera, then record locally or go live.
-              The interface keeps the whole setup visible instead of hiding it behind layers of panels.
-            </p>
-          </div>
-        </section>
-
-        <section id="story" className="fastcast-v2-story-track" ref={storyRef} aria-labelledby="story-title">
-          <div className="fastcast-v2-story-sticky">
-            <div className="fastcast-v2-story-grid fastcast-v2-shell">
-              <div className="fastcast-v2-story-copy">
-                <p className="fastcast-v2-section-kicker">The FastCast flow</p>
-                <h2 id="story-title" className="sr-only">The FastCast recording and streaming workflow</h2>
-                <div className="fastcast-v2-story-panels">
-                  {storyChapters.map((chapter, index) => (
-                    <article
-                      key={chapter.label}
-                      data-story-panel
-                      className={index === activeChapter ? 'is-active' : undefined}
-                      aria-hidden={!isStatic && index !== activeChapter}
-                    >
-                      <chapter.Icon size={26} />
-                      <p>{chapter.eyebrow}</p>
-                      <h3>{chapter.title}</h3>
-                      <div>{chapter.body}</div>
-                    </article>
-                  ))}
-                </div>
-              </div>
-
-              <StoryScreen activeChapter={activeChapter} />
-            </div>
-
-            <div className="fastcast-v2-story-tabs fastcast-v2-shell" aria-label="FastCast workflow chapters">
-              {storyChapters.map((chapter, index) => (
-                <button
-                  key={chapter.label}
-                  type="button"
-                  className={index === activeChapter ? 'is-active' : undefined}
-                  onClick={() => jumpToChapter(index)}
-                  aria-current={index === activeChapter ? 'step' : undefined}
-                >
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  {chapter.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="fastcast-v2-capabilities">
-          <div className="fastcast-v2-shell">
-            <div className="fastcast-v2-capability-heading" data-reveal>
-              <p className="fastcast-v2-section-kicker">Small app. Real capture stack.</p>
-              <h2>Everything the focused workflow needs.</h2>
-            </div>
-            <div className="fastcast-v2-capability-grid">
-              {capabilityCards.map((card, index) => (
-                <article key={card.metric} data-reveal style={{ '--reveal-delay': `${index * 80}ms` } as CSSProperties}>
-                  <card.Icon size={22} />
-                  <strong>{card.metric}</strong>
-                  <p>{card.label}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="fastcast-v2-layouts">
-          <div className="fastcast-v2-layouts-sticky fastcast-v2-shell">
-            <div className="fastcast-v2-layouts-copy" data-reveal>
-              <p className="fastcast-v2-section-kicker">Live layouts</p>
-              <h2>Change the frame<br />while you are recording.</h2>
-              <p>
-                Move between screen-only, camera-only, picture-in-picture, and side-by-side layouts
-                with global shortcuts. The recording keeps moving while the composition changes.
-              </p>
-              <div className="fastcast-v2-key-row">
-                <span><kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>1–4</kbd></span>
-                <span>switch layouts</span>
-              </div>
-            </div>
-            <div className="fastcast-v2-layout-stack" aria-label="Four FastCast layout modes" data-reveal>
-              <div className="fastcast-v2-layout-card fastcast-v2-layout-screen"><span>Screen</span></div>
-              <div className="fastcast-v2-layout-card fastcast-v2-layout-camera"><span>Camera</span></div>
-              <div className="fastcast-v2-layout-card fastcast-v2-layout-pip"><span>Picture in picture</span><i /></div>
-              <div className="fastcast-v2-layout-card fastcast-v2-layout-split"><span>Side by side</span><i /></div>
-            </div>
-          </div>
-        </section>
-
-        <section id="privacy" className="fastcast-v2-privacy">
-          <div className="fastcast-v2-shell fastcast-v2-privacy-grid">
-            <div className="fastcast-v2-privacy-copy" data-reveal>
-              <p className="fastcast-v2-section-kicker">Local-first by design</p>
-              <h2>Your capture stays yours.</h2>
-              <p>
-                FastCast records to your machine. It does not require an account, collect telemetry,
-                upload crashes, poll in the background, or install updates automatically.
-              </p>
-              <ul>
-                <li><Check size={17} /> Stream keys are not saved to disk</li>
-                <li><Check size={17} /> Support bundles are local, explicit, and redacted</li>
-                <li><Check size={17} /> Updates are checked only when you ask</li>
-              </ul>
-            </div>
-            <div className="fastcast-v2-privacy-visual" data-reveal aria-hidden="true">
-              <div className="fastcast-v2-lock-orbit">
-                <span><Mic size={19} /></span>
-                <span><MonitorUp size={19} /></span>
-                <span><Video size={19} /></span>
-                <span><Radio size={19} /></span>
-                <div><ShieldCheck size={62} /></div>
-              </div>
-              <p>Local capture boundary</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="fastcast-v2-beta-section">
-          <div className="fastcast-v2-shell">
-            <div className="fastcast-v2-beta-heading" data-reveal>
-              <p className="fastcast-v2-section-kicker">Open Beta</p>
-              <h2>Start free. Unlock more when you need it.</h2>
-            </div>
-            <div className="fastcast-v2-plan-grid">
-              <article data-reveal>
-                <p className="fastcast-v2-plan-name">FastCast Free</p>
-                <h3>$0</h3>
-                <p>Focused 1080p30 recording and streaming for Windows.</p>
-                <ul>
-                  <li><Check size={16} /> Monitor or window capture</li>
-                  <li><Check size={16} /> Desktop audio and microphone</li>
-                  <li><Check size={16} /> Webcam and live layouts</li>
-                  <li><Check size={16} /> RTMP and RTMPS streaming</li>
-                </ul>
-                <a href={downloadUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('pricing')}>
-                  Download Free <ArrowUpRight size={17} />
-                </a>
-              </article>
-              <article className="fastcast-v2-plan-pro" data-reveal>
-                <span className="fastcast-v2-plan-badge"><Sparkles size={14} /> One-time license</span>
-                <p className="fastcast-v2-plan-name">FastCast Pro</p>
-                <h3>More headroom</h3>
-                <p>Higher resolution, faster capture, and advanced encoder control.</p>
-                <ul>
-                  <li><Check size={16} /> 1440p and 4K recording</li>
-                  <li><Check size={16} /> 60 fps capture where supported</li>
-                  <li><Check size={16} /> Advanced encoder controls</li>
-                  <li><Check size={16} /> No subscription and no account</li>
-                </ul>
                 <a
-                  href={fastCastProCheckoutUrl}
+                  className="fc-btn fc-btn-ghost fc-btn-lg"
+                  href={allReleasesUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackCtaClick('fastcast', 'pro_clicked', 'pricing', fastCastProCheckoutUrl)}
                 >
-                  Get FastCast Pro <ArrowUpRight size={17} />
+                  All releases <span aria-hidden="true">→</span>
                 </a>
-              </article>
-            </div>
-            <p className="fastcast-v2-beta-note" data-reveal>
-              FastCast is currently unsigned during Open Beta, so Windows SmartScreen may show an Unknown Publisher warning.
-            </p>
-          </div>
-        </section>
-
-        <section id="guides" className="fastcast-v2-guides">
-          <div className="fastcast-v2-shell">
-            <div className="fastcast-v2-guides-heading" data-reveal>
-              <div>
-                <p className="fastcast-v2-section-kicker">FastCast guides</p>
-                <h2>Record with fewer surprises.</h2>
               </div>
-              <a href="/fastcast/guides">View all guides <ArrowUpRight size={17} /></a>
-            </div>
-            <div className="fastcast-v2-guide-grid">
-              {fastCastGuides.slice(0, 6).map((guide, index) => (
-                <a
-                  key={guide.slug}
-                  href={fastCastGuidePath(guide.slug)}
-                  data-reveal
-                  style={{ '--reveal-delay': `${index * 60}ms` } as CSSProperties}
-                >
-                  <span>{guide.category}</span>
-                  <h3>{guide.shortTitle}</h3>
-                  <p>{guide.description}</p>
-                  <i><ArrowRight size={18} /></i>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="faq" className="fastcast-v2-faq">
-          <div className="fastcast-v2-shell">
-            <div className="fastcast-v2-faq-heading" data-reveal>
-              <p className="fastcast-v2-section-kicker">FAQ</p>
-              <h2>FastCast questions.</h2>
-            </div>
-            <div className="fastcast-v2-faq-list" data-reveal>
-              {fastCastFaqs.map(({ question, answer }) => (
-                <details key={question}>
-                  <summary>
-                    {question}
-                    <ChevronDown size={18} />
-                  </summary>
-                  <p>{answer}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="fastcast-v2-final">
-          <div className="fastcast-v2-final-orb" aria-hidden="true" />
-          <div className="fastcast-v2-shell" data-reveal>
-            <img src="/assets/FastCast/FastCast_Icon.png" alt="" width="68" height="68" />
-            <p className="fastcast-v2-section-kicker">Ready when you are</p>
-            <h2>Capture the moment.<br />Skip the setup spiral.</h2>
-            <p>Download FastCast v0.5.1 for Windows 10 or 11 x64.</p>
-            <div>
-              <a
-                className="fastcast-v2-button fastcast-v2-button-primary"
-                href={downloadUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackDownload('final')}
-              >
-                <Download size={18} /> Download FastCast
-              </a>
-              <a
-                className="fastcast-v2-button fastcast-v2-button-ghost"
-                href={allReleasesUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Github size={18} /> All releases
-              </a>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="fastcast-v2-footer">
-        <div className="fastcast-v2-shell">
-          <p><strong>FastCast</strong> · Native Windows screen recording and streaming.</p>
+      <footer className="fc-foot">
+        <div className="fc-unit-inner">
+          <p>
+            <b>FastCast</b> · Native Windows screen recording and streaming · Sturm Technologies LLC
+          </p>
           <nav aria-label="FastCast footer links">
             <a href="/fastcast/guides">Guides</a>
             <a href="/roadmap">Roadmap</a>
-            <a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">Latest release</a>
+            <a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">Release notes</a>
             <a href={allReleasesUrl} target="_blank" rel="noopener noreferrer">All releases</a>
           </nav>
-          <p>Source code is private. Public repositories host downloads and version metadata.</p>
         </div>
       </footer>
-
-      <div className="fastcast-v2-floating-cta">
-        <span><CircleDot size={14} /> FastCast <b>v0.5.1</b></span>
-        <a href={downloadUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('floating')}>
-          Download <Download size={14} />
-        </a>
-      </div>
     </div>
   );
 }

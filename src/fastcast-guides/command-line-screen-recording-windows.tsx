@@ -25,7 +25,7 @@ export function GuidePage() {
           that already-running instance and returns an exit code your script can inspect.
         </>
       }
-      topCtaNote="FastCast 0.5.1 includes fastcastc.exe beside the main app, with commands to start recording, select Display N, and stop the active recording."
+      topCtaNote="FastCast includes fastcastc.exe beside the main app, with commands to start recording, select Display N, and stop the active recording."
       finalCtaHeading="Automate your next screen recording"
       finalCtaBody="Download the FastCast portable ZIP, configure the main app once, and use fastcastc from PowerShell whenever a script needs deterministic Start and Stop actions."
     >

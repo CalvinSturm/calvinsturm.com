@@ -90,7 +90,7 @@ const flagships: Flagship[] = [
       'RTMP/RTMPS streaming',
       'Hardware H.264 encoding',
     ],
-    meta: 'v0.5.1 · Windows 10/11 x64 · Free version, optional Pro license',
+    meta: 'v0.6.0 · Windows 10/11 x64 · Free version, optional Pro license',
     cta: 'Explore FastCast',
   },
   {
