@@ -1,10 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { FastPlayV3 } from './FastPlayV3.tsx';
+import { FastPlayProductPage } from './FastSeriesShared.tsx';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <FastPlayV3 />
+    <FastPlayProductPage />
   </StrictMode>,
 );
