@@ -930,7 +930,7 @@ const fastCastFaqs = [
   {
     question: 'Is FastCast free?',
     answer:
-      'FastCast Free is free during the Open Beta and covers 1080p30 recording and streaming. A one-time FastCast Pro license unlocks 1440p and 4K recording, 60 fps capture, and advanced encoder controls. No subscription and no account.',
+      'FastCast Free covers 1080p30 recording and streaming, and those capabilities will stay free. A one-time FastCast Pro license unlocks 1440p and 4K recording, 60 fps capture, and advanced encoder controls. No subscription and no account.',
   },
   {
     question: 'Is FastCast signed?',

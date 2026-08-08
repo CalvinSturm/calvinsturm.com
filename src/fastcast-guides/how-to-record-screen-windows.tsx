@@ -30,7 +30,7 @@ export function GuidePage() {
       }
       topCtaNote="FastCast is a native Windows screen recorder: pick a monitor or window, choose mic and desktop audio, optionally add a webcam overlay, and press Record to get a local MP4. One portable ZIP, no runtime to install."
       finalCtaHeading="Ready to record?"
-      finalCtaBody="Download FastCast, unzip it, and you are recording in under a minute: choose a screen or window, pick your audio, press Record. Free during Open Beta."
+      finalCtaBody="Download FastCast, unzip it, and you are recording in under a minute: choose a screen or window, pick your audio, press Record. 1080p30 recording and streaming will stay free."
     >
       <GuideSection id="before-you-record" title="Before you record">
         <p>Five minutes of preparation prevents most ruined recordings:</p>
@@ -184,8 +184,8 @@ export function GuidePage() {
           hotkey.
         </p>
         <InlineCta>
-          FastCast is free during Open Beta and records with hardware H.264 encoding on supported
-          GPUs. Download, unzip, record.
+          FastCast records with hardware H.264 encoding on supported GPUs. Its 1080p30 recording
+          and streaming will stay free. Download, unzip, record.
         </InlineCta>
       </GuideSection>
 

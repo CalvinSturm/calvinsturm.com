@@ -116,7 +116,7 @@ const fastCastFaqs = [
   {
     question: 'Is FastCast free?',
     answer:
-      'FastCast Free covers 1080p recording and streaming at 30 fps, with no subscription and no account. A one-time FastCast Pro license unlocks 1440p and 4K recording, 60 fps capture, and advanced encoder controls.',
+      'FastCast Free covers 1080p recording and streaming at 30 fps, and those capabilities will stay free, with no subscription and no account. A one-time FastCast Pro license unlocks 1440p and 4K recording, 60 fps capture, and advanced encoder controls.',
   },
   {
     question: 'Is FastCast signed?',
@@ -497,7 +497,7 @@ export function FastCastV2() {
                   <p className="fc-plan-name">FastCast Free</p>
                   <p className="fc-plan-price">$0</p>
                   <p className="fc-plan-line">
-                    1080p recording and streaming at 30 fps. Free with no subscription.
+                    1080p recording and streaming at 30 fps. Stays free with no subscription.
                   </p>
                   <ul className="fc-ticks">
                     <li>Monitor or window capture</li>

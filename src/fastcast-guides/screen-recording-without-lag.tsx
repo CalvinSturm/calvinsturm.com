@@ -30,7 +30,7 @@ export function GuidePage() {
       }
       topCtaNote="FastCast uses hardware H.264 encoding on supported NVIDIA and AMD GPUs and offers 1080p and 720p downscaled output, which are the two levers that matter most for smooth recording."
       finalCtaHeading="Record a smooth take"
-      finalCtaBody="FastCast is free during Open Beta. Pick a screen, use hardware encoding on a supported GPU, and run a short test recording; two minutes tells you everything about your headroom."
+      finalCtaBody="FastCast is in Open Beta, and 1080p30 recording and streaming will stay free. Pick a screen, use hardware encoding on a supported GPU, and run a short test recording; two minutes tells you everything about your headroom."
     >
       <GuideSection id="find-the-lag" title="First: find out where the lag is">
         <p>&quot;Lag while recording&quot; is actually two different problems with different fixes:</p>

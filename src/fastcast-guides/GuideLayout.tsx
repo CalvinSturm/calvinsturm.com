@@ -33,7 +33,7 @@ const fastCastGuides = createProductGuides({
   footer: (
     <>
       <p>
-        FastCast is a native Windows screen recorder and live streamer, currently free during Open Beta.
+        FastCast is a native Windows screen recorder and live streamer, currently in Open Beta. 1080p30 recording and streaming will stay free.
       </p>
       <p>
         <a href={fastCastPath}>FastCast</a>
@@ -46,8 +46,8 @@ const fastCastGuides = createProductGuides({
       </p>
     </>
   ),
-  topCtaMeta: 'Free during Open Beta · Windows 10/11 x64 · Portable ZIP · No account',
-  finalCtaMeta: 'Free during Open Beta · Windows 10/11 x64 · No telemetry, no accounts',
+  topCtaMeta: '1080p30 stays free · Open Beta · Windows 10/11 x64 · Portable ZIP · No account',
+  finalCtaMeta: '1080p30 stays free · Open Beta · Windows 10/11 x64 · No telemetry, no accounts',
   authorName: 'Calvin Sturm',
   guides,
   guidePath,
@@ -57,7 +57,7 @@ const fastCastGuides = createProductGuides({
     'Practical guides to Windows screen recording: capturing your screen and webcam, keeping recordings smooth, fixing black or silent recordings, understanding what 4K 60 FPS really requires, and deciding honestly between FastCast and OBS. Each guide works with any recorder and shows where FastCast fits.',
   indexFinalCtaHeading: 'Record without the setup maze',
   indexFinalCtaBody:
-    'FastCast is a native Windows screen recorder and streamer: pick a monitor or window, choose your audio, add an optional webcam overlay, and record MP4 or go live over RTMP. Free during Open Beta.',
+    'FastCast is a native Windows screen recorder and streamer: pick a monitor or window, choose your audio, add an optional webcam overlay, and record MP4 or go live over RTMP. The 1080p30 recording and streaming tier will stay free.',
 });
 
 export const { GuideLayout, GuideSection, InlineCta, TopCta, DownloadCta, GuidesIndexPage } = fastCastGuides;

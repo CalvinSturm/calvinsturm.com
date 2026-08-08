@@ -28,7 +28,7 @@ export function GuidePage() {
       }
       topCtaNote="FastCast is a native Windows recorder and streamer built around the common case: choose a monitor or window, pick audio, optionally add a webcam overlay, then record MP4 or go live over RTMP. No scenes to set up."
       finalCtaHeading="Try the simpler path first"
-      finalCtaBody="FastCast is free during Open Beta and takes about a minute to try: download the ZIP, run it, record. If you outgrow it, OBS will still be there."
+      finalCtaBody="FastCast is in Open Beta, and 1080p30 recording and streaming will stay free. It takes about a minute to try: download the ZIP, run it, record. If you outgrow it, OBS will still be there."
     >
       <GuideSection id="summary" title="The comparison in short">
         <ul>
@@ -120,7 +120,7 @@ export function GuidePage() {
           </li>
           <li>
             <strong>Price and tiers.</strong> OBS is entirely free. FastCast Free covers 1080p30
-            recording and streaming during the Open Beta; a one-time FastCast Pro license unlocks
+            recording and streaming, and that tier will stay free; a one-time FastCast Pro license unlocks
             1440p/4K recording, 60 fps capture where hardware supports it, and advanced encoder
             controls. Pro is activated inside the app; there is no subscription and no account.
             High-resolution capture details are in{' '}

@@ -27,7 +27,7 @@ export function GuidePage() {
       }
       topCtaNote="FastCast records a monitor or window with an optional webcam picture-in-picture overlay, plus microphone and desktop audio, straight to MP4. No scene building required."
       finalCtaHeading="Record your first screen-and-camera take"
-      finalCtaBody="FastCast is free during Open Beta: unzip, choose your screen and webcam, press Record. The result is one MP4 with you and your screen in the same frame."
+      finalCtaBody="Try the FastCast Open Beta: unzip, choose your screen and webcam, press Record. The result is one MP4 with you and your screen in the same frame. 1080p30 recording will stay free."
     >
       <GuideSection id="when-it-helps" title="When screen plus webcam is worth it">
         <p>
@@ -150,8 +150,8 @@ export function GuidePage() {
           the MP4 is ready to upload, or to trim in any editor.
         </p>
         <InlineCta>
-          FastCast's webcam overlay is on the free tier, along with 1080p30 recording, during the
-          Open Beta.
+          FastCast's webcam overlay is currently on the free tier, alongside 1080p30 recording.
+          1080p30 recording will stay free after Open Beta.
         </InlineCta>
       </GuideSection>
 

@@ -28,7 +28,7 @@ export function GuidePage() {
       }
       topCtaNote="FastCast shows a live preview of the selected screen or window and live level meters for microphone and desktop audio before you record, so black-screen and no-audio surprises show up before the take instead of after it."
       finalCtaHeading="Record a take you can trust"
-      finalCtaBody="FastCast is free during Open Beta: pick your screen or window, watch the preview and the audio meters, and press Record knowing what the file will contain."
+      finalCtaBody="Try the FastCast Open Beta: pick your screen or window, watch the preview and the audio meters, and press Record knowing what the file will contain. 1080p30 recording and streaming will stay free."
     >
       <GuideSection id="test-first" title="Run a 30-second test first">
         <p>
