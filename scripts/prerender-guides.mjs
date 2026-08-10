@@ -7,7 +7,7 @@ import { createServer } from 'vite';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(root, 'dist');
-const products = ['fastplay', 'fastcast'];
+const products = ['fastplay', 'fastcast', 'fastclip', 'fastcompress'];
 
 function guideHtmlFiles(product) {
   const guideDir = join(root, product, 'guides');
@@ -72,7 +72,7 @@ try {
     );
   }
 
-  console.log(`Prerendered ${pages.length} FastPlay/FastCast guide pages.`);
+  console.log(`Prerendered ${pages.length} guide pages across ${products.length} products.`);
 } finally {
   await vite.close();
 }

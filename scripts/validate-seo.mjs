@@ -173,6 +173,80 @@ for (const route of builtRoutes) {
   if (!sitemapRoutes.has(route)) errors.push(`sitemap: built route ${route} missing from sitemap`);
 }
 
+// ---- guide pages must be prerenderable ----
+// Guide shells ship an empty #root, so their content and internal links only
+// exist after scripts/prerender-guides.mjs fills them in at build time. A guide
+// entry that still mounts with a bare createRoot, or a product missing from the
+// prerender list, silently ships a blank body to crawlers.
+const prerenderScript = readFileSync(join(root, 'scripts', 'prerender-guides.mjs'), 'utf8');
+const prerenderProducts = new Set(
+  (prerenderScript.match(/const products = \[([^\]]*)\]/)?.[1] ?? '')
+    .split(',')
+    .map((s) => s.trim().replace(/^['"]|['"]$/g, ''))
+    .filter(Boolean),
+);
+
+const guidePages = pages.filter((p) => /^[a-z]+\/guides(\/[^/]+)?\.html$/.test(p.file));
+if (guidePages.length === 0) errors.push('No guide pages found; the prerender check is not running');
+
+for (const page of guidePages) {
+  const product = page.file.split('/')[0];
+  if (!prerenderProducts.has(product)) {
+    errors.push(`${page.file}: product "${product}" is missing from products in scripts/prerender-guides.mjs`);
+  }
+
+  const entry = page.html.match(/<script\s+type="module"\s+src="([^"]+)"/i)?.[1];
+  if (!entry) {
+    errors.push(`${page.file}: module entry was not found`);
+    continue;
+  }
+
+  const entrySource = readFileSync(join(root, entry), 'utf8');
+  if (!/export function GuidePage\(/.test(entrySource)) {
+    errors.push(`${entry}: prerendering needs an exported GuidePage component`);
+  }
+  if (!/\bmountGuide\(/.test(entrySource)) {
+    errors.push(`${entry}: must mount via mountGuide() so build-time HTML is hydrated, not discarded`);
+  }
+}
+
+// ---- guide hub ItemList must list every guide of that product ----
+for (const page of guidePages.filter((p) => /^[a-z]+\/guides\.html$/.test(p.file))) {
+  const product = page.file.split('/')[0];
+  const expected = new Set(
+    [...builtRoutes].filter((r) => r.startsWith(`/${product}/guides/`)).map((r) => `${ORIGIN}${r}`),
+  );
+
+  let listed = null;
+  for (const [, block] of page.html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    try {
+      const schema = JSON.parse(block);
+      if (schema['@type'] === 'CollectionPage' && schema.mainEntity?.['@type'] === 'ItemList') {
+        listed = schema.mainEntity.itemListElement ?? [];
+      }
+    } catch {
+      // The per-page JSON-LD check above reports the parse error.
+    }
+  }
+
+  if (!listed) {
+    errors.push(`${page.file}: missing a CollectionPage ItemList of the product's guides`);
+    continue;
+  }
+
+  const listedUrls = new Set(listed.map((entry) => entry.url));
+  for (const url of expected) {
+    if (!listedUrls.has(url)) errors.push(`${page.file}: ItemList is missing ${url}`);
+  }
+  for (const url of listedUrls) {
+    if (!expected.has(url)) errors.push(`${page.file}: ItemList links unknown guide ${url}`);
+  }
+
+  const positions = listed.map((entry) => entry.position);
+  const ordered = positions.every((pos, i) => pos === i + 1);
+  if (!ordered) errors.push(`${page.file}: ItemList positions must run 1..${listed.length} in order`);
+}
+
 // ---- internal link resolution (literal hrefs only) ----
 function collectFiles(dir, exts, out = []) {
   for (const entry of readdirSync(dir)) {
