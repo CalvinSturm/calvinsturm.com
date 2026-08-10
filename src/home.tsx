@@ -1,12 +1,9 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { mountPage } from './lib/mountPage.tsx';
 import HomeApp from './HomeApp.tsx';
 import './index.css';
 
-document.documentElement.classList.add('home-page');
+export function Page() {
+  return <HomeApp />;
+}
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <HomeApp />
-  </StrictMode>,
-);
+mountPage(<Page />);

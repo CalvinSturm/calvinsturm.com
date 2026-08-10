@@ -1,12 +1,9 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { mountPage } from './lib/mountPage.tsx';
 import FaceForgeApp from './FaceForgeApp.tsx';
 import './index.css';
 
-document.documentElement.classList.add('home-page');
+export function Page() {
+  return <FaceForgeApp />;
+}
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <FaceForgeApp />
-  </StrictMode>,
-);
+mountPage(<Page />);
