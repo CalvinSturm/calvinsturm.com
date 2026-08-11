@@ -10,7 +10,8 @@
     "clean": "powershell -NoProfile -Command \"if (Test-Path dist) { Remove-Item -Recurse -Force dist }\"",
     "lint": "tsc --noEmit",
     "validate:seo": "node scripts/validate-seo.mjs",
-    "indexnow": "node scripts/indexnow.mjs"
+    "indexnow": "node scripts/indexnow.mjs",
+    "indexnow:send": "node scripts/indexnow.mjs --send"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",
