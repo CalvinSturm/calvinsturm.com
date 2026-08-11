@@ -7,14 +7,17 @@
 // the URL Inspection tool in Google Search Console or by resubmitting the
 // sitemap. Nothing in this script affects Google in any way.
 //
-//   npm run indexnow                        preview every sitemap URL
-//   npm run indexnow -- fastplay            preview specific routes
-//   npm run indexnow -- --send              actually submit every sitemap URL
-//   npm run indexnow -- --send fastplay     actually submit specific routes
+//   npm run indexnow                     preview every sitemap URL
+//   npm run indexnow -- fastplay         preview specific routes
+//   npm run indexnow:send                submit every sitemap URL
+//   npm run indexnow:send -- fastplay    submit specific routes
 //
-// Previewing is the default and submitting requires --send, because this
-// reaches an external service and `npm run --` can silently swallow a
-// negating flag depending on the shell.
+// Previewing is the default and submitting requires --send. Do not try to
+// pass that flag yourself: `npm run indexnow -- --send` silently drops it in
+// PowerShell, so the run previews when you meant it to submit. The
+// indexnow:send script bakes the flag into the command instead, which works
+// in every shell. Positional route arguments after `--` do pass through
+// reliably.
 //
 // Run this AFTER a deploy is live. IndexNow tells search engines to come and
 // fetch, so submitting mid-build points them at the old content.
@@ -78,7 +81,8 @@ for (const url of urlList) console.log(`  ${url}`);
 
 if (!send) {
   console.log(`\nPOST ${ENDPOINT}\n${JSON.stringify({ ...payload, urlList: ['...'] }, null, 2)}`);
-  console.log('\nNothing was sent. Re-run with --send to submit.');
+  console.log('\nNothing was sent. Run `npm run indexnow:send` to submit.');
+  console.log('Do not use `npm run indexnow -- --send`: PowerShell drops the flag.');
   process.exit(0);
 }
 
