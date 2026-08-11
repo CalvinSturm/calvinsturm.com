@@ -1,5 +1,11 @@
-// Submit URLs to IndexNow, which pushes them to Bing and Yandex instead of
-// waiting for the next crawl. No dependencies.
+// Submit URLs to IndexNow so participating search engines refetch them
+// instead of waiting for their next crawl. No dependencies.
+//
+// IndexNow reaches Bing and Yandex (plus Seznam and Naver). Google does NOT
+// participate: it has never joined IndexNow and ignores these submissions
+// entirely. Getting a URL recrawled by Google is a separate job, done through
+// the URL Inspection tool in Google Search Console or by resubmitting the
+// sitemap. Nothing in this script affects Google in any way.
 //
 //   npm run indexnow                        preview every sitemap URL
 //   npm run indexnow -- fastplay            preview specific routes
@@ -64,7 +70,10 @@ const payload = {
   urlList,
 };
 
-console.log(`${send ? 'Submitting' : '[preview] would submit'} ${urlList.length} URL(s) to IndexNow:`);
+console.log(
+  `${send ? 'Submitting' : '[preview] would submit'} ${urlList.length} URL(s) to IndexNow ` +
+    '(Bing and Yandex; Google does not participate):',
+);
 for (const url of urlList) console.log(`  ${url}`);
 
 if (!send) {
