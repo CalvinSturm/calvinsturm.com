@@ -35,10 +35,9 @@ if (inputFiles.length === 0) {
 // canonicalised to the real product page, so it is not a route of its own.
 const NON_INDEXABLE = new Set(['404.html', 'fastplay-v2.html']);
 
-// These product pages render with React, but crawlers may inspect the HTML
-// shell without running JavaScript. Keep their hero H1 available in the source
-// document; React replaces the fallback when the app mounts.
-const CLIENT_RENDERED_H1_SHELLS = new Set(['fastcast.html', 'fastplay.html']);
+// Shells that ship as-is instead of being prerendered: 404.html is an error
+// page and fastplay-v2.html is a noindexed design preview.
+const NOT_PRERENDERED = new Set(['404.html', 'fastplay-v2.html']);
 
 function routeForFile(file) {
   if (file === 'index.html') return '/';
@@ -69,11 +68,11 @@ for (const page of pages) {
     titles.set(title, file);
   }
 
-  if (CLIENT_RENDERED_H1_SHELLS.has(file)) {
-    const h1Matches = [...html.matchAll(/<h1(?:\s[^>]*)?>[\s\S]*?<\/h1>/gi)];
-    if (h1Matches.length !== 1) {
-      errors.push(`${file}: expected exactly one source HTML <h1>, found ${h1Matches.length}`);
-    }
+  // Prerendering injects content into an empty root, so a shell must not ship
+  // hand-written fallback markup: scripts/prerender.mjs would not find its
+  // insertion point, and any H1 there would collide with the rendered one.
+  if (!NOT_PRERENDERED.has(file) && !/<div id="root"><\/div>/.test(html)) {
+    errors.push(`${file}: expected an empty <div id="root"></div> for prerendering`);
   }
 
   if (/name="robots"[^>]*noindex/.test(html) && page.indexable) {
@@ -171,6 +170,96 @@ for (const url of sitemapUrls) {
 const sitemapRoutes = new Set(sitemapUrls.map((u) => u.slice(ORIGIN.length) || '/'));
 for (const route of builtRoutes) {
   if (!sitemapRoutes.has(route)) errors.push(`sitemap: built route ${route} missing from sitemap`);
+}
+
+// ---- every route must be prerenderable ----
+// Shells ship an empty #root, so their content and internal links only exist
+// after scripts/prerender.mjs fills them in at build time. An entry that still
+// mounts with a bare createRoot, or a page missing from the prerender lists,
+// silently ships a blank body to crawlers.
+const prerenderScript = readFileSync(join(root, 'scripts', 'prerender.mjs'), 'utf8');
+function listFromPrerender(name) {
+  const body = prerenderScript.match(new RegExp(String.raw`const ${name} = \[([^\]]*)\]`))?.[1] ?? '';
+  return body
+    .split(',')
+    .map((s) => s.trim().replace(/^['"]|['"]$/g, ''))
+    .filter(Boolean);
+}
+const guideProducts = new Set(listFromPrerender('guideProducts'));
+const standalonePages = new Set(listFromPrerender('standalonePages'));
+if (guideProducts.size === 0 || standalonePages.size === 0) {
+  errors.push('scripts/prerender.mjs: could not read guideProducts / standalonePages');
+}
+
+const prerenderedPages = pages.filter((p) => !NOT_PRERENDERED.has(p.file));
+for (const page of prerenderedPages) {
+  const isGuide = /^[a-z-]+\/guides(\/[^/]+)?\.html$/.test(page.file);
+  if (isGuide) {
+    const product = page.file.split('/')[0];
+    if (!guideProducts.has(product)) {
+      errors.push(`${page.file}: product "${product}" is missing from guideProducts in scripts/prerender.mjs`);
+    }
+  } else if (!standalonePages.has(page.file)) {
+    errors.push(`${page.file}: missing from standalonePages in scripts/prerender.mjs`);
+  }
+
+  const entry = page.html.match(/<script\s+type="module"\s+src="([^"]+)"/i)?.[1];
+  if (!entry) {
+    errors.push(`${page.file}: module entry was not found`);
+    continue;
+  }
+
+  const entrySource = readFileSync(join(root, entry), 'utf8');
+  // Guide entries predate the shared helper and still use GuidePage/mountGuide.
+  if (!/export function (Page|GuidePage)\(/.test(entrySource)) {
+    errors.push(`${entry}: prerendering needs an exported Page (or GuidePage) component`);
+  }
+  if (!/\bmount(Page|Guide)\(/.test(entrySource)) {
+    errors.push(`${entry}: must mount via mountPage() so build-time HTML is hydrated, not discarded`);
+  }
+  if (/\bcreateRoot\(/.test(entrySource)) {
+    errors.push(`${entry}: createRoot() discards prerendered HTML; use mountPage()`);
+  }
+}
+
+const guidePages = prerenderedPages.filter((p) => /^[a-z-]+\/guides(\/[^/]+)?\.html$/.test(p.file));
+if (guidePages.length === 0) errors.push('No guide pages found; the prerender check is not running');
+
+// ---- guide hub ItemList must list every guide of that product ----
+for (const page of guidePages.filter((p) => /^[a-z]+\/guides\.html$/.test(p.file))) {
+  const product = page.file.split('/')[0];
+  const expected = new Set(
+    [...builtRoutes].filter((r) => r.startsWith(`/${product}/guides/`)).map((r) => `${ORIGIN}${r}`),
+  );
+
+  let listed = null;
+  for (const [, block] of page.html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    try {
+      const schema = JSON.parse(block);
+      if (schema['@type'] === 'CollectionPage' && schema.mainEntity?.['@type'] === 'ItemList') {
+        listed = schema.mainEntity.itemListElement ?? [];
+      }
+    } catch {
+      // The per-page JSON-LD check above reports the parse error.
+    }
+  }
+
+  if (!listed) {
+    errors.push(`${page.file}: missing a CollectionPage ItemList of the product's guides`);
+    continue;
+  }
+
+  const listedUrls = new Set(listed.map((entry) => entry.url));
+  for (const url of expected) {
+    if (!listedUrls.has(url)) errors.push(`${page.file}: ItemList is missing ${url}`);
+  }
+  for (const url of listedUrls) {
+    if (!expected.has(url)) errors.push(`${page.file}: ItemList links unknown guide ${url}`);
+  }
+
+  const positions = listed.map((entry) => entry.position);
+  const ordered = positions.every((pos, i) => pos === i + 1);
+  if (!ordered) errors.push(`${page.file}: ItemList positions must run 1..${listed.length} in order`);
 }
 
 // ---- internal link resolution (literal hrefs only) ----

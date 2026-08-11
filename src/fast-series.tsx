@@ -1,12 +1,9 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { mountPage } from './lib/mountPage.tsx';
 import FastSeriesApp from './FastSeriesApp.tsx';
 import './index.css';
 
-document.documentElement.classList.add('home-page');
+export function Page() {
+  return <FastSeriesApp />;
+}
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <FastSeriesApp />
-  </StrictMode>,
-);
+mountPage(<Page />);

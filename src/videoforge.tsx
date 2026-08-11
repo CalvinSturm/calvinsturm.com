@@ -1,12 +1,9 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { mountPage } from './lib/mountPage.tsx';
 import VideoForgeApp from './VideoForgeApp.tsx';
 import './index.css';
 
-document.documentElement.classList.add('home-page');
+export function Page() {
+  return <VideoForgeApp />;
+}
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <VideoForgeApp />
-  </StrictMode>,
-);
+mountPage(<Page />);

@@ -1,10 +1,9 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { mountGuide } from '../product-guides/mountGuide.tsx';
 import { GuidesIndexPage } from './GuideLayout.tsx';
 import '../index.css';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <GuidesIndexPage />
-  </StrictMode>,
-);
+export function GuidePage() {
+  return <GuidesIndexPage />;
+}
+
+mountGuide(<GuidePage />);

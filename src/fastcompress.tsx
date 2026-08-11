@@ -1,10 +1,9 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { mountPage } from './lib/mountPage.tsx';
 import { FastCompressProductPage } from './FastSeriesShared.tsx';
 import './index.css';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <FastCompressProductPage />
-  </StrictMode>,
-);
+export function Page() {
+  return <FastCompressProductPage />;
+}
+
+mountPage(<Page />);

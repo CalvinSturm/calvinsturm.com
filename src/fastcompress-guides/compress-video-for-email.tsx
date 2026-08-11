@@ -1,5 +1,4 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { mountGuide } from '../product-guides/mountGuide.tsx';
 import { GuideLayout, GuideSection, InlineCta } from './GuideLayout.tsx';
 import { guidePath } from './guides-data';
 import '../index.css';
@@ -13,7 +12,7 @@ const toc = [
   { id: 'faq', label: 'Common questions' },
 ];
 
-function Article() {
+export function GuidePage() {
   return (
     <GuideLayout
       slug="compress-video-for-email"
@@ -166,8 +165,4 @@ function Article() {
   );
 }
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Article />
-  </StrictMode>,
-);
+mountGuide(<GuidePage />);

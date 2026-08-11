@@ -1,10 +1,9 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { mountPage } from './lib/mountPage.tsx';
 import { FastCastV2 } from './FastCastV2.tsx';
 import './index.css';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <FastCastV2 />
-  </StrictMode>,
-);
+export function Page() {
+  return <FastCastV2 />;
+}
+
+mountPage(<Page />);
