@@ -170,10 +170,10 @@ export function FastPlayV3() {
             <div className="fastcast-v2-hero-product" aria-hidden="true">
               <div className="fastcast-v2-product-glow" />
               <img
-                src="/assets/FastPlay/FastPlay_Demo.gif"
+                src="/assets/FastPlay/fastplay_hero.gif"
                 alt=""
-                width="544"
-                height="988"
+                width="540"
+                height="958"
                 decoding="async"
                 fetchPriority="high"
               />
