@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { CircleDot, Download } from 'lucide-react';
 import { guides as fastCastGuides, guidePath as fastCastGuidePath, fastCastProCheckoutUrl } from './fastcast-guides/guides-data';
 import { trackCtaClick } from './lib/analytics';
 import { useReducedMotion } from './lib/useReducedMotion';
@@ -639,6 +640,18 @@ export function FastCastV2() {
           </nav>
         </div>
       </footer>
+
+      <div className="fc-floating-cta">
+        <span><CircleDot size={14} /> FastCast <b>v0.6.1</b></span>
+        <a
+          href={downloadUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackDownload('floating')}
+        >
+          Download <Download size={14} />
+        </a>
+      </div>
     </div>
   );
 }

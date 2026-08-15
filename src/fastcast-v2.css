@@ -1011,6 +1011,68 @@ body:has(.fc) {
   color: var(--fc-color-brand-visited);
 }
 
+.fc-floating-cta {
+  position: fixed;
+  z-index: 80;
+  right: 24px;
+  bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 48px;
+  padding: 6px 7px 6px 15px;
+  border: 1px solid var(--fc-color-brand-border);
+  border-radius: 999px;
+  background: rgba(11, 11, 12, 0.88);
+  color: var(--fc-color-text-muted);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(18px);
+  font-size: 11px;
+}
+
+.fc-floating-cta > span,
+.fc-floating-cta > a {
+  display: flex;
+  align-items: center;
+}
+
+.fc-floating-cta > span {
+  gap: 7px;
+}
+
+.fc-floating-cta > span svg {
+  color: var(--fc-color-record);
+}
+
+.fc-floating-cta b {
+  color: var(--fc-color-text-subtle);
+  font-weight: 650;
+}
+
+.fc-floating-cta > a {
+  gap: 7px;
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: var(--fc-color-brand);
+  color: var(--fc-color-on-brand) !important;
+  font-weight: 750;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.fc-floating-cta > a:hover {
+  background: var(--fc-color-brand-hover);
+  transform: translateY(-1px);
+}
+
+.fc-floating-cta > a:active {
+  background: var(--fc-color-brand-active);
+  transform: none;
+}
+
+.fc-floating-cta > a:visited {
+  color: var(--fc-color-on-brand) !important;
+}
+
 /* ------------------------------------------------------------ smaller rigs */
 
 @media (max-width: 1080px) {
@@ -1095,6 +1157,15 @@ body:has(.fc) {
 }
 
 @media (max-width: 560px) {
+  .fc-floating-cta {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .fc-floating-cta > span {
+    display: none;
+  }
+
   .fc-timecode {
     display: none;
   }
