@@ -215,7 +215,7 @@ export function FastCastV2() {
             </span>
           )}
           <a
-            className="fc-btn fc-btn-rec"
+            className="fc-btn fc-btn-primary"
             href={downloadUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -242,7 +242,7 @@ export function FastCastV2() {
                 </p>
                 <div className="fc-actions">
                   <a
-                    className="fc-btn fc-btn-rec fc-btn-lg"
+                    className="fc-btn fc-btn-primary fc-btn-lg"
                     href={downloadUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -321,7 +321,7 @@ export function FastCastV2() {
                   </ol>
                 </article>
 
-                <article className="fc-ch fc-ch-live">
+                <article className="fc-ch fc-ch-featured">
                   <header>
                     <span className="fc-ch-id">CH B</span>
                     <h3>FastCast</h3>
@@ -506,7 +506,7 @@ export function FastCastV2() {
                     <li>Streaming to YouTube, Twitch, or Kick</li>
                   </ul>
                   <a
-                    className="fc-btn fc-btn-ghost"
+                    className="fc-btn fc-btn-primary"
                     href={downloadUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -529,7 +529,7 @@ export function FastCastV2() {
                     <li>No subscription and no account</li>
                   </ul>
                   <a
-                    className="fc-btn fc-btn-rec"
+                    className="fc-btn fc-btn-primary"
                     href={fastCastProCheckoutUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -604,7 +604,7 @@ export function FastCastV2() {
                 no installer.</p>
               <div className="fc-actions">
                 <a
-                  className="fc-btn fc-btn-rec fc-btn-lg"
+                  className="fc-btn fc-btn-primary fc-btn-lg"
                   href={downloadUrl}
                   target="_blank"
                   rel="noopener noreferrer"

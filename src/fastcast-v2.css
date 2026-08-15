@@ -1,36 +1,50 @@
 /* FastCast product page.
  *
  * The page is dressed as a piece of rack-mounted broadcast gear: a graphite
- * panel, silkscreen-style mono labels, hairline rules, and exactly one accent
- * (tally red) reserved for recording and for the actions that start it. There
- * are no gradients, no glows, and no scroll choreography. If you are adding
- * something here, it should look like it was screen-printed onto a panel.
+ * panel, silkscreen-style mono labels, hairline rules, and a blue-first brand
+ * accent. Tally red is reserved for recording and live state. There are no
+ * gradients, no glows, and no scroll choreography. If you are adding something
+ * here, it should look like it was screen-printed onto a panel.
  *
  * Structure: every band is a .fc-unit. Inside, .fc-unit-inner is a two-column
  * grid of [patch label rail | content]. The rail is the spine that runs down
  * the whole page.
  */
 
+:root:has(.fc) {
+  /* FastCast's icon ranges from deep cobalt to bright cyan. This midpoint is
+     the stable page accent; state tokens keep hover and active feedback in the
+     same family without pushing the page toward neon. */
+  --fc-color-background: #0b0b0c;
+  --fc-color-surface: #161617;
+  --fc-color-surface-raised: #1c1c1e;
+  --fc-color-border: #2a2a2c;
+  --fc-color-border-strong: #414145;
+  --fc-color-text: #f2efe8;
+  --fc-color-text-muted: #aaa6a0;
+  --fc-color-text-subtle: #918d87;
+  --fc-color-brand: #2583ff;
+  --fc-color-brand-hover: #4c9aff;
+  --fc-color-brand-active: #1073ee;
+  --fc-color-brand-visited: #75a9ff;
+  --fc-color-brand-wash: rgba(37, 131, 255, 0.08);
+  --fc-color-brand-border: rgba(37, 131, 255, 0.56);
+  --fc-color-brand-focus: rgba(37, 131, 255, 0.28);
+  --fc-color-on-brand: #071528;
+  --fc-color-record: #ff4b43;
+  --fc-color-record-focus: rgba(255, 75, 67, 0.2);
+}
+
 .fc {
   /* Warm graphite, not blue-black: it sits under a blue app screenshot without
      the two competing. */
-  --ink: #0c0c0d;
-  --panel: #141416;
-  --panel-2: #1b1b1e;
-  --rule: rgba(233, 229, 219, 0.13);
-  --rule-strong: rgba(233, 229, 219, 0.24);
-  --silk: #e9e5db;
-  --silk-dim: #93908a;
-  --silk-faint: #6b6863;
-  --tally: #ff3b30;
-  --tally-ink: #ff6b5c;
   --shell: min(1200px, 100% - 56px);
   --rail-w: 128px;
   --rail-gap: 40px;
 
   min-height: 100vh;
-  background: var(--ink);
-  color: var(--silk);
+  background: var(--fc-color-background);
+  color: var(--fc-color-text);
   font-family: Archivo, "Segoe UI", system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.55;
@@ -42,7 +56,7 @@
    the page overscrolls into a strip of the marketing site's paper colour. */
 :root:has(.fc),
 body:has(.fc) {
-  background: #0c0c0d;
+  background: var(--fc-color-background);
 }
 
 .fc *,
@@ -68,8 +82,9 @@ body:has(.fc) {
 }
 
 .fc :focus-visible {
-  outline: 2px solid var(--tally-ink);
+  outline: 2px solid var(--fc-color-brand);
   outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--fc-color-brand-focus);
 }
 
 /* Headline voice: Archivo pulled slightly narrow and set tight, the way a
@@ -92,7 +107,7 @@ body:has(.fc) {
 }
 
 .fc h2 em {
-  color: var(--tally-ink);
+  color: var(--fc-color-brand);
   font-style: normal;
 }
 
@@ -129,8 +144,8 @@ body:has(.fc) {
   left: 10px;
   z-index: 200;
   padding: 10px 14px;
-  background: var(--silk);
-  color: #0c0c0d;
+  background: var(--fc-color-brand);
+  color: var(--fc-color-on-brand);
   font-weight: 700;
   transform: translateY(-160%);
 }
@@ -151,8 +166,8 @@ body:has(.fc) {
   gap: 32px;
   height: 56px;
   padding-inline: max(28px, calc((100vw - 1200px) / 2));
-  border-bottom: 1px solid var(--rule);
-  background: rgba(12, 12, 13, 0.92);
+  border-bottom: 1px solid var(--fc-color-border);
+  background: rgba(11, 11, 12, 0.92);
   backdrop-filter: blur(10px);
 }
 
@@ -176,8 +191,8 @@ body:has(.fc) {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--tally);
-  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.16);
+  background: var(--fc-color-record);
+  box-shadow: 0 0 0 3px var(--fc-color-record-focus);
   animation: fc-tally-pulse 2.4s ease-in-out infinite;
 }
 
@@ -196,11 +211,16 @@ body:has(.fc) {
   justify-content: center;
   gap: 26px;
   font-size: 14px;
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
 }
 
-.fc-bar nav a:hover {
-  color: var(--silk);
+.fc-bar nav a:hover,
+.fc-bar nav a[aria-current="page"] {
+  color: var(--fc-color-brand);
+}
+
+.fc-bar nav a:active {
+  color: var(--fc-color-brand-active);
 }
 
 .fc-bar-right {
@@ -210,12 +230,12 @@ body:has(.fc) {
 }
 
 .fc-timecode {
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-size: 10px;
 }
 
 .fc-timecode span {
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
   font-variant-numeric: tabular-nums;
 }
 
@@ -237,39 +257,72 @@ body:has(.fc) {
   font-size: 12px;
 }
 
-.fc-btn-rec {
-  background: var(--tally);
-  color: #fff;
+.fc-btn-primary {
+  background: var(--fc-color-brand);
+  color: var(--fc-color-on-brand);
 }
 
-.fc-btn-rec:hover {
-  background: #ff5245;
+.fc-btn-primary:hover {
+  background: var(--fc-color-brand-hover);
+}
+
+.fc-btn-primary:active {
+  background: var(--fc-color-brand-active);
+}
+
+.fc-btn-primary:visited {
+  color: var(--fc-color-on-brand);
 }
 
 .fc-btn-ghost {
-  border-color: var(--rule-strong);
-  color: var(--silk);
+  border-color: var(--fc-color-border-strong);
+  color: var(--fc-color-text);
 }
 
 .fc-btn-ghost:hover {
-  border-color: var(--silk-dim);
-  background: rgba(233, 229, 219, 0.05);
+  border-color: var(--fc-color-brand-border);
+  background: var(--fc-color-brand-wash);
+  color: var(--fc-color-brand-hover);
+}
+
+.fc-btn-ghost:active {
+  border-color: var(--fc-color-brand-active);
+  color: var(--fc-color-brand-active);
+}
+
+.fc-btn span[aria-hidden="true"] {
+  color: var(--fc-color-brand-hover);
+}
+
+.fc-btn[aria-disabled="true"],
+.fc-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .fc-link {
-  color: var(--silk-dim);
+  color: var(--fc-color-brand);
   font-size: 14px;
   white-space: nowrap;
 }
 
 .fc-link:hover {
-  color: var(--tally-ink);
+  color: var(--fc-color-brand-hover);
+}
+
+.fc-link:active {
+  color: var(--fc-color-brand-active);
+}
+
+.fc-link:visited {
+  color: var(--fc-color-brand-visited);
 }
 
 /* ------------------------------------------------------------- rack + rails */
 
 .fc-unit {
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid var(--fc-color-border);
 }
 
 .fc-hero {
@@ -299,19 +352,19 @@ body:has(.fc) {
   flex-direction: column;
   gap: 4px;
   padding-right: var(--rail-gap);
-  border-right: 1px solid var(--rule);
+  border-right: 1px solid var(--fc-color-border);
   min-height: 46px;
 }
 
 .fc-rail b {
-  color: var(--tally-ink);
+  color: var(--fc-color-brand);
   font-weight: 600;
   font-size: 12px;
   letter-spacing: 0.18em;
 }
 
 .fc-rail span {
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
 }
 
 .fc-unit-body {
@@ -321,7 +374,7 @@ body:has(.fc) {
 .fc-unit-lede {
   max-width: 62ch;
   margin-top: 18px;
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
   font-size: 17px;
 }
 
@@ -334,7 +387,7 @@ body:has(.fc) {
 }
 
 .fc-fineprint {
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-size: 13px;
 }
 
@@ -368,7 +421,7 @@ body:has(.fc) {
 }
 
 .fc-eyebrow {
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
 }
 
 .fc-hero-copy h1 {
@@ -378,7 +431,7 @@ body:has(.fc) {
 .fc-lede {
   max-width: 46ch;
   margin-top: 26px;
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
   font-size: 18px;
 }
 
@@ -396,7 +449,7 @@ body:has(.fc) {
 /* Spec plate: the label on the back of the unit. Real numbers, no adjectives. */
 .fc-plate {
   margin-top: 40px;
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid var(--fc-color-border);
 }
 
 .fc-plate div {
@@ -404,11 +457,11 @@ body:has(.fc) {
   grid-template-columns: 92px minmax(0, 1fr);
   gap: 16px;
   padding: 10px 0;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--fc-color-border);
 }
 
 .fc-plate dt {
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace;
   font-size: 10px;
   letter-spacing: 0.16em;
@@ -417,7 +470,7 @@ body:has(.fc) {
 }
 
 .fc-plate dd {
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
   font-size: 14px;
 }
 
@@ -431,9 +484,9 @@ body:has(.fc) {
 
 .fc-monitor-frame {
   overflow: hidden;
-  border: 1px solid var(--rule-strong);
+  border: 1px solid var(--fc-color-border-strong);
   border-radius: 3px;
-  background: var(--panel);
+  background: var(--fc-color-surface);
 }
 
 .fc-monitor-frame picture,
@@ -446,7 +499,7 @@ body:has(.fc) {
 .fc-monitor figcaption,
 .fc-shot figcaption {
   margin-top: 12px;
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-size: 13px;
 }
 
@@ -463,14 +516,14 @@ body:has(.fc) {
   display: flex;
   flex-direction: column;
   padding: 22px 24px 26px;
-  border: 1px solid var(--rule);
+  border: 1px solid var(--fc-color-border);
   border-radius: 3px;
-  background: var(--panel);
+  background: var(--fc-color-surface);
 }
 
-.fc-ch-live {
-  border-color: rgba(255, 59, 48, 0.42);
-  background: var(--panel-2);
+.fc-ch-featured {
+  border-color: var(--fc-color-brand-border);
+  background: var(--fc-color-surface-raised);
 }
 
 .fc-ch header {
@@ -478,16 +531,16 @@ body:has(.fc) {
   align-items: center;
   gap: 12px;
   padding-bottom: 16px;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--fc-color-border);
 }
 
 .fc-ch-id {
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-size: 10px;
 }
 
-.fc-ch-live .fc-ch-id {
-  color: var(--tally-ink);
+.fc-ch-featured .fc-ch-id {
+  color: var(--fc-color-brand);
 }
 
 .fc-ch header h3 {
@@ -496,12 +549,12 @@ body:has(.fc) {
 
 .fc-ch-count {
   margin-left: auto;
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-size: 10px;
 }
 
-.fc-ch-live .fc-ch-count {
-  color: var(--tally-ink);
+.fc-ch-featured .fc-ch-count {
+  color: var(--fc-color-brand);
 }
 
 .fc-ch ol {
@@ -514,8 +567,8 @@ body:has(.fc) {
   grid-template-columns: 34px minmax(0, 1fr);
   gap: 10px;
   padding: 11px 0;
-  border-bottom: 1px solid var(--rule);
-  color: var(--silk-dim);
+  border-bottom: 1px solid var(--fc-color-border);
+  color: var(--fc-color-text-muted);
   font-size: 15px;
 }
 
@@ -524,18 +577,18 @@ body:has(.fc) {
 }
 
 .fc-ch li span {
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace;
   font-size: 11px;
   line-height: 1.7;
 }
 
-.fc-ch-live li {
-  color: var(--silk);
+.fc-ch-featured li {
+  color: var(--fc-color-text);
 }
 
-.fc-ch-live li span {
-  color: var(--tally-ink);
+.fc-ch-featured li span {
+  color: var(--fc-color-brand);
 }
 
 /* Pushed to the floor of the card so the empty space above it is the point:
@@ -543,7 +596,7 @@ body:has(.fc) {
 .fc-ch-note {
   margin-top: auto;
   padding-top: 24px;
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-size: 13px;
 }
 
@@ -551,13 +604,13 @@ body:has(.fc) {
   max-width: 78ch;
   margin-top: 28px;
   padding: 18px 0 18px 20px;
-  border-left: 2px solid var(--tally);
-  color: var(--silk-dim);
+  border-left: 2px solid var(--fc-color-brand);
+  color: var(--fc-color-text-muted);
   font-size: 15px;
 }
 
 .fc-honest b {
-  color: var(--silk);
+  color: var(--fc-color-text);
   font-weight: 600;
 }
 
@@ -565,7 +618,7 @@ body:has(.fc) {
 
 .fc-rows {
   margin-top: 40px;
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid var(--fc-color-border);
 }
 
 .fc-rows li {
@@ -574,16 +627,16 @@ body:has(.fc) {
   gap: 32px;
   align-items: baseline;
   padding: 22px 0;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--fc-color-border);
 }
 
 .fc-rows p {
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
   font-size: 15px;
 }
 
 .fc-rows-spec {
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-size: 10px;
   text-align: right;
 }
@@ -609,7 +662,7 @@ body:has(.fc) {
 .fc-ticks li {
   position: relative;
   padding-left: 22px;
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
   font-size: 15px;
 }
 
@@ -617,7 +670,7 @@ body:has(.fc) {
   content: "+";
   position: absolute;
   left: 0;
-  color: var(--tally-ink);
+  color: var(--fc-color-brand);
   font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace;
   font-size: 13px;
 }
@@ -641,8 +694,8 @@ body:has(.fc) {
 
 .fc-keygroup-name {
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--rule-strong);
-  color: var(--silk-faint);
+  border-bottom: 1px solid var(--fc-color-border-strong);
+  color: var(--fc-color-text-subtle);
   font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace;
   font-size: 10px;
   letter-spacing: 0.16em;
@@ -661,8 +714,8 @@ body:has(.fc) {
   gap: 20px;
   align-items: center;
   padding: 11px 0;
-  border-bottom: 1px solid var(--rule);
-  color: var(--silk-dim);
+  border-bottom: 1px solid var(--fc-color-border);
+  color: var(--fc-color-text-muted);
   font-size: 15px;
 }
 
@@ -678,11 +731,11 @@ body:has(.fc) {
   display: inline-block;
   min-width: 26px;
   padding: 4px 7px;
-  border: 1px solid var(--rule-strong);
+  border: 1px solid var(--fc-color-border-strong);
   border-bottom-width: 2px;
   border-radius: 3px;
-  background: var(--panel-2);
-  color: var(--silk);
+  background: var(--fc-color-surface-raised);
+  color: var(--fc-color-text);
   font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace;
   font-size: 11px;
   font-weight: 500;
@@ -692,21 +745,21 @@ body:has(.fc) {
 
 .fc-combo i {
   padding: 0 5px;
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-size: 10px;
   font-style: normal;
 }
 
 .fc-combo em {
   padding-left: 8px;
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-size: 12px;
   font-style: normal;
 }
 
 .fc-keynote {
   margin-top: 22px;
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-size: 14px;
 }
 
@@ -717,7 +770,7 @@ body:has(.fc) {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
   margin-top: 40px;
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid var(--fc-color-border);
 }
 
 .fc-facts li {
@@ -725,7 +778,7 @@ body:has(.fc) {
   flex-direction: column;
   gap: 10px;
   padding: 26px 28px 26px 0;
-  border-right: 1px solid var(--rule);
+  border-right: 1px solid var(--fc-color-border);
 }
 
 .fc-facts li:last-child {
@@ -743,7 +796,7 @@ body:has(.fc) {
 }
 
 .fc-facts span {
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
   font-size: 15px;
 }
 
@@ -761,28 +814,28 @@ body:has(.fc) {
   display: flex;
   flex-direction: column;
   padding: 26px 26px 28px;
-  border: 1px solid var(--rule);
+  border: 1px solid var(--fc-color-border);
   border-radius: 3px;
-  background: var(--panel);
+  background: var(--fc-color-surface);
 }
 
 .fc-plans .fc-plan-pro {
-  border-color: rgba(255, 59, 48, 0.42);
-  background: var(--panel-2);
+  border-color: var(--fc-color-brand-border);
+  background: var(--fc-color-surface-raised);
 }
 
 .fc-plan-name {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
 }
 
 .fc-chip {
   padding: 3px 7px;
-  border: 1px solid var(--rule-strong);
+  border: 1px solid var(--fc-color-border-strong);
   border-radius: 999px;
-  color: var(--silk-faint);
+  color: var(--fc-color-text-subtle);
   font-size: 9px;
 }
 
@@ -796,12 +849,12 @@ body:has(.fc) {
 }
 
 .fc-plan-pro .fc-plan-price {
-  color: var(--tally-ink);
+  color: var(--fc-color-brand);
 }
 
 .fc-plan-line {
   margin-top: 12px;
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
   font-size: 15px;
 }
 
@@ -818,7 +871,7 @@ body:has(.fc) {
 
 .fc-doclist {
   margin-top: 32px;
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid var(--fc-color-border);
 }
 
 .fc-doclist a {
@@ -827,16 +880,16 @@ body:has(.fc) {
   gap: 28px;
   align-items: baseline;
   padding: 20px 0;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--fc-color-border);
   transition: background-color 130ms ease;
 }
 
 .fc-doclist a:hover {
-  background: rgba(233, 229, 219, 0.03);
+  background: var(--fc-color-brand-wash);
 }
 
 .fc-doc-cat {
-  color: var(--silk-faint);
+  color: var(--fc-color-brand);
   font-size: 10px;
 }
 
@@ -847,30 +900,35 @@ body:has(.fc) {
 
 .fc-doclist p {
   margin-top: 6px;
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
   font-size: 14px;
 }
 
 .fc-doc-arrow {
-  color: var(--silk-faint);
+  color: var(--fc-color-brand);
   text-align: right;
   transition: color 130ms ease, transform 130ms ease;
 }
 
 .fc-doclist a:hover .fc-doc-arrow {
-  color: var(--tally-ink);
+  color: var(--fc-color-brand-hover);
   transform: translateX(3px);
+}
+
+.fc-doclist a:visited h3,
+.fc-doclist a:visited .fc-doc-arrow {
+  color: var(--fc-color-brand-visited);
 }
 
 /* ---------------------------------------------------------------------- faq */
 
 .fc-faq-list {
   margin-top: 32px;
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid var(--fc-color-border);
 }
 
 .fc-faq-list details {
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--fc-color-border);
 }
 
 .fc-faq-list summary {
@@ -891,7 +949,7 @@ body:has(.fc) {
 
 .fc-faq-list summary::after {
   content: "+";
-  color: var(--tally-ink);
+  color: var(--fc-color-brand);
   font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace;
   font-size: 15px;
 }
@@ -903,7 +961,7 @@ body:has(.fc) {
 .fc-faq-list p {
   max-width: 76ch;
   padding-bottom: 22px;
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
   font-size: 15px;
 }
 
@@ -920,8 +978,8 @@ body:has(.fc) {
 /* ------------------------------------------------------------------- footer */
 
 .fc-foot {
-  border-top: 1px solid var(--rule);
-  color: var(--silk-faint);
+  border-top: 1px solid var(--fc-color-border);
+  color: var(--fc-color-text-subtle);
 }
 
 .fc-foot .fc-unit-inner {
@@ -931,7 +989,7 @@ body:has(.fc) {
 }
 
 .fc-foot b {
-  color: var(--silk-dim);
+  color: var(--fc-color-text-muted);
   font-weight: 600;
 }
 
@@ -942,7 +1000,15 @@ body:has(.fc) {
 }
 
 .fc-foot nav a:hover {
-  color: var(--silk);
+  color: var(--fc-color-brand-hover);
+}
+
+.fc-foot nav a:active {
+  color: var(--fc-color-brand-active);
+}
+
+.fc-foot nav a:visited {
+  color: var(--fc-color-brand-visited);
 }
 
 /* ------------------------------------------------------------ smaller rigs */
@@ -995,7 +1061,7 @@ body:has(.fc) {
     min-height: 0;
     padding: 0 0 12px;
     border-right: 0;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--fc-color-border);
   }
 
   .fc-ab,
@@ -1011,7 +1077,7 @@ body:has(.fc) {
   .fc-facts li {
     padding: 22px 0;
     border-right: 0;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--fc-color-border);
   }
 
   .fc-facts li + li {
