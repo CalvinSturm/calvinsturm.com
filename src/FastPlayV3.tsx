@@ -158,7 +158,7 @@ export function FastPlayV3() {
             </div>
             <div className="fastcast-v2-hero-copy">
               <h1 id="fastplay-v3-title">A fast Windows video player that stays out of your way.</h1>
-              <p>Fast startup. Responsive seeking. Hardware-accelerated playback. FastPlay stays out of the way so the footage can take over.</p>
+              <p className="fastcast-v2-hero-lede">Fast startup. Responsive seeking. Hardware-accelerated playback. FastPlay stays out of the way so the footage can take over.</p>
               <div className="fastcast-v2-hero-actions">
                 <a className="fastcast-v2-button fastcast-v2-button-primary" href={downloadUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('hero')}>
                   Download for Windows <ArrowRight size={18} />

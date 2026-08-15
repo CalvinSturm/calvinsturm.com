@@ -318,7 +318,7 @@
   color: transparent;
 }
 
-.fastcast-v2-hero-copy > p:nth-of-type(2) {
+.fastcast-v2 .fastcast-v2-hero-lede {
   max-width: 720px;
   margin-top: 24px;
   color: #a8b5c5;
@@ -1607,7 +1607,7 @@
     font-size: clamp(34px, 10.5vw, 54px);
   }
 
-  .fastcast-v2-hero-copy > p:nth-of-type(2) {
+  .fastcast-v2 .fastcast-v2-hero-lede {
     max-width: 540px;
     font-size: 15px;
   }
