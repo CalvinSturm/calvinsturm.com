@@ -29,7 +29,7 @@ import { useReducedMotion } from './lib/useReducedMotion';
 import './fastcast-v2.css';
 import './fastplay-v3.css';
 
-const downloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/download/v0.4.4/fastplay-0.4.4-x86_64.msi';
+const downloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/download/v0.4.5/fastplay-0.4.5-x86_64.msi';
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastPlay/releases/latest';
 const sourceUrl = 'https://github.com/CalvinSturm/FastPlay';
 const releaseNotesUrl = 'https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.4.md';

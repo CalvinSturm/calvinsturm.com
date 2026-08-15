@@ -4,7 +4,7 @@ import { trackCtaClick } from './lib/analytics';
 import { useReducedMotion } from './lib/useReducedMotion';
 import './fastcast-v2.css';
 
-const downloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.6.0/FastCast-0.6.0-win-x64.zip';
+const downloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.6.1/FastCast-0.6.1-win-x64.zip';
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const allReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 
