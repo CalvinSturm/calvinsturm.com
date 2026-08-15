@@ -1,6 +1,6 @@
 # SEO content backlog
 
-Status of the problem-focused guide strategy as of 2026-07-16. The guide
+Status of the problem-focused guide strategy as of 2026-08-14. The guide
 architecture is `src/product-guides/ProductGuides.tsx` bound per product
 (`src/<product>-guides/`); each guide needs an HTML shell, a `.tsx` article, a
 `guides-data.ts` entry, a Vite input, and a sitemap entry.
@@ -9,7 +9,7 @@ architecture is `src/product-guides/ProductGuides.tsx` bound per product
 
 | Hub | Guides | Target intents |
 | --- | --- | --- |
-| `/fastcast/guides` | 6 | record screen Windows, OBS alternative, screen+webcam, 4K 60fps, recording lag, black screen / no audio troubleshooting |
+| `/fastcast/guides` | 16 | Windows recording, screen+webcam, command-line capture, YouTube/Twitch/Kick streaming, stream keys, private testing, bitrate, stability, OBS comparison |
 | `/fastplay/guides` | 6 | HDR on Windows, HEVC player, MOV not playing, HDR washed out, review workflow, stuttering playback |
 | `/fastcompress/guides` | 2 (new) | compress video for Discord, compress video for email |
 | `/fastclip/guides` | 2 (new) | long video to vertical clips, local auto captions |
@@ -38,6 +38,26 @@ architecture is `src/product-guides/ProductGuides.tsx` bound per product
    commits to benchmark data before "fastest" claims; hold until benchmarks
    exist.
 
+## Future FastCast recording articles
+
+These ideas need a distinct angle and evidence that they will not cannibalize
+the main recording guide. Validate current FastCast capability before drafting.
+
+1. How to Record Desktop Audio and Microphone on Windows
+2. How to Record a Specific Window on Windows 11
+3. How to Record a Tutorial Video on Windows
+4. How to Record a Product Demo on Windows
+5. How to Record a PowerPoint Presentation With Audio and Webcam
+6. How to Record Your Screen Without a Watermark
+7. How to Record Your Screen Without OBS
+8. How to Use a Green Screen While Recording on Windows — **blocked:** FastCast
+   does not currently provide chroma key or filters. Do not describe this as a
+   FastCast feature unless the shipped product changes.
+9. How to Fix Washed-Out Screen Recordings With HDR
+10. 1080p vs. 4K Screen Recording: Which Should You Use?
+11. 30 FPS vs. 60 FPS Screen Recording
+12. How Much Storage Does Screen Recording Use?
+
 ## Covered by existing articles (do not duplicate)
 
 - "Record without configuring OBS" and "OBS alternatives": both map to
@@ -52,6 +72,9 @@ architecture is `src/product-guides/ProductGuides.tsx` bound per product
 - "Record system audio and microphone together": covered by the audio-setup
   section of `how-to-record-screen-windows`; split out only if search data
   shows it deserves its own page.
+- "How to record your screen with audio," "Windows 11 screen recorder," and
+  "How to screen record on PC": covered by `how-to-record-screen-windows`.
+  Do not create separate pages unless search data proves a distinct intent.
 - "Timestamp markers and notes review": FastPlay has no markers/notes feature;
   `video-review-workflow` honestly positions in/out points instead. Blocked on
   product capability.

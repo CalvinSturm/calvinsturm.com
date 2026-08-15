@@ -100,7 +100,8 @@ export function GuidePage() {
           service presets, and login-based setup. FastCast keeps it manual but simple: click your
           platform (YouTube, Twitch, or Kick) to fill in the server URL, paste your stream key,
           and go live. FastCast has no platform OAuth login and no multistream/simulcast; if you
-          need either, that is an OBS job.
+          need either, that is an OBS job. For the focused path, follow the{' '}
+          <a href={guidePath('how-to-stream-on-windows')}>Windows live-streaming guide</a>.
         </p>
       </GuideSection>
 

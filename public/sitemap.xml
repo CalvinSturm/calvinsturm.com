@@ -20,25 +20,25 @@
   </url>
   <url>
     <loc>https://www.calvinsturm.com/fastcast/guides</loc>
-    <lastmod>2026-08-11</lastmod>
+    <lastmod>2026-08-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.calvinsturm.com/fastcast/guides/how-to-record-screen-windows</loc>
-    <lastmod>2026-07-19</lastmod>
+    <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.calvinsturm.com/fastcast/guides/obs-alternative-windows</loc>
-    <lastmod>2026-07-19</lastmod>
+    <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.calvinsturm.com/fastcast/guides/record-screen-and-webcam</loc>
-    <lastmod>2026-07-19</lastmod>
+    <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -50,13 +50,13 @@
   </url>
   <url>
     <loc>https://www.calvinsturm.com/fastcast/guides/screen-recording-without-lag</loc>
-    <lastmod>2026-07-19</lastmod>
+    <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.calvinsturm.com/fastcast/guides/screen-recording-black-screen-no-audio</loc>
-    <lastmod>2026-07-16</lastmod>
+    <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -68,7 +68,55 @@
   </url>
   <url>
     <loc>https://www.calvinsturm.com/fastcast/guides/stream-to-youtube-rtmps-windows</loc>
-    <lastmod>2026-07-19</lastmod>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/how-to-stream-on-windows</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/stream-to-twitch-windows</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/stream-to-kick-windows</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/find-stream-key-youtube-twitch-kick</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/test-live-stream-without-going-public</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/choose-live-streaming-bitrate</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/stream-screen-webcam-windows</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.calvinsturm.com/fastcast/guides/fix-live-stream-dropping-buffering</loc>
+    <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

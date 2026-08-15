@@ -38,6 +38,11 @@ export function GuidePage() {
           track, and any on-screen sound made it in. If all three pass, a longer recording will
           almost certainly pass too.
         </p>
+        <p>
+          The same source checks apply before going live. Continue with the{' '}
+          <a href={guidePath('how-to-stream-on-windows')}>Windows streaming setup</a>{' '}
+          when the local picture and audio both pass.
+        </p>
       </GuideSection>
 
       <GuideSection id="black-screen" title="Black screen: causes and fixes">

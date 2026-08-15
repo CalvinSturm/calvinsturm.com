@@ -104,6 +104,11 @@ export function GuidePage() {
           <li>Lower one or two GPU-heavy quality settings while recording.</li>
           <li>Close GPU-accelerated apps you are not recording (browsers with video playing, editors).</li>
         </ul>
+        <p>
+          A live stream adds upload stability to the same capture and encoder load. If local
+          recording is smooth but viewers still buffer, use the{' '}
+          <a href={guidePath('fix-live-stream-dropping-buffering')}>live-stream stability checklist</a>.
+        </p>
       </GuideSection>
 
       <GuideSection id="disk-and-background" title="Disk speed and background load">

@@ -5,6 +5,7 @@ import '../index.css';
 
 const toc = [
   { id: 'before-you-record', label: 'Before you record' },
+  { id: 'windows-options', label: 'Windows recording options' },
   { id: 'choose-source', label: 'Choosing what to capture' },
   { id: 'audio-setup', label: 'Setting up audio' },
   { id: 'webcam', label: 'Adding a webcam' },
@@ -21,11 +22,11 @@ export function GuidePage() {
       toc={toc}
       lede={
         <>
-          To record your screen on Windows, you need a recorder that can capture the right source
-          (a full monitor or a single window), the right audio (microphone, system sound, or both),
-          and save a file you can actually use, which usually means MP4. Windows ships Game Bar
-          (Win+G) for basic app capture, but it cannot record the whole desktop; a dedicated
-          recorder like FastCast covers the full job.
+          To record your screen on a Windows 11 or Windows 10 PC, choose a full monitor or one app
+          window, select microphone and desktop audio, then record to a usable local file such as
+          MP4. Built-in Windows tools can handle basic captures. A dedicated recorder such as
+          FastCast adds one place for full-display or window capture, both audio sources, and an
+          optional webcam.
         </>
       }
       topCtaNote="FastCast is a native Windows screen recorder: pick a monitor or window, choose mic and desktop audio, optionally add a webcam overlay, and press Record to get a local MP4. One portable ZIP, no runtime to install."
@@ -56,8 +57,33 @@ export function GuidePage() {
         </ul>
       </GuideSection>
 
+      <GuideSection id="windows-options" title="Choose a Windows 11 screen recorder for the job">
+        <p>Windows users have three practical starting points:</p>
+        <ul>
+          <li>
+            <strong>Snipping Tool:</strong> useful for a quick selected-area capture when you do
+            not need a full recording-and-streaming setup. Its available audio options can depend
+            on the installed Windows version, so check the controls shown on your PC.
+          </li>
+          <li>
+            <strong>Xbox Game Bar:</strong> press <code>Win+G</code> for basic app recording. It is
+            designed around application capture rather than every desktop and File Explorer workflow.
+          </li>
+          <li>
+            <strong>A dedicated recorder:</strong> use FastCast or another recorder when you need
+            a specific monitor or window, desktop audio and microphone together, an optional
+            webcam, or the same setup for live streaming.
+          </li>
+        </ul>
+        <p>
+          The right choice depends on the source and sound, not simply whether the PC says Windows
+          11. For a narrated tutorial or product demo, confirm the microphone and desktop-audio
+          sources separately before recording the full take.
+        </p>
+      </GuideSection>
+
       <GuideSection id="choose-source" title="Choosing what to capture">
-        <p>Windows recorders generally offer two kinds of source, and the choice matters:</p>
+        <p>Windows PC screen recorders generally offer two kinds of source, and the choice matters:</p>
         <ul>
           <li>
             <strong>A full monitor.</strong> Captures everything on that display, including app
@@ -71,9 +97,9 @@ export function GuidePage() {
           </li>
         </ul>
         <p>
-          FastCast supports both: you choose a screen or a specific window when you set up the
-          recording. Note that Windows Game Bar cannot capture the desktop or File Explorer at
-          all, which is the usual reason people outgrow it.
+          FastCast supports both: choose a screen or a specific window when you set up the
+          recording. A dedicated capture source is useful when built-in app recording does not
+          cover the desktop or File Explorer workflow you need.
         </p>
       </GuideSection>
 
@@ -96,6 +122,11 @@ export function GuidePage() {
           recording. Watch the live mic meter, adjust the persisted gain control from -12 dB to
           +12 dB, and back it down if the clipping warning appears. If you plan to narrate over
           game or app audio, do a short combined test first to confirm the balance sounds right.
+        </p>
+        <p>
+          That is the basic answer to recording a Windows screen with audio: enable the microphone
+          for your voice, desktop audio for computer sound, or both when viewers need narration and
+          the app. Listen to a short MP4 before committing to a long recording.
         </p>
       </GuideSection>
 

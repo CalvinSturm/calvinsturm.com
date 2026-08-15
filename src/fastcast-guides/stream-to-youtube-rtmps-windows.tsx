@@ -5,7 +5,7 @@ import '../index.css';
 
 const toc = [
   { id: 'before-you-start', label: 'Before you start' },
-  { id: 'youtube', label: 'Create the YouTube stream' },
+  { id: 'youtube', label: 'Create the YouTube Live stream' },
   { id: 'fastcast', label: 'Configure FastCast' },
   { id: 'test', label: 'Run a private test' },
   { id: 'security', label: 'Protect the stream key' },
@@ -19,15 +19,15 @@ export function GuidePage() {
       toc={toc}
       lede={
         <>
-          YouTube Live accepts video from a custom encoder through an ingest URL and stream key.
-          FastCast can send your screen, audio, and optional webcam to that endpoint over RTMPS.
-          There is no account login inside FastCast: you create the event in YouTube, copy the two
-          connection values, and run a private test before going public.
+          Connect FastCast to YouTube Live securely using RTMPS and your stream key, then run a
+          private test before broadcasting publicly. You create the broadcast in YouTube Studio;
+          FastCast sends the selected Windows screen, audio, and optional webcam to it without
+          logging into your YouTube account.
         </>
       }
-      topCtaNote="FastCast supports generic RTMP and encrypted RTMPS streaming. Paste the YouTube ingest URL and key, choose a focused screen/camera layout, and go live without building an OBS scene."
-      finalCtaHeading="Run an unlisted YouTube Live test"
-      finalCtaBody="Configure the stream in YouTube Studio, paste the RTMPS details into FastCast, and verify motion and audio in the Live Control Room before scheduling a public broadcast."
+      topCtaNote="FastCast supports encrypted RTMPS streaming to YouTube. Paste the server URL and key, choose a focused screen and camera layout, and test the feed without building an OBS scene."
+      finalCtaHeading="Run a private YouTube Live test"
+      finalCtaBody="Configure the stream in YouTube Studio, paste the RTMPS details into FastCast, and verify motion and audio in the Live Control Room before broadcasting publicly."
     >
       <GuideSection id="before-you-start" title="Before you start">
         <ul>
@@ -44,13 +44,17 @@ export function GuidePage() {
             live encoder settings guide
           </a>.
         </p>
+        <p>
+          New to server URLs and stream keys? Start with the plain-language{' '}
+          <a href={guidePath('how-to-stream-on-windows')}>Windows live-streaming workflow</a>.
+        </p>
       </GuideSection>
 
-      <GuideSection id="youtube" title="Create or select the stream in YouTube Studio">
+      <GuideSection id="youtube" title="Create or select a YouTube Live stream">
         <ol>
-          <li>Open YouTube Studio and enter the Live Control Room.</li>
+          <li>Open YouTube Studio, choose Create, then choose Go Live to enter the Live Control Room.</li>
           <li>Create a stream or select a reusable stream configuration.</li>
-          <li>For the first test, set visibility to Private or Unlisted.</li>
+          <li>For the first test, set visibility to Private or Unlisted rather than Public.</li>
           <li>Find the stream URL and stream key in the encoder setup area.</li>
           <li>Choose the RTMPS URL when YouTube provides it, then copy the URL and key separately.</li>
         </ol>
@@ -71,7 +75,7 @@ export function GuidePage() {
           <li>Start streaming, then watch for the preview in YouTube&apos;s Live Control Room.</li>
         </ol>
         <p>
-          FastCast uses a generic endpoint rather than YouTube account integration. You still
+          FastCast uses the YouTube endpoint rather than a YouTube account login. You still
           control the title, visibility, audience, scheduling, and final Go Live action in YouTube.
         </p>
       </GuideSection>
@@ -118,8 +122,8 @@ export function GuidePage() {
             <a href={guidePath('screen-recording-black-screen-no-audio')}>black-screen and audio checklist</a>.
           </li>
           <li>
-            <strong>Need overlays, alerts, scenes, or multiple platforms:</strong> FastCast is not a
-            full broadcast suite; see the{' '}
+            <strong>Need overlays, alerts, scenes, or multiple simultaneous destinations:</strong>{' '}
+            FastCast is not a full broadcast suite; see the{' '}
             <a href={guidePath('obs-alternative-windows')}>FastCast and OBS comparison</a>.
           </li>
         </ul>
