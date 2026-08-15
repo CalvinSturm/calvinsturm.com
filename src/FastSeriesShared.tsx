@@ -1241,6 +1241,7 @@ const fastPlayControls: Array<[string, string]> = [
   ['Ctrl+Shift+O (letter O)', 'Recent files overlay'],
   ['PageUp / PageDown', 'Previous / next file in the play queue'],
   ['Ctrl+S', 'Save screenshot'],
+  ['Ctrl+Shift+S', 'Toggle framed/frameless windowed mode'],
   ['[ / ]', 'Decrease / increase playback speed'],
   ['\\', 'Reset speed to 1x'],
   ['I / O', 'Set in-point / out-point'],
