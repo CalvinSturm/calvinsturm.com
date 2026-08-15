@@ -8,7 +8,7 @@ import type { GuideMeta } from '../product-guides/ProductGuides.tsx';
 export const fastPlayPath = '/fastplay';
 export const guidesIndexPath = '/fastplay/guides';
 
-export const fastPlayDownloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/latest';
+export const fastPlayDownloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/download/v0.4.6/fastplay-0.4.6-x86_64.msi';
 export const fastPlaySourceUrl = 'https://github.com/CalvinSturm/FastPlay';
 
 export type GuideCategory = 'HDR & Color' | 'Formats & Codecs' | 'Playback Performance' | 'Workflow';

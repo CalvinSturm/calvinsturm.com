@@ -135,14 +135,14 @@ const fastCastTimeline: TimelineItem[] = [
 
 const fastPlayTimeline: TimelineItem[] = [
   {
-    version: 'v0.4.4',
-    date: 'July 2026',
+    version: 'v0.4.6',
+    date: 'August 2026',
     status: 'Current release',
     tone: 'current',
-    title: 'Full-range PQ and 120 fps playback',
-    body: 'Full-range PQ/BT.2020 video now opens and plays through the HDR path, and a smoother audio master clock removes the structural frame loss that affected 120 fps playback on high-refresh displays.',
+    title: 'Frameless windows and better portrait video',
+    body: 'FastPlay can switch between framed and frameless windows with Ctrl+Shift+S, remembers that choice for new instances, and sizes rotated phone videos correctly when they open.',
     link: {
-      href: 'https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.4.md',
+      href: 'https://github.com/CalvinSturm/FastPlay/releases/tag/v0.4.6',
       label: 'Release notes',
     },
   },
@@ -499,7 +499,7 @@ export default function RoadmapApp() {
                 hardware-accelerated decode, and keyboard-driven controls. Free and open source under the MIT
                 License.
               </p>
-              <p className="fs-spot-meta">v0.4.4 · Windows 10+ · MSI installer · MIT License</p>
+              <p className="fs-spot-meta">v0.4.6 · Windows 10+ · MSI installer · MIT License</p>
               <div className="rm-spot-links">
                 <a href="/fastplay" className="home-spot-cta">
                   FastPlay product page

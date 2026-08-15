@@ -10,11 +10,9 @@ import {
   Download,
   FileVideo,
   Gauge,
-  Github,
   HardDrive,
   Keyboard,
   ShieldCheck,
-  Sparkles,
   Subtitles,
   Sun,
 } from 'lucide-react';
@@ -25,7 +23,7 @@ import { trackCtaClick } from './lib/analytics';
 import './fastplay-v3-base.css';
 import './fastplay-v3.css';
 
-const currentVersion = '0.4.5';
+const currentVersion = '0.4.6';
 const downloadUrl = `https://github.com/CalvinSturm/FastPlay/releases/download/v${currentVersion}/fastplay-${currentVersion}-x86_64.msi`;
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastPlay/releases/latest';
 const sourceUrl = 'https://github.com/CalvinSturm/FastPlay';
@@ -187,23 +185,23 @@ export function FastPlayV3() {
         <section id="overview" className="fastplay-v3-release-summary" aria-labelledby="release-summary-title">
           <div className="fastcast-v2-shell">
             <div className="fastplay-v3-release-card" data-reveal>
-              <h2 id="release-summary-title">New in v0.4.5: more reliable playback sessions</h2>
-              <p className="fastplay-v3-release-lede">A reliability release that prevents resource leaks across many open players, restores video after canceled software-decoder seeks, and keeps diagnostics separate for every run.</p>
+              <h2 id="release-summary-title">New in v0.4.6: frameless windows and better portrait video</h2>
+              <p className="fastplay-v3-release-lede">Switch between framed and frameless windows, keep your preferred style, and open rotated phone videos at the right shape.</p>
               <div className="fastplay-v3-release-grid">
                 <article>
-                  <h3>Clean multi-window playback</h3>
-                  <p>Overlay rebuilds no longer leak GDI handles, so running many FastPlay windows does not exhaust shared Windows desktop resources.</p>
+                  <h3>Frameless mode</h3>
+                  <p>Press Ctrl+Shift+S to switch between framed and frameless windows.</p>
                 </article>
                 <article>
-                  <h3>Seek recovery</h3>
-                  <p>Software-decoded video now recovers when a seek cancels a decoder reopen instead of leaving audio playing over a frozen picture.</p>
+                  <h3>Your choice remembered</h3>
+                  <p>New FastPlay windows open in the window style you last selected.</p>
                 </article>
                 <article>
-                  <h3>Per-run diagnostics</h3>
-                  <p>Concurrent players now keep separate session and crash logs, while fatal errors shut workers down cleanly before exit.</p>
+                  <h3>Better portrait video</h3>
+                  <p>Rotated phone videos now open in a correctly sized portrait window.</p>
                 </article>
               </div>
-              <a href={releaseNotesUrl} target="_blank" rel="noopener noreferrer">Read v0.4.5 release notes <ArrowUpRight size={16} /></a>
+              <a href={releaseNotesUrl} target="_blank" rel="noopener noreferrer">Read v{currentVersion} release notes <ArrowUpRight size={16} /></a>
             </div>
           </div>
         </section>
@@ -280,34 +278,33 @@ export function FastPlayV3() {
           <div className="fastcast-v2-shell">
             <div className="fastcast-v2-beta-heading" data-reveal>
               <p className="fastcast-v2-section-kicker">Current release · v{currentVersion}</p>
-              <h2>Reliable with one file—or twelve.</h2>
+              <h2>Video playback that just works.</h2>
             </div>
             <div className="fastcast-v2-plan-grid">
               <article data-reveal>
-                <p className="fastcast-v2-plan-name">Resource reliability</p>
-                <h3>Every player closes cleanly.</h3>
-                <p>Overlay rebuilds no longer leak GDI handles, so running many FastPlay windows does not exhaust the shared Windows desktop pool.</p>
+                <p className="fastcast-v2-plan-name">Reliable every day</p>
+                <h3>Open one video or a dozen.</h3>
+                <p>FastPlay stays responsive and closes cleanly, even when you have several videos open.</p>
                 <ul>
-                  <li><Check size={16} /> Zero GDI growth across repeated seeks</li>
-                  <li><Check size={16} /> Twelve concurrent players validated</li>
-                  <li><Check size={16} /> Clean shutdown on close or fatal error</li>
+                  <li><Check size={16} /> Open multiple videos without slowing down Windows</li>
+                  <li><Check size={16} /> Close every player without leftover processes</li>
+                  <li><Check size={16} /> Tested with 12 videos open at once</li>
                 </ul>
-                <a href={releaseNotesUrl} target="_blank" rel="noopener noreferrer">Read release notes <ArrowUpRight size={17} /></a>
+                <a href={releaseNotesUrl} target="_blank" rel="noopener noreferrer">See what’s new <ArrowUpRight size={17} /></a>
               </article>
               <article className="fastcast-v2-plan-pro" data-reveal>
-                <span className="fastcast-v2-plan-badge"><Sparkles size={14} /> Free forever</span>
-                <p className="fastcast-v2-plan-name">Seek recovery</p>
-                <h3>Scrubbing keeps video alive.</h3>
-                <p>Software-decode clips now recover when a seek cancels a decoder reopen instead of leaving audio playing over a frozen picture.</p>
+                <p className="fastcast-v2-plan-name">Smooth seeking</p>
+                <h3>Jump anywhere without getting stuck.</h3>
+                <p>Skip forward, go back, or drag through a video without leaving the picture frozen while the audio keeps playing.</p>
                 <ul>
-                  <li><Check size={16} /> Dead decoder workers respawn when needed</li>
-                  <li><Check size={16} /> Audio-only files avoid redundant reopen work</li>
-                  <li><Check size={16} /> Per-run diagnostics survive every instance</li>
+                  <li><Check size={16} /> Move through videos quickly</li>
+                  <li><Check size={16} /> Playback recovers if a video has trouble</li>
+                  <li><Check size={16} /> Picture and audio stay together</li>
                 </ul>
-                <a href={sourceUrl} target="_blank" rel="noopener noreferrer">Explore the source <ArrowUpRight size={17} /></a>
+                <a className="fastplay-v3-plan-download" href={downloadUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('release-card')}><Download size={17} /> Download FastPlay</a>
               </article>
             </div>
-            <p className="fastcast-v2-beta-note" data-reveal>FastPlay is free, open source, and built for Windows 10 or later on 64-bit hardware.</p>
+            <p className="fastcast-v2-beta-note" data-reveal>FastPlay is free for Windows 10 and 11.</p>
           </div>
         </section>
 
@@ -347,7 +344,6 @@ export function FastPlayV3() {
             <p>Download FastPlay v{currentVersion} for 64-bit Windows 10 or later.</p>
             <div>
               <a className="fastcast-v2-button fastcast-v2-button-primary" href={downloadUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('final')}><Download size={18} /> Download FastPlay</a>
-              <a className="fastcast-v2-button fastcast-v2-button-ghost" href={sourceUrl} target="_blank" rel="noopener noreferrer"><Github size={18} /> View source</a>
             </div>
           </div>
         </section>
@@ -356,7 +352,7 @@ export function FastPlayV3() {
       <footer className="fastcast-v2-footer">
         <div className="fastcast-v2-shell">
           <p><strong>FastPlay</strong> · Fast, lightweight local video playback for Windows.</p>
-          <nav aria-label="FastPlay footer links"><a href="/fastplay/guides">Guides</a><a href="/roadmap">Roadmap</a><a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">Latest release</a><a href={sourceUrl} target="_blank" rel="noopener noreferrer">GitHub</a></nav>
+          <nav aria-label="FastPlay footer links"><a href="/fastplay/guides">Guides</a><a href="/roadmap">Roadmap</a><a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">Latest release</a><a href={sourceUrl} target="_blank" rel="noopener noreferrer">Explore the source</a></nav>
           <p>Free and open source under the MIT License.</p>
         </div>
       </footer>
