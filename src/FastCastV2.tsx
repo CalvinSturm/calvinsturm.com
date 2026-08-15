@@ -236,10 +236,10 @@ export function FastCastV2() {
                 <p className="fc-eyebrow">Windows screen recorder and streamer</p>
                 {/* Must stay word-for-word identical to the fallback <h1> in
                     fastcast.html so a non-JS crawl and a rendered crawl agree. */}
-                <h1 id="fastcast-v2-title">Record your screen without building a scene</h1>
+                <h1 id="fastcast-v2-title">Record, stream, or do both in one click.</h1>
                 <p className="fc-lede">
-                  Open FastCast, pick a display and a mic, press record. When you want to go live, the
-                  same setup streams to YouTube, Twitch, Kick, or another streaming service.
+                  Open FastCast, pick a display and mic, then record, stream, or do both with one click.
+                  Go live to YouTube, Twitch, Kick, or any RTMP service.
                 </p>
                 <div className="fc-actions">
                   <a
