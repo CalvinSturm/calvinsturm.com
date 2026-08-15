@@ -207,7 +207,7 @@ export function FastCastV2() {
               the tally bar shows the build instead of the session timecode. */}
           {reducedMotion ? (
             <span className="fc-timecode" aria-hidden="true">
-              FastCast <span>0.6.0 · Windows 64-bit</span>
+              FastCast <span>0.6.1 · Windows 64-bit</span>
             </span>
           ) : (
             <span className="fc-timecode" aria-hidden="true">
@@ -255,7 +255,7 @@ export function FastCastV2() {
                   </a>
                 </div>
                 <p className="fc-fineprint">
-                  v0.6.0 · Portable ZIP · Free · No account
+                  v0.6.1 · Portable ZIP · Free · No account
                 </p>
 
                 <dl className="fc-plate">
@@ -600,7 +600,7 @@ export function FastCastV2() {
             <RailLabel code="REC" name="Ready" />
             <div className="fc-unit-body fc-end-body">
               <h2>Press record in ten seconds</h2>
-              <p className="fc-unit-lede">FastCast v0.6.0 for Windows 10 and 11, 64-bit. Portable ZIP,
+              <p className="fc-unit-lede">FastCast v0.6.1 for Windows 10 and 11, 64-bit. Portable ZIP,
                 no installer.</p>
               <div className="fc-actions">
                 <a

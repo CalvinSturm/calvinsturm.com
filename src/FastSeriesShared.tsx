@@ -644,7 +644,7 @@ const fastClipAllReleasesUrl = 'https://github.com/CalvinSturm/FastClip-Releases
 const fastCompressReleaseUrl = 'https://github.com/CalvinSturm/FastCompress-Releases/releases/latest';
 const fastCompressAllReleasesUrl = 'https://github.com/CalvinSturm/FastCompress-Releases/releases';
 const fastPlaySourceUrl = 'https://github.com/CalvinSturm/FastPlay';
-const fastPlayReleaseNotesUrl = 'https://github.com/CalvinSturm/FastPlay/blob/main/docs/release-notes-v0.4.4.md';
+const fastPlayReleaseNotesUrl = 'https://github.com/CalvinSturm/FastPlay/releases/tag/v0.4.5';
 
 type ProductSectionHeadingProps = {
   eyebrow?: string;
@@ -1306,7 +1306,7 @@ export function FastPlayProductPage() {
       brand="FastPlay"
       brandIconUrl="/assets/FastPlay/fastplay.png"
       navLinks={[
-        { href: '#release', label: 'v0.4.4' },
+        { href: '#release', label: 'v0.4.5' },
         { href: '#features', label: 'Features' },
         { href: '#architecture', label: 'Architecture' },
         { href: '#vlc', label: 'vs VLC' },
@@ -1350,7 +1350,7 @@ export function FastPlayProductPage() {
         primaryHref={fastPlayDownloadUrl}
         secondaryLabel="View source on GitHub"
         secondaryHref={fastPlaySourceUrl}
-        meta="v0.4.4 · Windows 10+ · MIT License"
+        meta="v0.4.5 · Windows 10+ · MIT License"
         subMeta="Windows x64 local playback. No streaming, media library, or plugin system."
         heroIconUrl="/assets/FastPlay/fastplay.png"
         heroIconAlt="FastPlay app icon"
@@ -1378,14 +1378,14 @@ export function FastPlayProductPage() {
           <article className="product-panel product-release-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)] sm:p-8">
             <ProductSectionHeading
               eyebrow="Current release"
-              title="New in v0.4.4: full-range PQ and 120 fps playback"
-              description="A playback-correctness release. Full-range PQ video from tools such as Topaz Video AI now opens correctly, and high-frame-rate video presents at full cadence on high-refresh displays."
+              title="New in v0.4.5: more reliable playback sessions"
+              description="A reliability release that prevents resource leaks across many open players, restores video after canceled software-decoder seeks, and keeps diagnostics separate for every run."
             />
             <div className="product-release-list mt-7 grid gap-4 md:grid-cols-3">
               {[
-                ['Full-range PQ playback', 'Full-range H.264 with genuine PQ and BT.2020 signaling now plays through the HDR path instead of failing to open.'],
-                ['120 fps pacing', 'The audio master clock now advances smoothly between hardware counter updates, removing the structural frame loss at high frame rates.'],
-                ['Native HDR or SDR output', 'PQ content presents natively on an HDR-active display and tone-maps to SDR otherwise, with the same safety checks for unsupported color combinations.'],
+                ['Clean multi-window playback', 'Overlay rebuilds no longer leak GDI handles, so running many FastPlay windows does not exhaust shared Windows desktop resources.'],
+                ['Seek recovery', 'Software-decoded video now recovers when a seek cancels a decoder reopen instead of leaving audio playing over a frozen picture.'],
+                ['Per-run diagnostics', 'Concurrent players now keep separate session and crash logs, while fatal errors shut workers down cleanly before exit.'],
               ].map(([title, body]) => (
                 <div key={title} className="product-release-item rounded-xl bg-slate-50 p-4">
                   <h3 className="font-semibold text-slate-900">{title}</h3>
@@ -1394,7 +1394,7 @@ export function FastPlayProductPage() {
               ))}
             </div>
             <a href={fastPlayReleaseNotesUrl} target="_blank" rel="noopener noreferrer" className="product-panel-link mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
-              Read v0.4.4 release notes
+              Read v0.4.5 release notes
               <ArrowUpRight className="h-4 w-4 text-amber-500" />
             </a>
           </article>
