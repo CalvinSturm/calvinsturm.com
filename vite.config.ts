@@ -39,6 +39,7 @@ export default defineConfig(({mode}) => {
           fastcastGuideYouTubeRtmps: path.resolve(__dirname, 'fastcast/guides/stream-to-youtube-rtmps-windows.html'),
           fastplay: path.resolve(__dirname, 'fastplay.html'),
           fastplayV2: path.resolve(__dirname, 'fastplay-v2.html'),
+          fastplayV3: path.resolve(__dirname, 'fastplay-v3.html'),
           fastplayGuides: path.resolve(__dirname, 'fastplay/guides.html'),
           fastplayGuideHdrVideo: path.resolve(__dirname, 'fastplay/guides/hdr-video-windows.html'),
           fastplayGuideMov: path.resolve(__dirname, 'fastplay/guides/mov-not-playing-windows.html'),

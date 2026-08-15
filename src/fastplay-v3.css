@@ -153,7 +153,8 @@
   aspect-ratio: 544 / 988;
 }
 
-.fastplay-v3 .fastcast-v2-hero-product video {
+.fastplay-v3 .fastcast-v2-hero-product video,
+.fastplay-v3 .fastcast-v2-hero-product img {
   position: relative;
   z-index: 2;
   display: block;
@@ -176,24 +177,98 @@
   color: rgba(255, 255, 255, 0.44);
 }
 
-.fastplay-v3 .fastcast-v2-intro {
-  background:
-    radial-gradient(circle at 80% 18%, rgba(124, 255, 75, 0.14), transparent 30%),
-    #f5f5f2;
-  color: #111;
-}
-
-.fastplay-v3 .fastcast-v2-intro h2 {
-  max-width: 1040px;
-  font-weight: 520;
-}
-
-.fastplay-v3 .fastcast-v2-intro .fastcast-v2-section-kicker,
 .fastplay-v3 .fastcast-v2-capability-heading .fastcast-v2-section-kicker,
 .fastplay-v3 .fastcast-v2-beta-heading .fastcast-v2-section-kicker,
 .fastplay-v3 .fastcast-v2-guides .fastcast-v2-section-kicker,
 .fastplay-v3 .fastcast-v2-faq .fastcast-v2-section-kicker {
   color: #2a861a;
+}
+
+.fastplay-v3 .fastplay-v3-release-summary {
+  position: relative;
+  z-index: 4;
+  padding: 96px 0;
+  background: #080a0b;
+  color: #f5f6f4;
+}
+
+.fastplay-v3 .fastplay-v3-release-card {
+  padding: clamp(32px, 3.2vw, 44px);
+  border: 1px solid rgba(65, 208, 151, 0.32);
+  border-radius: 11px;
+  background: linear-gradient(120deg, rgba(20, 28, 28, 0.96), rgba(18, 18, 23, 0.98) 60%);
+}
+
+.fastplay-v3 .fastplay-v3-release-card h2 {
+  max-width: 1060px;
+  font-size: clamp(28px, 2.2vw, 36px);
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+
+.fastplay-v3 .fastplay-v3-release-lede {
+  max-width: 980px;
+  margin-top: 20px;
+  color: #a9b6bf;
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.65;
+}
+
+.fastplay-v3 .fastplay-v3-release-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 34px;
+}
+
+.fastplay-v3 .fastplay-v3-release-grid article {
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.fastplay-v3 .fastplay-v3-release-grid h3 {
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.fastplay-v3 .fastplay-v3-release-grid p {
+  margin-top: 12px;
+  color: #a9b6bf;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.fastplay-v3 .fastplay-v3-release-card > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 30px;
+  color: #f5f6f4;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.fastplay-v3 .fastplay-v3-release-card > a svg {
+  color: #ffbd18;
+}
+
+@media (max-width: 820px) {
+  .fastplay-v3 .fastplay-v3-release-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .fastplay-v3 .fastplay-v3-release-summary {
+    padding: 72px 0;
+  }
+
+  .fastplay-v3 .fastplay-v3-release-card {
+    padding: 26px 22px;
+  }
 }
 
 .fastplay-v3 .fastcast-v2-story-track {
@@ -213,8 +288,8 @@
 }
 
 .fastplay-v3 .fastcast-v2-story-grid {
-  grid-template-columns: minmax(320px, 0.85fr) minmax(320px, 0.72fr);
-  gap: clamp(50px, 8vw, 145px);
+  grid-template-columns: minmax(360px, 0.9fr) minmax(360px, 0.8fr);
+  gap: clamp(50px, 6vw, 110px);
 }
 
 .fastplay-v3 .fastcast-v2-story-panels article > svg {
@@ -223,7 +298,7 @@
 }
 
 .fastplay-v3 .fastcast-v2-story-panels article > p {
-  color: #76906c;
+  color: #91aa87;
 }
 
 .fastplay-v3 .fastcast-v2-story-panels h3 {
@@ -231,11 +306,12 @@
 }
 
 .fastplay-v3 .fastcast-v2-story-panels article > div {
-  color: #a2a8a0;
+  color: #c0c6bd;
+  font-size: 18px;
 }
 
 .fastplay-v3 .fastcast-v2-story-device {
-  width: min(35vw, 430px);
+  width: min(38vw, 500px);
   aspect-ratio: 544 / 988;
 }
 
@@ -253,12 +329,6 @@
   box-shadow: 0 42px 110px rgba(0, 0, 0, 0.78), 0 0 72px rgba(120, 255, 64, 0.13);
 }
 
-.fastplay-v3 .fastcast-v2-screen-focus {
-  border-color: rgba(158, 255, 104, 0.9);
-  background: rgba(119, 255, 58, 0.045);
-  box-shadow: inset 0 0 24px rgba(132, 255, 73, 0.08), 0 0 26px rgba(132, 255, 73, 0.34);
-}
-
 .fastplay-v3 .fastcast-v2-story-tabs button::before {
   background: linear-gradient(90deg, #49dd39, #b0ff68);
   box-shadow: 0 0 16px rgba(142, 255, 82, 0.56);
@@ -269,6 +339,7 @@
 }
 
 .fastplay-v3 .fastcast-v2-capabilities {
+  padding: 120px 0 130px;
   background: #f6f6f3;
   color: #111;
 }
@@ -283,50 +354,12 @@
   color: #38a625;
 }
 
-.fastplay-v3 .fastcast-v2-layouts {
-  background:
-    radial-gradient(circle at 75% 50%, rgba(116, 255, 65, 0.18), transparent 30%),
-    linear-gradient(145deg, #0b0b0b, #020202 70%);
-}
-
-.fastplay-v3 .fastcast-v2-layouts::before {
-  border-color: rgba(145, 255, 95, 0.12);
-  box-shadow: 0 0 0 80px rgba(126, 255, 72, 0.025), 0 0 0 160px rgba(126, 255, 72, 0.015);
-}
-
-.fastplay-v3 .fastcast-v2-layouts-copy h2,
 .fastplay-v3 .fastcast-v2-privacy-copy h2 {
   font-weight: 520;
 }
 
-.fastplay-v3 .fastcast-v2-layout-card {
-  border-color: rgba(168, 255, 128, 0.22);
-  background:
-    linear-gradient(145deg, rgba(91, 204, 48, 0.2), rgba(7, 12, 6, 0.88)),
-    repeating-linear-gradient(0deg, transparent 0 32px, rgba(185, 255, 151, 0.045) 33px);
-}
-
-.fastplay-v3 .fastcast-v2-layout-card::before {
-  border-color: rgba(183, 255, 149, 0.12);
-  background: linear-gradient(135deg, rgba(136, 255, 84, 0.16), rgba(255, 255, 255, 0.02));
-}
-
-.fastplay-v3 .fastcast-v2-layout-camera::before {
-  border-radius: 9px;
-  background: repeating-linear-gradient(90deg, rgba(140, 255, 86, 0.11) 0 2px, transparent 2px 18px);
-}
-
-.fastplay-v3 .fastcast-v2-layout-pip i {
-  border-color: rgba(157, 255, 108, 0.42);
-  background: #15210f;
-}
-
-.fastplay-v3 .fastcast-v2-layout-split i {
-  border-color: rgba(163, 255, 118, 0.13);
-  background: radial-gradient(circle, rgba(140, 255, 86, 0.18), rgba(13, 24, 10, 0.84));
-}
-
 .fastplay-v3 .fastcast-v2-privacy {
+  padding: 130px 0;
   background:
     radial-gradient(circle at 18% 52%, rgba(124, 255, 77, 0.12), transparent 34%),
     #070707;
@@ -355,13 +388,34 @@
   box-shadow: 0 0 70px rgba(129, 255, 69, 0.13);
 }
 
+.fastplay-v3 .fastcast-v2-privacy-copy > p:last-of-type,
+.fastplay-v3 .fastcast-v2-privacy-copy ul {
+  color: #c0c8bd;
+  font-size: 16px;
+}
+
 .fastplay-v3 .fastcast-v2-beta-section {
+  padding: 120px 0 130px;
   background: #f5f5f2;
   color: #111;
 }
 
 .fastplay-v3 .fastcast-v2-plan-grid article {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
   border-radius: 8px;
+}
+
+.fastplay-v3 .fastcast-v2-plan-grid ul {
+  margin: 34px 0 30px;
+}
+
+.fastplay-v3 .fastcast-v2-plan-grid article > a {
+  position: relative;
+  inset: auto;
+  margin-top: auto;
+  padding: 18px 0 0;
 }
 
 .fastplay-v3 .fastcast-v2-plan-grid .fastcast-v2-plan-pro {
@@ -381,6 +435,18 @@
   background: #ecece8;
 }
 
+.fastplay-v3 .fastcast-v2-guides {
+  padding: 120px 0 130px;
+}
+
+.fastplay-v3 .fastcast-v2-guides-heading > a {
+  padding: 11px 14px;
+  border: 1px solid rgba(11, 17, 24, 0.22);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+}
+
 .fastplay-v3 .fastcast-v2-guide-grid > a {
   background: rgba(250, 250, 247, 0.95);
 }
@@ -393,7 +459,17 @@
   color: #2d991b;
 }
 
+.fastplay-v3 .fastcast-v2-faq {
+  padding-bottom: 130px;
+}
+
+.fastplay-v3 .fastcast-v2-faq-list {
+  max-width: 980px;
+}
+
 .fastplay-v3 .fastcast-v2-final {
+  min-height: 78vh;
+  padding: 120px 0;
   background:
     radial-gradient(circle at 50% 70%, rgba(123, 255, 65, 0.16), transparent 38%),
     #050505;
@@ -411,7 +487,18 @@
 }
 
 .fastplay-v3 .fastcast-v2-footer {
+  padding: 40px 0 72px;
   background: #050505;
+  color: #939c90;
+  font-size: 13px;
+}
+
+.fastplay-v3 .fastcast-v2-footer strong {
+  color: #edf0ea;
+}
+
+.fastplay-v3 .fastcast-v2-footer nav {
+  color: #bdc5b9;
 }
 
 .fastplay-v3 .fastcast-v2-floating-cta {
@@ -489,12 +576,137 @@
   }
 }
 
+/* Every rule in here undoes a .fastplay-v3 override that would otherwise beat
+ * the base sheet's reduced-motion rules. Those are written at (0,1,0) and the
+ * overrides land at (0,2,0), and a media query adds no specificity, so each
+ * override has to be reverted by hand at matching specificity. */
 @media (prefers-reduced-motion: reduce) {
+  /* Without this the track keeps reserving 240vh of scroll while the sticky
+     panel collapses to its content, leaving a tall empty band under the hero.
+     min-height matches: the 480px breakpoint above pins the track to 1180px,
+     which would strand the same gap on a narrow phone. */
+  .fastplay-v3 .fastcast-v2-hero-track {
+    height: auto;
+    min-height: 0;
+  }
+
   .fastplay-v3 .fastcast-v2-hero-copy {
     top: auto;
   }
 
   .fastplay-v3 .fastcast-v2-hero-product {
     bottom: auto;
+  }
+}
+/* Keyboard shortcuts band.
+ *
+ * Modelled on the controls table on the live /fastplay page, so the values
+ * here track that page's product tokens rather than inventing new ones:
+ *
+ *   surface  --product-surface-alpha  #131318
+ *   border   --product-border         #1e1e26
+ *   radius   --product-radius         10px
+ *   text     --product-text           #e4e4e8
+ *   muted    --product-muted          #8a8a96
+ *
+ * The live card carries no shadow and no accent: the keys are plain monospace
+ * text, not chips. New FastPlay-only section, so it uses the fastplay-v3-*
+ * namespace rather than the recovered fastcast-v2- one.
+ */
+
+.fastplay-v3 .fastplay-v3-keys {
+  position: relative;
+  z-index: 4;
+  padding: 112px 0;
+  background: #0a0a0c;
+}
+
+/* Keep the heading and table on one readable desktop column. The wider cap
+   avoids the undersized table seen in the 2048px screenshot without allowing
+   rows to become too long to scan. */
+.fastplay-v3 .fastplay-v3-keys-inner {
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.fastplay-v3 .fastplay-v3-keys-heading {
+  margin-bottom: 34px;
+}
+
+.fastplay-v3 .fastplay-v3-keys-heading h2 {
+  margin-top: 16px;
+  font-size: clamp(30px, 3.6vw, 40px);
+  font-weight: 520;
+  letter-spacing: -0.02em;
+  line-height: 1.14;
+}
+
+.fastplay-v3 .fastplay-v3-keys-heading > p:last-child {
+  margin-top: 16px;
+  color: #b4b4bc;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.fastplay-v3 .fastplay-v3-keys-card {
+  overflow-x: auto;
+  border: 1px solid #1e1e26;
+  border-radius: 10px;
+  background: #131318;
+}
+
+.fastplay-v3 .fastplay-v3-keys-card table {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: collapse;
+  font-size: 15px;
+  text-align: left;
+}
+
+.fastplay-v3 .fastplay-v3-keys-card th,
+.fastplay-v3 .fastplay-v3-keys-card td {
+  padding: 13px 20px;
+}
+
+.fastplay-v3 .fastplay-v3-keys-card thead tr {
+  border-bottom: 1px solid #1e1e26;
+  background: transparent;
+}
+
+.fastplay-v3 .fastplay-v3-keys-card th {
+  color: #8a8a96;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fastplay-v3 .fastplay-v3-keys-card tbody tr {
+  border-bottom: 1px solid #1e1e26;
+}
+
+.fastplay-v3 .fastplay-v3-keys-card tbody tr:last-child {
+  border-bottom: none;
+}
+
+/* Key column: monospace, never wrapped mid-chord. */
+.fastplay-v3 .fastplay-v3-keys-card td:first-child {
+  color: #e4e4e8;
+  font-family: "Cascadia Code", Consolas, monospace;
+  white-space: nowrap;
+}
+
+.fastplay-v3 .fastplay-v3-keys-card td:last-child {
+  color: #b4b4bc;
+}
+
+@media (max-width: 720px) {
+  .fastplay-v3 .fastplay-v3-keys {
+    padding: 100px 0;
+  }
+
+  .fastplay-v3 .fastplay-v3-keys-card th,
+  .fastplay-v3 .fastplay-v3-keys-card td {
+    padding: 8px 12px;
   }
 }

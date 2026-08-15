@@ -31,13 +31,13 @@ if (inputFiles.length === 0) {
 }
 
 // 404.html is built but intentionally noindexed and canonical-free.
-// fastplay-v2.html is a design preview of /fastplay: it is noindexed and
-// canonicalised to the real product page, so it is not a route of its own.
-const NON_INDEXABLE = new Set(['404.html', 'fastplay-v2.html']);
+// FastPlay preview pages are noindexed and canonicalised to the real product
+// page, so they are not routes of their own.
+const NON_INDEXABLE = new Set(['404.html', 'fastplay-v2.html', 'fastplay-v3.html']);
 
 // Shells that ship as-is instead of being prerendered: 404.html is an error
-// page and fastplay-v2.html is a noindexed design preview.
-const NOT_PRERENDERED = new Set(['404.html', 'fastplay-v2.html']);
+// page and the FastPlay previews are noindexed design routes.
+const NOT_PRERENDERED = new Set(['404.html', 'fastplay-v2.html', 'fastplay-v3.html']);
 
 function routeForFile(file) {
   if (file === 'index.html') return '/';

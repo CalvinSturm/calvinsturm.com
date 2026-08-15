@@ -1,9 +1,8 @@
 import { mountPage } from './lib/mountPage.tsx';
-import { FastPlayProductPage } from './FastSeriesShared.tsx';
-import './index.css';
+import { FastPlayV3 } from './FastPlayV3.tsx';
 
 export function Page() {
-  return <FastPlayProductPage />;
+  return <FastPlayV3 />;
 }
 
 mountPage(<Page />);

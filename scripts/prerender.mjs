@@ -38,8 +38,8 @@ const standalonePages = [
   'videoforge.html',
 ];
 
-// fastplay-v2.html is a noindexed design preview and 404.html is an error
-// shell; neither is a route worth prerendering.
+// FastPlay preview pages are noindexed, and 404.html is an error shell; none
+// are routes worth prerendering.
 
 function guideHtmlFiles(product) {
   const guideDir = join(root, product, 'guides');
