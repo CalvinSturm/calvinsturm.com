@@ -107,7 +107,7 @@
   max-width: 1120px;
   font-size: clamp(48px, 5.2vw, 80px);
   font-weight: 520;
-  line-height: 0.95;
+  line-height: 1;
   letter-spacing: -0.06em;
   background: linear-gradient(180deg, #fff 18%, #f0f0eb 64%, #bdbdb6 108%);
   background-clip: text;
