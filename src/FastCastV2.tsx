@@ -9,9 +9,12 @@ const downloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/d
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const allReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 
-// The page is laid out like a rack of broadcast units. Every band carries a
-// three-letter patch label on its left rail, so the labels have to describe the
-// band rather than count it: the reader is scanning a panel, not a checklist.
+// The page is laid out like a rack of broadcast units, and only some bands carry
+// a three-letter patch label on the left rail. A label on every band turns the
+// system into wallpaper and the reader stops reading any of them, so add one
+// only where the code names something the heading does not: a state (REC), a
+// class of input (KEY), a boundary (LCL). Bands without one keep the rail column
+// empty via .fc-unit-blank, so the content edge stays on the same line.
 type Rail = { code: string; name: string };
 
 // Setup paths for the same job: record the screen with mic and webcam, then
@@ -131,29 +134,45 @@ function trackDownload(location: string, href = downloadUrl) {
 }
 
 /**
- * The one moving part on the page: a timecode in the tally bar counting how
- * long this tab has been open. It writes straight to the node at 10 Hz instead
- * of through state, so the rest of the page never re-renders, and it does not
- * run at all when the visitor asks for reduced motion.
+ * The one live element on the page: a timecode in the tally bar counting how
+ * long this tab has been open. It writes straight to the node instead of
+ * through state, so the rest of the page never re-renders.
+ *
+ * The clock keeps running when the visitor asks for reduced motion. A numeral
+ * changing in place is not motion in the vestibular sense, and this is the only
+ * thing on the page that says "recorder" rather than "software". What does get
+ * dropped is the frames field, and with it the 10 Hz tick: a digit flickering
+ * ten times a second in a bar that is on screen for the whole visit is the
+ * distraction people set that flag to avoid. Seconds still read as a counter.
  */
-function useSessionTimecode(ref: React.RefObject<HTMLSpanElement | null>, enabled: boolean) {
+function useSessionTimecode(ref: React.RefObject<HTMLSpanElement | null>, frames: boolean) {
   useEffect(() => {
-    if (!enabled) return;
     const start = performance.now();
+    const period = frames ? 100 : 1000;
 
     const pad = (value: number) => String(Math.floor(value)).padStart(2, '0');
 
+    let timer = 0;
+
     const tick = () => {
       const node = ref.current;
-      if (!node) return;
       const elapsed = (performance.now() - start) / 1000;
-      node.textContent = `${pad(elapsed / 3600)}:${pad((elapsed / 60) % 60)}:${pad(elapsed % 60)}:${pad((elapsed % 1) * 30)}`;
+
+      if (node) {
+        const clock = `${pad(elapsed / 3600)}:${pad((elapsed / 60) % 60)}:${pad(elapsed % 60)}`;
+        node.textContent = frames ? `${clock}:${pad((elapsed % 1) * 30)}` : clock;
+      }
+
+      // Re-arm against the elapsed time rather than on a fixed interval, so a
+      // slow frame cannot make the counter show the same second twice or skip
+      // one. At 1 Hz that would read as a broken clock.
+      const drift = (performance.now() - start) % period;
+      timer = window.setTimeout(tick, period - drift);
     };
 
     tick();
-    const timer = window.setInterval(tick, 100);
-    return () => window.clearInterval(timer);
-  }, [ref, enabled]);
+    return () => window.clearTimeout(timer);
+  }, [ref, frames]);
 }
 
 function KeyCombo({ keys, hold }: { keys: string[]; hold?: boolean }) {
@@ -204,17 +223,12 @@ export function FastCastV2() {
           <a href="#faq">FAQ</a>
         </nav>
         <div className="fc-bar-right">
-          {/* A frozen counter reads as a broken clock, so the still version of
-              the tally bar shows the build instead of the session timecode. */}
-          {reducedMotion ? (
-            <span className="fc-timecode" aria-hidden="true">
-              FastCast <span>0.6.1 · Windows 64-bit</span>
-            </span>
-          ) : (
-            <span className="fc-timecode" aria-hidden="true">
-              Session <span ref={timecodeRef}>00:00:00:00</span>
-            </span>
-          )}
+          {/* Reads "Session", not "REC": red and REC are reserved for actual
+              recording and live state, in the app and here. A page clock that
+              labelled itself REC would be the site lying about status. */}
+          <span className="fc-timecode" aria-hidden="true">
+            Session <span ref={timecodeRef}>{reducedMotion ? '00:00:00' : '00:00:00:00'}</span>
+          </span>
           <a
             className="fc-btn fc-btn-primary"
             href={downloadUrl}
@@ -228,9 +242,8 @@ export function FastCastV2() {
       </header>
 
       <main id="fastcast-main">
-        <section className="fc-unit fc-hero" aria-labelledby="fastcast-v2-title">
-          <div className="fc-unit-inner">
-            <RailLabel code="PGM" name="Program" />
+        <section className="fc-unit fc-unit-wide fc-hero" aria-labelledby="fastcast-v2-title">
+          <div className="fc-unit-inner fc-unit-blank">
             <div className="fc-hero-grid">
               <div className="fc-hero-copy">
                 <p className="fc-eyebrow">Windows screen recorder and streamer</p>
@@ -293,9 +306,8 @@ export function FastCastV2() {
           </div>
         </section>
 
-        <section id="compare" className="fc-unit fc-compare" aria-labelledby="compare-title">
-          <div className="fc-unit-inner">
-            <RailLabel code="A/B" name="Compare" />
+        <section id="compare" className="fc-unit fc-unit-wide fc-compare" aria-labelledby="compare-title">
+          <div className="fc-unit-inner fc-unit-blank">
             <div className="fc-unit-body">
               <h2 id="compare-title">
                 Same recording. <em>Two setup paths.</em>
@@ -353,8 +365,7 @@ export function FastCastV2() {
         </section>
 
         <section id="panel" className="fc-unit fc-panel" aria-labelledby="panel-title">
-          <div className="fc-unit-inner">
-            <RailLabel code="PNL" name="Controls" />
+          <div className="fc-unit-inner fc-unit-blank">
             <div className="fc-unit-body">
               <h2 id="panel-title">
                 Everything you need <em>to record</em>
@@ -376,9 +387,8 @@ export function FastCastV2() {
           </div>
         </section>
 
-        <section className="fc-unit fc-advanced" aria-labelledby="advanced-title">
-          <div className="fc-unit-inner">
-            <RailLabel code="EXP" name="Expanded" />
+        <section className="fc-unit fc-unit-wide fc-advanced" aria-labelledby="advanced-title">
+          <div className="fc-unit-inner fc-unit-blank">
             <div className="fc-unit-body fc-advanced-grid">
               <div>
                 <h2 id="advanced-title">
@@ -550,8 +560,7 @@ export function FastCastV2() {
         </section>
 
         <section id="guides" className="fc-unit fc-guides" aria-labelledby="guides-title">
-          <div className="fc-unit-inner">
-            <RailLabel code="DOC" name="Guides" />
+          <div className="fc-unit-inner fc-unit-blank">
             <div className="fc-unit-body">
               <div className="fc-unit-head">
                 <h2 id="guides-title">

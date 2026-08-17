@@ -7,8 +7,14 @@
  * here, it should look like it was screen-printed onto a panel.
  *
  * Structure: every band is a .fc-unit. Inside, .fc-unit-inner is a two-column
- * grid of [patch label rail | content]. The rail is the spine that runs down
- * the whole page.
+ * grid of [patch label rail | content]. Bands that carry no patch label add
+ * .fc-unit-blank and leave the rail column empty, so the content edge holds the
+ * same line down the whole page whether a label is there or not.
+ *
+ * Three bands carry a visual the visitor has to read rather than glance at: the
+ * hero shot, the OBS step comparison, and the expanded view. Those add
+ * .fc-unit-wide and run past the shell on a wide rig. Prose stays capped in ch
+ * regardless, so widening a band widens the panels inside it and nothing else.
  */
 
 :root:has(.fc) {
@@ -367,6 +373,12 @@ body:has(.fc) {
   color: var(--fc-color-text-subtle);
 }
 
+/* No patch label on this band. The rail column stays open rather than
+   collapsing, so the content starts on the same line as every labelled band. */
+.fc-unit-blank > * {
+  grid-column: 2;
+}
+
 .fc-unit-body {
   max-width: 100%;
 }
@@ -400,16 +412,15 @@ body:has(.fc) {
   align-items: start;
 }
 
-/* The app window is the one thing on this page a visitor has to read rather
-   than glance at, so on a wide rig the hero band runs past the shell and the
-   screenshot is served at its native 728px. The band keeps the shell's left
-   edge, so the rail and the copy stay in line with every unit below; only the
-   panel side extends. */
+/* On a wide rig the three .fc-unit-wide bands run past the shell. Each keeps the
+   shell's left edge, so the rail and the copy stay in line with every unit
+   above and below; only the right side extends. A page where the content edge
+   wandered per band would read as broken rather than as emphasis. */
 @media (min-width: 1200px) {
-  .fc-hero .fc-unit-inner {
-    --hero-inset: max(28px, calc((100% - 1200px) / 2));
-    width: min(1448px, calc(100% - var(--hero-inset) - 28px));
-    margin-inline: var(--hero-inset) auto;
+  .fc-unit-wide .fc-unit-inner {
+    --wide-inset: max(28px, calc((100% - 1200px) / 2));
+    width: min(1448px, calc(100% - var(--wide-inset) - 28px));
+    margin-inline: var(--wide-inset) auto;
   }
 
   /* The copy column holds its width and the panel takes whatever is left, so
@@ -417,6 +428,18 @@ body:has(.fc) {
      headline into a narrower wrap than it has today. */
   .fc-hero-grid {
     grid-template-columns: minmax(496px, 1fr) minmax(0, 728px);
+  }
+
+  /* The two step lists are the argument, so let them have the extra width. */
+  .fc-ab {
+    gap: 24px;
+  }
+
+  /* Native is 726px wide, so 460 is still a downscale. The copy beside it is
+     capped in ch and simply sits in more air. */
+  .fc-advanced-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+    gap: 72px;
   }
 }
 
@@ -1111,6 +1134,12 @@ body:has(.fc) {
     grid-template-columns: minmax(0, 1fr);
     gap: 22px;
     padding-block: 60px;
+  }
+
+  /* One column now, so the rail column no longer exists to skip. Without this
+     the content would be placed into an implicit second track. */
+  .fc-unit-blank > * {
+    grid-column: 1;
   }
 
   /* The spine turns into a header strip so the label still reads as a patch
