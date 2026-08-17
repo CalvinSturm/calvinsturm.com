@@ -726,15 +726,37 @@
   background: #0a0a0c;
 }
 
-/* Keep the heading and table on one readable desktop column. The wider cap
-   avoids the undersized table seen in the 2048px screenshot without allowing
-   rows to become too long to scan. */
+/* The body now runs the full shell so the table keeps roughly the 900px measure
+   it had as a single column once the media column and gap are subtracted. */
 .fastplay-v3 .fastplay-v3-keys-inner {
-  max-width: 900px;
   margin-inline: auto;
 }
 
+/* Table left, the clip that used to be the hero right. align-items: start lets
+   the media stick while the 26-row table scrolls past it. */
+.fastplay-v3 .fastplay-v3-keys-body {
+  display: grid;
+  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+  gap: 52px;
+}
+
+.fastplay-v3 .fastplay-v3-keys-media {
+  position: sticky;
+  top: 106px;
+}
+
+.fastplay-v3 .fastplay-v3-keys-media video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #1e1e26;
+  border-radius: 10px;
+  background: #131318;
+}
+
 .fastplay-v3 .fastplay-v3-keys-heading {
+  max-width: 900px;
   margin-bottom: 34px;
 }
 
@@ -803,6 +825,21 @@
 
 .fastplay-v3 .fastplay-v3-keys-card td:last-child {
   color: #b4b4bc;
+}
+
+/* Below this the table column would drop under its 34rem min-width and start
+   scrolling sideways, so the media moves under it and stops sticking. */
+@media (max-width: 980px) {
+  .fastplay-v3 .fastplay-v3-keys-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .fastplay-v3 .fastplay-v3-keys-media {
+    position: static;
+    width: min(100%, 300px);
+    margin-inline: auto;
+  }
 }
 
 @media (max-width: 720px) {

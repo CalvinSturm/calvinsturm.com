@@ -169,13 +169,16 @@ export function FastPlayV3() {
             </div>
             <div className="fastcast-v2-hero-product" aria-hidden="true">
               <div className="fastcast-v2-product-glow" />
-              <img
-                src="/assets/FastPlay/fastplay_hero.gif"
-                alt=""
-                width="540"
-                height="958"
-                decoding="async"
-                fetchPriority="high"
+              <video
+                src="/assets/FastPlay/fastplay-hero.mp4"
+                poster="/assets/FastPlay/fastplay-hero-poster.jpg"
+                width="590"
+                height="1070"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
               />
             </div>
             <div className="fastcast-v2-scroll-cue" aria-hidden="true"><span>Scroll to enter FastPlay</span><i /></div>
@@ -214,23 +217,39 @@ export function FastPlayV3() {
                 <h2 id="shortcuts-title">Every action has a keybind</h2>
                 <p>Hold H in the player to see the full controls overlay.</p>
               </div>
-              <div className="fastplay-v3-keys-card" data-reveal>
-                <table>
-                  <thead>
-                    <tr>
-                      <th scope="col">Key</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {fastPlayControls.map(([key, action]) => (
-                      <tr key={key}>
-                        <td>{key}</td>
-                        <td>{action}</td>
+              <div className="fastplay-v3-keys-body">
+                <div className="fastplay-v3-keys-card" data-reveal>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Key</th>
+                        <th scope="col">Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {fastPlayControls.map(([key, action]) => (
+                        <tr key={key}>
+                          <td>{key}</td>
+                          <td>{action}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="fastplay-v3-keys-media" data-reveal>
+                  <video
+                    src="/assets/FastPlay/fastplay-keys.mp4"
+                    poster="/assets/FastPlay/fastplay-keys-poster.jpg"
+                    width="540"
+                    height="958"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    aria-label="FastPlay playing a sunset beach video in a frameless portrait window, with the timeline scrubbed from the keyboard."
+                  />
+                </div>
               </div>
             </div>
           </div>
