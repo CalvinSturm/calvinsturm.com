@@ -5,7 +5,6 @@ import {
   ArrowUpRight,
   Check,
   ChevronDown,
-  CircleDot,
   Cpu,
   Download,
   FileVideo,
@@ -259,7 +258,7 @@ export function FastPlayV3() {
           <div className="fastcast-v2-shell">
             <div className="fastcast-v2-capability-heading" data-reveal>
               <p className="fastcast-v2-section-kicker">Lightweight app. Serious playback path.</p>
-              <h2>Built for the frame in front of you.</h2>
+              <h2>Every frame on time.</h2>
             </div>
             <div className="fastcast-v2-capability-grid">
               {capabilityCards.map((card, index) => (
@@ -297,7 +296,7 @@ export function FastPlayV3() {
           <div className="fastcast-v2-shell">
             <div className="fastcast-v2-beta-heading" data-reveal>
               <p className="fastcast-v2-section-kicker">Current release · v{currentVersion}</p>
-              <h2>Video playback that just works.</h2>
+              <h2>Stays fast when you push it.</h2>
             </div>
             <div className="fastcast-v2-plan-grid">
               <article data-reveal>
@@ -359,7 +358,7 @@ export function FastPlayV3() {
           <div className="fastcast-v2-shell" data-reveal>
             <img src="/assets/FastPlay/fastplay.png" alt="" width="68" height="68" />
             <p className="fastcast-v2-section-kicker">Ready when you are</p>
-            <h2>Open fast.<br />Stay in the moment.</h2>
+            <h2>Your video.<br />Nothing in the way.</h2>
             <p>Download FastPlay v{currentVersion} for 64-bit Windows 10 or later.</p>
             <div>
               <a className="fastcast-v2-button fastcast-v2-button-primary" href={downloadUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('final')}><Download size={18} /> Download FastPlay</a>
@@ -376,10 +375,6 @@ export function FastPlayV3() {
         </div>
       </footer>
 
-      <div className="fastcast-v2-floating-cta">
-        <span><CircleDot size={14} /> FastPlay <b>v{currentVersion}</b></span>
-        <a href={downloadUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('floating')}>Download <Download size={14} /></a>
-      </div>
     </div>
   );
 }

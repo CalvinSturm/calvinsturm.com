@@ -606,16 +606,6 @@
   color: #bdc5b9;
 }
 
-.fastplay-v3 .fastcast-v2-floating-cta {
-  border-color: rgba(164, 255, 121, 0.18);
-  background: rgba(10, 13, 9, 0.84);
-}
-
-.fastplay-v3 .fastcast-v2-floating-cta > a {
-  background: #a1ff6e;
-  color: #0a1307 !important;
-}
-
 @media (max-width: 1040px) {
   .fastplay-v3 .fastcast-v2-story-grid {
     grid-template-columns: minmax(280px, 0.9fr) minmax(300px, 0.72fr);
