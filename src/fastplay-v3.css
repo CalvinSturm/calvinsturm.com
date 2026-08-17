@@ -17,9 +17,11 @@
   font-family: Inter, "Helvetica Neue", Arial, sans-serif;
 }
 
+/* Track sits in the 2px strip above the charcoal bar, so it needs to lift off
+   a dark surface rather than a white one. */
 .fastplay-v3 .fastcast-v2-progress {
   top: 0;
-  background: rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .fastplay-v3 .fastcast-v2-progress span {
@@ -27,13 +29,19 @@
   box-shadow: 0 0 16px rgba(121, 242, 61, 0.45);
 }
 
+/* Charcoal rather than white: a light bar cut the page in half and read as
+   generic against an otherwise near-black page. #151718 is lifted just enough
+   off the #060606 body to stay a distinct surface without becoming a band.
+   Opaque, so the base sheet's backdrop-filter is switched off rather than
+   inherited: blurring behind a solid colour changes nothing on screen and only
+   costs a compositing layer. */
 .fastplay-v3 .fastcast-v2-nav {
   inset: 2px 0 auto;
   height: 70px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
-  background: rgba(255, 255, 255, 0.93);
-  color: #111;
-  backdrop-filter: blur(22px) saturate(150%);
+  border-bottom: 1px solid #2a2d2e;
+  background: #151718;
+  color: #fff;
+  backdrop-filter: none;
 }
 
 /* The FastPlay mark is a transparent PNG with no tile behind it, so a border
@@ -42,18 +50,21 @@
   border: 0;
 }
 
+/* Was dark green on pale green, which needed the white bar to be legible. On
+   charcoal it inverts to the page's own green on a faint tint of itself. */
 .fastplay-v3 .fastcast-v2-beta {
-  border-color: rgba(32, 149, 20, 0.22);
-  background: rgba(72, 206, 44, 0.1);
-  color: #258217;
+  border-color: rgba(121, 242, 61, 0.28);
+  background: rgba(121, 242, 61, 0.1);
+  color: var(--fc-green-hover);
 }
 
 .fastplay-v3 .fastcast-v2-nav nav {
-  color: #4b4b49;
+  color: #b8b8b8;
 }
 
-.fastplay-v3 .fastcast-v2-nav nav a:hover {
-  color: #000;
+.fastplay-v3 .fastcast-v2-nav nav a:hover,
+.fastplay-v3 .fastcast-v2-nav nav a:focus-visible {
+  color: #fff;
 }
 
 .fastplay-v3 .fastcast-v2-nav-cta {
@@ -75,8 +86,9 @@
   background: var(--fc-green-active);
 }
 
+/* #111 was a ring for a white bar; on charcoal it disappeared into it. */
 .fastplay-v3 .fastcast-v2-nav-cta:focus-visible {
-  outline: 2px solid #111;
+  outline: 2px solid #fff;
   outline-offset: 3px;
   box-shadow: 0 0 0 6px rgba(121, 242, 61, 0.34);
 }
