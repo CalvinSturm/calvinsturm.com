@@ -28,6 +28,20 @@ const latestReleaseUrl = 'https://github.com/CalvinSturm/FastPlay/releases/lates
 const sourceUrl = 'https://github.com/CalvinSturm/FastPlay';
 const releaseNotesUrl = `https://github.com/CalvinSturm/FastPlay/releases/tag/v${currentVersion}`;
 
+// Two framings of the same capture. Desktop gets the landscape one, where the
+// window sizing itself is legible against the desktop around it; narrow screens
+// keep the portrait crop, which would otherwise shrink to nothing.
+//
+// This query string is the single source of truth for the switch: it is used
+// verbatim both here, in the <source media> attributes, and in the matching
+// @media block in fastplay-v3.css, so the CSS slot and the chosen file can
+// never disagree about which framing is on screen.
+const heroWideQuery = '(min-width: 761px)';
+const heroWideSrc = '/assets/FastPlay/fastplay-hero-wide.mp4';
+const heroWidePoster = '/assets/FastPlay/fastplay-hero-wide-poster.jpg';
+const heroTallSrc = '/assets/FastPlay/fastplay-hero.mp4';
+const heroTallPoster = '/assets/FastPlay/fastplay-hero-poster.jpg';
+
 const capabilityCards = [
   { metric: '120 fps', label: 'full-cadence playback on high-refresh displays', Icon: Gauge },
   { metric: 'HDR10', label: 'native HDR output or careful SDR tone mapping', Icon: Sun },
@@ -94,6 +108,37 @@ function useHeroProgress(heroRef: React.RefObject<HTMLElement | null>) {
   }, [heroRef]);
 }
 
+/**
+ * Keeps the hero video honest across the landscape/portrait breakpoint.
+ *
+ * `poster` cannot be made media-conditional in markup the way `<source>` can,
+ * so it is assigned here instead of hardcoded: a landscape poster in the tall
+ * slot would show as a heavily zoomed centre crop while the file loads.
+ *
+ * The `load()` call covers a real gap in `<source media>`: the media attribute
+ * is only consulted during resource selection, so an element that has already
+ * picked a file keeps it when the viewport crosses the breakpoint, leaving the
+ * portrait video in the landscape slot (verified in Chrome 151). Re-running
+ * selection is the documented fix. It only fires on an actual breakpoint
+ * crossing, not on ordinary resizes, so playback is not disturbed.
+ */
+function useHeroFraming(videoRef: React.RefObject<HTMLVideoElement | null>) {
+  useEffect(() => {
+    const query = window.matchMedia(heroWideQuery);
+    const applyPoster = () => {
+      const node = videoRef.current;
+      if (node) node.poster = query.matches ? heroWidePoster : heroTallPoster;
+    };
+    applyPoster();
+    const handleChange = () => {
+      applyPoster();
+      videoRef.current?.load();
+    };
+    query.addEventListener('change', handleChange);
+    return () => query.removeEventListener('change', handleChange);
+  }, [videoRef]);
+}
+
 function useRevealOnScroll() {
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
@@ -117,9 +162,11 @@ function useRevealOnScroll() {
 export function FastPlayV3() {
   const pageRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
 
   usePageProgress(pageRef);
   useHeroProgress(heroRef);
+  useHeroFraming(heroVideoRef);
   useRevealOnScroll();
 
   return (
@@ -169,16 +216,18 @@ export function FastPlayV3() {
             <div className="fastcast-v2-hero-product" aria-hidden="true">
               <div className="fastcast-v2-product-glow" />
               <video
-                src="/assets/FastPlay/fastplay-hero.mp4"
-                poster="/assets/FastPlay/fastplay-hero-poster.jpg"
-                width="590"
-                height="1070"
+                ref={heroVideoRef}
+                width="1280"
+                height="720"
                 autoPlay
                 muted
                 loop
                 playsInline
                 preload="metadata"
-              />
+              >
+                <source src={heroWideSrc} type="video/mp4" media={heroWideQuery} />
+                <source src={heroTallSrc} type="video/mp4" />
+              </video>
             </div>
             <div className="fastcast-v2-scroll-cue" aria-hidden="true"><span>Scroll to enter FastPlay</span><i /></div>
           </div>
