@@ -36,9 +36,10 @@
   backdrop-filter: blur(22px) saturate(150%);
 }
 
+/* The FastPlay mark is a transparent PNG with no tile behind it, so a border
+   here outlines empty space beside the glyph rather than framing an icon. */
 .fastplay-v3 .fastcast-v2-brand img {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 9px;
+  border: 0;
 }
 
 .fastplay-v3 .fastcast-v2-beta {
@@ -560,8 +561,21 @@
   box-shadow: 0 0 0 75px rgba(127, 255, 68, 0.02), 0 0 0 150px rgba(127, 255, 68, 0.012), inset 0 0 130px rgba(127, 255, 68, 0.055);
 }
 
+/* Same transparent-PNG problem as the nav mark, plus a box-shadow that would
+   cast the bounding rectangle rather than the glyph. */
+.fastplay-v3 .fastcast-v2-final img {
+  border: 0;
+  box-shadow: none;
+}
+
+/* background-clip: text paints only within the background box, and the base
+   sheet sets line-height 0.92 here, which lands above the descenders and
+   shears the g in "Nothing". Extend the box down and pull the same amount
+   back off the margin so the layout below does not move. Matches the hero h1. */
 .fastplay-v3 .fastcast-v2-final h2 {
   font-weight: 520;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
   background: linear-gradient(180deg, #fff, #b4b8af);
   background-clip: text;
 }
@@ -668,6 +682,32 @@
 
   .fastplay-v3 .fastcast-v2-story-device {
     width: min(62vw, 270px);
+  }
+}
+
+/* Landscape hero framing, from 761px up.
+ *
+ * The query is duplicated verbatim in FastPlayV3.tsx (heroWideQuery, and the
+ * <source media> attributes built from it). Change one and you must change the
+ * other, or the slot will be a different shape from the file inside it.
+ *
+ * 761px rather than 760px so this and the max-width: 760px block above are
+ * mutually exclusive rather than both applying at exactly 760px.
+ *
+ * The offset is far smaller than the portrait -55vh: a 16:9 slab is roughly a
+ * third the height of the 544/988 one, so the same offset would drop nearly all
+ * of it below the fold. -6vh clears the copy block and still lets the bottom
+ * edge run off the viewport, which is what gives the hero its depth.
+ *
+ * This block must stay ABOVE the reduced-motion block that follows. Both land
+ * at (0,2,0), so if it moved below, `bottom: -6vh` would beat the `bottom: auto`
+ * that reduced motion depends on, and the slab would be pulled up out of flow.
+ */
+@media (min-width: 761px) {
+  .fastplay-v3 .fastcast-v2-hero-product {
+    bottom: -6vh;
+    width: min(58vw, 780px);
+    aspect-ratio: 16 / 9;
   }
 }
 
