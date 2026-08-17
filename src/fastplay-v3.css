@@ -706,7 +706,7 @@
 @media (min-width: 761px) {
   .fastplay-v3 .fastcast-v2-hero-product {
     bottom: -6vh;
-    width: min(58vw, 780px);
+    width: min(68vw, 1040px);
     aspect-ratio: 16 / 9;
   }
 }
