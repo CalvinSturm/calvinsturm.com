@@ -5,6 +5,7 @@ import {
   ArrowUpRight,
   Check,
   ChevronDown,
+  CircleDot,
   Cpu,
   Download,
   FileVideo,
@@ -424,6 +425,10 @@ export function FastPlayV3() {
         </div>
       </footer>
 
+      <div className="fastcast-v2-floating-cta">
+        <span><CircleDot size={14} /> FastPlay <b>v{currentVersion}</b></span>
+        <a href={downloadUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackDownload('floating')}>Download <Download size={14} /></a>
+      </div>
     </div>
   );
 }
