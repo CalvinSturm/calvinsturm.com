@@ -24,13 +24,13 @@ export function GuidePage() {
           Recording 4K at 60 FPS on Windows means encoding roughly eight times the pixel
           throughput of 1080p30 in real time, so success depends on three things: a GPU with a
           capable hardware H.264 encoder, a disk fast enough to swallow the output, and headroom
-          left over for whatever you are recording. In FastCast, 4K and 60 FPS capture are
-          FastCast Pro features, and results genuinely depend on your hardware.
+          left over for whatever you are recording. In FastCast, 60 FPS capture is free and 4K
+          is a FastCast Pro feature, and results genuinely depend on your hardware.
         </>
       }
-      topCtaNote="FastCast records with hardware H.264 encoding on supported NVIDIA and AMD GPUs. The free tier covers 1080p30; FastCast Pro unlocks 1440p/4K and 60 FPS capture where your hardware supports them."
+      topCtaNote="FastCast records with hardware H.264 encoding on supported NVIDIA and AMD GPUs. The free tier covers 1080p60; FastCast Pro unlocks 1440p/4K and 120 FPS capture where your hardware supports them."
       finalCtaHeading="Start with the free tier, then step up"
-      finalCtaBody="Download FastCast, confirm smooth 1080p30 recording on your machine, and if you need more, FastCast Pro unlocks 1440p/4K and 60 FPS capture with advanced encoder controls, activated inside the app."
+      finalCtaBody="Download FastCast, confirm smooth 1080p60 recording on your machine, and if you need more, FastCast Pro unlocks 1440p/4K and 120 FPS capture with advanced encoder controls, activated inside the app."
     >
       <GuideSection id="what-it-takes" title="What 4K 60 FPS actually demands">
         <p>
@@ -133,8 +133,8 @@ export function GuidePage() {
 
       <GuideSection id="fastcast-support" title="FastCast support and tiers">
         <p>
-          FastCast Free records and streams at 1080p30. A one-time FastCast Pro license unlocks
-          1440p and 4K recording plus 60 FPS capture where your hardware supports them, along with
+          FastCast Free records and streams at 1080p60. A one-time FastCast Pro license unlocks
+          1440p and 4K recording plus 120 FPS capture where your hardware supports them, along with
           advanced encoder controls. You can{' '}
           <a
             href={fastCastProCheckoutUrl}
@@ -149,7 +149,7 @@ export function GuidePage() {
         </p>
         <InlineCta>
           Not sure your machine can sustain 4K60? Download FastCast free, run the test procedure
-          above at 1080p30, and you will know exactly how much headroom you have before paying for
+          above at 1080p60, and you will know exactly how much headroom you have before paying for
           anything.
         </InlineCta>
       </GuideSection>

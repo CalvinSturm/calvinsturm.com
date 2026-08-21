@@ -89,7 +89,8 @@ export function GuidePage() {
           <li>Complete the platform&apos;s own Go Live step when it requires one.</li>
         </ol>
         <p>
-          FastCast does not log into the platform and does not save stream keys to disk. Titles,
+          FastCast does not log into the platform, and stream keys are session-only unless you
+          opt in to storing them in Windows Credential Manager. Titles,
           categories, audience controls, scheduling, and final publication remain in the platform
           dashboard.
         </p>

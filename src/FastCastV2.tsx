@@ -1,17 +1,29 @@
 import { useEffect, useRef } from 'react';
 import { CircleDot, Download } from 'lucide-react';
-import { guides as fastCastGuides, guidePath as fastCastGuidePath, fastCastProCheckoutUrl } from './fastcast-guides/guides-data';
+import {
+  guides as fastCastGuides,
+  guidePath as fastCastGuidePath,
+  fastCastProCheckoutUrl,
+  fastCastProPrice,
+} from './fastcast-guides/guides-data';
 import { trackCtaClick } from './lib/analytics';
 import { useReducedMotion } from './lib/useReducedMotion';
 import './fastcast-v2.css';
 
-const downloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.6.1/FastCast-0.6.1-win-x64.zip';
+// Single source of truth for the shipped version: the download URL and every
+// version string on the page derive from it, so a release bump is one edit
+// here plus softwareVersion/downloadUrl in fastcast.html.
+const currentVersion = '0.7.0';
+const downloadUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.zip`;
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const allReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 
-// The page is laid out like a rack of broadcast units. Every band carries a
-// three-letter patch label on its left rail, so the labels have to describe the
-// band rather than count it: the reader is scanning a panel, not a checklist.
+// The page is laid out like a rack of broadcast units, and only some bands carry
+// a three-letter patch label on the left rail. A label on every band turns the
+// system into wallpaper and the reader stops reading any of them, so add one
+// only where the code names something the heading does not: a state (REC), a
+// class of input (KEY), a boundary (LCL). Bands without one keep the rail column
+// empty via .fc-unit-blank, so the content edge stays on the same line.
 type Rail = { code: string; name: string };
 
 // Setup paths for the same job: record the screen with mic and webcam, then
@@ -108,16 +120,17 @@ const fastCastFaqs = [
   {
     question: 'Is FastCast an OBS alternative?',
     answer:
-      'FastCast is a simpler OBS alternative for focused single-scene recording and streaming workflows. OBS is still better for advanced scenes, filters, plugins, multistreaming, or complex broadcast production.',
+      'FastCast is a simpler OBS alternative for focused single-scene recording and streaming workflows. OBS is still better for advanced scenes, filters, plugins, or complex broadcast production.',
   },
   {
     question: 'Does FastCast save stream keys?',
-    answer: 'No. Stream keys are not saved to disk.',
+    answer:
+      'Not unless you ask it to. Stream keys are session-only by default. Turning on Remember stream keys in Advanced stores them in Windows Credential Manager, encrypted by Windows under your user account, and turning it back off deletes them immediately. Keys never go into settings files, logs, or support bundles.',
   },
   {
     question: 'Is FastCast free?',
     answer:
-      'FastCast Free covers 1080p recording and streaming at 30 fps, and those capabilities will stay free, with no subscription and no account. A one-time FastCast Pro license unlocks 1440p and 4K recording, 60 fps capture, and advanced encoder controls.',
+      `FastCast Free covers 1080p recording and streaming at 60 fps, and those capabilities will stay free, with no subscription and no account. FastCast Pro is a one-time ${fastCastProPrice} license that unlocks 1440p and 4K recording, 120 fps capture, multistreaming to up to three destinations, and advanced encoder controls.`,
   },
   {
     question: 'Is FastCast signed?',
@@ -131,29 +144,45 @@ function trackDownload(location: string, href = downloadUrl) {
 }
 
 /**
- * The one moving part on the page: a timecode in the tally bar counting how
- * long this tab has been open. It writes straight to the node at 10 Hz instead
- * of through state, so the rest of the page never re-renders, and it does not
- * run at all when the visitor asks for reduced motion.
+ * The one live element on the page: a timecode in the tally bar counting how
+ * long this tab has been open. It writes straight to the node instead of
+ * through state, so the rest of the page never re-renders.
+ *
+ * The clock keeps running when the visitor asks for reduced motion. A numeral
+ * changing in place is not motion in the vestibular sense, and this is the only
+ * thing on the page that says "recorder" rather than "software". What does get
+ * dropped is the frames field, and with it the 10 Hz tick: a digit flickering
+ * ten times a second in a bar that is on screen for the whole visit is the
+ * distraction people set that flag to avoid. Seconds still read as a counter.
  */
-function useSessionTimecode(ref: React.RefObject<HTMLSpanElement | null>, enabled: boolean) {
+function useSessionTimecode(ref: React.RefObject<HTMLSpanElement | null>, frames: boolean) {
   useEffect(() => {
-    if (!enabled) return;
     const start = performance.now();
+    const period = frames ? 100 : 1000;
 
     const pad = (value: number) => String(Math.floor(value)).padStart(2, '0');
 
+    let timer = 0;
+
     const tick = () => {
       const node = ref.current;
-      if (!node) return;
       const elapsed = (performance.now() - start) / 1000;
-      node.textContent = `${pad(elapsed / 3600)}:${pad((elapsed / 60) % 60)}:${pad(elapsed % 60)}:${pad((elapsed % 1) * 30)}`;
+
+      if (node) {
+        const clock = `${pad(elapsed / 3600)}:${pad((elapsed / 60) % 60)}:${pad(elapsed % 60)}`;
+        node.textContent = frames ? `${clock}:${pad((elapsed % 1) * 30)}` : clock;
+      }
+
+      // Re-arm against the elapsed time rather than on a fixed interval, so a
+      // slow frame cannot make the counter show the same second twice or skip
+      // one. At 1 Hz that would read as a broken clock.
+      const drift = (performance.now() - start) % period;
+      timer = window.setTimeout(tick, period - drift);
     };
 
     tick();
-    const timer = window.setInterval(tick, 100);
-    return () => window.clearInterval(timer);
-  }, [ref, enabled]);
+    return () => window.clearTimeout(timer);
+  }, [ref, frames]);
 }
 
 function KeyCombo({ keys, hold }: { keys: string[]; hold?: boolean }) {
@@ -204,17 +233,12 @@ export function FastCastV2() {
           <a href="#faq">FAQ</a>
         </nav>
         <div className="fc-bar-right">
-          {/* A frozen counter reads as a broken clock, so the still version of
-              the tally bar shows the build instead of the session timecode. */}
-          {reducedMotion ? (
-            <span className="fc-timecode" aria-hidden="true">
-              FastCast <span>0.6.1 · Windows 64-bit</span>
-            </span>
-          ) : (
-            <span className="fc-timecode" aria-hidden="true">
-              Session <span ref={timecodeRef}>00:00:00:00</span>
-            </span>
-          )}
+          {/* Reads "Session", not "REC": red and REC are reserved for actual
+              recording and live state, in the app and here. A page clock that
+              labelled itself REC would be the site lying about status. */}
+          <span className="fc-timecode" aria-hidden="true">
+            Session <span ref={timecodeRef}>{reducedMotion ? '00:00:00' : '00:00:00:00'}</span>
+          </span>
           <a
             className="fc-btn fc-btn-primary"
             href={downloadUrl}
@@ -228,9 +252,8 @@ export function FastCastV2() {
       </header>
 
       <main id="fastcast-main">
-        <section className="fc-unit fc-hero" aria-labelledby="fastcast-v2-title">
-          <div className="fc-unit-inner">
-            <RailLabel code="PGM" name="Program" />
+        <section className="fc-unit fc-unit-wide fc-hero" aria-labelledby="fastcast-v2-title">
+          <div className="fc-unit-inner fc-unit-blank">
             <div className="fc-hero-grid">
               <div className="fc-hero-copy">
                 <p className="fc-eyebrow">Windows screen recorder and streamer</p>
@@ -256,7 +279,7 @@ export function FastCastV2() {
                   </a>
                 </div>
                 <p className="fc-fineprint">
-                  v0.6.1 · Portable ZIP · Free · No account
+                  v{currentVersion} · Portable ZIP · Free · No account
                 </p>
 
                 <dl className="fc-plate">
@@ -293,9 +316,8 @@ export function FastCastV2() {
           </div>
         </section>
 
-        <section id="compare" className="fc-unit fc-compare" aria-labelledby="compare-title">
-          <div className="fc-unit-inner">
-            <RailLabel code="A/B" name="Compare" />
+        <section id="compare" className="fc-unit fc-unit-wide fc-compare" aria-labelledby="compare-title">
+          <div className="fc-unit-inner fc-unit-blank">
             <div className="fc-unit-body">
               <h2 id="compare-title">
                 Same recording. <em>Two setup paths.</em>
@@ -345,7 +367,7 @@ export function FastCastV2() {
 
               <p className="fc-honest">
                 <b>Keep OBS for the rest.</b> It is a full broadcast studio and it earns those steps:
-                scene switching, plugins, filters, multistreaming, and productions with a director.
+                scene switching, plugins, filters, and productions with a director.
                 FastCast is for the recording you want to start in the next ten seconds.
               </p>
             </div>
@@ -353,8 +375,7 @@ export function FastCastV2() {
         </section>
 
         <section id="panel" className="fc-unit fc-panel" aria-labelledby="panel-title">
-          <div className="fc-unit-inner">
-            <RailLabel code="PNL" name="Controls" />
+          <div className="fc-unit-inner fc-unit-blank">
             <div className="fc-unit-body">
               <h2 id="panel-title">
                 Everything you need <em>to record</em>
@@ -376,9 +397,8 @@ export function FastCastV2() {
           </div>
         </section>
 
-        <section className="fc-unit fc-advanced" aria-labelledby="advanced-title">
-          <div className="fc-unit-inner">
-            <RailLabel code="EXP" name="Expanded" />
+        <section className="fc-unit fc-unit-wide fc-advanced" aria-labelledby="advanced-title">
+          <div className="fc-unit-inner fc-unit-blank">
             <div className="fc-unit-body fc-advanced-grid">
               <div>
                 <h2 id="advanced-title">
@@ -477,8 +497,8 @@ export function FastCastV2() {
                   <span>FastCast does not collect usage data, upload crash reports, or check for updates unless you ask it to.</span>
                 </li>
                 <li>
-                  <b>Stream keys are not saved</b>
-                  <span>FastCast uses your stream key only while the app is open and does not save it.</span>
+                  <b>Stream keys are session-only by default</b>
+                  <span>FastCast uses your stream key only while the app is open. If you turn on Remember stream keys, it is stored in Windows Credential Manager, never in a settings file, log, or support bundle.</span>
                 </li>
               </ul>
             </div>
@@ -498,7 +518,7 @@ export function FastCastV2() {
                   <p className="fc-plan-name">FastCast Free</p>
                   <p className="fc-plan-price">$0</p>
                   <p className="fc-plan-line">
-                    1080p recording and streaming at 30 fps. Stays free with no subscription.
+                    1080p recording and streaming at 60 fps. Stays free with no subscription.
                   </p>
                   <ul className="fc-ticks">
                     <li>Monitor or window capture</li>
@@ -521,11 +541,12 @@ export function FastCastV2() {
                   <p className="fc-plan-name">
                     FastCast Pro <span className="fc-chip">One-time</span>
                   </p>
-                  <p className="fc-plan-price">4K · 60 fps</p>
+                  <p className="fc-plan-price">{fastCastProPrice}</p>
                   <p className="fc-plan-line">For recordings people will scrub through frame by frame.</p>
                   <ul className="fc-ticks">
                     <li>1440p and 4K recording</li>
-                    <li>60 fps capture where your hardware supports it</li>
+                    <li>120 fps capture where your hardware supports it</li>
+                    <li>Stream to up to three destinations at once</li>
                     <li>Fine-tune recording quality and file size</li>
                     <li>No subscription and no account</li>
                   </ul>
@@ -550,8 +571,7 @@ export function FastCastV2() {
         </section>
 
         <section id="guides" className="fc-unit fc-guides" aria-labelledby="guides-title">
-          <div className="fc-unit-inner">
-            <RailLabel code="DOC" name="Guides" />
+          <div className="fc-unit-inner fc-unit-blank">
             <div className="fc-unit-body">
               <div className="fc-unit-head">
                 <h2 id="guides-title">
@@ -601,7 +621,7 @@ export function FastCastV2() {
             <RailLabel code="REC" name="Ready" />
             <div className="fc-unit-body fc-end-body">
               <h2>Press record in ten seconds</h2>
-              <p className="fc-unit-lede">FastCast v0.6.1 for Windows 10 and 11, 64-bit. Portable ZIP,
+              <p className="fc-unit-lede">FastCast v{currentVersion} for Windows 10 and 11, 64-bit. Portable ZIP,
                 no installer.</p>
               <div className="fc-actions">
                 <a
@@ -634,6 +654,7 @@ export function FastCastV2() {
           </p>
           <nav aria-label="FastCast footer links">
             <a href="/fastcast/guides">Guides</a>
+            <a href="/fast-series">Fast Series</a>
             <a href="/roadmap">Roadmap</a>
             <a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">Release notes</a>
             <a href={allReleasesUrl} target="_blank" rel="noopener noreferrer">All releases</a>
@@ -642,7 +663,7 @@ export function FastCastV2() {
       </footer>
 
       <div className="fc-floating-cta">
-        <span><CircleDot size={14} /> FastCast <b>v0.6.1</b></span>
+        <span><CircleDot size={14} /> FastCast <b>v{currentVersion}</b></span>
         <a
           href={downloadUrl}
           target="_blank"

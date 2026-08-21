@@ -17,6 +17,10 @@ import { fastPlayFaqs } from '../src/fastplay-faqs.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const ORIGIN = 'https://www.calvinsturm.com';
+// 5 MB is the common ceiling for card images (X for static images, LinkedIn),
+// and slower scrapers give up well before it. An oversized share image is a
+// preview that silently fails to render, so treat it as an error, not a warning.
+const SHARE_IMAGE_MAX_MB = 5;
 const errors = [];
 const warnings = [];
 
@@ -110,6 +114,32 @@ for (const page of pages) {
 
   if (!/<meta property="og:title"/.test(html)) errors.push(`${file}: missing og:title`);
   if (!/<meta property="og:image"/.test(html)) warnings.push(`${file}: missing og:image`);
+
+  // Share images have to be absolute on this origin and actually exist under
+  // public/. An off-domain or stale og:image breaks every link preview
+  // silently and credits the image to someone else's domain, which is exactly
+  // the sort of rot that survives for months because nothing renders it here.
+  for (const [, ogAttr, twitterAttr, rawUrl] of html.matchAll(
+    /<meta (?:property="(og:image)"|name="(twitter:image)")\s+content="([^"]*)"/g,
+  )) {
+    const attr = ogAttr ?? twitterAttr;
+    const url = rawUrl.split(/[?#]/)[0];
+    if (!url.startsWith(`${ORIGIN}/`)) {
+      errors.push(`${file}: ${attr} must be absolute on ${ORIGIN}: ${rawUrl}`);
+      continue;
+    }
+    let bytes;
+    try {
+      bytes = statSync(join(root, 'public', url.slice(ORIGIN.length))).size;
+    } catch {
+      errors.push(`${file}: ${attr} asset not found in public/: ${url}`);
+      continue;
+    }
+    const mb = bytes / 1024 / 1024;
+    if (mb > SHARE_IMAGE_MAX_MB) {
+      errors.push(`${file}: ${attr} is ${mb.toFixed(1)} MB, over the ${SHARE_IMAGE_MAX_MB} MB share limit: ${url}`);
+    }
+  }
 
   for (const [, block] of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     try {

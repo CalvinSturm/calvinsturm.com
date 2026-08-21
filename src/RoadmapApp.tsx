@@ -307,7 +307,7 @@ const laterItems = [
     product: 'Both',
     accent: 'none',
     title: 'Deliberately not planned',
-    body: 'FastPlay stays out of streaming, playlists, media libraries, plugins, and cross-platform builds. FastCast does not chase full OBS parity: no scene system, chroma key, or multistreaming is on this roadmap, and it keeps its no-telemetry, no-account, manual-update stance.',
+    body: 'FastPlay stays out of streaming, playlists, media libraries, plugins, and cross-platform builds. FastCast does not chase full OBS parity: no scene system or chroma key is on this roadmap, and it keeps its no-telemetry, no-account, manual-update stance.',
   },
 ];
 

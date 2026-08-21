@@ -11,6 +11,9 @@ export const guidesIndexPath = '/fastcast/guides';
 export const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 export const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 export const fastCastProCheckoutUrl = 'https://calvinstorm.gumroad.com/l/fastcast';
+// Keep in step with the Gumroad listing, and with the FAQ answer duplicated in
+// the FAQPage JSON-LD in fastcast.html, which cannot import this.
+export const fastCastProPrice = '$49';
 export const fastCastSiteUrl = 'https://calvinsturm.github.io/FastCast-releases/';
 
 export type GuideCategory =
