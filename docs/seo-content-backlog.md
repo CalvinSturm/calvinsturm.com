@@ -1,5 +1,8 @@
 # SEO content backlog
 
+On-page guide strategy. For off-page work (canonical URLs, share metadata,
+directory submissions, and outreach) see `seo-backlink-outreach.md`.
+
 Status of the problem-focused guide strategy as of 2026-08-14. The guide
 architecture is `src/product-guides/ProductGuides.tsx` bound per product
 (`src/<product>-guides/`); each guide needs an HTML shell, a `.tsx` article, a

@@ -25,7 +25,7 @@ export function GuidePage() {
           software and never share it.
         </>
       }
-      topCtaNote="FastCast accepts a server URL and stream key for YouTube, Twitch, Kick, or a custom RTMP/RTMPS destination. Keys are not saved to disk."
+      topCtaNote="FastCast accepts a server URL and stream key for YouTube, Twitch, Kick, or a custom RTMP/RTMPS destination. Keys are session-only unless you opt in to storing them in Windows Credential Manager."
       finalCtaHeading="Keep the connection simple and private"
       finalCtaBody="Choose a FastCast destination, verify its server URL, and paste the key only when you are ready to test. 1080p30 streaming will stay free."
     >
@@ -108,7 +108,7 @@ export function GuidePage() {
         <ul>
           <li>Never put a key in a screenshot, screen share, recording, chat message, source repository, or support ticket.</li>
           <li>Use RTMPS when the platform offers it so the credential is encrypted in transit.</li>
-          <li>FastCast uses the key while open but does not save it to disk.</li>
+          <li>FastCast uses the key while open and forgets it on exit, unless you turn on Remember stream keys in Advanced.</li>
           <li>If the key is exposed, stop streaming and reset or regenerate it in the platform dashboard immediately.</li>
           <li>Replace the old key in every encoder after resetting it; the previous value should no longer work.</li>
         </ul>

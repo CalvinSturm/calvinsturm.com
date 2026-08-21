@@ -26,7 +26,7 @@ export function GuidePage() {
       }
       topCtaNote="FastCast sends a monitor or window, microphone, desktop audio, and optional webcam to Twitch from one focused Windows setup. 1080p30 streaming will stay free."
       finalCtaHeading="Test the Twitch connection"
-      finalCtaBody="Download the FastCast Open Beta, configure your Twitch destination, and run a bandwidth test before the real broadcast. FastCast does not save your stream key to disk."
+      finalCtaBody="Download the FastCast Open Beta, configure your Twitch destination, and run a bandwidth test before the real broadcast. FastCast keeps your stream key for the session only unless you opt in to storing it in Windows Credential Manager."
     >
       <GuideSection id="prepare" title="Prepare the Twitch channel and Windows PC">
         <ul>

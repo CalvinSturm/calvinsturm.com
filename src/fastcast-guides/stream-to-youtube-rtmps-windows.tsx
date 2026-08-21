@@ -99,7 +99,7 @@ export function GuidePage() {
           <li>Prefer <code>rtmps://</code>; plain RTMP does not encrypt the key in transit.</li>
           <li>Do not show the key in screenshots, tutorials, logs, support requests, or screen shares.</li>
           <li>Reset the key in YouTube Studio immediately if it is exposed.</li>
-          <li>FastCast deliberately does not save the stream key to disk; paste it again after restarting.</li>
+          <li>FastCast keeps the stream key for the session only; paste it again after restarting, or turn on Remember stream keys in Advanced to store it in Windows Credential Manager.</li>
         </ul>
       </GuideSection>
 

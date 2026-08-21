@@ -82,7 +82,8 @@ export function GuidePage() {
         <p>
           The portable ZIP contains the GUI and its small command-line controller, with no runtime
           to install. FastCast is deliberately quiet: no telemetry, no accounts, no background
-          polling, and stream keys are never saved to disk.
+          polling, and stream keys are session-only unless you opt in to storing them in Windows
+          Credential Manager.
         </p>
       </GuideSection>
 
@@ -99,8 +100,9 @@ export function GuidePage() {
           <strong>Streaming.</strong> Both tools stream over RTMP. OBS adds platform integrations,
           service presets, and login-based setup. FastCast keeps it manual but simple: click your
           platform (YouTube, Twitch, or Kick) to fill in the server URL, paste your stream key,
-          and go live. FastCast has no platform OAuth login and no multistream/simulcast; if you
-          need either, that is an OBS job. For the focused path, follow the{' '}
+          and go live. FastCast has no platform OAuth login; if you need one, that is an OBS job.
+          FastCast Pro streams to up to three destinations at once. For the focused path, follow
+          the{' '}
           <a href={guidePath('how-to-stream-on-windows')}>Windows live-streaming guide</a>.
         </p>
       </GuideSection>

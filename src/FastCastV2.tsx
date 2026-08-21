@@ -1,11 +1,20 @@
 import { useEffect, useRef } from 'react';
 import { CircleDot, Download } from 'lucide-react';
-import { guides as fastCastGuides, guidePath as fastCastGuidePath, fastCastProCheckoutUrl } from './fastcast-guides/guides-data';
+import {
+  guides as fastCastGuides,
+  guidePath as fastCastGuidePath,
+  fastCastProCheckoutUrl,
+  fastCastProPrice,
+} from './fastcast-guides/guides-data';
 import { trackCtaClick } from './lib/analytics';
 import { useReducedMotion } from './lib/useReducedMotion';
 import './fastcast-v2.css';
 
-const downloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.6.1/FastCast-0.6.1-win-x64.zip';
+// Single source of truth for the shipped version: the download URL and every
+// version string on the page derive from it, so a release bump is one edit
+// here plus softwareVersion/downloadUrl in fastcast.html.
+const currentVersion = '0.7.0';
+const downloadUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.zip`;
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const allReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 
@@ -111,16 +120,17 @@ const fastCastFaqs = [
   {
     question: 'Is FastCast an OBS alternative?',
     answer:
-      'FastCast is a simpler OBS alternative for focused single-scene recording and streaming workflows. OBS is still better for advanced scenes, filters, plugins, multistreaming, or complex broadcast production.',
+      'FastCast is a simpler OBS alternative for focused single-scene recording and streaming workflows. OBS is still better for advanced scenes, filters, plugins, or complex broadcast production.',
   },
   {
     question: 'Does FastCast save stream keys?',
-    answer: 'No. Stream keys are not saved to disk.',
+    answer:
+      'Not unless you ask it to. Stream keys are session-only by default. Turning on Remember stream keys in Advanced stores them in Windows Credential Manager, encrypted by Windows under your user account, and turning it back off deletes them immediately. Keys never go into settings files, logs, or support bundles.',
   },
   {
     question: 'Is FastCast free?',
     answer:
-      'FastCast Free covers 1080p recording and streaming at 30 fps, and those capabilities will stay free, with no subscription and no account. A one-time FastCast Pro license unlocks 1440p and 4K recording, 60 fps capture, and advanced encoder controls.',
+      `FastCast Free covers 1080p recording and streaming at 60 fps, and those capabilities will stay free, with no subscription and no account. FastCast Pro is a one-time ${fastCastProPrice} license that unlocks 1440p and 4K recording, 120 fps capture, multistreaming to up to three destinations, and advanced encoder controls.`,
   },
   {
     question: 'Is FastCast signed?',
@@ -269,7 +279,7 @@ export function FastCastV2() {
                   </a>
                 </div>
                 <p className="fc-fineprint">
-                  v0.6.1 · Portable ZIP · Free · No account
+                  v{currentVersion} · Portable ZIP · Free · No account
                 </p>
 
                 <dl className="fc-plate">
@@ -357,7 +367,7 @@ export function FastCastV2() {
 
               <p className="fc-honest">
                 <b>Keep OBS for the rest.</b> It is a full broadcast studio and it earns those steps:
-                scene switching, plugins, filters, multistreaming, and productions with a director.
+                scene switching, plugins, filters, and productions with a director.
                 FastCast is for the recording you want to start in the next ten seconds.
               </p>
             </div>
@@ -487,8 +497,8 @@ export function FastCastV2() {
                   <span>FastCast does not collect usage data, upload crash reports, or check for updates unless you ask it to.</span>
                 </li>
                 <li>
-                  <b>Stream keys are not saved</b>
-                  <span>FastCast uses your stream key only while the app is open and does not save it.</span>
+                  <b>Stream keys are session-only by default</b>
+                  <span>FastCast uses your stream key only while the app is open. If you turn on Remember stream keys, it is stored in Windows Credential Manager, never in a settings file, log, or support bundle.</span>
                 </li>
               </ul>
             </div>
@@ -508,7 +518,7 @@ export function FastCastV2() {
                   <p className="fc-plan-name">FastCast Free</p>
                   <p className="fc-plan-price">$0</p>
                   <p className="fc-plan-line">
-                    1080p recording and streaming at 30 fps. Stays free with no subscription.
+                    1080p recording and streaming at 60 fps. Stays free with no subscription.
                   </p>
                   <ul className="fc-ticks">
                     <li>Monitor or window capture</li>
@@ -531,11 +541,12 @@ export function FastCastV2() {
                   <p className="fc-plan-name">
                     FastCast Pro <span className="fc-chip">One-time</span>
                   </p>
-                  <p className="fc-plan-price">4K · 60 fps</p>
+                  <p className="fc-plan-price">{fastCastProPrice}</p>
                   <p className="fc-plan-line">For recordings people will scrub through frame by frame.</p>
                   <ul className="fc-ticks">
                     <li>1440p and 4K recording</li>
-                    <li>60 fps capture where your hardware supports it</li>
+                    <li>120 fps capture where your hardware supports it</li>
+                    <li>Stream to up to three destinations at once</li>
                     <li>Fine-tune recording quality and file size</li>
                     <li>No subscription and no account</li>
                   </ul>
@@ -610,7 +621,7 @@ export function FastCastV2() {
             <RailLabel code="REC" name="Ready" />
             <div className="fc-unit-body fc-end-body">
               <h2>Press record in ten seconds</h2>
-              <p className="fc-unit-lede">FastCast v0.6.1 for Windows 10 and 11, 64-bit. Portable ZIP,
+              <p className="fc-unit-lede">FastCast v{currentVersion} for Windows 10 and 11, 64-bit. Portable ZIP,
                 no installer.</p>
               <div className="fc-actions">
                 <a
@@ -643,6 +654,7 @@ export function FastCastV2() {
           </p>
           <nav aria-label="FastCast footer links">
             <a href="/fastcast/guides">Guides</a>
+            <a href="/fast-series">Fast Series</a>
             <a href="/roadmap">Roadmap</a>
             <a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">Release notes</a>
             <a href={allReleasesUrl} target="_blank" rel="noopener noreferrer">All releases</a>
@@ -651,7 +663,7 @@ export function FastCastV2() {
       </footer>
 
       <div className="fc-floating-cta">
-        <span><CircleDot size={14} /> FastCast <b>v0.6.1</b></span>
+        <span><CircleDot size={14} /> FastCast <b>v{currentVersion}</b></span>
         <a
           href={downloadUrl}
           target="_blank"

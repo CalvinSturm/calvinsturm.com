@@ -17,13 +17,16 @@
     <meta property="og:title" content="FastCast | Native Windows screen recorder and OBS alternative" />
     <meta property="og:description" content="FastCast is a native Windows screen recorder for local MP4 recording, webcam overlay, desktop and mic audio, and RTMP/RTMPS livestreaming." />
     <meta property="og:url" content="https://www.calvinsturm.com/fastcast" />
-    <meta property="og:image" content="https://www.calvinsturm.com/assets/FastCast/fastcast-default-view.png" />
+    <meta property="og:image" content="https://www.calvinsturm.com/assets/FastCast/fastcast-demo-poster.jpg" />
+    <meta property="og:image:width" content="1600" />
+    <meta property="og:image:height" content="900" />
+    <meta property="og:image:alt" content="The FastCast window on Windows, showing capture, stream, audio and webcam, and advanced encoder panels." />
     <meta property="og:locale" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="FastCast | Native Windows screen recorder and OBS alternative" />
     <meta name="twitter:description" content="FastCast is a native Windows screen recorder for local MP4 recording, webcam overlay, desktop and mic audio, and RTMP/RTMPS livestreaming." />
-    <meta name="twitter:image" content="https://www.calvinsturm.com/assets/FastCast/fastcast-default-view.png" />
+    <meta name="twitter:image" content="https://www.calvinsturm.com/assets/FastCast/fastcast-demo-poster.jpg" />
 
     <script type="application/ld+json">
       {
@@ -34,12 +37,13 @@
         "applicationCategory": "MultimediaApplication",
         "applicationSubCategory": "Screen Recorder",
         "description": "FastCast is a native Windows screen recorder and live streaming app for local MP4 recording, monitor or window capture, desktop and microphone audio, webcam overlay, and RTMP/RTMPS streaming.",
-        "softwareVersion": "0.6.1",
+        "softwareVersion": "0.7.0",
         "url": "https://www.calvinsturm.com/fastcast",
-        "downloadUrl": "https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.6.1/FastCast-0.6.1-win-x64.zip",
+        "downloadUrl": "https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.7.0/FastCast-0.7.0-win-x64.zip",
         "releaseNotes": "https://github.com/CalvinSturm/FastCast-releases/releases/latest",
         "screenshot": "https://www.calvinsturm.com/assets/FastCast/fastcast-default-view.png",
-        "image": "https://www.calvinsturm.com/assets/FastCast/fastcast-default-view.png",
+        "image": "https://www.calvinsturm.com/assets/FastCast/fastcast-demo-poster.jpg",
+        "sameAs": "https://github.com/CalvinSturm/FastCast-releases",
         "publisher": {
           "@type": "Organization",
           "name": "Sturm Technologies LLC",
@@ -50,12 +54,24 @@
           "name": "Calvin Sturm",
           "url": "https://github.com/CalvinSturm"
         },
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "softwareRequirements": "Windows 10 or Windows 11, 64-bit"
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "FastCast Free",
+            "description": "1080p recording and streaming at 60 fps, with no subscription and no account.",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "name": "FastCast Pro",
+            "description": "One-time license that unlocks 1440p and 4K recording, 120 fps capture, multistreaming to up to three destinations, and advanced encoder controls.",
+            "price": "49",
+            "priceCurrency": "USD",
+            "url": "https://calvinstorm.gumroad.com/l/fastcast"
+          }
+        ],
+        "softwareRequirements": "Windows 10 version 20H1 or later, or Windows 11, 64-bit"
       }
     </script>
     <script type="application/ld+json">
@@ -76,7 +92,7 @@
             "name": "Is FastCast an OBS alternative?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "FastCast is a simpler OBS alternative for focused single-scene recording and streaming workflows. OBS is still better for advanced scenes, filters, plugins, multistreaming, or complex broadcast production."
+              "text": "FastCast is a simpler OBS alternative for focused single-scene recording and streaming workflows. OBS is still better for advanced scenes, filters, plugins, or complex broadcast production."
             }
           },
           {
@@ -84,7 +100,7 @@
             "name": "Does FastCast save stream keys?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. Stream keys are not saved to disk."
+              "text": "Not unless you ask it to. Stream keys are session-only by default. Turning on Remember stream keys in Advanced stores them in Windows Credential Manager, encrypted by Windows under your user account, and turning it back off deletes them immediately. Keys never go into settings files, logs, or support bundles."
             }
           },
           {
@@ -92,7 +108,7 @@
             "name": "Is FastCast free?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "FastCast Free covers 1080p recording and streaming at 30 fps, and those capabilities will stay free, with no subscription and no account. A one-time FastCast Pro license unlocks 1440p and 4K recording, 60 fps capture, and advanced encoder controls."
+              "text": "FastCast Free covers 1080p recording and streaming at 60 fps, and those capabilities will stay free, with no subscription and no account. FastCast Pro is a one-time $49 license that unlocks 1440p and 4K recording, 120 fps capture, multistreaming to up to three destinations, and advanced encoder controls."
             }
           },
           {
