@@ -66,6 +66,11 @@ const panelRows = [
     spec: '4 layouts',
   },
   {
+    name: 'Built-in green screen',
+    body: 'Remove a green backdrop from your webcam inside FastCast, then place yourself cleanly over your recording or stream.',
+    spec: 'Live chroma key',
+  },
+  {
     name: 'A finished MP4',
     body: 'Recordings are saved as H.264 MP4 files, ready to upload or edit as soon as recording ends.',
     spec: 'MP4 / H.264',
@@ -262,7 +267,8 @@ export function FastCastV2() {
                 <h1 id="fastcast-v2-title">Record, stream, or do both in one click.</h1>
                 <p className="fc-lede">
                   Open FastCast, pick a display and mic, then record, stream, or do both with one click.
-                  Go live to YouTube, Twitch, Kick, or any RTMP service.
+                  Add your webcam with built-in green-screen removal, or go live to YouTube, Twitch,
+                  Kick, or any RTMP service.
                 </p>
                 <div className="fc-actions">
                   <a
@@ -297,20 +303,15 @@ export function FastCastV2() {
                   Anything more reads as a second app wrapped around the app. */}
               <figure className="fc-monitor">
                 <div className="fc-monitor-frame">
-                  {/* WebP for the page, PNG kept as the fallback and as the file
-                      og:image and the JSON-LD screenshot point at. */}
-                  <picture>
-                    <source srcSet="/assets/FastCast/fastcast-default-view.webp" type="image/webp" />
-                    <img
-                      src="/assets/FastCast/fastcast-default-view.png"
-                      alt="The FastCast window on Windows: a live preview of the screen being captured, with Sources, Destination, and Recent files below it, and a Start recording button"
-                      width="728"
-                      height="790"
-                      fetchPriority="high"
-                    />
-                  </picture>
+                  <img
+                    src="/assets/FastCast/fastcast-green-screen.png"
+                    alt="FastCast recording a game with a webcam overlay and green-screen removal enabled, placing the presenter cleanly over the captured screen"
+                    width="730"
+                    height="792"
+                    fetchPriority="high"
+                  />
                 </div>
-                <figcaption>FastCast at launch. Nothing to set up before this screen.</figcaption>
+                <figcaption>Built-in green screen · Live while you record or stream</figcaption>
               </figure>
             </div>
           </div>
