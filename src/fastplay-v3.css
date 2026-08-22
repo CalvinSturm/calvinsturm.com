@@ -743,8 +743,41 @@
   }
 
   .fastplay-v3 .fastcast-v2-hero-product {
-    bottom: -47vh;
-    width: min(76vw, 410px);
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: min(88vw, 390px);
+    height: auto;
+    aspect-ratio: 544 / 988;
+    transform: none;
+  }
+
+  /* The desktop hero earns its scroll track by growing the landscape player
+     into the viewport. On a phone the portrait capture already fills the
+     available width, so pinning it inside 240vh only creates an empty-feeling
+     opening scroll. Keep the same content in ordinary document flow. */
+  .fastplay-v3 .fastcast-v2-hero-track {
+    height: auto;
+    min-height: 0;
+  }
+
+  .fastplay-v3 .fastcast-v2-hero-sticky {
+    position: relative;
+    top: auto;
+    display: flex;
+    height: auto;
+    min-height: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-bottom: 42px;
+  }
+
+  .fastplay-v3 .fastcast-v2-hero-copy {
+    position: relative;
+    top: auto;
+    padding: 105px 0 42px;
+    opacity: 1;
+    transform: none;
   }
 
   .fastplay-v3 .fastcast-v2-story-sticky {
@@ -758,7 +791,7 @@
 
 @media (max-width: 480px) {
   .fastplay-v3 .fastcast-v2-hero-track {
-    min-height: 1180px;
+    min-height: 0;
   }
 
   .fastplay-v3 .fastcast-v2-hero-copy {
@@ -770,8 +803,9 @@
   }
 
   .fastplay-v3 .fastcast-v2-hero-product {
-    bottom: -40vh;
-    width: min(78vw, 360px);
+    bottom: auto;
+    width: min(88vw, 360px);
+    height: auto;
   }
 
   .fastplay-v3 .fastcast-v2-story-device {

@@ -40,8 +40,8 @@ const releaseNotesUrl = `https://github.com/CalvinSturm/FastPlay/releases/tag/v$
 const heroWideQuery = '(min-width: 761px)';
 const heroWideSrc = '/assets/FastPlay/fastplay-hero-wide.mp4';
 const heroWidePoster = '/assets/FastPlay/fastplay-hero-wide-poster.jpg';
-const heroTallSrc = '/assets/FastPlay/fastplay-hero.mp4';
-const heroTallPoster = '/assets/FastPlay/fastplay-hero-poster.jpg';
+const heroTallSrc = '/assets/FastPlay/fastplay-demo.mp4';
+const heroTallPoster = '/assets/FastPlay/fastplay-demo-poster.jpg';
 
 const capabilityCards = [
   { metric: '120 fps', label: 'full-cadence playback on high-refresh displays', Icon: Gauge },
