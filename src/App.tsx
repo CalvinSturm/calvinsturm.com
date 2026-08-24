@@ -10,6 +10,7 @@ import {
   Clapperboard,
   Download,
   HardDrive,
+  Mail,
   MapPin,
   Menu,
   Minus,
@@ -45,7 +46,7 @@ const reviews = [
 ] as const;
 
 const processSteps = [
-  ['01', 'Reach out in plain language', 'Call or request a callback with a simple description of what feels off.'],
+  ['01', 'Reach out in plain language', 'Request a callback with a simple description of what feels off.'],
   ['02', 'Get help at home', 'The issue gets worked on where it happens, with calm explanations as things are fixed.'],
   ['03', 'Leave feeling lighter', 'You get a working solution, the next step if one exists, and fewer lingering headaches.'],
 ] as const;
@@ -184,9 +185,9 @@ export default function App() {
           </nav>
 
           <div className="home-header-actions">
-            <a href="tel:+18059940881" className="svc-phone-nav">
-              <Phone className="h-4 w-4" />
-              (805) 994-0881
+            <a href="mailto:techwiz@calvinsturm.com" className="svc-phone-nav">
+              <Mail className="h-4 w-4" />
+              Email
             </a>
             <a href="#request-help" className="home-btn home-btn-primary home-btn-compact">
               Request callback
@@ -243,9 +244,9 @@ export default function App() {
                 <Calendar className="h-4 w-4" />
                 Request a callback
               </a>
-              <a href="tel:+18059940881" className="home-btn home-btn-ghost">
-                <Phone className="h-4 w-4" />
-                (805) 994-0881
+              <a href="mailto:techwiz@calvinsturm.com" className="home-btn home-btn-ghost">
+                <Mail className="h-4 w-4" />
+                Email Tech Wiz
               </a>
             </div>
             <div className="svc-topics">
@@ -342,7 +343,7 @@ export default function App() {
         <section id="how-it-works" className="home-section home-shell" aria-labelledby="how-it-works-heading">
           <div className="home-section-head">
             <p className="home-eyebrow">How it works</p>
-            <h2 id="how-it-works-heading">A simple path from first call to fixed</h2>
+            <h2 id="how-it-works-heading">A simple path from first note to fixed</h2>
           </div>
           <ol className="svc-steps">
             {processSteps.map(([step, title, desc]) => (
@@ -432,15 +433,15 @@ export default function App() {
             <div className="svc-area-copy">
               <p className="home-eyebrow">Service area</p>
               <h2 id="service-area-heading">Serving the Five Cities &amp; Central Coast</h2>
-              <p>Nearby and not listed? Call to confirm: there&apos;s a good chance we can help.</p>
+              <p>Nearby and not listed? Send a request to confirm: there&apos;s a good chance we can help.</p>
               <div className="home-hero-actions">
-                <a href="tel:+18059940881" className="home-btn home-btn-primary">
-                  <Phone className="h-4 w-4" />
-                  Call now
-                </a>
-                <a href="#request-help" className="home-btn home-btn-ghost">
+                <a href="#request-help" className="home-btn home-btn-primary">
                   <Calendar className="h-4 w-4" />
                   Request callback
+                </a>
+                <a href="mailto:techwiz@calvinsturm.com" className="home-btn home-btn-ghost">
+                  <Mail className="h-4 w-4" />
+                  Email Tech Wiz
                 </a>
               </div>
             </div>
@@ -461,9 +462,9 @@ export default function App() {
               <p className="svc-lead">
                 A simple description is enough. We&apos;ll follow up in plain English, usually the same day.
               </p>
-              <a href="tel:+18059940881" className="svc-phone-big">
-                <Phone className="h-5 w-5" />
-                (805) 994-0881
+              <a href="mailto:techwiz@calvinsturm.com" className="svc-phone-big">
+                <Mail className="h-5 w-5" />
+                techwiz@calvinsturm.com
               </a>
             </div>
 
@@ -535,9 +536,9 @@ export default function App() {
                   <Calendar className="h-4 w-4" />
                   Request callback
                 </button>
-                <a href="tel:+18059940881" className="home-btn home-btn-ghost">
-                  <Phone className="h-4 w-4" />
-                  Call now
+                <a href="mailto:techwiz@calvinsturm.com" className="home-btn home-btn-ghost">
+                  <Mail className="h-4 w-4" />
+                  Email
                 </a>
               </div>
               {isSubmitted && (
@@ -594,15 +595,15 @@ export default function App() {
           <div className="home-final-panel">
             <Wrench className="home-final-icon h-6 w-6" aria-hidden="true" />
             <h2 id="final-heading">Ready for tech that just works?</h2>
-            <p>One call or a short note is enough to get started. Patient help, at your home, in plain English.</p>
+            <p>A short note is enough to get started. Patient help, at your home, in plain English.</p>
             <div className="home-hero-actions home-final-actions">
               <a href="#request-help" className="home-btn home-btn-primary">
                 <Calendar className="h-4 w-4" />
                 Request a callback
               </a>
-              <a href="tel:+18059940881" className="home-btn home-btn-ghost">
-                <Phone className="h-4 w-4" />
-                Call (805) 994-0881
+              <a href="mailto:techwiz@calvinsturm.com" className="home-btn home-btn-ghost">
+                <Mail className="h-4 w-4" />
+                Email Tech Wiz
               </a>
             </div>
           </div>
@@ -632,7 +633,6 @@ export default function App() {
           </nav>
           <nav aria-label="Contact">
             <h3>Contact</h3>
-            <a href="tel:+18059940881">(805) 994-0881</a>
             <a href="mailto:techwiz@calvinsturm.com">techwiz@calvinsturm.com</a>
             <a href="#request-help">Request a callback</a>
           </nav>
@@ -644,9 +644,9 @@ export default function App() {
 
       <div className="svc-mobilebar">
         <div className="svc-mobilebar-inner">
-          <a href="tel:+18059940881" className="home-btn home-btn-primary">
-            <Phone className="h-4 w-4" />
-            Call
+          <a href="mailto:techwiz@calvinsturm.com" className="home-btn home-btn-primary">
+            <Mail className="h-4 w-4" />
+            Email
           </a>
           <a href="#request-help" className="home-btn home-btn-ghost">
             <Calendar className="h-4 w-4" />

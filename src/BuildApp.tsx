@@ -13,10 +13,10 @@ import {
   Gauge,
   Globe,
   Layers,
+  Mail,
   Menu,
   MessageSquare,
   Minus,
-  Phone,
   Plus,
   Send,
   ShieldCheck,
@@ -217,9 +217,9 @@ export default function BuildApp() {
           </nav>
 
           <div className="home-header-actions">
-            <a href="tel:+18059940881" className="svc-phone-nav">
-              <Phone className="h-4 w-4" />
-              (805) 994-0881
+            <a href="mailto:calvinsturm@gmail.com" className="svc-phone-nav">
+              <Mail className="h-4 w-4" />
+              Email
             </a>
             <a href="#request-build" className="home-btn home-btn-primary home-btn-compact">
               Start a project
@@ -276,9 +276,9 @@ export default function BuildApp() {
                 <Calendar className="h-4 w-4" />
                 Start a project
               </a>
-              <a href="tel:+18059940881" className="home-btn home-btn-ghost">
-                <Phone className="h-4 w-4" />
-                (805) 994-0881
+              <a href="mailto:calvinsturm@gmail.com" className="home-btn home-btn-ghost">
+                <Mail className="h-4 w-4" />
+                Email me
               </a>
             </div>
             <div className="svc-topics">
@@ -476,9 +476,9 @@ export default function BuildApp() {
                 One or two sentences is plenty to get started. We&apos;ll reply with next steps, not a sales pitch,
                 usually within one business day.
               </p>
-              <a href="tel:+18059940881" className="svc-phone-big">
-                <Phone className="h-5 w-5" />
-                (805) 994-0881
+              <a href="mailto:calvinsturm@gmail.com" className="svc-phone-big">
+                <Mail className="h-5 w-5" />
+                calvinsturm@gmail.com
               </a>
             </div>
 
@@ -556,9 +556,9 @@ export default function BuildApp() {
                   <Send className="h-4 w-4" />
                   {submitState === 'submitting' ? 'Sending…' : 'Send inquiry'}
                 </button>
-                <a href="tel:+18059940881" className="home-btn home-btn-ghost">
-                  <Phone className="h-4 w-4" />
-                  Call now
+                <a href="mailto:calvinsturm@gmail.com" className="home-btn home-btn-ghost">
+                  <Mail className="h-4 w-4" />
+                  Email me
                 </a>
               </div>
               {submitState === 'success' && (
@@ -569,7 +569,7 @@ export default function BuildApp() {
               {submitState === 'error' && (
                 <div role="alert" className="svc-note svc-note-error">
                   Something went wrong sending that. Email <a href="mailto:calvinsturm@gmail.com">calvinsturm@gmail.com</a>{' '}
-                  directly or call <a href="tel:+18059940881">(805) 994-0881</a>.
+                  directly.
                 </div>
               )}
             </form>
@@ -627,9 +627,9 @@ export default function BuildApp() {
                 <Calendar className="h-4 w-4" />
                 Start a project
               </a>
-              <a href="tel:+18059940881" className="home-btn home-btn-ghost">
-                <Phone className="h-4 w-4" />
-                Call now
+              <a href="mailto:calvinsturm@gmail.com" className="home-btn home-btn-ghost">
+                <Mail className="h-4 w-4" />
+                Email me
               </a>
             </div>
           </div>
@@ -661,7 +661,6 @@ export default function BuildApp() {
           </nav>
           <nav aria-label="Contact">
             <h3>Contact</h3>
-            <a href="tel:+18059940881">(805) 994-0881</a>
             <a href="mailto:calvinsturm@gmail.com">calvinsturm@gmail.com</a>
             <a href="#request-build">Start a project</a>
           </nav>
@@ -682,9 +681,9 @@ export default function BuildApp() {
 
       <div className="svc-mobilebar">
         <div className="svc-mobilebar-inner">
-          <a href="tel:+18059940881" className="home-btn home-btn-primary">
-            <Phone className="h-4 w-4" />
-            Call
+          <a href="mailto:calvinsturm@gmail.com" className="home-btn home-btn-primary">
+            <Mail className="h-4 w-4" />
+            Email
           </a>
           <a href="#request-build" className="home-btn home-btn-ghost">
             <Calendar className="h-4 w-4" />
