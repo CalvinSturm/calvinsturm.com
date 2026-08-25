@@ -1,0 +1,28 @@
+.fc-policy-fastplay {
+  --fc-color-background: #060606;
+  --fc-color-surface: #111310;
+  --fc-color-surface-raised: #181b17;
+  --fc-color-border: #2b3029;
+  --fc-color-border-strong: #475044;
+  --fc-color-text: #f2f4ef;
+  --fc-color-text-muted: #adb5a9;
+  --fc-color-text-subtle: #909a8c;
+  --fc-color-brand: #79f23d;
+  --fc-color-brand-hover: #95ff57;
+  --fc-color-brand-active: #66d92f;
+  --fc-color-brand-visited: #b0ff88;
+  --fc-color-brand-wash: rgba(121, 242, 61, 0.075);
+  --fc-color-brand-border: rgba(121, 242, 61, 0.5);
+  --fc-color-brand-focus: rgba(121, 242, 61, 0.24);
+  --fc-color-on-brand: #091206;
+}
+
+:root:has(.fc-policy-fastplay),
+body:has(.fc-policy-fastplay) {
+  background: #060606;
+}
+
+.fc-policy-fastplay .fc-tally {
+  background: var(--fc-color-brand);
+  box-shadow: 0 0 0 3px var(--fc-color-brand-focus);
+}

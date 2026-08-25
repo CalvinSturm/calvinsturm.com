@@ -28,7 +28,7 @@ export function GuidePage() {
       }
       topCtaNote="FastCast is a native Windows recorder and streamer built around the common case: choose a monitor or window, pick audio, optionally add a webcam overlay, then record MP4 or go live over RTMP. No scenes to set up."
       finalCtaHeading="Try the simpler path first"
-      finalCtaBody="FastCast is in Open Beta, and 1080p30 recording and streaming will stay free. It takes about a minute to try: download the ZIP, run it, record. If you outgrow it, OBS will still be there."
+      finalCtaBody="FastCast is in Open Beta, and 1080p60 recording and streaming will stay free. Install it, record, and see whether the focused workflow fits. If you outgrow it, OBS will still be there."
     >
       <GuideSection id="summary" title="The comparison in short">
         <ul>
@@ -80,8 +80,8 @@ export function GuidePage() {
           <li>Start and stop globally with <code>Ctrl+Alt+F9</code>.</li>
         </ul>
         <p>
-          The portable ZIP contains the GUI and its small command-line controller, with no runtime
-          to install. FastCast is deliberately quiet: no telemetry, no accounts, no background
+          The Windows installer is the quickest way to start; a portable ZIP is also available.
+          FastCast is deliberately quiet: no telemetry, no accounts, no background
           polling, and stream keys are session-only unless you opt in to storing them in Windows
           Credential Manager.
         </p>
@@ -111,8 +111,9 @@ export function GuidePage() {
         <ul>
           <li>
             <strong>Scenes and compositing.</strong> OBS: full scene system, unlimited sources,
-            filters, chroma key, transitions. FastCast: four live screen/camera layouts that can
-            switch during a take, but no arbitrary sources, filters, or chroma key. This is the
+            filters, chroma key, transitions. FastCast: four live screen/camera layouts and built-in
+            green-screen removal that can switch during a take, but no arbitrary sources, plugin
+            system, or general filter stack. This is the
             single biggest difference.
           </li>
           <li>
@@ -122,10 +123,11 @@ export function GuidePage() {
             encoder tuning out of the box.
           </li>
           <li>
-            <strong>Price and tiers.</strong> OBS is entirely free. FastCast Free covers 1080p30
+            <strong>Price and tiers.</strong> OBS is entirely free. FastCast Free covers 1080p60
             recording and streaming, and that tier will stay free; a one-time FastCast Pro license unlocks
-            1440p/4K recording, 60 fps capture where hardware supports it, and advanced encoder
-            controls. Pro is activated inside the app; there is no subscription and no account.
+            1440p/4K recording, 120 fps capture where hardware supports it, multistreaming to up to
+            three destinations, and advanced encoder controls. Pro is activated inside the app;
+            there is no subscription and no account.
             High-resolution capture details are in{' '}
             <a href={guidePath('record-4k-60fps-windows')}>recording 4K 60 FPS on Windows</a>.
           </li>

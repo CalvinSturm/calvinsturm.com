@@ -12,9 +12,10 @@ import './fastcast-v2.css';
 
 // Single source of truth for the shipped version: the download URL and every
 // version string on the page derive from it, so a release bump is one edit
-// here plus softwareVersion/downloadUrl in fastcast.html.
+// here plus softwareVersion/downloadUrl in fastcast.html and the guide CTA.
 const currentVersion = '0.7.0';
-const downloadUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.zip`;
+const installerUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.msi`;
+const portableUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.zip`;
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const allReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 
@@ -144,7 +145,7 @@ const fastCastFaqs = [
   },
 ];
 
-function trackDownload(location: string, href = downloadUrl) {
+function trackDownload(location: string, href = installerUrl) {
   trackCtaClick('fastcast', 'download_clicked', location, href);
 }
 
@@ -246,7 +247,7 @@ export function FastCastV2() {
           </span>
           <a
             className="fc-btn fc-btn-primary"
-            href={downloadUrl}
+            href={installerUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackDownload('nav')}
@@ -261,32 +262,43 @@ export function FastCastV2() {
           <div className="fc-unit-inner fc-unit-blank">
             <div className="fc-hero-grid">
               <div className="fc-hero-copy">
-                <p className="fc-eyebrow">Windows screen recorder and streamer</p>
+                <p className="fc-eyebrow">A lightweight OBS alternative for Windows</p>
                 {/* Must stay word-for-word identical to the fallback <h1> in
                     fastcast.html so a non-JS crawl and a rendered crawl agree. */}
-                <h1 id="fastcast-v2-title">Record, stream, or do both in one click.</h1>
+                <h1 id="fastcast-v2-title">Record or stream without the complexity of OBS.</h1>
                 <p className="fc-lede">
-                  Open FastCast, pick a display and mic, then record, stream, or do both with one click.
-                  Add your webcam with built-in green-screen removal, or go live to YouTube, Twitch,
-                  Kick, or any RTMP service.
+                  FastCast is a simple, native Windows recorder and streamer. Pick a display and
+                  mic, then record an MP4 or go live—without building scenes or configuring a
+                  broadcasting suite.
                 </p>
                 <div className="fc-actions">
                   <a
                     className="fc-btn fc-btn-primary fc-btn-lg"
-                    href={downloadUrl}
+                    href={installerUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackDownload('hero')}
                   >
-                    Download for Windows
+                    Download FastCast
                   </a>
-                  <a className="fc-btn fc-btn-ghost fc-btn-lg" href="#compare">
-                    Coming from OBS? <span aria-hidden="true">↓</span>
+                  <a
+                    className="fc-btn fc-btn-ghost fc-btn-lg"
+                    href={portableUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackDownload('hero_portable', portableUrl)}
+                  >
+                    Portable ZIP
                   </a>
                 </div>
-                <p className="fc-fineprint">
-                  v{currentVersion} · Portable ZIP · Free · No account
-                </p>
+                <ul className="fc-hero-trust" aria-label="FastCast Free highlights">
+                  <li>Free 1080p60</li>
+                  <li>No account</li>
+                  <li>No watermark</li>
+                  <li>No telemetry</li>
+                  <li>Windows 10 / 11</li>
+                </ul>
+                <p className="fc-fineprint">v{currentVersion} · Windows installer · Open Beta</p>
 
                 <dl className="fc-plate">
                   {specPlate.map((row) => (
@@ -369,7 +381,9 @@ export function FastCastV2() {
               <p className="fc-honest">
                 <b>Keep OBS for the rest.</b> It is a full broadcast studio and it earns those steps:
                 scene switching, plugins, filters, and productions with a director.
-                FastCast is for the recording you want to start in the next ten seconds.
+                FastCast is the lightweight OBS alternative for the recording or RTMP stream you
+                want to start in the next ten seconds.{' '}
+                <a className="fc-link" href="/fastcast/guides/obs-alternative-windows">Compare FastCast and OBS</a>.
               </p>
             </div>
           </div>
@@ -502,6 +516,10 @@ export function FastCastV2() {
                   <span>FastCast uses your stream key only while the app is open. If you turn on Remember stream keys, it is stored in Windows Credential Manager, never in a settings file, log, or support bundle.</span>
                 </li>
               </ul>
+              <p className="fc-fineprint fc-privacy-link">
+                Licensing, manual update checks, website analytics, and user-directed streaming are covered in the{' '}
+                <a className="fc-link" href="/fastcast/privacy">FastCast Privacy Policy</a>.
+              </p>
             </div>
           </div>
         </section>
@@ -511,7 +529,7 @@ export function FastCastV2() {
             <RailLabel code="LIC" name="License" />
             <div className="fc-unit-body">
               <h2 id="license-title">
-                Free to record. <em>Pay once for 4K, 60 fps, and more control.</em>
+                Free for everyday capture. <em>Pay once when you need more.</em>
               </h2>
 
               <div className="fc-plans">
@@ -529,7 +547,7 @@ export function FastCastV2() {
                   </ul>
                   <a
                     className="fc-btn fc-btn-primary"
-                    href={downloadUrl}
+                    href={installerUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackDownload('pricing')}
@@ -622,12 +640,12 @@ export function FastCastV2() {
             <RailLabel code="REC" name="Ready" />
             <div className="fc-unit-body fc-end-body">
               <h2>Press record in ten seconds</h2>
-              <p className="fc-unit-lede">FastCast v{currentVersion} for Windows 10 and 11, 64-bit. Portable ZIP,
-                no installer.</p>
+              <p className="fc-unit-lede">FastCast v{currentVersion} for Windows 10 and 11, 64-bit.
+                Free 1080p60, no account, no watermark, and no telemetry.</p>
               <div className="fc-actions">
                 <a
                   className="fc-btn fc-btn-primary fc-btn-lg"
-                  href={downloadUrl}
+                  href={installerUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackDownload('final')}
@@ -657,6 +675,7 @@ export function FastCastV2() {
             <a href="/fastcast/guides">Guides</a>
             <a href="/fast-series">Fast Series</a>
             <a href="/roadmap">Roadmap</a>
+            <a href="/fastcast/privacy">Privacy Policy</a>
             <a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">Release notes</a>
             <a href={allReleasesUrl} target="_blank" rel="noopener noreferrer">All releases</a>
           </nav>
@@ -666,7 +685,7 @@ export function FastCastV2() {
       <div className="fc-floating-cta">
         <span><CircleDot size={14} /> FastCast <b>v{currentVersion}</b></span>
         <a
-          href={downloadUrl}
+          href={installerUrl}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackDownload('floating')}

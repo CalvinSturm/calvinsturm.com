@@ -526,6 +526,20 @@
   font-size: 16px;
 }
 
+.fastplay-v3 .fastplay-v3-privacy-link {
+  margin-top: 24px;
+}
+
+.fastplay-v3 .fastplay-v3-privacy-link a {
+  color: var(--fc-green-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.fastplay-v3 .fastplay-v3-privacy-link a:hover {
+  color: var(--fc-blue-bright);
+}
+
 .fastplay-v3 .fastcast-v2-beta-section {
   padding: 120px 0 130px;
   background: #f5f5f2;

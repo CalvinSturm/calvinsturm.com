@@ -8,7 +8,7 @@ import type { GuideMeta } from '../product-guides/ProductGuides.tsx';
 export const fastCastPath = '/fastcast';
 export const guidesIndexPath = '/fastcast/guides';
 
-export const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
+export const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.7.0/FastCast-0.7.0-win-x64.msi';
 export const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 export const fastCastProCheckoutUrl = 'https://calvinstorm.gumroad.com/l/fastcast';
 // Keep in step with the Gumroad listing, and with the FAQ answer duplicated in

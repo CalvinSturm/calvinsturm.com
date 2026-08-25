@@ -331,6 +331,10 @@ export function FastPlayV3() {
                 <li><Check size={17} /> No permanent media-library workflow</li>
                 <li><Check size={17} /> Free and open source under the MIT License</li>
               </ul>
+              <p className="fastplay-v3-privacy-link">
+                Recent-file history, local logs, website analytics, downloads, and support are covered in the{' '}
+                <a href="/fastplay/privacy">FastPlay Privacy Policy</a>.
+              </p>
             </div>
             <div className="fastcast-v2-privacy-visual" data-reveal aria-hidden="true">
               <div className="fastcast-v2-lock-orbit">
@@ -420,7 +424,7 @@ export function FastPlayV3() {
       <footer className="fastcast-v2-footer">
         <div className="fastcast-v2-shell">
           <p><strong>FastPlay</strong> · Fast, lightweight local video playback for Windows.</p>
-          <nav aria-label="FastPlay footer links"><a href="/fastplay/guides">Guides</a><a href="/fast-series">Fast Series</a><a href="/roadmap">Roadmap</a><a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">Latest release</a><a href={sourceUrl} target="_blank" rel="noopener noreferrer">Explore the source</a></nav>
+          <nav aria-label="FastPlay footer links"><a href="/fastplay/guides">Guides</a><a href="/fast-series">Fast Series</a><a href="/roadmap">Roadmap</a><a href="/fastplay/privacy">Privacy Policy</a><a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">Latest release</a><a href={sourceUrl} target="_blank" rel="noopener noreferrer">Explore the source</a></nav>
           <p>Free and open source under the MIT License.</p>
         </div>
       </footer>

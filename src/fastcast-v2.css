@@ -403,6 +403,10 @@ body:has(.fc) {
   font-size: 13px;
 }
 
+.fc-privacy-link {
+  margin-top: 24px;
+}
+
 /* --------------------------------------------------------------------- hero */
 
 .fc-hero-grid {
@@ -467,6 +471,23 @@ body:has(.fc) {
 
 .fc-hero-copy .fc-fineprint {
   margin-top: 16px;
+}
+
+.fc-hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 20px;
+  color: var(--fc-color-text-muted);
+  font-family: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  font-size: 12px;
+}
+
+.fc-hero-trust li::before {
+  content: "\2713";
+  margin-right: 7px;
+  color: var(--fc-color-brand);
+  font-weight: 700;
 }
 
 /* Spec plate: the label on the back of the unit. Real numbers, no adjectives. */
