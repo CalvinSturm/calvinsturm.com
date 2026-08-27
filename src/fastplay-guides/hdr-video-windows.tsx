@@ -87,8 +87,8 @@ export function GuidePage() {
           </li>
           <li>
             <strong>Use a player that chooses the right presentation path.</strong> On an HDR-active
-            display, FastPlay presents HDR10 and HLG natively. On an SDR display—or when Windows
-            HDR is off—it tone-maps automatically. VLC and mpv can also handle HDR, though they may
+            display, FastPlay presents HDR10 and HLG natively. On an SDR display, or when Windows
+            HDR is off, it tone-maps automatically. VLC and mpv can also handle HDR, though they may
             need configuration.
           </li>
           <li>

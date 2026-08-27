@@ -101,8 +101,8 @@ export function GuidePage() {
           <li>Update the GPU driver if hardware decode fails or produces corruption.</li>
         </ol>
         <p>
-          For broader causes—thermal throttling, slow storage, display judder, and codec
-          fallback—use the full{' '}
+          For broader causes such as thermal throttling, slow storage, display judder, and codec
+          fallback, use the full{' '}
           <a href={guidePath('video-stuttering-windows')}>Windows video stuttering checklist</a>.
         </p>
       </GuideSection>
@@ -115,7 +115,7 @@ export function GuidePage() {
           improved from 405 dropped frames to 6 out of 2,400 on a 240 Hz display.
         </p>
         <InlineCta>
-          Open the original file in FastPlay—no transcoding—and compare it on the monitor&apos;s highest
+          Open the original file in FastPlay with no transcoding, then compare it on the monitor&apos;s highest
           refresh-rate setting.
         </InlineCta>
       </GuideSection>

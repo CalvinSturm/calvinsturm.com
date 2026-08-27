@@ -237,7 +237,7 @@ function LockModel({ hovered }: { hovered?: boolean }) {
         </mesh>
       </group>
       
-      {/* Orbiting keys — calm when idle, chaotic on hover */}
+      {/* Orbiting keys: calm when idle, chaotic on hover */}
       <group position={[0, 0, 0]}>
         {[
           [0, 0],

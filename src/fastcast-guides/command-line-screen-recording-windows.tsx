@@ -88,7 +88,7 @@ if ($LASTEXITCODE -ne 0) {
   throw "FastCast could not stop recording."
 }`}</code></pre>
         <p>
-          Harmless no-ops return exit code 0—for example, asking an already-recording instance to
+          Harmless no-ops return exit code 0. For example, asking an already-recording instance to
           start again. Invalid arguments, an unavailable monitor, or a real control failure return
           nonzero. Separate Start and Stop calls are safer for automation than a toggle because the
           desired end state is explicit.

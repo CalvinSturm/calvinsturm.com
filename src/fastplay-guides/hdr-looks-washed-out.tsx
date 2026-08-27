@@ -117,8 +117,8 @@ export function GuidePage() {
           FastPlay takes the most common failure off the table by selecting a presentation path
           when the file opens. On an HDR-capable display with Windows HDR enabled, HDR10 (PQ) and
           HLG present natively through a 10-bit PQ swapchain. On SDR, highlights are tone-mapped
-          instead of clipped and BT.2020 is converted to BT.709. Full-range PQ files—including
-          some Topaz Video AI HDR Enhanced exports—are supported as of version 0.4.4.
+          instead of clipped and BT.2020 is converted to BT.709. Full-range PQ files, including
+          some Topaz Video AI HDR Enhanced exports, are supported as of version 0.4.4.
         </p>
         <p>
           Since HDR files are usually HEVC, it also matters that FastPlay decodes HEVC itself with

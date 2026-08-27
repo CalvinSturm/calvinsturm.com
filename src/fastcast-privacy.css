@@ -86,7 +86,7 @@
   position: absolute;
   left: 0;
   color: var(--fc-color-brand);
-  content: "—";
+  content: "•";
 }
 
 .fc-policy-copy {

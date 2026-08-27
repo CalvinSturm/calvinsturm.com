@@ -53,7 +53,7 @@ the main recording guide. Validate current FastCast capability before drafting.
 5. How to Record a PowerPoint Presentation With Audio and Webcam
 6. How to Record Your Screen Without a Watermark
 7. How to Record Your Screen Without OBS
-8. How to Use a Green Screen While Recording on Windows — **blocked:** FastCast
+8. How to Use a Green Screen While Recording on Windows. **Blocked:** FastCast
    does not currently provide chroma key or filters. Do not describe this as a
    FastCast feature unless the shipped product changes.
 9. How to Fix Washed-Out Screen Recordings With HDR

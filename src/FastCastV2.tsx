@@ -268,7 +268,7 @@ export function FastCastV2() {
                 <h1 id="fastcast-v2-title">Record or stream without the complexity of OBS.</h1>
                 <p className="fc-lede">
                   FastCast is a simple, native Windows recorder and streamer. Pick a display and
-                  mic, then record an MP4 or go live—without building scenes or configuring a
+                  mic, then record an MP4 or go live without building scenes or configuring a
                   broadcasting suite.
                 </p>
                 <div className="fc-actions">

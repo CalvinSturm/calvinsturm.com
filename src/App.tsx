@@ -130,7 +130,7 @@ export default function App() {
         }),
       });
     } catch {
-      // swallow — still show confirmation so user isn't stranded
+      // Swallow the error; still show confirmation so the user isn't stranded.
     }
     setIsSubmitted(true);
   };

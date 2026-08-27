@@ -85,7 +85,7 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
     title: 'How to Play 120 FPS Video Smoothly on Windows',
     shortTitle: 'Play 120 FPS video smoothly',
     description:
-      'How display refresh rate, decoding, storage, and playback timing affect 120 FPS video—and how to diagnose choppy high-frame-rate playback on Windows.',
+      'How display refresh rate, decoding, storage, and playback timing affect 120 FPS video, and how to diagnose choppy high-frame-rate playback on Windows.',
     category: 'Playback Performance',
     published: '2026-07-19',
     updated: '2026-07-19',

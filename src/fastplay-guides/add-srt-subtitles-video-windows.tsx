@@ -49,9 +49,9 @@ vacation.srt`}</code></pre>
           extensions before renaming. Then confirm the pair looks like this:
         </p>
         <ul>
-          <li><code>lesson-03.mov</code> and <code>lesson-03.srt</code>—loads automatically.</li>
-          <li><code>lesson-03.mov</code> and <code>lesson-03-english.srt</code>—does not match.</li>
-          <li><code>lesson-03.mov</code> and <code>lesson-03.srt.txt</code>—still a text file, not an SRT.</li>
+          <li><code>lesson-03.mov</code> and <code>lesson-03.srt</code>: loads automatically.</li>
+          <li><code>lesson-03.mov</code> and <code>lesson-03-english.srt</code>: does not match.</li>
+          <li><code>lesson-03.mov</code> and <code>lesson-03.srt.txt</code>: still a text file, not an SRT.</li>
         </ul>
         <p>
           Keep the files together if you move or copy the video. Sidecar subtitles are separate
