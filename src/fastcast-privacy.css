@@ -55,6 +55,18 @@
   color: var(--fc-color-brand-visited);
 }
 
+.fc-policy-actions {
+  display: flex;
+  max-width: 920px;
+  margin-top: 18px;
+}
+
+.fc-policy-print {
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
 .fc-policy-summary {
   max-width: 920px;
   margin-top: 34px;
@@ -249,5 +261,84 @@
 
   .fc-policy-summary {
     padding: 22px 20px;
+  }
+}
+
+@media print {
+  @page {
+    margin: 16mm;
+  }
+
+  :root:has(.fc-policy),
+  body:has(.fc-policy) {
+    background: #fff !important;
+  }
+
+  .fc-policy {
+    --fc-color-background: #fff;
+    --fc-color-surface: #fff;
+    --fc-color-surface-raised: #f3f4f6;
+    --fc-color-border: #c7c7c7;
+    --fc-color-border-strong: #8d8d8d;
+    --fc-color-text: #111;
+    --fc-color-text-muted: #2d2d2d;
+    --fc-color-text-subtle: #4b5563;
+    --fc-color-brand: #0057b8;
+    --fc-color-brand-hover: #0057b8;
+    --fc-color-brand-visited: #0057b8;
+    --fc-color-brand-wash: #f5f8fc;
+    --fc-color-brand-border: #6f8faf;
+
+    background: #fff;
+    color: #111;
+    font-size: 11pt;
+  }
+
+  .fc-policy .fc-skip,
+  .fc-policy .fc-bar,
+  .fc-policy .fc-foot,
+  .fc-policy .fc-rail,
+  .fc-policy-actions {
+    display: none !important;
+  }
+
+  .fc-policy .fc-unit-inner {
+    display: block;
+    width: 100%;
+    padding-block: 18px;
+  }
+
+  .fc-policy-hero .fc-unit-inner {
+    padding-top: 0;
+  }
+
+  .fc-policy .fc-unit-body,
+  .fc-policy-copy,
+  .fc-policy-meta,
+  .fc-policy-summary {
+    max-width: none;
+  }
+
+  .fc-policy-table-wrap {
+    overflow: visible;
+  }
+
+  .fc-policy table {
+    min-width: 0;
+    font-size: 9pt;
+    table-layout: fixed;
+  }
+
+  .fc-policy th,
+  .fc-policy td {
+    padding: 8px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .fc-policy-services article,
+  .fc-policy-summary,
+  .fc-policy-note {
+    break-inside: avoid;
   }
 }

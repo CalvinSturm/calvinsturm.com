@@ -98,6 +98,15 @@ export function FastCastPrivacy() {
                 <div><dt>Last updated</dt><dd>August 23, 2026</dd></div>
                 <div><dt>Policy URL</dt><dd><a href={policyUrl}>{policyUrl}</a></dd></div>
               </dl>
+              <div className="fc-policy-actions">
+                <button
+                  type="button"
+                  className="fc-btn fc-btn-ghost fc-policy-print"
+                  onClick={() => window.print()}
+                >
+                  Print / Save as PDF
+                </button>
+              </div>
               <div className="fc-policy-summary" aria-labelledby="summary-title">
                 <h2 id="summary-title">The short version</h2>
                 <ul>

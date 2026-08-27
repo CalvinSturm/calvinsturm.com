@@ -18,6 +18,8 @@ const installerUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/
 const portableUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.zip`;
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const allReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
+const supportEmail = 'calvinsturm@gmail.com';
+const supportUrl = `mailto:${supportEmail}?subject=FastCast%20Support`;
 
 // The page is laid out like a rack of broadcast units, and only some bands carry
 // a three-letter patch label on the left rail. A label on every band turns the
@@ -236,6 +238,7 @@ export function FastCastV2() {
           <a href="#keys">Shortcuts</a>
           <a href="#pricing">Pricing</a>
           <a href="#guides">Guides</a>
+          <a href="#support">Support</a>
           <a href="#faq">FAQ</a>
         </nav>
         <div className="fc-bar-right">
@@ -618,6 +621,25 @@ export function FastCastV2() {
           </div>
         </section>
 
+        <section id="support" className="fc-unit" aria-labelledby="support-title">
+          <div className="fc-unit-inner">
+            <RailLabel code="SUP" name="Support" />
+            <div className="fc-unit-body">
+              <h2 id="support-title">Need help with FastCast?</h2>
+              <p className="fc-unit-lede">
+                Email Sturm Technologies for installation, recording, streaming, licensing, or billing support.
+              </p>
+              <div className="fc-actions">
+                <a className="fc-btn fc-btn-primary" href={supportUrl}>Email FastCast support</a>
+              </div>
+              <p className="fc-fineprint">
+                Include your FastCast version, Windows version, and a short description of the problem. Do not send
+                passwords or stream keys. You can also write to <a className="fc-link" href={supportUrl}>{supportEmail}</a>.
+              </p>
+            </div>
+          </div>
+        </section>
+
         <section id="faq" className="fc-unit fc-faq" aria-labelledby="faq-title">
           <div className="fc-unit-inner">
             <RailLabel code="FAQ" name="Questions" />
@@ -675,6 +697,7 @@ export function FastCastV2() {
             <a href="/fastcast/guides">Guides</a>
             <a href="/fast-series">Fast Series</a>
             <a href="/roadmap">Roadmap</a>
+            <a href={supportUrl}>Support</a>
             <a href="/fastcast/privacy">Privacy Policy</a>
             <a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">Release notes</a>
             <a href={allReleasesUrl} target="_blank" rel="noopener noreferrer">All releases</a>

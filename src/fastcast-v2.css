@@ -403,6 +403,11 @@ body:has(.fc) {
   font-size: 13px;
 }
 
+#support .fc-fineprint {
+  max-width: 78ch;
+  margin-top: 16px;
+}
+
 .fc-privacy-link {
   margin-top: 24px;
 }
