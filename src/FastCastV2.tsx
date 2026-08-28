@@ -13,7 +13,7 @@ import './fastcast-v2.css';
 // Single source of truth for the shipped version: the download URL and every
 // version string on the page derive from it, so a release bump is one edit
 // here plus softwareVersion/downloadUrl in fastcast.html and the guide CTA.
-const currentVersion = '0.7.0';
+const currentVersion = '0.7.1';
 const installerUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.msi`;
 const portableUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.zip`;
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';

@@ -194,7 +194,7 @@ export function GuidePage() {
         </ol>
         <p>
           This screenshot feature is coming in the next FastCast release. It is implemented on the
-          current development branch but is not part of the public v0.7.0 installer linked from
+          current development branch but is not part of the public v0.7.1 installer linked from
           this site. HDR screen recording is the workflow available to download today.
         </p>
       </GuideSection>
