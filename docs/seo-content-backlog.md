@@ -3,7 +3,7 @@
 On-page guide strategy. For off-page work (canonical URLs, share metadata,
 directory submissions, and outreach) see `seo-backlink-outreach.md`.
 
-Status of the problem-focused guide strategy as of 2026-08-14. The guide
+Status of the problem-focused guide strategy as of 2026-08-28. The guide
 architecture is `src/product-guides/ProductGuides.tsx` bound per product
 (`src/<product>-guides/`); each guide needs an HTML shell, a `.tsx` article, a
 `guides-data.ts` entry, a Vite input, and a sitemap entry.
@@ -12,8 +12,8 @@ architecture is `src/product-guides/ProductGuides.tsx` bound per product
 
 | Hub | Guides | Target intents |
 | --- | --- | --- |
-| `/fastcast/guides` | 16 | Windows recording, screen+webcam, command-line capture, YouTube/Twitch/Kick streaming, stream keys, private testing, bitrate, stability, OBS comparison |
-| `/fastplay/guides` | 6 | HDR on Windows, HEVC player, MOV not playing, HDR washed out, review workflow, stuttering playback |
+| `/fastcast/guides` | 17 | HDR capture, Windows recording, screen+webcam, command-line capture, YouTube/Twitch/Kick streaming, stream keys, private testing, bitrate, stability, OBS comparison |
+| `/fastplay/guides` | 8 | HDR on Windows, HEVC player, MOV not playing, HDR washed out, review workflow, stuttering playback, 120 FPS, subtitles |
 | `/fastcompress/guides` | 2 (new) | compress video for Discord, compress video for email |
 | `/fastclip/guides` | 2 (new) | long video to vertical clips, local auto captions |
 
@@ -56,13 +56,15 @@ the main recording guide. Validate current FastCast capability before drafting.
 8. How to Use a Green Screen While Recording on Windows. **Blocked:** FastCast
    does not currently provide chroma key or filters. Do not describe this as a
    FastCast feature unless the shipped product changes.
-9. How to Fix Washed-Out Screen Recordings With HDR
-10. 1080p vs. 4K Screen Recording: Which Should You Use?
-11. 30 FPS vs. 60 FPS Screen Recording
-12. How Much Storage Does Screen Recording Use?
+9. 1080p vs. 4K Screen Recording: Which Should You Use?
+10. 30 FPS vs. 60 FPS Screen Recording
+11. How Much Storage Does Screen Recording Use?
 
 ## Covered by existing articles (do not duplicate)
 
+- "HDR screen recording washed out" and "HDR screenshot colors wrong":
+  `hdr-screen-recording-screenshots-windows` covers both intents and explains
+  FastCast's FP16 scRGB to SDR tone-mapping path.
 - "Record without configuring OBS" and "OBS alternatives": both map to
   `obs-alternative-windows` plus the main recording guide; a separate article
   would cannibalize them.

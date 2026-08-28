@@ -77,6 +77,8 @@ export type GuideLayoutProps = {
   toc: TocEntry[];
   /** One-or-two sentence direct answer rendered as the article lede. */
   lede: ReactNode;
+  /** Optional full-width visual rendered between the article header and CTA. */
+  heroMedia?: ReactNode;
   topCtaNote: string;
   finalCtaHeading: string;
   finalCtaBody: string;
@@ -263,6 +265,7 @@ export function createProductGuides(config: ProductGuidesConfig) {
     slug,
     toc,
     lede,
+    heroMedia,
     topCtaNote,
     finalCtaHeading,
     finalCtaBody,
@@ -303,6 +306,7 @@ export function createProductGuides(config: ProductGuidesConfig) {
             </p>
           </header>
 
+          {heroMedia && <div className="guide-hero-media">{heroMedia}</div>}
           <TopCta note={topCtaNote} />
           <TableOfContents entries={toc} />
 

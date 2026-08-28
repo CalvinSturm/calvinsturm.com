@@ -31,6 +31,7 @@ export default defineConfig(({mode}) => {
           fastcastPrivacy: path.resolve(__dirname, 'fastcast/privacy.html'),
           fastcastGuides: path.resolve(__dirname, 'fastcast/guides.html'),
           fastcastGuideRecordScreen: path.resolve(__dirname, 'fastcast/guides/how-to-record-screen-windows.html'),
+          fastcastGuideHdrCapture: path.resolve(__dirname, 'fastcast/guides/hdr-screen-recording-screenshots-windows.html'),
           fastcastGuideObsAlt: path.resolve(__dirname, 'fastcast/guides/obs-alternative-windows.html'),
           fastcastGuideWebcam: path.resolve(__dirname, 'fastcast/guides/record-screen-and-webcam.html'),
           fastcastGuide4k: path.resolve(__dirname, 'fastcast/guides/record-4k-60fps-windows.html'),

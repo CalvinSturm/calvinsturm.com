@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07090d" />
+    <meta name="color-scheme" content="dark" />
+
+    <title>Fix Washed-Out HDR Screen Recording on Windows | FastCast</title>
+    <meta name="description" content="Fix HDR screen recordings and screenshots that look too bright or washed out on Windows 11. Learn why it happens and how FastCast tone-maps HDR to SDR." />
+    <meta name="author" content="Calvin Sturm" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.calvinsturm.com/fastcast/guides/hdr-screen-recording-screenshots-windows" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Calvin Sturm" />
+    <meta property="og:title" content="How to Fix Washed-Out HDR Screen Recordings and Screenshots on Windows" />
+    <meta property="og:description" content="Why Windows HDR captures look too bright, and how correct HDR-to-SDR tone mapping preserves highlight, contrast, and color detail." />
+    <meta property="og:url" content="https://www.calvinsturm.com/fastcast/guides/hdr-screen-recording-screenshots-windows" />
+    <meta property="og:image" content="https://www.calvinsturm.com/assets/FastCast/hdr-capture-before-after.jpg" />
+    <meta property="og:image:width" content="1672" />
+    <meta property="og:image:height" content="941" />
+    <meta property="og:image:alt" content="Illustration of a blown-out HDR capture compared with correctly tone-mapped SDR output" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="article:published_time" content="2026-08-28" />
+    <meta property="article:modified_time" content="2026-08-28" />
+    <meta property="article:author" content="Calvin Sturm" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Fix Washed-Out HDR Screen Recordings and Screenshots on Windows" />
+    <meta name="twitter:description" content="Why Windows HDR captures look too bright, and how FastCast tone-maps FP16 scRGB capture to compatible SDR output." />
+    <meta name="twitter:image" content="https://www.calvinsturm.com/assets/FastCast/hdr-capture-before-after.jpg" />
+    <meta name="twitter:image:alt" content="Illustration of a blown-out HDR capture compared with correctly tone-mapped SDR output" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "How to Fix Washed-Out HDR Screen Recordings and Screenshots on Windows",
+        "description": "Fix HDR screen recordings and screenshots that look too bright or washed out on Windows 11, and learn how correct HDR-to-SDR tone mapping works.",
+        "datePublished": "2026-08-28",
+        "dateModified": "2026-08-28",
+        "author": {
+          "@type": "Person",
+          "name": "Calvin Sturm",
+          "url": "https://github.com/CalvinSturm"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Sturm Technologies LLC",
+          "url": "https://www.calvinsturm.com"
+        },
+        "image": "https://www.calvinsturm.com/assets/FastCast/hdr-capture-before-after.jpg",
+        "mainEntityOfPage": "https://www.calvinsturm.com/fastcast/guides/hdr-screen-recording-screenshots-windows",
+        "about": {
+          "@type": "SoftwareApplication",
+          "name": "FastCast",
+          "operatingSystem": "Windows 10, Windows 11",
+          "applicationCategory": "MultimediaApplication",
+          "url": "https://www.calvinsturm.com/fastcast"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can an MP4 contain HDR?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. MP4 can hold HDR video when its codec, bit depth, transfer characteristics, color primaries, and metadata support HDR. FastCast currently outputs a tone-mapped SDR H.264 MP4 rather than a preserved HDR MP4."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does turning HDR off fix washed-out recordings?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It can avoid an HDR-to-SDR mismatch because Windows renders the desktop as SDR, but it also disables the HDR presentation. Correct tone mapping lets HDR remain enabled while producing compatible SDR output."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does Snipping Tool look different?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Windows versions and capture tools can use different capture, tone-mapping, and image paths. The viewer can also change the result, so compare the same frame in the same app."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does an HDR screenshot look wrong on an SDR display?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "HDR pixel values need compatible metadata and display handling or an HDR-to-SDR conversion. A normal SDR viewer can show unconverted HDR values with incorrect brightness, gamma, contrast, or color."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does FastCast record HDR games?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "FastCast can capture a compatible HDR-enabled monitor or game window through Windows Graphics Capture and tone-map it to SDR. Protected content, anti-cheat systems, unsupported presentation paths, or a forced DXGI fallback can still limit capture."
+            }
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "FastCast",
+            "item": "https://www.calvinsturm.com/fastcast"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Guides",
+            "item": "https://www.calvinsturm.com/fastcast/guides"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Fix washed-out HDR captures",
+            "item": "https://www.calvinsturm.com/fastcast/guides/hdr-screen-recording-screenshots-windows"
+          }
+        ]
+      }
+    </script>
+
+    <link rel="icon" type="image/png" sizes="any" href="/assets/FastCast/FastCast_Icon.png?v=2" />
+    <link rel="shortcut icon" type="image/png" href="/assets/FastCast/FastCast_Icon.png?v=2" />
+    <link rel="apple-touch-icon" href="/assets/FastCast/FastCast_Icon.png?v=2" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/fastcast-guides/hdr-screen-recording-screenshots-windows.tsx"></script>
+  </body>
+</html>

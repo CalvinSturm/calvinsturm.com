@@ -18,6 +18,7 @@ export const fastCastSiteUrl = 'https://calvinsturm.github.io/FastCast-releases/
 
 export type GuideCategory =
   | 'Recording Basics'
+  | 'HDR & Color'
   | 'Live Streaming'
   | 'Quality & Performance'
   | 'Troubleshooting'
@@ -34,6 +35,17 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
     published: '2026-07-15',
     updated: '2026-08-14',
     related: ['record-screen-and-webcam', 'how-to-stream-on-windows', 'screen-recording-without-lag'],
+  },
+  {
+    slug: 'hdr-screen-recording-screenshots-windows',
+    title: 'How to Fix Washed-Out HDR Screen Recordings and Screenshots on Windows',
+    shortTitle: 'Fix washed-out HDR captures',
+    description:
+      'Why HDR screen recordings and screenshots look too bright on Windows, and how correct HDR-to-SDR tone mapping preserves highlights, contrast, and color.',
+    category: 'HDR & Color',
+    published: '2026-08-28',
+    updated: '2026-08-28',
+    related: ['how-to-record-screen-windows', 'screen-recording-black-screen-no-audio', 'record-4k-60fps-windows'],
   },
   {
     slug: 'record-screen-and-webcam',

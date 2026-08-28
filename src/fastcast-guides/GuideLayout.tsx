@@ -54,7 +54,7 @@ const fastCastGuides = createProductGuides({
   indexEyebrow: 'FastCast guides',
   indexTitle: 'FastCast Guides: Windows Recording and Live Streaming',
   indexLede:
-    'Practical guides to recording and live streaming on Windows: capture your screen, desktop audio, microphone, and webcam; stream to YouTube, Twitch, or Kick; improve performance; and fix black, silent, or unstable output. Each guide explains the general workflow and shows where FastCast fits.',
+    'Practical guides to recording and live streaming on Windows: capture HDR screens without blown-out color, record desktop audio, microphone, and webcam, stream to YouTube, Twitch, or Kick, improve performance, and troubleshoot output. Each guide explains the general workflow and shows where FastCast fits.',
   indexFinalCtaHeading: 'Record without the setup maze',
   indexFinalCtaBody:
     'FastCast is a native Windows screen recorder and streamer: pick a monitor or window, choose your audio, add an optional webcam overlay, and record MP4 or go live over RTMP. The 1080p60 recording and streaming tier will stay free.',

@@ -8536,6 +8536,56 @@ textarea.svc-input {
   font-size: 13px;
 }
 
+.product-guide .guide-hero-media {
+  margin-top: 32px;
+}
+
+.product-guide .guide-hero-comparison {
+  width: min(1040px, calc(100vw - 48px));
+  margin: 0 0 0 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  border: 1px solid var(--product-border);
+  border-radius: var(--product-radius);
+  background: var(--product-surface-alpha);
+}
+
+.product-guide .guide-comparison-labels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--product-border);
+}
+
+.product-guide .guide-comparison-labels span {
+  padding: 10px 14px;
+  color: var(--product-muted);
+  font-family: "SF Mono", "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.product-guide .guide-comparison-labels span + span {
+  border-left: 1px solid var(--product-border);
+  color: var(--product-accent);
+}
+
+.product-guide .guide-hero-comparison img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.product-guide .guide-hero-comparison figcaption {
+  padding: 10px 14px 12px;
+  color: var(--product-faint);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
 /* CTA panels: visible but restrained. */
 .product-guide .guide-cta {
   border: 1px solid var(--product-border);
@@ -8661,6 +8711,24 @@ textarea.svc-input {
   line-height: 1.25;
   letter-spacing: -0.01em;
   scroll-margin-top: 76px;
+}
+
+.product-guide .guide-section h3 {
+  margin: 28px 0 8px;
+  color: var(--product-text);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.product-guide .guide-section code {
+  border: 1px solid var(--product-border);
+  border-radius: 4px;
+  background: var(--product-surface-alpha);
+  padding: 0.1em 0.35em;
+  color: var(--product-text);
+  font-family: "SF Mono", "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-size: 0.88em;
 }
 
 .product-guide .guide-section p,
@@ -8794,5 +8862,14 @@ textarea.svc-input {
   .product-guide .guide-cta-actions,
   .product-guide .guide-cta-actions .product-button {
     width: 100%;
+  }
+
+  .product-guide .guide-hero-comparison {
+    width: calc(100vw - 24px);
+  }
+
+  .product-guide .guide-comparison-labels span {
+    padding-inline: 8px;
+    font-size: 10px;
   }
 }
