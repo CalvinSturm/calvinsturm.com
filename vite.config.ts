@@ -52,6 +52,8 @@ export default defineConfig(({mode}) => {
           fastplayV2: path.resolve(__dirname, 'fastplay-v2.html'),
           fastplayV3: path.resolve(__dirname, 'fastplay-v3.html'),
           fastplayGuides: path.resolve(__dirname, 'fastplay/guides.html'),
+          fastplayGuideVideosNotPlaying: path.resolve(__dirname, 'fastplay/guides/videos-not-playing-on-pc.html'),
+          fastplayGuidePlaybackSpeed: path.resolve(__dirname, 'fastplay/guides/change-video-playback-speed-windows.html'),
           fastplayGuideHdrVideo: path.resolve(__dirname, 'fastplay/guides/hdr-video-windows.html'),
           fastplayGuideMov: path.resolve(__dirname, 'fastplay/guides/mov-not-playing-windows.html'),
           fastplayGuideHevc: path.resolve(__dirname, 'fastplay/guides/hevc-player-windows.html'),
