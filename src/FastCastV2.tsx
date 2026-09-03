@@ -13,7 +13,7 @@ import './fastcast-v2.css';
 // Single source of truth for the shipped version: the download URL and every
 // version string on the page derive from it, so a release bump is one edit
 // here plus softwareVersion/downloadUrl in fastcast.html and the guide CTA.
-const currentVersion = '0.7.1';
+const currentVersion = '0.8.0';
 const installerUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.msi`;
 const portableUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.zip`;
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
@@ -79,6 +79,11 @@ const panelRows = [
     spec: 'MP4 / H.264',
   },
   {
+    name: 'Instant Replay',
+    body: 'Keep the last 15 to 300 seconds in memory and save the moment as an MP4 after it happens. Press Ctrl+Alt+F8 when you want the clip; nothing is written until then.',
+    spec: '15–300 sec · Ctrl+Alt+F8',
+  },
+  {
     name: 'The same setup, live',
     body: 'Use the same setup to stream to YouTube, Twitch, Kick, or another streaming service. There is no second scene to build for going live.',
     spec: 'RTMP / RTMPS',
@@ -97,6 +102,7 @@ const globalKeys = [
   { keys: ['Ctrl', 'Alt', 'F9'], action: 'Start or stop recording' },
   { keys: ['Ctrl', 'Alt', 'F10'], action: 'Mute or unmute the microphone' },
   { keys: ['Ctrl', 'Alt', 'F11'], action: 'Mute or unmute desktop audio' },
+  { keys: ['Ctrl', 'Alt', 'F8'], action: 'Save the Instant Replay clip' },
   { keys: ['Ctrl', 'Alt', '1'], action: 'Screen only' },
   { keys: ['Ctrl', 'Alt', '2'], action: 'Screen with camera' },
   { keys: ['Ctrl', 'Alt', '3'], action: 'Camera with screen' },
@@ -123,7 +129,12 @@ const fastCastFaqs = [
   {
     question: 'What is FastCast?',
     answer:
-      'FastCast is a native Windows screen recorder and live streaming app for local MP4 recording, monitor or window capture, desktop audio, microphone capture, webcam overlay, and RTMP/RTMPS streaming.',
+      'FastCast is a native Windows screen recorder and live streaming app for local MP4 recording, Instant Replay clips, monitor or window capture, desktop audio, microphone capture, webcam overlay, and RTMP/RTMPS streaming.',
+  },
+  {
+    question: 'What is Instant Replay?',
+    answer:
+      'Instant Replay keeps the last 15 to 300 seconds of your screen in memory and saves it as an MP4 when you press Ctrl+Alt+F8. Nothing is written until you save a clip, and the buffer keeps running afterward.',
   },
   {
     question: 'Is FastCast an OBS alternative?',
@@ -301,7 +312,7 @@ export function FastCastV2() {
                   <li>No telemetry</li>
                   <li>Windows 10 / 11</li>
                 </ul>
-                <p className="fc-fineprint">v{currentVersion} · Windows installer · Open Beta</p>
+                <p className="fc-fineprint">v{currentVersion} · Windows installer · Instant Replay · Open Beta</p>
 
                 <dl className="fc-plate">
                   {specPlate.map((row) => (
@@ -399,7 +410,7 @@ export function FastCastV2() {
                 Everything you need <em>to record</em>
               </h2>
               <p className="fc-unit-lede">
-                Capture your screen, audio, and webcam without digging through menus.
+                Capture your screen, audio, and webcam without digging through menus, then save the last moment when it matters.
               </p>
 
               <ul className="fc-rows">
@@ -681,6 +692,15 @@ export function FastCastV2() {
                   rel="noopener noreferrer"
                 >
                   All releases <span aria-hidden="true">→</span>
+                </a>
+                <a
+                  className="fc-btn fc-btn-ghost fc-btn-lg"
+                  href={portableUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackDownload('final_portable', portableUrl)}
+                >
+                  Portable ZIP
                 </a>
               </div>
             </div>

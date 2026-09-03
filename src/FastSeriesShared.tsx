@@ -27,6 +27,7 @@ import {
   Moon,
   PlayCircle,
   Radio,
+  RotateCcw,
   ShieldCheck,
   Scissors,
   SlidersHorizontal,
@@ -634,7 +635,8 @@ export function ProductPage({ product }: { product: Product }) {
 }
 
 const githubProfileUrl = 'https://github.com/CalvinSturm';
-const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.5.1/FastCast-0.5.1-win-x64.zip';
+const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.8.0/FastCast-0.8.0-win-x64.msi';
+const fastCastPortableUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.8.0/FastCast-0.8.0-win-x64.zip';
 const fastCastReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 const fastPlayDownloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/download/v0.4.6/fastplay-0.4.6-x86_64.msi';
@@ -910,13 +912,19 @@ const fastCastFeatures: FeatureItem[] = [
   { title: 'Passthrough, 1080p, or 720p output', Icon: FileVideo },
   { title: 'Hotkeys: Ctrl+Alt+F9 record, Ctrl+Alt+1-4 layouts', Icon: Keyboard },
   { title: 'Command-line recording control with fastcastc', Icon: Terminal },
+  { title: 'Instant Replay: save the last 15–300 seconds with Ctrl+Alt+F8', Icon: RotateCcw },
 ];
 
 const fastCastFaqs = [
   {
     question: 'What is FastCast?',
     answer:
-      'FastCast is a native Windows screen recorder and live streaming app for local MP4 recording, monitor or window capture, desktop audio, microphone capture, webcam overlay, and RTMP/RTMPS streaming.',
+      'FastCast is a native Windows screen recorder and live streaming app for local MP4 recording, Instant Replay clips, monitor or window capture, desktop audio, microphone capture, webcam overlay, and RTMP/RTMPS streaming.',
+  },
+  {
+    question: 'What is Instant Replay?',
+    answer:
+      'Instant Replay keeps the last 15 to 300 seconds in memory and saves it as an MP4 when you press Ctrl+Alt+F8. Nothing is written until you save a clip.',
   },
   {
     question: 'Is FastCast an OBS alternative?',
@@ -979,7 +987,7 @@ export function FastCastProductPage() {
         primaryHref={fastCastDownloadUrl}
         secondaryLabel="View release notes"
         secondaryHref={fastCastReleaseUrl}
-        meta="v0.5.1 · Windows 10/11 x64 · Portable ZIP · Free version, optional Pro license"
+        meta="v0.8.0 · Windows 10/11 x64 · MSI or portable ZIP · Free version, optional Pro license"
         heroIconUrl="/assets/FastCast/FastCast_Icon.png"
         heroIconAlt="FastCast app icon"
         preview={
@@ -1006,10 +1014,11 @@ export function FastCastProductPage() {
           </div>
           <aside className="product-panel product-release-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
             <h3>Current release</h3>
-            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.5.1</p>
+            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.8.0</p>
             <p className="product-panel-copy mt-3 text-sm leading-relaxed text-slate-600">
-              This release adds command-line recording control through <code>fastcastc</code> for scripts, Stream Deck
-              buttons, and schedulers. FastCast does not download or install updates automatically.
+              This release adds Instant Replay, which keeps the last 15 to 300 seconds in memory and saves a clip with
+              <code>Ctrl+Alt+F8</code>. It also adds notification-area controls and recent-file clip access. FastCast
+              does not download or install updates automatically.
             </p>
             <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-panel-link mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
               Open release page
@@ -1050,12 +1059,12 @@ export function FastCastProductPage() {
               <ShieldCheck className="h-6 w-6 text-emerald-600" />
               <h3 className="mt-4 text-lg font-semibold text-slate-900">Verify the download</h3>
               <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
-                Download <code>FastCast-0.5.1-win-x64.zip</code> from the latest release. An optional{' '}
+                Download <code>FastCast-0.8.0-win-x64.zip</code> from the latest release. An optional{' '}
                 <code>.sha256</code> sidecar is included for integrity checks.
               </p>
               <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Expected SHA-256</p>
               <code className="mt-2 block break-all rounded-xl bg-slate-100 p-3 text-xs text-slate-700">
-                1c890d9de1f8da1ddfc70a654e8d9b08e7fd62b8fc11e8e38d82cb334f2f2c88
+                b03291c8e820b192a229b1f7874ef5c55ed7e7ede05128c87da080eb1f8648a6
               </code>
             </article>
             <article className="product-panel product-warning-panel rounded-2xl border border-amber-200/70 bg-amber-50 p-6">
@@ -1171,6 +1180,10 @@ export function FastCastProductPage() {
               <a href={fastCastAllReleasesUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-secondary cta-secondary">
                 <Github className="h-5 w-5" />
                 All releases
+              </a>
+              <a href={fastCastPortableUrl} target="_blank" rel="noopener noreferrer" className="product-button product-button-secondary cta-secondary">
+                <Download className="h-5 w-5" />
+                Portable ZIP
               </a>
             </div>
           </div>
