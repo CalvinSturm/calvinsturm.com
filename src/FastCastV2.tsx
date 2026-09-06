@@ -149,7 +149,7 @@ const fastCastFaqs = [
   {
     question: 'Is FastCast free?',
     answer:
-      `FastCast Free covers 1080p recording and streaming at 60 fps, and those capabilities will stay free, with no subscription and no account. FastCast Pro is a one-time ${fastCastProPrice} license that unlocks 1440p and 4K recording, 120 fps capture, multistreaming to up to three destinations, and advanced encoder controls.`,
+      `FastCast Free covers 1080p recording and streaming at 60 fps, and those capabilities will stay free, with no subscription and no account. FastCast Pro unlocks 1440p and 4K recording, 120 fps capture, multistreaming to up to three destinations, and advanced encoder controls, and it is now pay what you want: enter $0 at checkout for a free license key, or pay any amount you like to support development.`,
   },
   {
     question: 'Is FastCast signed?',
@@ -543,7 +543,7 @@ export function FastCastV2() {
             <RailLabel code="LIC" name="License" />
             <div className="fc-unit-body">
               <h2 id="license-title">
-                Free for everyday capture. <em>Pay once when you need more.</em>
+                Free for everyday capture. <em>Name your price for the rest.</em>
               </h2>
 
               <div className="fc-plans">
@@ -575,7 +575,10 @@ export function FastCastV2() {
                     FastCast Pro <span className="fc-chip">One-time</span>
                   </p>
                   <p className="fc-plan-price">{fastCastProPrice}</p>
-                  <p className="fc-plan-line">For recordings people will scrub through frame by frame.</p>
+                  <p className="fc-plan-line">
+                    For recordings people will scrub through frame by frame. Pay $0 for a license key,
+                    or any amount you want to support FastCast.
+                  </p>
                   <ul className="fc-ticks">
                     <li>1440p and 4K recording</li>
                     <li>120 fps capture where your hardware supports it</li>
@@ -590,7 +593,7 @@ export function FastCastV2() {
                     rel="noopener noreferrer"
                     onClick={() => trackCtaClick('fastcast', 'pro_clicked', 'pricing', fastCastProCheckoutUrl)}
                   >
-                    Get FastCast Pro <span aria-hidden="true">→</span>
+                    Unlock Pro, pay what you want <span aria-hidden="true">→</span>
                   </a>
                 </article>
               </div>
