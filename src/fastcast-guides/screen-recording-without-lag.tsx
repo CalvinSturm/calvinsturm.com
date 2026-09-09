@@ -153,10 +153,9 @@ export function GuidePage() {
             whole monitor.
           </li>
           <li>
-            <strong>Free-tier ceiling as a sanity check.</strong> FastCast Free records 1080p30,
-            which is a modest, widely achievable load; if 1080p30 stutters, fix the environment
-            (encoder, disk, background load) before considering higher settings, which require
-            Pro and more headroom.
+            <strong>1080p30 as a sanity check.</strong> 1080p30 is a modest, widely achievable
+            load; if it stutters, fix the environment (encoder, disk, background load) before
+            reaching for higher settings, which need real headroom.
           </li>
           <li>
             <strong>Untimed recordings use a crash-safe segmented mode</strong>, so a long take
@@ -180,8 +179,8 @@ export function GuidePage() {
             not broadly validated yet, and the software fallback is much slower.
           </li>
           <li>
-            FastCast has no per-encoder tuning UI in the free tier; advanced encoder controls are
-            part of FastCast Pro.
+            FastCast's encoder controls are deliberately narrow compared with OBS, though every
+            one of them is available to everyone.
           </li>
         </ul>
       </GuideSection>

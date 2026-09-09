@@ -150,8 +150,8 @@ export function GuidePage() {
           the MP4 is ready to upload, or to trim in any editor.
         </p>
         <InlineCta>
-          FastCast's webcam overlay is currently on the free tier, alongside 1080p30 recording.
-          1080p30 recording will stay free after Open Beta. For a live destination, see how to{' '}
+          FastCast's webcam overlay, like every other feature, is included: one license key unlocks
+          the app and the key is pay what you want. For a live destination, see how to{' '}
           <a href={guidePath('stream-screen-webcam-windows')}>stream your screen and webcam together</a>.
         </InlineCta>
       </GuideSection>

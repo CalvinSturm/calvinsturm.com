@@ -136,6 +136,7 @@ body:has(.fc) {
 .fc-rows-spec,
 .fc-doc-cat,
 .fc-plan-name,
+.fc-license-unlocks-title,
 .fc-foot {
   font-family: "IBM Plex Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
   font-size: 11px;
@@ -851,26 +852,49 @@ body:has(.fc) {
 
 /* ------------------------------------------------------------------ license */
 
-.fc-plans {
+.fc-license-card {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-  margin-top: 40px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0;
+  margin-top: 36px;
   margin-bottom: 24px;
+  border: 1px solid var(--fc-color-brand-border);
+  border-radius: 3px;
+  background: var(--fc-color-surface-raised);
 }
 
-.fc-plans article {
+.fc-license-offer {
   display: flex;
   flex-direction: column;
-  padding: 26px 26px 28px;
-  border: 1px solid var(--fc-color-border);
-  border-radius: 3px;
+  align-items: flex-start;
+  padding: 30px 30px 32px;
+}
+
+.fc-license-offer .fc-btn {
+  align-self: stretch;
+  justify-content: center;
+}
+
+.fc-license-offer .fc-btn + .fc-btn {
+  margin-top: 10px;
+}
+
+.fc-license-offer .fc-fineprint {
+  margin-top: 16px;
+}
+
+.fc-license-unlocks {
+  padding: 30px 30px 32px;
+  border-left: 1px solid var(--fc-color-border);
   background: var(--fc-color-surface);
 }
 
-.fc-plans .fc-plan-pro {
-  border-color: var(--fc-color-brand-border);
-  background: var(--fc-color-surface-raised);
+.fc-license-unlocks-title {
+  color: var(--fc-color-text-muted);
+}
+
+.fc-license-unlocks .fc-ticks {
+  margin-top: 16px;
 }
 
 .fc-plan-name {
@@ -890,30 +914,42 @@ body:has(.fc) {
 
 .fc-plan-price {
   margin-top: 14px;
+  color: var(--fc-color-brand);
   font-size: 34px;
   font-weight: 700;
   font-stretch: 88%;
   letter-spacing: -0.02em;
-  line-height: 1;
+  line-height: 1.05;
 }
 
-.fc-plan-pro .fc-plan-price {
-  color: var(--fc-color-brand);
+.fc-plan-price-note {
+  color: var(--fc-color-text-subtle);
+  font-size: 13px;
+  font-weight: 600;
+  font-stretch: normal;
+  letter-spacing: 0.02em;
 }
 
 .fc-plan-line {
   margin-top: 12px;
+  margin-bottom: 26px;
   color: var(--fc-color-text-muted);
   font-size: 15px;
 }
 
-.fc-plans .fc-ticks {
-  flex: 1;
-  margin-bottom: 26px;
+/* The ask for money sits below the card, in the reader's voice rather than the
+   product's, so keep it plain text against the page instead of a third panel. */
+.fc-support-note {
+  max-width: 62ch;
+  margin-bottom: 24px;
+  padding-left: 16px;
+  border-left: 2px solid var(--fc-color-brand-border);
+  color: var(--fc-color-text-muted);
+  font-size: 15px;
 }
 
-.fc-plans .fc-btn {
-  align-self: flex-start;
+.fc-support-note strong {
+  color: var(--fc-color-text);
 }
 
 /* ------------------------------------------------------------------- guides */
@@ -1182,9 +1218,19 @@ body:has(.fc) {
   }
 
   .fc-ab,
-  .fc-plans,
   .fc-facts {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fc-license-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Stacked, so the divider between the offer and the list has to move to the
+     top edge of the list or the two halves run together. */
+  .fc-license-unlocks {
+    border-left: 0;
+    border-top: 1px solid var(--fc-color-border);
   }
 
   .fc-keygroup ul {

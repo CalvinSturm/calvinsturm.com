@@ -101,13 +101,13 @@ export function GuidePage() {
           service presets, and login-based setup. FastCast keeps it manual but simple: click your
           platform (YouTube, Twitch, or Kick) to fill in the server URL, paste your stream key,
           and go live. FastCast has no platform OAuth login; if you need one, that is an OBS job.
-          FastCast Pro streams to up to three destinations at once. For the focused path, follow
+          FastCast streams to up to three destinations at once. For the focused path, follow
           the{' '}
           <a href={guidePath('how-to-stream-on-windows')}>Windows live-streaming guide</a>.
         </p>
       </GuideSection>
 
-      <GuideSection id="features" title="Scenes, encoders, and tiers">
+      <GuideSection id="features" title="Scenes, encoders, and price">
         <ul>
           <li>
             <strong>Scenes and compositing.</strong> OBS: full scene system, unlimited sources,
@@ -123,11 +123,11 @@ export function GuidePage() {
             encoder tuning out of the box.
           </li>
           <li>
-            <strong>Price and tiers.</strong> OBS is entirely free. FastCast Free covers 1080p60
-            recording and streaming, and that tier will stay free; a one-time FastCast Pro license unlocks
-            1440p/4K recording, 120 fps capture where hardware supports it, multistreaming to up to
-            three destinations, and advanced encoder controls. Pro is activated inside the app;
-            there is no subscription and no account.
+            <strong>Price.</strong> OBS is entirely free and open source. FastCast is paid, but it
+            has no tiers: one license key, activated inside the app, unlocks everything including 4K
+            recording, 120 fps capture where hardware supports it, multistreaming to up to three
+            destinations, and advanced encoder controls. The key is pay what you want, $29 suggested
+            with a $1 minimum, so you set the number. There is no subscription and no account.
             High-resolution capture details are in{' '}
             <a href={guidePath('record-4k-60fps-windows')}>recording 4K 60 FPS on Windows</a>.
           </li>

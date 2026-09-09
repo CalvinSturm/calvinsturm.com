@@ -326,6 +326,7 @@ const CTA_ACTIONS = new Set([
   'download_clicked',
   'github_clicked',
   'guide_product_cta_clicked',
+  'license_clicked',
   'pro_clicked',
   'release_clicked',
 ]);

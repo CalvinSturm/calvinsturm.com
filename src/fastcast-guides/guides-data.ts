@@ -10,10 +10,13 @@ export const guidesIndexPath = '/fastcast/guides';
 
 export const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.8.0/FastCast-0.8.0-win-x64.msi';
 export const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
-export const fastCastProCheckoutUrl = 'https://calvinstorm.gumroad.com/l/fastcast';
-// Keep in step with the Gumroad listing, and with the FAQ answer duplicated in
-// the FAQPage JSON-LD in fastcast.html, which cannot import this.
-export const fastCastProPrice = '$0+';
+export const fastCastLicenseCheckoutUrl = 'https://calvinstorm.gumroad.com/l/fastcast';
+// There are no tiers any more: one license unlocks the whole app, and the buyer
+// names the price. Gumroad enforces the $1 floor and pre-fills the suggested
+// amount, so keep both numbers in step with the listing, and with the FAQ answer
+// duplicated in the FAQPage JSON-LD in fastcast.html, which cannot import this.
+export const fastCastLicensePrice = '$29';
+export const fastCastLicensePriceMin = '$1';
 export const fastCastSiteUrl = 'https://calvinsturm.github.io/FastCast-releases/';
 
 export type GuideCategory =

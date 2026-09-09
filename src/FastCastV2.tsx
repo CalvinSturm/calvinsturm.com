@@ -3,8 +3,9 @@ import { CircleDot, Download } from 'lucide-react';
 import {
   guides as fastCastGuides,
   guidePath as fastCastGuidePath,
-  fastCastProCheckoutUrl,
-  fastCastProPrice,
+  fastCastLicenseCheckoutUrl,
+  fastCastLicensePrice,
+  fastCastLicensePriceMin,
 } from './fastcast-guides/guides-data';
 import { trackCtaClick } from './lib/analytics';
 import { useReducedMotion } from './lib/useReducedMotion';
@@ -147,9 +148,9 @@ const fastCastFaqs = [
       'Not unless you ask it to. Stream keys are session-only by default. Turning on Remember stream keys in Advanced stores them in Windows Credential Manager, encrypted by Windows under your user account, and turning it back off deletes them immediately. Keys never go into settings files, logs, or support bundles.',
   },
   {
-    question: 'Is FastCast free?',
+    question: 'How much does FastCast cost?',
     answer:
-      `FastCast Free covers 1080p recording and streaming at 60 fps, and those capabilities will stay free, with no subscription and no account. FastCast Pro unlocks 1440p and 4K recording, 120 fps capture, multistreaming to up to three destinations, and advanced encoder controls, and it is now pay what you want: enter $0 at checkout for a free license key, or pay any amount you like to support development.`,
+      'It is pay what you want, with a $1 minimum and $29 suggested. There are no paid tiers and nothing is held back: one license key unlocks the whole app, including 4K recording, 120 fps capture, multistreaming, and the advanced encoder controls. Whatever you decide to pay, you pay it once, with no subscription and no account, and the key keeps working on the versions that come after it.',
   },
   {
     question: 'Is FastCast signed?',
@@ -305,8 +306,8 @@ export function FastCastV2() {
                     Portable ZIP
                   </a>
                 </div>
-                <ul className="fc-hero-trust" aria-label="FastCast Free highlights">
-                  <li>Free 1080p60</li>
+                <ul className="fc-hero-trust" aria-label="FastCast highlights">
+                  <li>Every feature included</li>
                   <li>No account</li>
                   <li>No watermark</li>
                   <li>No telemetry</li>
@@ -440,7 +441,7 @@ export function FastCastV2() {
                 <ul className="fc-ticks">
                   <li>Encoder, resolution, frame rate, and scaling</li>
                   <li>YouTube, Twitch, Kick, or a custom RTMP/RTMPS URL</li>
-                  <li>Layout shortcuts, app updates, and Pro activation</li>
+                  <li>Layout shortcuts, app updates, and license activation</li>
                 </ul>
                 <p className="fc-fineprint">Simple by default. Detailed on demand.</p>
               </div>
@@ -543,59 +544,73 @@ export function FastCastV2() {
             <RailLabel code="LIC" name="License" />
             <div className="fc-unit-body">
               <h2 id="license-title">
-                Free for everyday capture. <em>Name your price for the rest.</em>
+                One license, every feature. <em>You decide what it is worth.</em>
               </h2>
+              <p className="fc-unit-lede">
+                There is no Pro tier any more. Every feature is in the build you download, and the
+                license key that unlocks it is pay what you want: $29 suggested, $1 minimum. Pay
+                the suggested price if FastCast earns it, or the minimum if that is what you have.
+              </p>
 
-              <div className="fc-plans">
-                <article>
-                  <p className="fc-plan-name">FastCast Free</p>
-                  <p className="fc-plan-price">$0</p>
-                  <p className="fc-plan-line">
-                    1080p recording and streaming at 60 fps. Stays free with no subscription.
+              <div className="fc-license-card">
+                <div className="fc-license-offer">
+                  <p className="fc-plan-name">
+                    FastCast license <span className="fc-chip">One-time</span>
                   </p>
-                  <ul className="fc-ticks">
-                    <li>Monitor or window capture</li>
-                    <li>Desktop audio and microphone</li>
-                    <li>Webcam and live layouts</li>
-                    <li>Streaming to YouTube, Twitch, or Kick</li>
-                  </ul>
+                  <p className="fc-plan-price">
+                    {fastCastLicensePrice}{' '}
+                    <span className="fc-plan-price-note">suggested</span>
+                  </p>
+                  <p className="fc-plan-line">
+                    Pay what you want, from {fastCastLicensePriceMin} up. No subscription, no
+                    account, no trial clock, and the key keeps working on the versions that come
+                    after it.
+                  </p>
                   <a
-                    className="fc-btn fc-btn-primary"
+                    className="fc-btn fc-btn-primary fc-btn-lg"
+                    href={fastCastLicenseCheckoutUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackCtaClick('fastcast', 'license_clicked', 'pricing', fastCastLicenseCheckoutUrl)}
+                  >
+                    Get your license key <span aria-hidden="true">&rarr;</span>
+                  </a>
+                  <a
+                    className="fc-btn fc-btn-ghost fc-btn-lg"
                     href={installerUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackDownload('pricing')}
                   >
-                    Download Free <span aria-hidden="true">→</span>
+                    Download FastCast
                   </a>
-                </article>
+                  <p className="fc-fineprint">
+                    Paste the key into Advanced in the app. Already have FastCast installed? You only
+                    need the key.
+                  </p>
+                </div>
 
-                <article className="fc-plan-pro">
-                  <p className="fc-plan-name">
-                    FastCast Pro <span className="fc-chip">One-time</span>
-                  </p>
-                  <p className="fc-plan-price">{fastCastProPrice}</p>
-                  <p className="fc-plan-line">
-                    For recordings people will scrub through frame by frame. Pay $0 for a license key,
-                    or any amount you want to support FastCast.
-                  </p>
+                <div className="fc-license-unlocks">
+                  <p className="fc-license-unlocks-title">Unlocked for everyone</p>
                   <ul className="fc-ticks">
-                    <li>1440p and 4K recording</li>
+                    <li>Recording and streaming up to 4K</li>
                     <li>120 fps capture where your hardware supports it</li>
-                    <li>Stream to up to three destinations at once</li>
-                    <li>Fine-tune recording quality and file size</li>
-                    <li>No subscription and no account</li>
+                    <li>Streaming to up to three destinations at once</li>
+                    <li>Instant Replay, webcam layouts, and the green screen</li>
+                    <li>Encoder, bitrate, and scaling controls</li>
+                    <li>No watermark and no telemetry, on any of it</li>
                   </ul>
-                  <a
-                    className="fc-btn fc-btn-primary"
-                    href={fastCastProCheckoutUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackCtaClick('fastcast', 'pro_clicked', 'pricing', fastCastProCheckoutUrl)}
-                  >
-                    Unlock Pro, pay what you want <span aria-hidden="true">→</span>
-                  </a>
-                </article>
+                </div>
+              </div>
+
+              <div className="fc-support-note">
+                <p>
+                  <strong>Why pay what you want?</strong> FastCast is one person
+                  writing a Windows capture app, and paying for the code signing certificate, the
+                  test hardware, and the hours is the whole reason the next version ships. If you
+                  record with it every week, $29 is what keeps it moving. If you cannot, pay the
+                  $1 minimum and use the app: that was always the point.
+                </p>
               </div>
 
               <p className="fc-fineprint">
@@ -677,7 +692,7 @@ export function FastCastV2() {
             <div className="fc-unit-body fc-end-body">
               <h2>Press record in ten seconds</h2>
               <p className="fc-unit-lede">FastCast v{currentVersion} for Windows 10 and 11, 64-bit.
-                Free 1080p60, no account, no watermark, and no telemetry.</p>
+                No account, no watermark, and no telemetry.</p>
               <div className="fc-actions">
                 <a
                   className="fc-btn fc-btn-primary fc-btn-lg"

@@ -300,8 +300,8 @@ const laterItems = [
   {
     product: 'FastCast',
     accent: 'cast',
-    title: 'Pro feature expansion',
-    body: 'FastCast Pro shipped in v0.4.0 as a one-time Creator Pro license unlocking 1440p/4K recording and 60 fps capture. Further Pro features are evaluated against beta feedback; nothing beyond what is in the app today is promised.',
+    title: 'Keeping the app funded',
+    body: 'The paid tier is gone: one license key unlocks the whole app, and the key is pay what you want, $29 suggested with a $1 minimum. Development from here is funded by people who choose to pay for it, so feature work is evaluated against beta feedback rather than against what would sell an upgrade. Nothing beyond what is in the app today is promised.',
   },
   {
     product: 'Both',

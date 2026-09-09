@@ -21,7 +21,7 @@ const serviceRows = [
   },
   {
     service: 'Gumroad',
-    when: 'When you buy or activate a current FastCast Pro license.',
+    when: 'When you obtain or activate a current FastCast license.',
     data: 'Gumroad processes checkout, payment, buyer, transaction, and license information. FastCast activation and validation send the license key, FastCast product ID, and whether the activation-use count should increase. FastCast does not send a device name to Gumroad.',
     href: 'https://gumroad.com/privacy',
   },
@@ -91,7 +91,7 @@ export function FastCastPrivacy() {
               <h1 id="privacy-title">FastCast Privacy Policy</h1>
               <p className="fc-unit-lede">
                 This policy explains how Sturm Technologies LLC handles information in connection with the FastCast
-                Windows application, the FastCast pages on calvinsturm.com, FastCast Pro licensing, and FastCast support.
+                Windows application, the FastCast pages on calvinsturm.com, FastCast licensing, and FastCast support.
               </p>
               <dl className="fc-policy-meta">
                 <div><dt>Effective</dt><dd>August 23, 2026</dd></div>
@@ -112,7 +112,7 @@ export function FastCastPrivacy() {
                 <ul>
                   <li>Your recordings stay on your computer unless you choose to livestream, upload, or share them.</li>
                   <li>FastCast has no usage telemetry, advertising SDK, account system, or automatic crash upload.</li>
-                  <li>Network connections occur when you stream, manually check for updates, visit an external link, or use FastCast Pro licensing. An already activated Pro license is revalidated with its issuing store when FastCast starts.</li>
+                  <li>Network connections occur when you stream, manually check for updates, visit an external link, or use FastCast licensing. An already activated license is revalidated with its issuing store when FastCast starts.</li>
                   <li>Stream keys are session-only unless you opt in to Windows Credential Manager storage.</li>
                 </ul>
               </div>
@@ -179,12 +179,12 @@ export function FastCastPrivacy() {
                 without the redaction option may contain more detailed local information and should be reviewed before sharing.
               </p>
 
-              <h3>FastCast Pro license state</h3>
+              <h3>FastCast license state</h3>
               <p>
-                If you activate FastCast Pro, FastCast stores the license key, issuing store, plan, activation identifiers,
+                If you activate a license, FastCast stores the license key, issuing store, plan, activation identifiers,
                 status, and validation timestamps locally in <code>%APPDATA%\FastCast\license.json</code>. FastCast contacts the
-                store that issued the key for activation, deactivation where supported, and validation. An activated Pro license
-                is revalidated once when FastCast starts; a Free installation without a stored activated key makes no license call.
+                store that issued the key for activation, deactivation where supported, and validation. An activated license
+                is revalidated once when FastCast starts; an installation without a stored activated key makes no license call.
               </p>
 
               <aside className="fc-policy-note">
@@ -254,8 +254,8 @@ export function FastCastPrivacy() {
               </p>
               <h3>Payments</h3>
               <p>
-                We do not directly receive or store your full payment-card number. Gumroad currently processes FastCast Pro
-                checkout. Lemon Squeezy processed earlier purchases. The applicable store may provide us with buyer contact,
+                We do not directly receive or store your full payment-card number. Gumroad currently processes FastCast
+                license checkout, including pay-what-you-want orders placed at the minimum price. Lemon Squeezy processed earlier purchases. The applicable store may provide us with buyer contact,
                 order, tax, refund, and license information needed to fulfill the purchase, provide support, prevent fraud, and
                 maintain business records.
               </p>

@@ -31,7 +31,8 @@ list without needing property filters.
 | `<product>_guide_viewed` | A `/<product>/guides/*` page loads (`guide_slug` is the article slug, or `index` for the hub page). Products: `fastcast`, `fastplay`, `fastclip`, `fastcompress`. | `product`, `guide_slug`, `source_path`, `referrer_path` |
 | `<product>_guide_product_cta_clicked` | The secondary CTA on a guide (link to the product page) is clicked. | `product`, `source_path`, `cta_location`, `destination` |
 | `<product>_related_guide_clicked` | A guide card (related-guides list or guides index) is clicked. | `product`, `source_path`, `guide_slug` (target), `destination` |
-| `fastcast_pro_clicked` | The FastCast Pro checkout link (Lemon Squeezy) is clicked, on the product page (`cta_location: pricing`) or inside a guide (`inline`). | `product`, `source_path`, `cta_location`, `destination` |
+| `fastcast_license_clicked` | The FastCast license checkout link (Gumroad) is clicked, on the product page (`cta_location: pricing`) or inside a guide (`inline`). | `product`, `source_path`, `cta_location`, `destination` |
+| `fastcast_pro_clicked` | Retired 2026-09-06 when the Pro tier was folded into a single pay-what-you-want license. Historical data only; nothing on the site emits it any more. | `product`, `source_path`, `cta_location`, `destination` |
 
 ### Property conventions
 
@@ -44,13 +45,17 @@ list without needing property filters.
 
 ## Known measurement limitations (do not fake these)
 
-- **Purchase completion cannot be measured from the website.** The public
-  FastCast Pro checkout link (Lemon Squeezy) makes checkout *clicks* trackable
-  (`fastcast_pro_clicked`), but the purchase itself completes on Lemon
-  Squeezy and activation happens inside the app, so completed sales come from
-  the Lemon Squeezy dashboard, not site analytics.
-- **`pricing_cta_clicked` is retired**: the pricing CTA shipped as
-  `fastcast_pro_clicked` to follow the `<product>_<action>` convention.
+- **Purchase completion cannot be measured from the website.** The FastCast
+  license link (Gumroad) makes checkout *clicks* trackable
+  (`fastcast_license_clicked`), but checkout completes on Gumroad and
+  activation happens inside the app, so orders come from the Gumroad
+  dashboard, not site analytics. Since the license is pay what you want, a
+  click that converts may still be a $1 order: click counts say nothing about
+  revenue.
+- **`pricing_cta_clicked` and `fastcast_pro_clicked` are retired**: the pricing
+  CTA shipped as `fastcast_pro_clicked` to follow the `<product>_<action>`
+  convention, and became `fastcast_license_clicked` on 2026-09-06 when the Pro
+  tier was removed. Do not sum the two as one series.
 - **`signup_submitted` is reserved but unused**: the site has no email or beta
   signup form.
 - Download clicks measure intent, not completed installs; GitHub does the

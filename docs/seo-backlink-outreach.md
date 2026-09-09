@@ -59,7 +59,9 @@ Completed in this pass, all verified by `npm run validate:seo` and `npm run buil
 - **FastCast pricing is accurate in structured data.** The schema advertised a
   single free offer while the page sells a $49 Pro licence. Now a two-offer
   array (Free $0, Pro $49 one-time), so directories categorise it as freemium
-  rather than free.
+  rather than free. Superseded twice since: the tiers were folded into one
+  pay-what-you-want license, and on 2026-09-09 that license took a $1 floor with
+  $29 suggested. See `marketing-pricing.md`.
 - **FastCast entity linked** to its public releases repo via `sameAs`
   (FastPlay already had `codeRepository`).
 - **Origin normalised.** `tech-support.html` and `build.html` used the apex

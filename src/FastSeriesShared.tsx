@@ -44,7 +44,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { guides as fastPlayGuides, guidePath as fastPlayGuidePath } from './fastplay-guides/guides-data';
-import { guides as fastCastGuides, guidePath as fastCastGuidePath, fastCastProCheckoutUrl } from './fastcast-guides/guides-data';
+import { guides as fastCastGuides, guidePath as fastCastGuidePath, fastCastLicenseCheckoutUrl } from './fastcast-guides/guides-data';
 import { guides as fastClipGuides, guidePath as fastClipGuidePath } from './fastclip-guides/guides-data';
 import { guides as fastCompressGuides, guidePath as fastCompressGuidePath } from './fastcompress-guides/guides-data';
 import { trackCtaClick } from './lib/analytics';
@@ -936,9 +936,9 @@ const fastCastFaqs = [
     answer: 'No. Stream keys are not saved to disk.',
   },
   {
-    question: 'Is FastCast free?',
+    question: 'How much does FastCast cost?',
     answer:
-      'FastCast Free covers 1080p30 recording and streaming, and those capabilities will stay free. A one-time FastCast Pro license unlocks 1440p and 4K recording, 60 fps capture, and advanced encoder controls. No subscription and no account.',
+      'Pay what you want, $29 suggested with a $1 minimum. There are no tiers: one license key unlocks the whole app, including 4K recording, 120 fps capture, multistreaming, and the advanced encoder controls. You pay once, with no subscription and no account.',
   },
   {
     question: 'Is FastCast signed?',
@@ -1082,22 +1082,24 @@ export function FastCastProductPage() {
       <section id="beta" className="product-section product-section-beta border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell product-split-grid grid gap-8 lg:grid-cols-2">
           <div className="product-copy-block">
-            <ProductSectionHeading eyebrow="Open Beta status" title="FastCast Free stays free. Pro unlocks more." />
+            <ProductSectionHeading eyebrow="Open Beta status" title="One license, every feature, and you name the price." />
             <p className="product-section-description mt-5 text-base leading-relaxed text-slate-600">
-              FastCast Free covers simple 1080p30 recording and streaming: monitor or window capture, mic and desktop
-              audio, webcam overlay, and custom RTMP/RTMPS streaming. A one-time FastCast Pro license unlocks
-              higher-resolution recording (1440p and 4K), 60 fps capture where your hardware supports it, and advanced
-              encoder controls. Activation is local-first: no accounts, no telemetry.
+Nothing is held back for a paid tier. One license key unlocks the whole app: monitor or window capture,
+              mic and desktop audio, webcam overlay, custom RTMP/RTMPS streaming, recording up to 4K, 120 fps capture
+              where your hardware supports it, and the advanced encoder controls. The key is pay what you want, $29
+              suggested with a $1 minimum, and every price gets you everything. Paying the suggested price is how
+              FastCast keeps getting built. Activation is local-first: no
+              accounts, no telemetry.
             </p>
             <p className="mt-5">
               <a
-                href={fastCastProCheckoutUrl}
+                href={fastCastLicenseCheckoutUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="product-panel-link inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900"
-                onClick={() => trackCtaClick('fastcast', 'pro_clicked', 'pricing', fastCastProCheckoutUrl)}
+                onClick={() => trackCtaClick('fastcast', 'license_clicked', 'pricing', fastCastLicenseCheckoutUrl)}
               >
-                Buy a FastCast Pro license
+                Get a FastCast license, pay what you want
                 <ArrowUpRight className="h-4 w-4 text-amber-500" />
               </a>
             </p>
