@@ -15,6 +15,28 @@ export type GuideCategory = 'HDR & Color' | 'Formats & Codecs' | 'Playback Perfo
 
 export const guides: Array<GuideMeta & { category: GuideCategory }> = [
   {
+    slug: 'videos-not-playing-on-pc',
+    title: 'Videos Not Playing on PC? 9 Fixes for Windows',
+    shortTitle: 'Fix videos not playing on PC',
+    description:
+      'Videos not playing on your PC? Diagnose files that will not open, black screens, audio-only playback, stuttering, codec errors, and damaged downloads on Windows.',
+    category: 'Formats & Codecs',
+    published: '2026-07-19',
+    updated: '2026-07-19',
+    related: ['hevc-player-windows', 'mov-not-playing-windows', 'video-stuttering-windows'],
+  },
+  {
+    slug: 'change-video-playback-speed-windows',
+    title: 'How to Change Video Playback Speed on Windows',
+    shortTitle: 'Change video playback speed',
+    description:
+      'Learn how to speed up or slow down a video on a Windows PC, when to use each playback rate, and how to reset FastPlay to normal 1x speed.',
+    category: 'Workflow',
+    published: '2026-07-19',
+    updated: '2026-07-19',
+    related: ['video-review-workflow', 'add-srt-subtitles-video-windows', 'video-stuttering-windows'],
+  },
+  {
     slug: 'hdr-video-windows',
     title: 'How to Play HDR Video on Windows',
     shortTitle: 'Play HDR video on Windows',
