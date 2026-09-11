@@ -1,0 +1,42 @@
+{
+  "catalog_version": 1,
+  "title": "FastMedia Skin Marketplace",
+  "listings": [
+    {
+      "skin_id": "sturmtechnologies.sturm-forge",
+      "name": "Sturm Forge",
+      "version": "1.0.0",
+      "author": "Sturm Technologies",
+      "publisher_id": "sturm-technologies",
+      "listing_slug": "sturm-forge",
+      "summary": "A compact graphite workstation theme built for focused creator workflows.",
+      "categories": [
+        "dark",
+        "professional",
+        "creator"
+      ],
+      "package_url": "skins/sturm-technologies--sturm-forge--1.0.0.fastskin",
+      "sha256": "22c62602f9dafa7774d968bab11653c654b25679397eede87af0402e0d134ef3",
+      "featured": true,
+      "sort_order": 10
+    },
+    {
+      "skin_id": "sturm.neon-blue",
+      "name": "Neon Blue",
+      "version": "1.1.0",
+      "author": "Sturm Technologies",
+      "publisher_id": "sturm-technologies",
+      "listing_slug": "neon-blue",
+      "summary": "A brighter cobalt editor skin for creators who want more color without losing readability.",
+      "categories": [
+        "dark",
+        "colorful",
+        "creator"
+      ],
+      "package_url": "skins/sturm-technologies--neon-blue--1.1.0.fastskin",
+      "sha256": "0a8d5b798d1b9fea4dbae8ac857a112205dd1c111588299e9041886d204577fe",
+      "featured": false,
+      "sort_order": 20
+    }
+  ]
+}
