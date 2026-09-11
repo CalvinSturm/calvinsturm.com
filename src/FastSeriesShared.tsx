@@ -635,8 +635,8 @@ export function ProductPage({ product }: { product: Product }) {
 }
 
 const githubProfileUrl = 'https://github.com/CalvinSturm';
-const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.8.0/FastCast-0.8.0-win-x64.msi';
-const fastCastPortableUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.8.0/FastCast-0.8.0-win-x64.zip';
+const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.0/FastCast-0.9.0-win-x64.msi';
+const fastCastPortableUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.0/FastCast-0.9.0-win-x64.zip';
 const fastCastReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 const fastPlayDownloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/download/v0.4.6/fastplay-0.4.6-x86_64.msi';
@@ -987,7 +987,7 @@ export function FastCastProductPage() {
         primaryHref={fastCastDownloadUrl}
         secondaryLabel="View release notes"
         secondaryHref={fastCastReleaseUrl}
-        meta="v0.8.0 · Windows 10/11 x64 · MSI or portable ZIP · Free version, optional Pro license"
+        meta="v0.9.0 · Windows 10/11 x64 · MSI or portable ZIP · Free version, optional Pro license"
         heroIconUrl="/assets/FastCast/FastCast_Icon.png"
         heroIconAlt="FastCast app icon"
         preview={
@@ -1014,7 +1014,7 @@ export function FastCastProductPage() {
           </div>
           <aside className="product-panel product-release-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
             <h3>Current release</h3>
-            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.8.0</p>
+            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.9.0</p>
             <p className="product-panel-copy mt-3 text-sm leading-relaxed text-slate-600">
               This release adds Instant Replay, which keeps the last 15 to 300 seconds in memory and saves a clip with
               <code>Ctrl+Alt+F8</code>. It also adds notification-area controls and recent-file clip access. FastCast
@@ -1059,7 +1059,7 @@ export function FastCastProductPage() {
               <ShieldCheck className="h-6 w-6 text-emerald-600" />
               <h3 className="mt-4 text-lg font-semibold text-slate-900">Verify the download</h3>
               <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
-                Download <code>FastCast-0.8.0-win-x64.zip</code> from the latest release. An optional{' '}
+                Download <code>FastCast-0.9.0-win-x64.zip</code> from the latest release. An optional{' '}
                 <code>.sha256</code> sidecar is included for integrity checks.
               </p>
               <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Expected SHA-256</p>
