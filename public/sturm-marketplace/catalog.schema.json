@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.calvinsturm.com/sturm-marketplace/catalog.schema.json",
+  "title": "Sturm Marketplace Catalog",
+  "type": "object",
+  "required": ["schema_version", "catalog_id", "name", "updated_at", "apps"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "catalog_id": {"type": "string", "minLength": 1},
+    "name": {"type": "string", "minLength": 1},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "apps": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/app"}
+    }
+  },
+  "$defs": {
+    "app": {
+      "type": "object",
+      "required": ["id", "name", "publisher", "status", "summary", "platforms"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "name": {"type": "string", "minLength": 1},
+        "publisher": {"type": "string", "minLength": 1},
+        "status": {"enum": ["available", "integration_ready", "unavailable"]},
+        "version": {"type": ["string", "null"]},
+        "summary": {"type": "string", "minLength": 1},
+        "homepage_url": {"type": ["string", "null"]},
+        "icon_url": {"type": ["string", "null"]},
+        "release_url": {"type": ["string", "null"]},
+        "platforms": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string"}
+        },
+        "installer": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "required": ["kind", "url", "sha256", "size_bytes", "signed"],
+              "properties": {
+                "kind": {"enum": ["msi", "exe", "msix", "zip"]},
+                "url": {"type": "string", "format": "uri"},
+                "sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"},
+                "size_bytes": {"type": "integer", "minimum": 1},
+                "signed": {"type": "boolean"}
+              },
+              "additionalProperties": true
+            }
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
