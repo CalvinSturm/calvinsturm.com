@@ -8,7 +8,7 @@ import type { GuideMeta } from '../product-guides/ProductGuides.tsx';
 export const fastCastPath = '/fastcast';
 export const guidesIndexPath = '/fastcast/guides';
 
-export const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.0/FastCast-0.9.0-win-x64.msi';
+export const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.1/FastCast-0.9.1-win-x64.msi';
 export const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 export const fastCastLicenseCheckoutUrl = 'https://calvinstorm.gumroad.com/l/fastcast';
 // There are no tiers any more: one license unlocks the whole app, and the buyer
