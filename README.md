@@ -19,6 +19,8 @@ Marketing site for Tech Wiz, an in-home tech support service serving the Five Ci
 - Request-callback form with client-side state only
 - Theme toggle with light/dark preference saved in `localStorage`
 - 3D animated `TechHelpCarousel` component for common support scenarios
+- FastMedia marketplace static catalog under `/fastmedia-marketplace/`
+- FastMedia marketplace account API under `/api/marketplace/` plus browser device sign-in at `/fastmedia-account.html`
 
 ## Project structure
 
@@ -29,14 +31,17 @@ src/
   main.tsx               App entry point
   index.css              Global styles
 
+api/marketplace/         FastMedia account + entitlement service
 public/
+  fastmedia-account.html FastMedia browser/device authorization page
   techWizIcon.png
   favicon.ico
   favicon.svg
   5CitiesMap.png
 
-assets/
-  Source image assets used during design
+docs/
+  FASTMEDIA_ACCOUNT_SERVICE.md
+  fastmedia-account-service.sql
 ```
 
 ## Development
@@ -71,9 +76,11 @@ npm run clean
 
 ## Environment variables
 
-No environment variables are required for the current site to run locally.
+The marketing site requires no runtime environment variables.
 
-There is a leftover `GEMINI_API_KEY` define in [vite.config.ts](C:\Users\Calvin\Software Projects\TECHWIZ\1\calvinsturm.com\vite.config.ts), but the current codebase does not use the Gemini SDK at runtime.
+The FastMedia account API requires production secrets described in `docs/FASTMEDIA_ACCOUNT_SERVICE.md`. Do not commit service-role database credentials or the Ed25519 signing seed.
+
+There is a leftover `GEMINI_API_KEY` define in `vite.config.ts`, but the current codebase does not use the Gemini SDK at runtime.
 
 ## Notes
 
