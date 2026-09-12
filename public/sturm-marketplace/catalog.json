@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "catalog_id": "sturm-windows",
+  "name": "Sturm Marketplace",
+  "updated_at": "2026-09-11T20:30:00-07:00",
+  "apps": [
+    {
+      "id": "fastcast",
+      "name": "FastCast",
+      "publisher": "Sturm Technologies LLC",
+      "status": "available",
+      "version": "0.9.0",
+      "summary": "Fast Windows screen recording and streaming built for creators.",
+      "homepage_url": "/fastcast",
+      "icon_url": "/assets/FastCast/FastCast_Icon.png",
+      "release_url": "https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.9.0",
+      "platforms": ["windows-x64"],
+      "installer": {
+        "kind": "msi",
+        "url": "https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.0/FastCast-0.9.0-win-x64.msi",
+        "sha256": "10e304e86fe2e904c3700e88209bd8a0e0c04887c52639e560064a6d37135f36",
+        "size_bytes": 5615616,
+        "signed": false
+      },
+      "trust": {
+        "checksum_published": true,
+        "account_required": false,
+        "telemetry": "none"
+      }
+    },
+    {
+      "id": "fastmedia",
+      "name": "FastMedia",
+      "publisher": "Sturm Technologies LLC",
+      "status": "integration_ready",
+      "version": null,
+      "summary": "A practical Windows media toolbox for converting, compressing, splitting and previewing media.",
+      "homepage_url": null,
+      "icon_url": null,
+      "release_url": null,
+      "platforms": ["windows-x64"],
+      "installer": null,
+      "trust": {
+        "checksum_published": false,
+        "account_required": false,
+        "telemetry": "unknown"
+      },
+      "integration_note": "The marketplace entry is wired and ready. A published FastMedia installer URL, version and SHA-256 are still required before downloads can be enabled."
+    }
+  ]
+}
