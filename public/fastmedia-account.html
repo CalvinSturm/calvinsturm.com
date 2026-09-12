@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FastMedia Marketplace Sign In</title>
+<style>
+:root{color-scheme:dark;font-family:Segoe UI,system-ui,sans-serif;background:#090b0e;color:#f2f4f7}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px}.card{width:min(520px,100%);background:#13171c;border:1px solid #282f38;border-radius:16px;padding:26px;box-sizing:border-box}h1{margin:0 0 6px;font-size:26px}p{color:#a0a9b5;line-height:1.45}.tabs{display:flex;gap:8px;margin:18px 0}.tabs button{flex:1}.code{font:700 25px Cascadia Mono,monospace;letter-spacing:2px;text-align:center;background:#0d1014;border:1px solid #394451;border-radius:10px;padding:13px;margin:12px 0 20px}label{display:block;margin:13px 0 5px;color:#a0a9b5;font-size:13px}input{width:100%;box-sizing:border-box;background:#101419;color:#f2f4f7;border:1px solid #394451;border-radius:8px;padding:11px}button{background:#3e82ff;color:white;border:0;border-radius:8px;padding:11px 14px;font-weight:650;cursor:pointer}.secondary{background:#20262e;color:#f2f4f7}.submit{width:100%;margin-top:18px}.status{min-height:24px;margin-top:15px;color:#a0a9b5}.error{color:#ff6470}.ok{color:#49d58a}.hidden{display:none}.fine{font-size:12px;color:#7b8592}</style>
+</head>
+<body><main class="card">
+<h1>FastMedia Marketplace</h1>
+<p>Approve the sign-in request from the FastMedia desktop app. Your password stays in this browser session and is never sent to the desktop app.</p>
+<div class="code" id="code">----</div>
+<div class="tabs"><button id="loginTab">Sign in</button><button class="secondary" id="registerTab">Create account</button></div>
+<form id="form">
+<div id="nameWrap" class="hidden"><label for="name">Display name</label><input id="name" maxlength="120" autocomplete="name"></div>
+<label for="email">Email</label><input id="email" type="email" maxlength="254" required autocomplete="email">
+<label for="password">Password</label><input id="password" type="password" minlength="10" maxlength="200" required autocomplete="current-password">
+<button class="submit" type="submit" id="submit">Approve sign-in</button>
+</form>
+<div class="status" id="status"></div>
+<p class="fine">This page never handles payment details. Marketplace ownership and checkout are separate systems.</p>
+</main>
+<script>
+const params=new URLSearchParams(location.search);const code=(params.get('code')||'').toUpperCase();document.getElementById('code').textContent=code||'Missing code';let mode='login';
+const loginTab=document.getElementById('loginTab'),registerTab=document.getElementById('registerTab'),nameWrap=document.getElementById('nameWrap'),password=document.getElementById('password');
+function setMode(next){mode=next;const reg=mode==='register';nameWrap.classList.toggle('hidden',!reg);loginTab.className=reg?'secondary':'';registerTab.className=reg?'':'secondary';password.autocomplete=reg?'new-password':'current-password';}
+loginTab.onclick=()=>setMode('login');registerTab.onclick=()=>setMode('register');
+document.getElementById('form').onsubmit=async(e)=>{e.preventDefault();const status=document.getElementById('status'),submit=document.getElementById('submit');status.className='status';status.textContent='Approving…';submit.disabled=true;try{const r=await fetch('/api/marketplace/device/approve',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({mode,user_code:code,email:document.getElementById('email').value,password:password.value,display_name:document.getElementById('name').value})});const data=await r.json();if(!r.ok)throw new Error(data.error||'Could not approve sign-in.');status.className='status ok';status.textContent='Approved. Return to FastMedia. You can close this tab.';document.getElementById('form').classList.add('hidden');}catch(err){status.className='status error';status.textContent=err.message;}finally{submit.disabled=false;}};
+</script></body></html>
