@@ -123,11 +123,11 @@ export function GuidePage() {
             encoder tuning out of the box.
           </li>
           <li>
-            <strong>Price.</strong> OBS is entirely free and open source. FastCast is paid, but it
-            has no tiers: one license key, activated inside the app, unlocks everything including 4K
-            recording, 120 fps capture where hardware supports it, multistreaming to up to three
-            destinations, and advanced encoder controls. The key is pay what you want, $29 suggested
-            with a $1 minimum, so you set the number. There is no subscription and no account.
+            <strong>Price.</strong> OBS is entirely free and open source. FastCast Free costs nothing
+            during the Open Beta and records and streams at 1080p60. A one-time FastCast Pro license,
+            activated inside the app, adds 4K recording, 120 fps capture where hardware supports it,
+            multistreaming to up to three destinations, and advanced encoder controls. Pro is $19
+            until the v1.0 launch, when the price rises to $29. There is no subscription and no account.
             High-resolution capture details are in{' '}
             <a href={guidePath('record-4k-60fps-windows')}>recording 4K 60 FPS on Windows</a>.
           </li>

@@ -158,8 +158,8 @@ export function GuidePage() {
           <li>
             <strong>Frame rate.</strong> 30 fps is smooth enough for demos, slides, and most
             software walkthroughs. 60 fps matters for fast motion like gameplay, at roughly double
-            the encoding and file-size cost. FastCast records up to 4K at up to 120 fps where your
-            hardware supports it, with no paid tier gating the higher settings.
+            the encoding and file-size cost. FastCast Free records at up to 1080p60. FastCast Pro
+            records up to 4K at up to 120 fps where your hardware supports it.
           </li>
         </ul>
         <p>

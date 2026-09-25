@@ -24,13 +24,13 @@ export function GuidePage() {
           Recording 4K at 60 FPS on Windows means encoding roughly eight times the pixel
           throughput of 1080p30 in real time, so success depends on three things: a GPU with a
           capable hardware H.264 encoder, a disk fast enough to swallow the output, and headroom
-          left over for whatever you are recording. FastCast does not charge for the high settings,
-          so 4K and 120 FPS are there for everyone, but results genuinely depend on your hardware.
+          left over for whatever you are recording. FastCast Pro unlocks 4K and 120 FPS, but results
+          genuinely depend on your hardware.
         </>
       }
-      topCtaNote="FastCast records with hardware H.264 encoding on supported NVIDIA and AMD GPUs, up to 4K and 120 FPS where your hardware supports it. Every resolution and frame rate is included: the license is pay what you want, $29 suggested with a $1 minimum."
+      topCtaNote="FastCast records with hardware H.264 encoding on supported NVIDIA and AMD GPUs, up to 4K and 120 FPS where your hardware supports it. FastCast Free records at up to 1080p60, and FastCast Pro unlocks 1440p, 4K and 120 FPS: $19 until the v1.0 launch, then $29."
       finalCtaHeading="Try it at your machine’s limit"
-      finalCtaBody="Download FastCast, then push the resolution and frame rate until your hardware complains. Nothing is locked behind a paid tier: 1440p, 4K, 120 FPS, and the advanced encoder controls all come with the one license key, whatever you decide to pay for it."
+      finalCtaBody="Download FastCast, then push the resolution and frame rate until your hardware complains. FastCast Free goes up to 1080p60, and a one-time Pro license unlocks 1440p, 4K, 120 FPS, and the advanced encoder controls."
     >
       <GuideSection id="what-it-takes" title="What 4K 60 FPS actually demands">
         <p>
@@ -133,16 +133,16 @@ export function GuidePage() {
 
       <GuideSection id="fastcast-support" title="What FastCast supports">
         <p>
-          FastCast records and streams at up to 4K, with 120 FPS capture where your hardware
-          supports it and advanced encoder controls alongside it. None of that is a paid upgrade:
-          one license key unlocks the app, and the key is pay what you want. You can{' '}
+          FastCast Free records and streams at up to 1080p60. FastCast Pro raises that to 4K, with
+          120 FPS capture where your hardware supports it and advanced encoder controls alongside
+          it. Pro is $19 until the v1.0 launch, when the price rises to $29. You can{' '}
           <a
             href={fastCastLicenseCheckoutUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackCtaClick('fastcast', 'license_clicked', 'inline', fastCastLicenseCheckoutUrl)}
           >
-            get a license key, $1 minimum
+            get FastCast Pro for $19
           </a>{' '}
           and activate it inside the app with no account and no subscription; an offline grace
           period covers activated devices.

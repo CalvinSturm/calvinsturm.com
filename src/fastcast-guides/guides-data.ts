@@ -8,15 +8,16 @@ import type { GuideMeta } from '../product-guides/ProductGuides.tsx';
 export const fastCastPath = '/fastcast';
 export const guidesIndexPath = '/fastcast/guides';
 
-export const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.1/FastCast-0.9.1-win-x64.msi';
+export const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.2/FastCast-0.9.2-win-x64.msi';
 export const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 export const fastCastLicenseCheckoutUrl = 'https://calvinstorm.gumroad.com/l/fastcast';
-// There are no tiers any more: one license unlocks the whole app, and the buyer
-// names the price. Gumroad enforces the $1 floor and pre-fills the suggested
-// amount, so keep both numbers in step with the listing, and with the FAQ answer
-// duplicated in the FAQPage JSON-LD in fastcast.html, which cannot import this.
-export const fastCastLicensePrice = '$29';
-export const fastCastLicensePriceMin = '$1';
+// FastCast Free records and streams at 1080p60. A one-time Pro license unlocks
+// 1440p/4K, 120 fps, multistreaming and the advanced encoder controls. Pro is
+// $19 until the v1.0 launch, when it rises to $29; copy should name both. Keep
+// both numbers in step with the Gumroad listing, and with the price in the
+// JSON-LD in fastcast.html, which cannot import this.
+export const fastCastLicensePrice = '$19';
+export const fastCastLicensePriceAtV1 = '$29';
 export const fastCastSiteUrl = 'https://calvinsturm.github.io/FastCast-releases/';
 
 export type GuideCategory =

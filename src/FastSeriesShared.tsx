@@ -635,8 +635,8 @@ export function ProductPage({ product }: { product: Product }) {
 }
 
 const githubProfileUrl = 'https://github.com/CalvinSturm';
-const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.1/FastCast-0.9.1-win-x64.msi';
-const fastCastPortableUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.1/FastCast-0.9.1-win-x64.zip';
+const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.2/FastCast-0.9.2-win-x64.msi';
+const fastCastPortableUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.2/FastCast-0.9.2-win-x64.zip';
 const fastCastReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 const fastPlayDownloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/download/v0.4.6/fastplay-0.4.6-x86_64.msi';
@@ -938,7 +938,7 @@ const fastCastFaqs = [
   {
     question: 'How much does FastCast cost?',
     answer:
-      'Pay what you want, $29 suggested with a $1 minimum. There are no tiers: one license key unlocks the whole app, including 4K recording, 120 fps capture, multistreaming, and the advanced encoder controls. You pay once, with no subscription and no account.',
+      'FastCast Free costs nothing during the Open Beta and records and streams at 1080p60. A FastCast Pro license is $19 until the v1.0 launch, when the price rises to $29. Pro unlocks 1440p and 4K recording, 120 fps capture, multistreaming, and the advanced encoder controls. You pay once, with no subscription and no account.',
   },
   {
     question: 'Is FastCast signed?',
@@ -987,7 +987,7 @@ export function FastCastProductPage() {
         primaryHref={fastCastDownloadUrl}
         secondaryLabel="View release notes"
         secondaryHref={fastCastReleaseUrl}
-        meta="v0.9.1 · Windows 10/11 x64 · MSI or portable ZIP · Free version, optional Pro license"
+        meta="v0.9.2 · Windows 10/11 x64 · MSI or portable ZIP · Free version, optional Pro license"
         heroIconUrl="/assets/FastCast/FastCast_Icon.png"
         heroIconAlt="FastCast app icon"
         preview={
@@ -1014,11 +1014,11 @@ export function FastCastProductPage() {
           </div>
           <aside className="product-panel product-release-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
             <h3>Current release</h3>
-            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.9.1</p>
+            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.9.2</p>
             <p className="product-panel-copy mt-3 text-sm leading-relaxed text-slate-600">
-              This release adds Instant Replay, which keeps the last 15 to 300 seconds in memory and saves a clip with
-              <code>Ctrl+Alt+F8</code>. It also adds notification-area controls and recent-file clip access. FastCast
-              does not download or install updates automatically.
+              This hotfix makes long recordings save reliably again: saving after Stop finishes in seconds, and a
+              recording that did not save can be rebuilt from Recent recordings. FastCast does not download or install
+              updates automatically.
             </p>
             <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-panel-link mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
               Open release page
@@ -1059,12 +1059,12 @@ export function FastCastProductPage() {
               <ShieldCheck className="h-6 w-6 text-emerald-600" />
               <h3 className="mt-4 text-lg font-semibold text-slate-900">Verify the download</h3>
               <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
-                Download <code>FastCast-0.9.1-win-x64.zip</code> from the latest release. An optional{' '}
+                Download <code>FastCast-0.9.2-win-x64.zip</code> from the latest release. An optional{' '}
                 <code>.sha256</code> sidecar is included for integrity checks.
               </p>
               <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Expected SHA-256</p>
               <code className="mt-2 block break-all rounded-xl bg-slate-100 p-3 text-xs text-slate-700">
-                6a609cd8e44e817df3fac424a04ce8d9761a79736746fa834adb95106d751840
+                d060166c3a9eff92e62d5544d15e547c04f5b29b7b272108ed4fbc51d07b8a2d
               </code>
             </article>
             <article className="product-panel product-warning-panel rounded-2xl border border-amber-200/70 bg-amber-50 p-6">
@@ -1082,14 +1082,13 @@ export function FastCastProductPage() {
       <section id="beta" className="product-section product-section-beta border-t border-slate-200 py-14 lg:py-20">
         <div className="section-shell product-split-grid grid gap-8 lg:grid-cols-2">
           <div className="product-copy-block">
-            <ProductSectionHeading eyebrow="Open Beta status" title="One license, every feature, and you name the price." />
+            <ProductSectionHeading eyebrow="Open Beta status" title="Free to record. Pro when you need more." />
             <p className="product-section-description mt-5 text-base leading-relaxed text-slate-600">
-Nothing is held back for a paid tier. One license key unlocks the whole app: monitor or window capture,
-              mic and desktop audio, webcam overlay, custom RTMP/RTMPS streaming, recording up to 4K, 120 fps capture
-              where your hardware supports it, and the advanced encoder controls. The key is pay what you want, $29
-              suggested with a $1 minimum, and every price gets you everything. Paying the suggested price is how
-              FastCast keeps getting built. Activation is local-first: no
-              accounts, no telemetry.
+              FastCast Free costs nothing during the Open Beta: monitor or window capture, mic and desktop audio,
+              webcam overlay, and custom RTMP/RTMPS streaming at 1080p60. A one-time FastCast Pro license adds
+              recording up to 4K, 120 fps capture where your hardware supports it, multistreaming, and the advanced
+              encoder controls. Pro is $19 until the v1.0 launch, when the price rises to $29, and buying it is how
+              FastCast keeps getting built. Activation is local-first: no accounts, no telemetry.
             </p>
             <p className="mt-5">
               <a
@@ -1099,7 +1098,7 @@ Nothing is held back for a paid tier. One license key unlocks the whole app: mon
                 className="product-panel-link inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900"
                 onClick={() => trackCtaClick('fastcast', 'license_clicked', 'pricing', fastCastLicenseCheckoutUrl)}
               >
-                Get a FastCast license, pay what you want
+                Get FastCast Pro for $19
                 <ArrowUpRight className="h-4 w-4 text-amber-500" />
               </a>
             </p>

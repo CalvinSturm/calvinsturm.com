@@ -5,7 +5,7 @@ import {
   guidePath as fastCastGuidePath,
   fastCastLicenseCheckoutUrl,
   fastCastLicensePrice,
-  fastCastLicensePriceMin,
+  fastCastLicensePriceAtV1,
 } from './fastcast-guides/guides-data';
 import { trackCtaClick } from './lib/analytics';
 import { useReducedMotion } from './lib/useReducedMotion';
@@ -14,7 +14,7 @@ import './fastcast-v2.css';
 // Single source of truth for the shipped version: the download URL and every
 // version string on the page derive from it, so a release bump is one edit
 // here plus softwareVersion/downloadUrl in fastcast.html and the guide CTA.
-const currentVersion = '0.9.1';
+const currentVersion = '0.9.2';
 const installerUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.msi`;
 const portableUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.zip`;
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
@@ -150,7 +150,7 @@ const fastCastFaqs = [
   {
     question: 'How much does FastCast cost?',
     answer:
-      'It is pay what you want, with a $1 minimum and $29 suggested. There are no paid tiers and nothing is held back: one license key unlocks the whole app, including 4K recording, 120 fps capture, multistreaming, and the advanced encoder controls. Whatever you decide to pay, you pay it once, with no subscription and no account, and the key keeps working on the versions that come after it.',
+      'FastCast Free costs nothing during the Open Beta and records and streams at 1080p60. A FastCast Pro license is $19 until the v1.0 launch, when the price rises to $29. Pro unlocks 1440p and 4K recording, 120 fps capture, multistreaming to up to three destinations, and the advanced encoder controls. You pay once, with no subscription and no account, and the key keeps working on the versions that come after it.',
   },
   {
     question: 'Is FastCast signed?',
@@ -307,7 +307,7 @@ export function FastCastV2() {
                   </a>
                 </div>
                 <ul className="fc-hero-trust" aria-label="FastCast highlights">
-                  <li>Every feature included</li>
+                  <li>Free at 1080p60</li>
                   <li>No account</li>
                   <li>No watermark</li>
                   <li>No telemetry</li>
@@ -544,25 +544,25 @@ export function FastCastV2() {
             <RailLabel code="LIC" name="License" />
             <div className="fc-unit-body">
               <h2 id="license-title">
-                One license, every feature. <em>You decide what it is worth.</em>
+                Free to record. <em>Pro when you need more.</em>
               </h2>
               <p className="fc-unit-lede">
-                There is no Pro tier any more. Every feature is in the build you download, and the
-                license key that unlocks it is pay what you want: $29 suggested, $1 minimum. Pay
-                the suggested price if FastCast earns it, or the minimum if that is what you have.
+                FastCast Free records and streams at 1080p60 and costs nothing during the Open Beta.
+                A one-time Pro license unlocks the rest. It is $19 until the v1.0 launch, when the
+                price rises to $29.
               </p>
 
               <div className="fc-license-card">
                 <div className="fc-license-offer">
                   <p className="fc-plan-name">
-                    FastCast license <span className="fc-chip">One-time</span>
+                    FastCast Pro <span className="fc-chip">One-time</span>
                   </p>
                   <p className="fc-plan-price">
                     {fastCastLicensePrice}{' '}
-                    <span className="fc-plan-price-note">suggested</span>
+                    <span className="fc-plan-price-note">until v1.0</span>
                   </p>
                   <p className="fc-plan-line">
-                    Pay what you want, from {fastCastLicensePriceMin} up. No subscription, no
+                    Rises to {fastCastLicensePriceAtV1} at the v1.0 launch. No subscription, no
                     account, no trial clock, and the key keeps working on the versions that come
                     after it.
                   </p>
@@ -573,7 +573,7 @@ export function FastCastV2() {
                     rel="noopener noreferrer"
                     onClick={() => trackCtaClick('fastcast', 'license_clicked', 'pricing', fastCastLicenseCheckoutUrl)}
                   >
-                    Get your license key <span aria-hidden="true">&rarr;</span>
+                    Get Pro for {fastCastLicensePrice} <span aria-hidden="true">&rarr;</span>
                   </a>
                   <a
                     className="fc-btn fc-btn-ghost fc-btn-lg"
@@ -591,25 +591,24 @@ export function FastCastV2() {
                 </div>
 
                 <div className="fc-license-unlocks">
-                  <p className="fc-license-unlocks-title">Unlocked for everyone</p>
+                  <p className="fc-license-unlocks-title">What Pro adds</p>
                   <ul className="fc-ticks">
-                    <li>Recording and streaming up to 4K</li>
+                    <li>Recording and streaming at 1440p and 4K</li>
                     <li>120 fps capture where your hardware supports it</li>
                     <li>Streaming to up to three destinations at once</li>
-                    <li>Instant Replay, webcam layouts, and the green screen</li>
                     <li>Encoder, bitrate, and scaling controls</li>
-                    <li>No watermark and no telemetry, on any of it</li>
+                    <li>Green-screen tuning and custom Instant Replay lengths</li>
+                    <li>No watermark and no telemetry, on Free or Pro</li>
                   </ul>
                 </div>
               </div>
 
               <div className="fc-support-note">
                 <p>
-                  <strong>Why pay what you want?</strong> FastCast is one person
-                  writing a Windows capture app, and paying for the code signing certificate, the
-                  test hardware, and the hours is the whole reason the next version ships. If you
-                  record with it every week, $29 is what keeps it moving. If you cannot, pay the
-                  $1 minimum and use the app: that was always the point.
+                  <strong>Why $19 now?</strong> FastCast is one person writing a Windows
+                  capture app, and paying for the code signing certificate, the test hardware, and
+                  the hours is the whole reason the next version ships. Buying during the beta gets
+                  you Pro for $19. After the v1.0 launch it is $29.
                 </p>
               </div>
 

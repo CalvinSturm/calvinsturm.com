@@ -301,7 +301,7 @@ const laterItems = [
     product: 'FastCast',
     accent: 'cast',
     title: 'Keeping the app funded',
-    body: 'The paid tier is gone: one license key unlocks the whole app, and the key is pay what you want, $29 suggested with a $1 minimum. Development from here is funded by people who choose to pay for it, so feature work is evaluated against beta feedback rather than against what would sell an upgrade. Nothing beyond what is in the app today is promised.',
+    body: 'FastCast Free stays free during the Open Beta. FastCast Pro is a one-time license, $19 until the v1.0 launch and $29 after it. Development is funded by the people who buy Pro, and feature work is evaluated against beta feedback. Nothing beyond what is in the app today is promised.',
   },
   {
     product: 'Both',
@@ -468,7 +468,7 @@ export default function RoadmapApp() {
                 and microphone audio, and RTMP/RTMPS streaming. Source code is private; releases, checksums, and
                 notes are public.
               </p>
-              <p className="fs-spot-meta">v0.6.0 · Windows 10/11 x64 · Portable ZIP · Free version, optional Pro license</p>
+              <p className="fs-spot-meta">v0.9.2 · Windows 10/11 x64 · MSI or portable ZIP · Free version, optional Pro license</p>
               <div className="rm-spot-links">
                 <a href="/fastcast" className="home-spot-cta">
                   FastCast product page
