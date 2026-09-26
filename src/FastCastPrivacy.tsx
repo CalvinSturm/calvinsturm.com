@@ -255,7 +255,7 @@ export function FastCastPrivacy() {
               <h3>Payments</h3>
               <p>
                 We do not directly receive or store your full payment-card number. Gumroad currently processes FastCast
-                license checkout, including pay-what-you-want orders placed at the minimum price. Lemon Squeezy processed earlier purchases. The applicable store may provide us with buyer contact,
+                license checkout, including earlier pay-what-you-want orders. Lemon Squeezy processed earlier purchases. The applicable store may provide us with buyer contact,
                 order, tax, refund, and license information needed to fulfill the purchase, provide support, prevent fraud, and
                 maintain business records.
               </p>
