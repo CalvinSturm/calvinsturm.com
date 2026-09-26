@@ -19,7 +19,12 @@ const fastSeriesLinks = [
   ['/fastshorts', 'FastShorts'],
 ] as const;
 
-export function HomeHeader() {
+type HeaderCta = { href: string; label: string; external?: boolean; onClick?: () => void };
+
+const defaultCta: HeaderCta = { href: '/fast-series', label: 'Explore Fast Series' };
+
+export function HomeHeader({ cta = defaultCta }: { cta?: HeaderCta } = {}) {
+  const ctaLinkProps = cta.external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -53,8 +58,8 @@ export function HomeHeader() {
           </nav>
 
           <div className="home-header-actions">
-            <a href="/fast-series" className="home-btn home-btn-primary home-btn-compact">
-              Explore Fast Series
+            <a href={cta.href} className="home-btn home-btn-primary home-btn-compact" onClick={cta.onClick} {...ctaLinkProps}>
+              {cta.label}
             </a>
             <button
               type="button"
@@ -77,8 +82,16 @@ export function HomeHeader() {
                   {label}
                 </a>
               ))}
-              <a href="/fast-series" className="home-btn home-btn-primary home-mobile-cta" onClick={() => setMenuOpen(false)}>
-                Explore Fast Series
+              <a
+                href={cta.href}
+                className="home-btn home-btn-primary home-mobile-cta"
+                onClick={() => {
+                  cta.onClick?.();
+                  setMenuOpen(false);
+                }}
+                {...ctaLinkProps}
+              >
+                {cta.label}
                 <ArrowRight className="h-4 w-4" />
               </a>
             </div>

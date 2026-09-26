@@ -1,455 +1,403 @@
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Clapperboard,
-  Code2,
-  FolderGit2,
-  Github,
-  HardDrive,
-  House,
-  Minimize2,
-  MonitorPlay,
-  PlayCircle,
-  Scissors,
-  ShieldCheck,
-  Video,
-  Wrench,
-  Zap,
-} from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { HomeHeader, HomeFooter } from './HomeChrome.tsx';
+import { fastCastDownloadUrl, guides as fastCastGuides } from './fastcast-guides/guides-data';
+import { guides as fastPlayGuides } from './fastplay-guides/guides-data';
+import { guides as fastClipGuides } from './fastclip-guides/guides-data';
+import { guides as fastCompressGuides } from './fastcompress-guides/guides-data';
+import { products, type Product, type ProductAction } from './home/products';
+import { trackCtaClick } from './lib/analytics';
 
-type Spotlight = {
-  slug: 'fastcast' | 'fastplay';
-  name: string;
-  iconUrl: string;
-  status: string;
-  description: string;
-  chips: string[];
-  cta: string;
-};
+// The homepage is the Fast Series store. At the top, a 3D shelf holds the five
+// apps; picking one (on the shelf or with the tabs under it) fills the panel
+// with that app's price, status and downloads. Below that: real screenshots,
+// guides, trust notes, and the company.
+//
+// The shelf is client-only. The prerendered HTML and the first client render
+// both show the flat icon shelf, so hydration matches; the WebGL scene swaps in
+// once it has loaded, and stays out if WebGL is unavailable.
 
-const spotlights: Spotlight[] = [
-  {
-    slug: 'fastcast',
-    name: 'FastCast',
-    iconUrl: '/assets/FastCast/FastCast_Icon.png',
-    status: 'Open Beta',
-    description:
-      'Native Windows screen recorder and OBS alternative for local MP4 recording, webcam overlay, desktop/mic audio, and RTMP/RTMPS livestreaming.',
-    chips: ['Local MP4 recording', 'Webcam overlay', 'RTMP/RTMPS streaming', 'Desktop + mic audio'],
-    cta: 'Explore FastCast',
-  },
-  {
-    slug: 'fastplay',
-    name: 'FastPlay',
-    iconUrl: '/assets/FastPlay/fastplay.png',
-    status: 'Released',
-    description:
-      'Fast lightweight Windows video player for local files, built for responsive playback, seeking, and simple native Windows use.',
-    chips: ['Instant open', 'Responsive seek', 'Hardware decode', 'Keyboard-driven'],
-    cta: 'Explore FastPlay',
-  },
+const StoreScene = lazy(() => import('./home/StoreScene.tsx'));
+
+function track(product: Product['slug'], action: ProductAction, location: string) {
+  if (action.kind === 'download') trackCtaClick(product, 'download_clicked', location, action.href);
+  else if (action.kind === 'pro') trackCtaClick(product, 'license_clicked', location, action.href);
+  else if (action.kind === 'source') trackCtaClick(product, 'github_clicked', location, action.href);
+}
+
+type Variant = 'primary' | 'pro' | 'ghost' | 'link';
+
+function ActionLink({
+  product,
+  action,
+  location,
+  variant,
+}: {
+  product: Product;
+  action: ProductAction;
+  location: string;
+  variant: Variant;
+}) {
+  const className = variant === 'link' ? 'hm-link' : `hm-btn hm-btn-${variant}`;
+  return (
+    <a
+      className={className}
+      href={action.href}
+      {...(action.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      onClick={() => track(product.slug, action, location)}
+    >
+      {action.label}
+    </a>
+  );
+}
+
+function variantFor(action: ProductAction, first: boolean): Variant {
+  if (action.kind === 'pro') return 'pro';
+  if (first) return 'primary';
+  if (action.kind === 'page') return 'link';
+  return 'ghost';
+}
+
+function supportsWebGL() {
+  try {
+    const canvas = document.createElement('canvas');
+    return Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl'));
+  } catch {
+    return false;
+  }
+}
+
+function useClientFlags() {
+  const [flags, setFlags] = useState({ ready: false, webgl: false, reducedMotion: false });
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const webgl = supportsWebGL();
+    // ?motion=on shows the animated shelf even when the OS asks for reduced
+    // motion, so the animated path can be reviewed from a machine that has it off.
+    const forceMotion = new URLSearchParams(window.location.search).get('motion') === 'on';
+    const update = () => setFlags({ ready: true, webgl, reducedMotion: query.matches && !forceMotion });
+    update();
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
+  return flags;
+}
+
+/** The flat shelf: what the prerender ships, and the view without WebGL. */
+function FlatShelf({ selected, onSelect }: { selected: number; onSelect: (i: number) => void }) {
+  return (
+    <div className="hm-flat" aria-hidden="true">
+      {products.map((p, i) => (
+        <button
+          key={p.slug}
+          type="button"
+          tabIndex={-1}
+          className={`hm-flat-box${i === selected ? ' is-selected' : ''}`}
+          style={{ ['--box' as string]: p.color }}
+          onClick={() => onSelect(i)}
+        >
+          <img src={p.icon384} alt="" width={120} height={120} />
+          <span className="hm-flat-name">{p.name}</span>
+          <span className="hm-flat-verb">{p.verb}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function ProductPanel({ product }: { product: Product }) {
+  return (
+    <div className="hm-panel">
+      <div className="hm-panel-main">
+        <p className="hm-panel-verb">{product.verb}</p>
+        <h2 className="hm-panel-name">{product.name}</h2>
+        <p className="hm-panel-meta">
+          <span className="hm-status">{product.status}</span>
+          {product.version ? <span>v{product.version}</span> : null}
+          <span>Windows 10 and 11</span>
+        </p>
+        <p className="hm-panel-summary">{product.summary}</p>
+        <ul className="hm-points">
+          {product.points.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="hm-panel-buy">
+        <div className={`hm-price hm-price-${product.priceTone}`}>
+          <strong>{product.price}</strong>
+          <span>{product.priceNote}</span>
+        </div>
+        <div className="hm-actions hm-actions-stack">
+          {product.actions.map((action, i) => (
+            <ActionLink
+              key={action.label}
+              product={product}
+              action={action}
+              location="store"
+              variant={variantFor(action, i === 0)}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const guideShelves = [
+  { name: 'FastCast', href: '/fastcast/guides', topic: 'Screen recording and streaming', count: fastCastGuides.length },
+  { name: 'FastPlay', href: '/fastplay/guides', topic: 'Video playback', count: fastPlayGuides.length },
+  { name: 'FastClip', href: '/fastclip/guides', topic: 'Vertical clips', count: fastClipGuides.length },
+  { name: 'FastCompress', href: '/fastcompress/guides', topic: 'Video compression', count: fastCompressGuides.length },
 ];
 
-type GridProduct = {
-  slug: string;
-  name: string;
-  Icon: LucideIcon;
-  line: string;
-  status: string;
-  useCase: string;
-};
-
-const gridProducts: GridProduct[] = [
+const checks = [
   {
-    slug: 'fastcast',
-    name: 'FastCast',
-    Icon: MonitorPlay,
-    line: 'Screen recording and RTMP/RTMPS livestreaming without scene setup.',
-    status: 'Open Beta',
-    useCase: 'Record & stream',
+    title: 'Public releases',
+    body: 'Builds ship on public GitHub releases pages with notes on what changed in each version.',
+    href: 'https://github.com/CalvinSturm',
+    link: 'GitHub',
   },
   {
-    slug: 'fastplay',
-    name: 'FastPlay',
-    Icon: PlayCircle,
-    line: 'Lightweight local video playback with fast startup and responsive seeking.',
-    status: 'Released',
-    useCase: 'Playback',
+    title: 'FastPlay is open source',
+    body: 'MIT licensed. Read the code, build it yourself, or file an issue.',
+    href: 'https://github.com/CalvinSturm/FastPlay',
+    link: 'FastPlay source',
   },
   {
-    slug: 'fastclip',
-    name: 'FastClip',
-    Icon: Scissors,
-    line: 'AI-assisted clip extraction for finding usable highlights from longer videos.',
-    status: 'Open Beta',
-    useCase: 'Clipping',
+    title: 'Your files stay on your PC',
+    body: 'FastCast has no account, no watermark, and no telemetry. FastClip analyzes footage locally. FastCompress has no account and no watermark.',
+    href: '/fastcast/privacy',
+    link: 'FastCast privacy policy',
   },
   {
-    slug: 'fastcompress',
-    name: 'FastCompress',
-    Icon: Minimize2,
-    line: 'Simple Windows video compression for smaller files without complicated setup.',
-    status: 'Beta',
-    useCase: 'Compression',
-  },
-  {
-    slug: 'fastshorts',
-    name: 'FastShorts',
-    Icon: Clapperboard,
-    line: 'Local-first short-form video pipeline for faceless and creator workflows.',
-    status: 'Experimental',
-    useCase: 'Short-form',
+    title: 'Unsigned during beta',
+    body: 'Windows SmartScreen may show an Unknown Publisher warning the first time you run a beta app. That is expected until code signing is in place.',
   },
 ];
-
-const whyPoints = [
-  [
-    'Native Windows where performance matters',
-    'Recording, playback, and encoding sit close to the hardware. These tools are built for Windows first, not wrapped web apps.',
-  ],
-  [
-    'Local-first when practical',
-    'Your footage stays on your machine. Files, recordings, and processing are local by default; nothing depends on an account.',
-  ],
-  [
-    'Simple workflows instead of bloated setup',
-    'Open the app, do the job, close the app. No scene graphs, plugin managers, or settings mazes to learn first.',
-  ],
-  [
-    'Clear product pages and honest limitations',
-    'Every tool documents what it does, what it does not do yet, and where the rough edges are.',
-  ],
-  [
-    'Built for real creator and media workflows',
-    'Record a session, review the footage, cut the highlight, shrink the file, ship the short. The series follows the actual pipeline.',
-  ],
-] as const;
-
-const trustPoints = [
-  {
-    Icon: Wrench,
-    title: 'Built by Calvin Sturm',
-    body: 'One developer shipping under Sturm Technologies LLC. You know exactly who wrote the software you are running.',
-  },
-  {
-    Icon: FolderGit2,
-    title: 'Public releases where possible',
-    body: 'FastPlay is open source under the MIT License. FastCast, FastClip, and FastCompress publish beta builds, SHA-256 checksums, and release notes on public GitHub release pages.',
-  },
-  {
-    Icon: ShieldCheck,
-    title: 'Privacy notes on every product page',
-    body: 'Local-first behavior, telemetry stance, and known limitations are written down per product, not buried in a policy.',
-  },
-  {
-    Icon: Zap,
-    title: 'Focused on shipping useful tools',
-    body: 'Small, practical apps that solve one problem well, released early and improved in the open.',
-  },
-] as const;
 
 export default function HomeApp() {
+  const [selected, setSelected] = useState(0);
+  const { ready, webgl, reducedMotion } = useClientFlags();
+  const product = products[selected];
+  const show3d = ready && webgl;
+
+  const onTabKey = (e: React.KeyboardEvent) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    const next = (selected + (e.key === 'ArrowRight' ? 1 : products.length - 1)) % products.length;
+    setSelected(next);
+    document.getElementById(`hm-tab-${products[next].slug}`)?.focus();
+  };
+
   return (
-    <div className="home-landing">
-      <HomeHeader />
+    <div className="home-landing hm">
+      <HomeHeader
+        cta={{
+          href: fastCastDownloadUrl,
+          label: 'Download FastCast',
+          external: true,
+          onClick: () => trackCtaClick('fastcast', 'download_clicked', 'header', fastCastDownloadUrl),
+        }}
+      />
 
       <main id="main-content">
-        {/* ---- Hero ---- */}
-        <section className="home-hero home-shell">
-          <div className="home-hero-copy">
-            <p className="home-eyebrow">Sturm Technologies · The Fast Series</p>
-            <h1>Practical Windows software for creators and builders</h1>
-            <p className="home-hero-sub">
-              Native Windows apps and local-first creator tools for recording, playback, compression, clipping, and
-              short-form video workflows.
+        {/* Store: title, 3D shelf, tabs, product panel */}
+        <section className="hm-store" aria-labelledby="hm-title">
+          <div className="hm-shell hm-store-head">
+            <h1 id="hm-title" className="hm-title">
+              <span>Record. Stream.</span> <span>Clip. Done.</span>
+            </h1>
+            <p className="hm-lede">
+              The Fast Series: focused Windows creator tools that do their job without turning your workflow into a
+              project. Pick one off the shelf.
             </p>
-            <div className="home-hero-actions">
-              <a href="/fast-series" className="home-btn home-btn-primary">
-                Explore the Fast Series
-                <ArrowRight className="h-4 w-4" />
-              </a>
-              <a href="/fast-series#available" className="home-btn home-btn-ghost">
-                Download available tools
-              </a>
-            </div>
-            <p className="home-hero-meta">Windows 10/11 · Local-first tools · Releases on GitHub</p>
           </div>
 
-          <div className="home-hero-visual" aria-hidden="true">
-            <div className="home-console">
-              <div className="home-console-bar">
-                <span className="home-console-dots">
-                  <i />
-                  <i />
-                  <i />
-                </span>
-                <span className="home-console-title">Fast Series</span>
-                <span className="home-console-os">Windows</span>
-              </div>
-
-              <div className="home-console-body">
-                <div className="home-console-card home-console-cast">
-                  <img src="/assets/FastCast/FastCast_Icon.png" alt="FastCast app icon" width={38} height={38} />
-                  <div className="home-console-card-text">
-                    <span className="home-console-name">FastCast</span>
-                    <span className="home-console-desc">Screen capture · Livestream</span>
-                  </div>
-                  <span className="home-rec-chip">
-                    <span className="home-rec-dot" />
-                    REC 00:42
-                  </span>
-                </div>
-
-                <div className="home-console-card home-console-play">
-                  <div className="home-console-card-top">
-                    <img src="/assets/FastPlay/fastplay.png" alt="FastPlay app icon" width={38} height={38} />
-                    <div className="home-console-card-text">
-                      <span className="home-console-name">FastPlay</span>
-                      <span className="home-console-desc">Local playback</span>
-                    </div>
-                    <span className="home-console-time">12:07 / 19:32</span>
-                  </div>
-                  <div className="home-scrub">
-                    <span />
-                  </div>
-                </div>
-
-                <div className="home-console-row">
-                  <div className="home-console-tile">
-                    <Scissors className="h-4 w-4" />
-                    <span>FastClip</span>
-                  </div>
-                  <div className="home-console-tile">
-                    <Minimize2 className="h-4 w-4" />
-                    <span>FastCompress</span>
-                  </div>
-                  <div className="home-console-tile">
-                    <Clapperboard className="h-4 w-4" />
-                    <span>FastShorts</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="home-console-foot">
-                <HardDrive className="h-3.5 w-3.5" />
-                <span>Files stay on your machine</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ---- Spotlight ---- */}
-        <section className="home-section home-shell" aria-labelledby="spotlight-heading">
-          <div className="home-section-head">
-            <p className="home-eyebrow">Flagship tools</p>
-            <h2 id="spotlight-heading">Start with the flagship tools</h2>
+          <div className="hm-stage">
+            {show3d ? (
+              <Suspense fallback={<FlatShelf selected={selected} onSelect={setSelected} />}>
+                <StoreScene products={products} selected={selected} onSelect={setSelected} reducedMotion={reducedMotion} />
+              </Suspense>
+            ) : (
+              <FlatShelf selected={selected} onSelect={setSelected} />
+            )}
           </div>
 
-          <div className="home-spot-grid">
-            {spotlights.map((p) => (
-              <a key={p.slug} href={`/${p.slug}`} className={`home-spot-card home-spot-${p.slug}`}>
-                <div className="home-spot-top">
-                  <img src={p.iconUrl} alt={`${p.name} app icon`} width={52} height={52} className="home-spot-icon" />
-                  <span className="home-status-chip">{p.status}</span>
-                </div>
-                <h3>{p.name}</h3>
-                <p className="home-spot-desc">{p.description}</p>
-                <ul className="home-spot-chips">
-                  {p.chips.map((chip) => (
-                    <li key={chip}>{chip}</li>
-                  ))}
-                </ul>
-                <span className="home-spot-cta">
-                  {p.cta}
-                  <ArrowRight className="h-4 w-4" />
-                </span>
-              </a>
-            ))}
-          </div>
-
-          <nav className="home-start-here" aria-label="Start here">
-            <span className="home-start-label">Start here</span>
-            <a href="/fastcast">
-              <span>Recording or streaming?</span>
-              <strong>
-                FastCast
-                <ArrowRight className="h-3.5 w-3.5" />
-              </strong>
-            </a>
-            <a href="/fastplay">
-              <span>Playing and reviewing footage?</span>
-              <strong>
-                FastPlay
-                <ArrowRight className="h-3.5 w-3.5" />
-              </strong>
-            </a>
-            <a href="/fastclip">
-              <span>Cutting clips from long videos?</span>
-              <strong>
-                FastClip
-                <ArrowRight className="h-3.5 w-3.5" />
-              </strong>
-            </a>
-            <a href="/fastcompress">
-              <span>Shrinking a video to send?</span>
-              <strong>
-                FastCompress
-                <ArrowRight className="h-3.5 w-3.5" />
-              </strong>
-            </a>
-          </nav>
-        </section>
-
-        {/* ---- Fast Series grid ---- */}
-        <section className="home-section home-shell" aria-labelledby="series-heading">
-          <div className="home-section-head home-section-head-split">
-            <div>
-              <p className="home-eyebrow">The Fast Series</p>
-              <h2 id="series-heading">One tool per job, one pipeline overall</h2>
-            </div>
-            <div className="home-section-head-links">
-              <a href="/fast-series" className="home-inline-link">
-                View the full series
-                <ArrowUpRight className="h-4 w-4" />
-              </a>
-              <a href="/roadmap" className="home-inline-link">
-                Product roadmap
-                <ArrowUpRight className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-
-          <div className="home-grid">
-            {gridProducts.map((p) => (
-              <a key={p.slug} href={`/${p.slug}`} className="home-grid-card">
-                <div className="home-grid-top">
-                  <span className="home-grid-icon">
-                    <p.Icon className="h-5 w-5" />
-                  </span>
-                  <span className="home-usecase">{p.useCase}</span>
-                </div>
-                <h3>{p.name}</h3>
-                <p>{p.line}</p>
-                <div className="home-grid-foot">
-                  <span className="home-status-chip">{p.status}</span>
-                  <ArrowRight className="home-grid-arrow h-4 w-4" />
-                </div>
-              </a>
-            ))}
-            <a href="/fast-series" className="home-grid-card home-grid-card-more">
-              <div className="home-grid-top">
-                <span className="home-grid-icon">
-                  <Zap className="h-5 w-5" />
-                </span>
-              </div>
-              <h3>Fast Series overview</h3>
-              <p>How the five tools fit together into one recording-to-shorts workflow.</p>
-              <div className="home-grid-foot">
-                <span className="home-spot-cta">
-                  See the series
-                  <ArrowRight className="h-4 w-4" />
-                </span>
-              </div>
-            </a>
-          </div>
-        </section>
-
-        {/* ---- Why this exists ---- */}
-        <section className="home-section home-shell" aria-labelledby="why-heading">
-          <div className="home-why-grid">
-            <div className="home-why-intro">
-              <p className="home-eyebrow">Why this exists</p>
-              <h2 id="why-heading">Small tools, built the way media work actually happens</h2>
-              <p>
-                Most creator software tries to do everything and ends up heavy. The Fast Series takes the opposite
-                bet: separate, focused tools that respect your machine and your time.
-              </p>
-            </div>
-            <ol className="home-why-list">
-              {whyPoints.map(([title, body], i) => (
-                <li key={title}>
-                  <span className="home-why-num">{String(i + 1).padStart(2, '0')}</span>
-                  <div>
-                    <h3>{title}</h3>
-                    <p>{body}</p>
-                  </div>
-                </li>
+          <div className="hm-shell hm-store-body">
+            <div className="hm-tabs" role="tablist" aria-label="Fast Series apps" onKeyDown={onTabKey}>
+              {products.map((p, i) => (
+                <button
+                  key={p.slug}
+                  id={`hm-tab-${p.slug}`}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === selected}
+                  aria-controls="hm-panel"
+                  tabIndex={i === selected ? 0 : -1}
+                  className="hm-tab"
+                  style={{ ['--box' as string]: p.color }}
+                  onClick={() => setSelected(i)}
+                >
+                  <img src={p.icon} alt="" width={28} height={28} />
+                  <span className="hm-tab-name">{p.name}</span>
+                  <span className="hm-tab-price">{p.boxPrice.replace('  /  ', ', ')}</span>
+                </button>
               ))}
-            </ol>
+            </div>
+
+            <div id="hm-panel" role="tabpanel" aria-labelledby={`hm-tab-${product.slug}`}>
+              <ProductPanel product={product} />
+            </div>
           </div>
         </section>
 
-        {/* ---- Trust ---- */}
-        <section className="home-section home-shell" aria-labelledby="trust-heading">
-          <div className="home-section-head">
-            <p className="home-eyebrow">Who is behind this</p>
-            <h2 id="trust-heading">Built in the open, documented plainly</h2>
+        {/* Real product media */}
+        <section className="hm-section hm-shell" aria-labelledby="hm-media-title">
+          <div className="hm-head">
+            <h2 id="hm-media-title">Straight from the apps</h2>
+            <p>Real captures, not mockups.</p>
           </div>
-          <div className="home-trust-grid">
-            {trustPoints.map(({ Icon, title, body }) => (
-              <article key={title} className="home-trust-card">
-                <Icon className="home-trust-icon h-5 w-5" />
-                <h3>{title}</h3>
-                <p>{body}</p>
-              </article>
+
+          <div className="hm-showcase">
+            <figure className="hm-shot">
+              <img
+                src="/assets/FastCast/fastcast-green-screen.png"
+                alt="FastCast recording a game at 1440p60 with a green-screened webcam in the corner"
+                width={730}
+                height={792}
+                loading="lazy"
+              />
+              <figcaption>
+                <strong>FastCast</strong> mid-recording, with the webcam keyed over the game.
+              </figcaption>
+            </figure>
+            <figure className="hm-shot">
+              <img
+                src="/assets/FastCast/fastcast-advanced-view.png"
+                alt="FastCast detailed view with capture, audio and webcam, stream, and advanced encoder panels"
+                width={726}
+                height={1124}
+                loading="lazy"
+              />
+              <figcaption>
+                <strong>FastCast</strong> detailed view. Press F2 to switch.
+              </figcaption>
+            </figure>
+            <figure className="hm-shot">
+              <video
+                src="/assets/FastPlay/fastplay-demo.mp4"
+                poster="/assets/FastPlay/fastplay-demo-poster.jpg"
+                width={544}
+                height={988}
+                controls
+                muted
+                playsInline
+                preload="none"
+                aria-label="FastPlay playing a vertical beach video"
+              />
+              <figcaption>
+                <strong>FastPlay</strong> playing a local file.
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+
+        {/* Guides */}
+        <section className="hm-section hm-shell" aria-labelledby="hm-guides-title">
+          <div className="hm-head">
+            <h2 id="hm-guides-title">Guides for the job, not just the app</h2>
+            <p>Plain how-to articles for recording, playback, clipping, and compression on Windows.</p>
+          </div>
+          <ul className="hm-guides">
+            {guideShelves.map((g) => (
+              <li key={g.href}>
+                <a href={g.href}>
+                  <span className="hm-guides-topic">{g.topic}</span>
+                  <span className="hm-guides-meta">
+                    {g.count} {g.count === 1 ? 'guide' : 'guides'} from {g.name}
+                  </span>
+                </a>
+              </li>
             ))}
-          </div>
-          <a
-            href="https://github.com/CalvinSturm"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="home-inline-link home-trust-github"
-          >
-            <Github className="h-4 w-4" />
-            github.com/CalvinSturm
-            <ArrowUpRight className="h-4 w-4" />
-          </a>
+          </ul>
         </section>
 
-        {/* ---- Services (secondary) ---- */}
-        <section className="home-section home-shell" aria-labelledby="services-heading">
-          <div className="home-services-band">
-            <div className="home-services-copy">
-              <span className="home-services-icon">
-                <Code2 className="h-5 w-5" />
-              </span>
+        {/* Trust */}
+        <section className="hm-section hm-shell" aria-labelledby="hm-trust-title">
+          <div className="hm-head">
+            <h2 id="hm-trust-title">What you can check before you install</h2>
+          </div>
+          <ul className="hm-checks">
+            {checks.map((item) => (
+              <li key={item.title}>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+                {item.href ? (
+                  <a
+                    className="hm-link"
+                    href={item.href}
+                    {...(item.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  >
+                    {item.link}
+                  </a>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* Company, secondary links, low-priority links */}
+        <section className="hm-section hm-shell" aria-labelledby="hm-about-title">
+          <div className="hm-about">
+            <div className="hm-about-who">
+              <img src="/sturm-mark.svg" alt="" width={40} height={40} />
               <div>
-                <h2 id="services-heading">Need a practical website, app, or automation built?</h2>
+                <h2 id="hm-about-title">Made by Calvin Sturm</h2>
                 <p>
-                  Alongside the Fast Series, Sturm Technologies takes on a small number of custom builds: websites,
-                  business software, and applied AI.
+                  Sturm Technologies LLC is one developer on California's Central Coast. The person who answers your
+                  support email is the person who wrote the code.
+                </p>
+                <p className="hm-about-links">
+                  <a className="hm-link" href="mailto:calvinsturm@gmail.com">
+                    calvinsturm@gmail.com
+                  </a>
+                  <a className="hm-link" href="https://github.com/CalvinSturm" target="_blank" rel="noopener noreferrer">
+                    GitHub
+                  </a>
                 </p>
               </div>
             </div>
-            <div className="home-services-actions">
-              <a href="/build" className="home-btn home-btn-ghost">
-                Websites &amp; software
-                <ArrowRight className="h-4 w-4" />
+
+            <div className="hm-also">
+              <a href="/marketplace" className="hm-also-item">
+                <h3>Sturm Marketplace</h3>
+                <p>Windows software from independent developers, with clear versions and direct downloads.</p>
               </a>
-              <a href="/tech-support" className="home-inline-link">
-                <House className="h-4 w-4" />
-                In-home tech support
+              <a href="/build" className="hm-also-item">
+                <h3>Websites and software, built for you</h3>
+                <p>Custom websites, apps, and applied AI for personal brands and small businesses.</p>
               </a>
             </div>
           </div>
+
+          <nav className="hm-minor" aria-label="More from Sturm Technologies">
+            <span>Also here:</span>
+            <a href="/tech-support">In-home tech support</a>
+            <a href="/projects">Experiments and side projects</a>
+            <a href="/roadmap">Product roadmap</a>
+          </nav>
         </section>
 
-        {/* ---- Final CTA ---- */}
-        <section className="home-final home-shell" aria-labelledby="final-heading">
-          <div className="home-final-panel">
-            <Video className="home-final-icon h-6 w-6" aria-hidden="true" />
-            <h2 id="final-heading">Build faster with practical creator tools</h2>
-            <p>Record, play back, clip, compress, and ship short-form video with tools that stay out of your way.</p>
-            <div className="home-hero-actions home-final-actions">
-              <a href="/fast-series" className="home-btn home-btn-primary">
-                Explore Fast Series
-                <ArrowRight className="h-4 w-4" />
-              </a>
-              <a href="/fast-series#available" className="home-btn home-btn-ghost">
-                Download available tools
-              </a>
+        {/* Final CTA */}
+        <section className="hm-final hm-shell" aria-labelledby="hm-final-title">
+          <div className="hm-final-inner">
+            <div className="hm-final-copy">
+              <h2 id="hm-final-title">Start with the one you need.</h2>
+              <p>FastCast and FastPlay are both free to download. Record with one, watch it back with the other.</p>
+            </div>
+            <div className="hm-actions">
+              <ActionLink product={products[0]} action={products[0].actions[0]} location="final" variant="primary" />
+              <ActionLink product={products[1]} action={products[1].actions[0]} location="final" variant="ghost" />
             </div>
           </div>
         </section>

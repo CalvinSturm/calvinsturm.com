@@ -38,7 +38,7 @@ list without needing property filters.
 
 - `product`: product slug (`fastcast`, `fastplay`, `fastclip`, `fastcompress`, `faceforge`, `localagent`).
 - `source_path`: `location.pathname` where the event fired.
-- `cta_location`: `hero`, `hero_secondary`, `top`, `inline`, `final`, or `product_cta`.
+- `cta_location`: `hero`, `hero_secondary`, `top`, `inline`, `final`, or `product_cta`. The homepage (`source_path: /`) also sends `header` (the header download button, FastCast) and `store` (the product panel under the 3D shelf, any product) for `<product>_download_clicked`, `fastcast_license_clicked` and `fastplay_github_clicked`.
 - `destination`: the href the user was sent to.
 - `guide_slug`: article slug, or `index` for a guides hub.
 - `referrer_path`: `document.referrer` for view events (may be empty).
