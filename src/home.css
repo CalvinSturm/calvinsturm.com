@@ -287,8 +287,9 @@ so the reduced-motion view is the only view. */
   }
 }
 
-/* Let the floor dissolve into the page instead of ending on a hard edge. */
-.hm-stage {
+/* Let the floor dissolve into the page instead of ending on a hard edge. The
+   fade is on the canvas only, so the tile button laid over it stays solid. */
+.hm-stage canvas {
   -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent);
   mask-image: linear-gradient(to bottom, #000 78%, transparent);
 }

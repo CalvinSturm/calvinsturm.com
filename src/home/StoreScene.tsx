@@ -209,7 +209,9 @@ function useFastCastBack(enabled: boolean) {
       const shotW = 720;
       const scale = shotW / 730;
       const shotX = 24;
-      const shotY = 36;
+      // Status line on top, screenshot under it, and the bottom band left clear
+      // for the centre tile's button, the same as on the front.
+      const shotY = 92;
 
       draw.current = (mode, seconds) => {
         const w = canvas.width;
@@ -239,26 +241,23 @@ function useFastCastBack(enabled: boolean) {
           ctx.fillText(clock, shotX + TIMER_TEXT.x * scale, shotY + TIMER_TEXT.y * scale);
         }
 
-        // Status line under the screenshot, in the app's own words.
+        // Status line above the screenshot, in the app's own words.
         ctx.textAlign = 'left';
         ctx.font = '700 38px Archivo, "Segoe UI", sans-serif';
         ctx.fillStyle = '#f4f7fa';
-        ctx.fillText('FastCast', 36, 900);
+        ctx.fillText('FastCast', 36, 66);
         ctx.textAlign = 'right';
         if (mode === 'recording') {
           ctx.fillStyle = '#e94b52';
+          ctx.fillText('Recording', w - 36, 66);
           ctx.beginPath();
-          ctx.arc(w - 250, 888, 11, 0, Math.PI * 2);
+          ctx.arc(w - 36 - ctx.measureText('Recording').width - 22, 54, 11, 0, Math.PI * 2);
           ctx.fill();
-          ctx.fillText('Recording', w - 36, 900);
         } else {
           ctx.fillStyle = '#32d583';
-          ctx.fillText('Ready', w - 36, 900);
+          ctx.fillText('Ready', w - 36, 66);
         }
         ctx.textAlign = 'left';
-        ctx.font = '500 30px Archivo, "Segoe UI", sans-serif';
-        ctx.fillStyle = '#98a2b3';
-        ctx.fillText('The real app, as it records.', 36, 956);
 
         tex.needsUpdate = true;
       };
@@ -296,6 +295,15 @@ function TileCta({ product }: { product: Product }) {
   );
 }
 
+/**
+ * Where a box sits relative to the picked one on a looped shelf: -2..2 for
+ * five boxes, so there are always two apps either side of centre stage.
+ */
+function shelfOffset(index: number, selected: number, count: number) {
+  const half = Math.floor(count / 2);
+  return ((((index - selected + half) % count) + count) % count) - half;
+}
+
 const SHEEN_TIME = 0.95;
 const ENTRANCE_DELAY = 0.35;
 const ENTRANCE_STAGGER = 0.13;
@@ -309,6 +317,7 @@ function Box({
   onRecordingChange,
   release,
   onHover,
+  count,
 }: {
   product: Product;
   index: number;
@@ -319,6 +328,7 @@ function Box({
   /** Bumped by the scene when the pointer leaves the shelf or rests on another box. */
   release: number;
   onHover: (index: number) => void;
+  count: number;
 }) {
   const ref = useRef<THREE.Group>(null);
   const isFastCast = product.slug === 'fastcast';
@@ -331,7 +341,7 @@ function Box({
 
   // Motion state lives in refs so the frame loop never re-renders React.
   const m = useRef({
-    px: { x: (index - selected) * SPACING, v: 0 },
+    px: { x: shelfOffset(index, selected, count) * SPACING, v: 0 },
     py: { x: reducedMotion ? 0 : -3.2, v: 0 },
     pz: { x: 0, v: 0 },
     ry: { x: reducedMotion ? 0 : 1.1 - index * 0.35, v: 0 },
@@ -350,23 +360,18 @@ function Box({
   const timers = useRef<{ dwell?: number; record?: number; tick?: number; leave?: number }>({});
   const prevSelected = useRef(selected);
   const [ctaReady, setCtaReady] = useState(false);
+  // Mirrors m.current.flipped for rendering: the tile button moves below the
+  // box while its back (the real app) is showing, so it never covers it.
+  const [showingBack, setShowingBack] = useState(false);
 
-  // The centre tile's button appears once the box has come to rest, so it
-  // never sits still over a box that is still spinning into place.
+  // The centre tile's button appears once the box has actually come to rest
+  // (checked in the frame loop below), so it never sits still over a box that
+  // is still spinning into place, however fast or slow the frames come.
+  const ctaShown = useRef(false);
   useEffect(() => {
-    if (selected !== index) {
-      setCtaReady(false);
-      return;
-    }
-    if (reducedMotion) {
-      setCtaReady(true);
-      return;
-    }
-    const firstTime = m.current.start === null;
-    const wait = firstTime ? (ENTRANCE_DELAY + index * ENTRANCE_STAGGER + 1.1) * 1000 : 1300;
-    const timer = window.setTimeout(() => setCtaReady(true), wait);
-    return () => window.clearTimeout(timer);
-  }, [selected, index, reducedMotion]);
+    ctaShown.current = false;
+    setCtaReady(false);
+  }, [selected]);
 
   useEffect(() => {
     if (art) invalidate();
@@ -379,7 +384,7 @@ function Box({
     const prev = prevSelected.current;
     prevSelected.current = selected;
     if (reducedMotion || prev === selected || selected !== index) return;
-    m.current.spin += (index > prev ? -1 : 1) * Math.PI * 2;
+    m.current.spin += (shelfOffset(index, prev, count) > 0 ? -1 : 1) * Math.PI * 2;
     m.current.sheenAt = performance.now() / 1000 + 0.25;
   }, [selected, index, reducedMotion]);
 
@@ -388,7 +393,7 @@ function Box({
     if (!g) return;
     const s = m.current;
     const dt = Math.min(rawDelta, 1 / 30);
-    const offset = index - selected;
+    const offset = shelfOffset(index, selected, count);
     const isSelected = offset === 0;
 
     // Centre stage: the picked box sits in the middle, front, and the rest of
@@ -397,6 +402,12 @@ function Box({
     // A flipped box is brought to the front and toward the middle, like
     // something picked up off the shelf to look at.
     const tx = s.flipped ? rowX * 0.3 : rowX;
+    // A box that wraps from one end of the loop to the other re-enters from
+    // the outside edge instead of sweeping across the whole shelf.
+    if (Math.abs(tx - s.px.x) > SPACING * 3 && !reducedMotion) {
+      s.px.x = tx + Math.sign(tx) * SPACING * 1.5;
+      s.px.v = 0;
+    }
     const flipped = s.flipped;
     const tz = flipped ? 1.6 : isSelected ? 0.9 : -Math.abs(offset) * 0.45;
     // Flipped boxes face the camera square, back side out.
@@ -404,6 +415,19 @@ function Box({
     let ty = isSelected || flipped ? 0.12 : 0;
     if (hovered && !isSelected && !flipped) ty += 0.12;
     const tScale = flipped ? 1.12 : isSelected ? 1.04 : hovered ? 1.02 : 1;
+
+    if (isSelected && !ctaShown.current) {
+      const settled =
+        reducedMotion ||
+        (s.landed &&
+          Math.abs(s.ry.x - (tYaw + s.spin)) < 0.12 &&
+          Math.abs(s.ry.v) < 0.4 &&
+          Math.abs(s.px.x - tx) < 0.08);
+      if (settled) {
+        ctaShown.current = true;
+        setCtaReady(true);
+      }
+    }
 
     if (reducedMotion) {
       g.position.set(snap(s.px, tx), snap(s.py, ty), snap(s.pz, tz));
@@ -488,6 +512,7 @@ function Box({
     if (!isFastCast || m.current.flipped || timers.current.dwell !== undefined) return;
     timers.current.dwell = window.setTimeout(() => {
       m.current.flipped = true;
+      setShowingBack(true);
       invalidate();
       timers.current.record = window.setTimeout(startRecording, reducedMotion ? 400 : 1100);
     }, 900);
@@ -499,6 +524,7 @@ function Box({
     document.body.style.cursor = '';
     if (m.current.flipped) {
       m.current.flipped = false;
+      setShowingBack(false);
       back.draw.current('ready', 0);
       onRecordingChange(false);
     }
@@ -555,16 +581,30 @@ function Box({
   return (
     <group
       ref={ref}
-      position={[(index - selected) * SPACING, reducedMotion ? 0 : -3.2, 0]}
+      position={[shelfOffset(index, selected, count) * SPACING, reducedMotion ? 0 : -3.2, 0]}
       onClick={(e) => {
         e.stopPropagation();
-        // A swipe that happens to end on a box is a swipe, not a pick.
-        if (e.delta > 8) return;
+        // A swipe that happens to end on a box is a swipe, not a pick, and the
+        // tap that ends a press-and-hold on FastCast is not a pick either.
+        if (e.delta > 8 || m.current.flipped) return;
         onSelect(index);
       }}
       onPointerOver={onOver}
       onPointerMove={onMove}
       onPointerOut={onOut}
+      onPointerDown={(e) => {
+        // Phones have no hover: press and hold on FastCast does the same job.
+        // A still finger never sends a move, so start the hold on the touch.
+        if (e.nativeEvent.pointerType !== 'touch') return;
+        onHover(index);
+        engage();
+      }}
+      onPointerUp={(e) => {
+        // Let go before the hold completes and it was only a tap.
+        if (e.nativeEvent.pointerType !== 'touch' || m.current.flipped) return;
+        window.clearTimeout(timers.current.dwell);
+        timers.current.dwell = undefined;
+      }}
     >
       <RoundedBox args={[BOX_W, BOX_H, BOX_D]} radius={0.05} smoothness={4}>
         <meshPhysicalMaterial color="#12161d" roughness={0.38} metalness={0.2} clearcoat={1} clearcoatRoughness={0.25} />
@@ -598,7 +638,7 @@ function Box({
         />
       </mesh>
       {ctaReady ? (
-        <Html position={[0, -0.8, BOX_D / 2]} center zIndexRange={[20, 0]} wrapperClass="hm-tile-cta-wrap">
+        <Html position={[0, showingBack ? -BOX_H / 2 - 0.26 : -0.8, 0]} center zIndexRange={[20, 0]} wrapperClass="hm-tile-cta-wrap">
           <TileCta product={product} />
         </Html>
       ) : null}
@@ -637,7 +677,7 @@ function Box({
 function CameraRig({ reducedMotion }: { reducedMotion: boolean }) {
   const { camera, size, pointer } = useThree();
   const aspect = size.width / size.height;
-  const halfWidth = aspect > 1.5 ? 5.5 : aspect > 1 ? 3.6 : 2.3;
+  const halfWidth = aspect > 1.5 ? 5.5 : aspect > 1.3 ? 3.6 : 2.1;
   const fov = 32;
   const distance = Math.max(6.4, halfWidth / (Math.tan(THREE.MathUtils.degToRad(fov / 2)) * aspect));
   const intro = useRef(!reducedMotion);
@@ -727,8 +767,8 @@ export default function StoreScene({ products, selected, onSelect, reducedMotion
     const dx = e.clientX - start.x;
     const dy = e.clientY - start.y;
     if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
-    const next = Math.min(products.length - 1, Math.max(0, selected + (dx < 0 ? 1 : -1)));
-    if (next !== selected) onSelect(next);
+    const n = products.length;
+    onSelect((selected + (dx < 0 ? 1 : n - 1)) % n);
   };
 
   return (
@@ -736,7 +776,11 @@ export default function StoreScene({ products, selected, onSelect, reducedMotion
       className="hm-scene"
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
-      onPointerLeave={() => {
+      onContextMenu={(e) => e.preventDefault()}
+      onPointerLeave={(e) => {
+        // A finger lifting off the screen also "leaves"; on touch, a tap on
+        // empty space or another box is what puts FastCast back.
+        if (e.pointerType === 'touch') return;
         hoveredIndex.current = null;
         setRelease((n) => n + 1);
       }}
@@ -748,6 +792,8 @@ export default function StoreScene({ products, selected, onSelect, reducedMotion
         camera={{ fov: 32, position: [0, 0.9, 9] }}
         onPointerMissed={() => {
           document.body.style.cursor = '';
+          hoveredIndex.current = null;
+          setRelease((n) => n + 1);
         }}
       >
         <color attach="background" args={['#0a0c10']} />
@@ -767,6 +813,7 @@ export default function StoreScene({ products, selected, onSelect, reducedMotion
             onRecordingChange={setRecording}
             release={release}
             onHover={onHover}
+            count={products.length}
           />
         ))}
 
