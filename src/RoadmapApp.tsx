@@ -24,10 +24,82 @@ type TimelineItem = {
 
 const fastCastTimeline: TimelineItem[] = [
   {
-    version: 'v0.6.0',
-    date: 'July 2026',
+    version: 'v0.9.2',
+    date: 'September 2026',
     status: 'Current release',
     tone: 'current',
+    title: 'Long recordings save again',
+    body: 'Fixed a v0.9.1 bug where a recording longer than about an hour could sit on Saving for hours. Saving after Stop finishes in seconds again, and a take that did not save can be rebuilt from its .fastcast-parts folder by selecting it in Recent recordings. The app now shows the current Pro price: $19 until v1.0, then $29.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.9.2',
+      label: 'Release page',
+    },
+  },
+  {
+    version: 'v0.9.0 - v0.9.1',
+    date: 'September 2026',
+    status: 'Shipped',
+    tone: 'shipped',
+    title: 'Named destinations',
+    body: 'Destination rows can carry a name like "Main channel", and each row links to the platform\'s own stream-key page. Pro gained custom Instant Replay lengths from 15 seconds to 5 minutes, while Instant Replay itself stays free. v0.9.1 was a hotfix that got Go Live working from destination rows again.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.9.0',
+      label: 'Release page',
+    },
+  },
+  {
+    version: 'v0.8.0',
+    date: 'September 2026',
+    status: 'Shipped',
+    tone: 'shipped',
+    title: 'Instant Replay',
+    body: 'FastCast can keep the last 15 to 300 seconds of your screen in memory and save it as an MP4 with Ctrl+Alt+F8, with nothing written to disk until you ask. Also added a notification-area icon with optional Start with Windows, a rebuilt control surface, and the mouse pointer in the preview.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.8.0',
+      label: 'Release page',
+    },
+  },
+  {
+    version: 'v0.7.1',
+    date: 'August 2026',
+    status: 'Shipped',
+    tone: 'shipped',
+    title: 'Instant Stop',
+    body: 'Stop recording hands the app straight back no matter how long the take was, while the file finishes writing in Recent files. Apps and displays opened after FastCast started now show up in Sources without a restart.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.7.1',
+      label: 'Release page',
+    },
+  },
+  {
+    version: 'v0.7.0',
+    date: 'August 2026',
+    status: 'Shipped',
+    tone: 'shipped',
+    title: 'Multistreaming',
+    body: 'One capture, encoded once, sent to up to three RTMP destinations at the same time, each with its own connection and live status so one failing platform cannot stall the others. Multistreaming is a Pro feature. Free streams to one destination and now records at 60 fps.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.7.0',
+      label: 'Release page',
+    },
+  },
+  {
+    version: 'v0.6.1',
+    date: 'August 2026',
+    status: 'Shipped',
+    tone: 'shipped',
+    title: 'Full-length recordings',
+    body: 'Fixed segmented recording dropping about 1% of video frames, and a rare hang on Stop with the webcam on. Takes affected in earlier versions can be rebuilt at full length from their .fastcast-parts folder, right from Recent files.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.6.1',
+      label: 'Release page',
+    },
+  },
+  {
+    version: 'v0.6.0',
+    date: 'July 2026',
+    status: 'Shipped',
+    tone: 'shipped',
     title: 'A compact dashboard by default',
     body: 'Made the compact view the default: a large live preview over Sources, Destination, and Recent files, so a screen, an app, audio, and a microphone can all be chosen without opening Advanced. Added an FPS control and mute icons with a level meter, stopped Windows drawing its yellow capture border around FastCast sessions, and moved FastCast Pro to Gumroad while existing Lemon Squeezy keys keep working.',
     link: {
