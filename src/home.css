@@ -231,39 +231,58 @@ so the reduced-motion view is the only view. */
 /* The button on the centre tile of the 3D shelf. It is a real link laid over
    the canvas, so it is focusable and readable, and it fades in once the box
    has settled. */
+/* Hangs the button from the box's bottom edge: centred under it, with a gap
+   in pixels so the spacing is the same whether the shelf is near or far. */
+.hm-tile-cta-anchor {
+  transform: translateX(-50%);
+  padding-top: clamp(12px, 1.4vw, 18px);
+}
+
 .hm-tile-cta {
+  --tile-color: var(--hm-accent);
   display: inline-flex;
   align-items: center;
-  min-height: 40px;
+  min-height: 38px;
   padding: 0 18px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background: var(--hm-accent-deep);
-  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.9);
-  color: #fff;
+  border: 1px solid var(--tile-color);
+  border-radius: 6px;
+  background: var(--tile-color);
+  box-shadow: 0 12px 28px -14px var(--tile-color);
   font-family: var(--hm-font);
-  font-size: 0.92rem;
-  font-weight: 700;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
   white-space: nowrap;
   animation: hm-tile-cta-in 280ms ease-out both;
 }
 
+/* Tag-qualified to beat the page's \`a { color: inherit }\`. */
+a.hm-tile-cta {
+  color: #0a0c10;
+}
+
 .hm-tile-cta:hover {
-  background: var(--hm-accent);
+  filter: brightness(1.12);
 }
 
 .hm-tile-cta:focus-visible {
-  outline: 2px solid var(--hm-accent-hover);
+  outline: 2px solid var(--tile-color);
   outline-offset: 3px;
 }
 
+/* Not a download (a waitlist, a beta page): outlined in the product colour. */
 .hm-tile-cta-quiet {
-  border-color: #3d4553;
-  background: var(--hm-raised);
+  background: rgba(10, 12, 16, 0.85);
+  box-shadow: none;
+}
+
+a.hm-tile-cta-quiet {
+  color: var(--tile-color);
 }
 
 .hm-tile-cta-quiet:hover {
-  background: #202633;
+  filter: none;
+  background: #151a22;
 }
 
 @keyframes hm-tile-cta-in {

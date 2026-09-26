@@ -11,7 +11,7 @@
 // motion none of the movement runs: the canvas renders on demand, boxes snap
 // to their places, and the FastCast box snaps around instead of spinning.
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { Environment, Html, Lightformer, MeshReflectorMaterial, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
@@ -287,6 +287,7 @@ function TileCta({ product }: { product: Product }) {
       className={`hm-tile-cta${action.kind === 'download' ? '' : ' hm-tile-cta-quiet'}`}
       href={action.href}
       {...(action.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      style={{ '--tile-color': product.color } as CSSProperties}
       onClick={onClick}
       onPointerDown={(e) => e.stopPropagation()}
     >
@@ -304,6 +305,17 @@ function shelfOffset(index: number, selected: number, count: number) {
   return ((((index - selected + half) % count) + count) % count) - half;
 }
 
+/** Scale of the picked box at rest, and of FastCast turned around to show the app. */
+const REST_SCALE = 1.04;
+const FLIP_SCALE = 1.08;
+/**
+ * Where the centre tile's button hangs from: a fixed spot at the bottom edge of
+ * the picked box at rest (less the idle float), not attached to the box, so the
+ * float, the hover lean and the FastCast flip never move it. The gap below that
+ * is set in CSS pixels, so it holds at every camera distance.
+ */
+const CTA_POSITION: [number, number, number] = [0, 0.12 - (BOX_H / 2) * REST_SCALE - 0.06, 0.9 + BOX_D / 2];
+
 const SHEEN_TIME = 0.95;
 const ENTRANCE_DELAY = 0.35;
 const ENTRANCE_STAGGER = 0.13;
@@ -317,6 +329,7 @@ function Box({
   onRecordingChange,
   release,
   onHover,
+  onSettled,
   count,
 }: {
   product: Product;
@@ -328,6 +341,8 @@ function Box({
   /** Bumped by the scene when the pointer leaves the shelf or rests on another box. */
   release: number;
   onHover: (index: number) => void;
+  /** Called once the picked box has come to rest, so the scene can show its button. */
+  onSettled: (index: number) => void;
   count: number;
 }) {
   const ref = useRef<THREE.Group>(null);
@@ -359,10 +374,6 @@ function Box({
   // Timers for the FastCast hover sequence: dwell, then flip, then record.
   const timers = useRef<{ dwell?: number; record?: number; tick?: number; leave?: number }>({});
   const prevSelected = useRef(selected);
-  const [ctaReady, setCtaReady] = useState(false);
-  // Mirrors m.current.flipped for rendering: the tile button moves below the
-  // box while its back (the real app) is showing, so it never covers it.
-  const [showingBack, setShowingBack] = useState(false);
 
   // The centre tile's button appears once the box has actually come to rest
   // (checked in the frame loop below), so it never sits still over a box that
@@ -370,7 +381,6 @@ function Box({
   const ctaShown = useRef(false);
   useEffect(() => {
     ctaShown.current = false;
-    setCtaReady(false);
   }, [selected]);
 
   useEffect(() => {
@@ -398,10 +408,7 @@ function Box({
 
     // Centre stage: the picked box sits in the middle, front, and the rest of
     // the shelf fans out on either side of it with a little extra room.
-    const rowX = offset * SPACING + Math.sign(offset) * 0.35;
-    // A flipped box is brought to the front and toward the middle, like
-    // something picked up off the shelf to look at.
-    const tx = s.flipped ? rowX * 0.3 : rowX;
+    const tx = offset * SPACING + Math.sign(offset) * 0.35;
     // A box that wraps from one end of the loop to the other re-enters from
     // the outside edge instead of sweeping across the whole shelf.
     if (Math.abs(tx - s.px.x) > SPACING * 3 && !reducedMotion) {
@@ -409,12 +416,14 @@ function Box({
       s.px.v = 0;
     }
     const flipped = s.flipped;
-    const tz = flipped ? 1.6 : isSelected ? 0.9 : -Math.abs(offset) * 0.45;
-    // Flipped boxes face the camera square, back side out.
-    const tYaw = (isSelected || flipped ? 0 : -Math.sign(offset) * 0.42) + (flipped ? Math.PI : 0);
-    let ty = isSelected || flipped ? 0.12 : 0;
-    if (hovered && !isSelected && !flipped) ty += 0.12;
-    const tScale = flipped ? 1.12 : isSelected ? 1.04 : hovered ? 1.02 : 1;
+    const tz = isSelected ? 0.9 : -Math.abs(offset) * 0.45;
+    // Only the centre box flips, and it turns around where it stands, back
+    // side out. It grows a touch and rises by the same amount, so its bottom
+    // edge stays put and the button under it does not have to move.
+    const tYaw = (isSelected ? 0 : -Math.sign(offset) * 0.42) + (flipped ? Math.PI : 0);
+    let ty = isSelected ? (flipped ? 0.12 + (FLIP_SCALE - REST_SCALE) * (BOX_H / 2) : 0.12) : 0;
+    if (hovered && !isSelected) ty += 0.12;
+    const tScale = flipped ? FLIP_SCALE : isSelected ? REST_SCALE : hovered ? 1.02 : 1;
 
     if (isSelected && !ctaShown.current) {
       const settled =
@@ -425,7 +434,7 @@ function Box({
           Math.abs(s.px.x - tx) < 0.08);
       if (settled) {
         ctaShown.current = true;
-        setCtaReady(true);
+        onSettled(index);
       }
     }
 
@@ -509,10 +518,9 @@ function Box({
   };
 
   const engage = () => {
-    if (!isFastCast || m.current.flipped || timers.current.dwell !== undefined) return;
+    if (!isFastCast || selected !== index || m.current.flipped || timers.current.dwell !== undefined) return;
     timers.current.dwell = window.setTimeout(() => {
       m.current.flipped = true;
-      setShowingBack(true);
       invalidate();
       timers.current.record = window.setTimeout(startRecording, reducedMotion ? 400 : 1100);
     }, 900);
@@ -524,7 +532,6 @@ function Box({
     document.body.style.cursor = '';
     if (m.current.flipped) {
       m.current.flipped = false;
-      setShowingBack(false);
       back.draw.current('ready', 0);
       onRecordingChange(false);
     }
@@ -541,6 +548,11 @@ function Box({
     }
     leave();
   }, [release]);
+
+  // Picking another app puts a flipped FastCast back on the shelf.
+  useEffect(() => {
+    if (selected !== index && (m.current.flipped || timers.current.dwell !== undefined)) leave();
+  }, [selected]);
 
   useEffect(
     () => () => {
@@ -637,11 +649,6 @@ function Box({
           toneMapped={false}
         />
       </mesh>
-      {ctaReady ? (
-        <Html position={[0, showingBack ? -BOX_H / 2 - 0.26 : -0.8, 0]} center zIndexRange={[20, 0]} wrapperClass="hm-tile-cta-wrap">
-          <TileCta product={product} />
-        </Html>
-      ) : null}
       {back.texture ? (
         <mesh position={[0, 0, -BOX_D / 2 - 0.002]} rotation={[0, Math.PI, 0]}>
           <planeGeometry args={[BOX_W - 0.08, BOX_H - 0.08]} />
@@ -746,6 +753,8 @@ function InvalidateOn({ value }: { value: unknown }) {
 export default function StoreScene({ products, selected, onSelect, reducedMotion }: SceneProps) {
   const [recording, setRecording] = useState(false);
   const [release, setRelease] = useState(0);
+  const [settled, setSettled] = useState<number | null>(null);
+  useEffect(() => setSettled(null), [selected]);
   const hoveredIndex = useRef<number | null>(null);
   const onHover = (index: number) => {
     // Resting on a different box puts a flipped one back on the shelf.
@@ -813,9 +822,18 @@ export default function StoreScene({ products, selected, onSelect, reducedMotion
             onRecordingChange={setRecording}
             release={release}
             onHover={onHover}
+            onSettled={setSettled}
             count={products.length}
           />
         ))}
+
+        {settled === selected && products[selected] ? (
+          <Html key={selected} position={CTA_POSITION} zIndexRange={[20, 0]}>
+            <div className="hm-tile-cta-anchor">
+              <TileCta product={products[selected]} />
+            </div>
+          </Html>
+        ) : null}
 
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, FLOOR_Y, 0]}>
           <planeGeometry args={[60, 30]} />
