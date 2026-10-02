@@ -138,7 +138,6 @@ export function HomeFooter() {
           <a href="/roadmap">Product roadmap</a>
           <a href="/projects">Projects</a>
           <a href="/build">Websites &amp; software</a>
-          <a href="/tech-support">Local tech support</a>
           <a href="https://github.com/CalvinSturm" target="_blank" rel="noopener noreferrer">
             GitHub
           </a>

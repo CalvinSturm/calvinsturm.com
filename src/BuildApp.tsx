@@ -657,7 +657,6 @@ export default function BuildApp() {
             ))}
             <a href="/fast-series">Fast Series</a>
             <a href="/projects">Projects</a>
-            <a href="/tech-support">Local tech support</a>
           </nav>
           <nav aria-label="Contact">
             <h3>Contact</h3>

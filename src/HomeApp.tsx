@@ -382,7 +382,6 @@ export default function HomeApp() {
 
           <nav className="hm-minor" aria-label="More from Sturm Technologies">
             <span>Also here:</span>
-            <a href="/tech-support">In-home tech support</a>
             <a href="/projects">Experiments and side projects</a>
             <a href="/roadmap">Product roadmap</a>
           </nav>

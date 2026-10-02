@@ -50,6 +50,11 @@
   ],
   "redirects": [
     {
+      "source": "/tech-support",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/LocalAgent",
       "destination": "/localagent",
       "permanent": true

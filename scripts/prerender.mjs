@@ -33,7 +33,6 @@ const standalonePages = [
   'fastshorts.html',
   'roadmap.html',
   'projects.html',
-  'tech-support.html',
   'build.html',
   'localagent.html',
   'faceforge.html',

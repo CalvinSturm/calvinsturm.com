@@ -20,7 +20,6 @@ export default defineConfig(({mode}) => {
         input: {
           main: path.resolve(__dirname, 'index.html'),
           build: path.resolve(__dirname, 'build.html'),
-          techSupport: path.resolve(__dirname, 'tech-support.html'),
           projects: path.resolve(__dirname, 'projects.html'),
           localagent: path.resolve(__dirname, 'localagent.html'),
           faceforge: path.resolve(__dirname, 'faceforge.html'),

@@ -1,47 +1,26 @@
-# Tech Wiz Website
+# calvinsturm.com
 
-Marketing site for Tech Wiz, an in-home tech support service serving the Five Cities and nearby Central Coast areas.
+Website for Sturm Technologies LLC: the Fast Series store (FastCast, FastPlay, FastClip, FastCompress, FastShorts), product guides, roadmap, projects, and build services.
 
 ## Stack
 
 - React 19
 - TypeScript
-- Vite 6
+- Vite 6 (multi-page app, every route prerendered by `scripts/prerender.mjs`)
 - Tailwind CSS 4
 - `lucide-react` for icons
-- `@react-three/fiber` and `@react-three/drei` for the interactive help carousel
+- `@react-three/fiber` and `@react-three/drei` for the 3D store shelf
 - `motion` for UI animation
-
-## What is in the app
-
-- Marketing homepage with sections for trust points, process, services, pricing, service area, FAQ, and callback CTA
-- Interactive service-area lookup for supported cities and ZIP codes
-- Request-callback form with client-side state only
-- Theme toggle with light/dark preference saved in `localStorage`
-- 3D animated `TechHelpCarousel` component for common support scenarios
-- FastMedia marketplace static catalog under `/fastmedia-marketplace/`
-- FastMedia marketplace account API under `/api/marketplace/` plus browser device sign-in at `/fastmedia-account.html`
 
 ## Project structure
 
 ```text
-src/
-  App.tsx                Main homepage and all marketing sections
-  TechHelpCarousel.tsx   3D interactive carousel
-  main.tsx               App entry point
-  index.css              Global styles
-
+*.html, fastcast/, ...   Page shells, one per route (registered in vite.config.ts)
+src/                     Page entries (*.tsx) and React components
+scripts/prerender.mjs    Prerenders every route after the Vite build
 api/marketplace/         FastMedia account + entitlement service
-public/
-  fastmedia-account.html FastMedia browser/device authorization page
-  techWizIcon.png
-  favicon.ico
-  favicon.svg
-  5CitiesMap.png
-
-docs/
-  FASTMEDIA_ACCOUNT_SERVICE.md
-  fastmedia-account-service.sql
+public/                  Static assets, sitemap, downloads
+docs/                    Marketing, pricing, SEO and account-service notes
 ```
 
 ## Development
@@ -84,6 +63,4 @@ There is a leftover `GEMINI_API_KEY` define in `vite.config.ts`, but the current
 
 ## Notes
 
-- The request form currently shows a local success state and does not submit to a backend.
-- Service area messaging is driven by lookup data inside `src/App.tsx`.
 - `metadata.json` still contains earlier wireframe metadata and is not the main source of truth for the site behavior.
