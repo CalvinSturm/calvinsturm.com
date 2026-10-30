@@ -309,7 +309,12 @@ const linkSources = [
   ...pages.map((p) => join(root, p.file)),
   ...collectFiles(join(root, 'src'), ['.tsx', '.ts']),
 ];
-const validRoutes = new Set([...builtRoutes, '/404']);
+// Static pages in public/ (marketplace, developers) are copied to dist as-is
+// and served at their clean URL, so links to them are valid too.
+const publicRoutes = readdirSync(join(root, 'public'))
+  .filter((entry) => entry.endsWith('.html') && !entry.startsWith('google'))
+  .map((entry) => `/${entry.replace(/\.html$/, '')}`);
+const validRoutes = new Set([...builtRoutes, ...publicRoutes, '/404']);
 for (const src of linkSources) {
   const content = readFileSync(src, 'utf8');
   for (const [, href] of content.matchAll(/href="(\/[^"#?]*)/g)) {

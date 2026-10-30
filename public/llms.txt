@@ -1,0 +1,34 @@
+# Sturm Technologies
+
+> Sturm Technologies LLC, founded by Calvin Sturm, builds practical native Windows software and local-first creator tools. The main product line is the Fast Series: FastCast (screen recorder and streaming), FastPlay (video player), FastClip (vertical clips), FastCompress (video compressor) and FastShorts (experimental). Every app runs on Windows 10 and 11, 64-bit, and works on local files without an account.
+
+Facts below are current as of 2026-10-30. Product pages are the source of truth; prefer them when they disagree with this file.
+
+## Products
+
+- [FastCast](https://www.calvinsturm.com/fastcast): Lightweight OBS alternative for Windows. Screen recording up to 4K, Instant Replay clips, green-screen webcam overlays, camera backgrounds, mic noise reduction, and RTMP/RTMPS streaming to YouTube, Twitch and Kick. Version 0.10.0, Open Beta. FastCast Free records and streams at 1080p60. FastCast Pro is a one-time license, $19 until v1.0 and $29 after, and unlocks 4K and 120 fps. No account, watermark or telemetry.
+- [FastPlay](https://www.calvinsturm.com/fastplay): Fast, lightweight native Windows video player for local files. D3D11 hardware decode, responsive seeking, 120 fps playback, native HDR10 output or SDR tone mapping, per-file resume, a temporary play queue, in/out loop ranges, and export of a marked range to MP4. Version 0.5.0. Free and open source under the MIT License, with no paid tier. Source: https://github.com/CalvinSturm/FastPlay
+- [FastClip](https://www.calvinsturm.com/fastclip): Turns long local videos into 1080x1920 vertical MP4 clips. On-device analysis proposes ranked highlight candidates you review, with optional burned-in captions. Open Beta, free during the beta. Footage never leaves the PC.
+- [FastCompress](https://www.calvinsturm.com/fastcompress): Compresses a video to fit where it is going, such as Discord or email, with presets, an editable target size, a preview of the plan before encoding, and a command-line mode. Beta, free during the beta. No watermark or account.
+- [FastShorts](https://www.calvinsturm.com/fastshorts): Experimental local pipeline that turns a written story into a narrated, captioned vertical short. No public download yet.
+
+## Other projects
+
+- [FaceForge](https://www.calvinsturm.com/faceforge): Blurs faces in video locally on Windows using AI face detection on NVIDIA RTX GPUs. Public alpha.
+- [LocalAgent](https://www.calvinsturm.com/localagent): Runs AI coding agents on your own machine with local models (Ollama, LM Studio, llama.cpp), explicit approvals and replayable runs. Alpha developer tool.
+- [VideoForge](https://www.calvinsturm.com/videoforge): Local-first Windows app for cleaning up, upscaling, reframing and exporting video on your own NVIDIA GPU. No cloud rendering or uploads.
+
+## Guides
+
+- [FastCast guides](https://www.calvinsturm.com/fastcast/guides): Screen recording, HDR capture, streaming to YouTube, Twitch and Kick, stream keys, bitrate, Instant Replay and OBS comparisons on Windows.
+- [FastPlay guides](https://www.calvinsturm.com/fastplay/guides): HDR and HEVC playback, MOV files that will not play, stuttering playback, 120 fps video, SRT subtitles and a keyboard-driven review workflow on Windows.
+- [FastClip guides](https://www.calvinsturm.com/fastclip/guides): Long video to vertical clips, and local auto captions without uploading.
+- [FastCompress guides](https://www.calvinsturm.com/fastcompress/guides): Compressing video for Discord and for email.
+
+## Company
+
+- [Fast Series overview](https://www.calvinsturm.com/fast-series)
+- [Roadmap and release timeline](https://www.calvinsturm.com/roadmap)
+- [FastCast privacy policy](https://www.calvinsturm.com/fastcast/privacy)
+- [FastPlay privacy policy](https://www.calvinsturm.com/fastplay/privacy)
+- Contact: calvinsturm@gmail.com

@@ -28,8 +28,13 @@ export const fastPlayFaqs = [
       'FastPlay supports external sidecar .srt subtitle files placed next to the media file. Embedded subtitle tracks and other subtitle formats are not loaded, and styling is intentionally minimal.',
   },
   {
+    question: 'Can FastPlay cut or export a clip?',
+    answer:
+      'Yes. Since v0.5.0, set an in point with I and an out point with O, then press Ctrl+Shift+E to save that range as an MP4. MP4 files cut on a keyframe are copied without re-encoding; otherwise FastPlay re-encodes to H.264/AAC so the clip matches your marks exactly. FFmpeg is included, so nothing else needs installing.',
+  },
+  {
     question: 'Is FastPlay the fastest video player?',
     answer:
-      'FastPlay is designed for fast local playback, but fastest claims require benchmark data. The benchmark page covers planned startup, seek, resume, memory, and playback comparisons.',
+      'FastPlay is built for fast local playback, but it does not claim to be the fastest. A local benchmark harness measures open and seek times, and cross-player comparisons will only be claimed once measured results are published.',
   },
 ];

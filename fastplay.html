@@ -38,6 +38,7 @@
         "applicationSubCategory": "Video Player",
         "description": "FastPlay is a fast, lightweight native Windows video player for local playback, responsive seeking, hardware-accelerated decode, smooth scrubbing, resume playback, and simple controls.",
         "softwareVersion": "0.5.0",
+        "dateModified": "2026-10-30",
         "license": "https://opensource.org/licenses/MIT",
         "url": "https://www.calvinsturm.com/fastplay",
         "downloadUrl": "https://github.com/CalvinSturm/FastPlay/releases/download/v0.5.0/fastplay-0.5.0-x86_64.msi",
@@ -48,11 +49,13 @@
         "image": "https://www.calvinsturm.com/assets/FastPlay/fastplay-hero-wide-poster.jpg",
         "publisher": {
           "@type": "Organization",
+          "@id": "https://www.calvinsturm.com/#organization",
           "name": "Sturm Technologies LLC",
           "url": "https://www.calvinsturm.com/"
         },
         "author": {
           "@type": "Person",
+          "@id": "https://www.calvinsturm.com/#calvin-sturm",
           "name": "Calvin Sturm",
           "url": "https://github.com/CalvinSturm"
         },
@@ -120,10 +123,18 @@
           },
           {
             "@type": "Question",
+            "name": "Can FastPlay cut or export a clip?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Since v0.5.0, set an in point with I and an out point with O, then press Ctrl+Shift+E to save that range as an MP4. MP4 files cut on a keyframe are copied without re-encoding; otherwise FastPlay re-encodes to H.264/AAC so the clip matches your marks exactly. FFmpeg is included, so nothing else needs installing."
+            }
+          },
+          {
+            "@type": "Question",
             "name": "Is FastPlay the fastest video player?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "FastPlay is designed for fast local playback, but fastest claims require benchmark data. The benchmark page covers planned startup, seek, resume, memory, and playback comparisons."
+              "text": "FastPlay is built for fast local playback, but it does not claim to be the fastest. A local benchmark harness measures open and seek times, and cross-player comparisons will only be claimed once measured results are published."
             }
           }
         ]
