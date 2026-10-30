@@ -65,7 +65,7 @@ const fastCastTimeline: TimelineItem[] = [
     status: 'Shipped',
     tone: 'shipped',
     title: 'Instant Replay',
-    body: 'FastCast can keep the last 15 to 300 seconds of your screen in memory and save it as an MP4 with Ctrl+Alt+F8, with nothing written to disk until you ask. Also added a notification-area icon with optional Start with Windows, a rebuilt control surface, and the mouse pointer in the preview.',
+    body: 'FastCast can keep the last 30 seconds to 5 minutes of your screen in memory and save it as an MP4 with Ctrl+Alt+F8, with nothing written to disk until you ask. Also added a notification-area icon with optional Start with Windows, a rebuilt control surface, and the mouse pointer in the preview.',
     link: {
       href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.8.0',
       label: 'Release page',

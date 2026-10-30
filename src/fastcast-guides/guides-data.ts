@@ -64,6 +64,17 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
     related: ['how-to-record-screen-windows', 'stream-screen-webcam-windows', 'screen-recording-without-lag'],
   },
   {
+    slug: 'clip-last-30-seconds-pc',
+    title: 'How to Clip the Last 30 Seconds on PC, on Any GPU',
+    shortTitle: 'Clip the last 30 seconds on PC',
+    description:
+      'Save the last 30 seconds to 5 minutes of your screen after it happens, with the NVIDIA app, AMD Software, Xbox Game Bar, or FastCast Instant Replay.',
+    category: 'Recording Basics',
+    published: '2026-10-30',
+    updated: '2026-10-30',
+    related: ['how-to-record-screen-windows', 'screen-recording-without-lag', 'obs-alternative-windows'],
+  },
+  {
     slug: 'command-line-screen-recording-windows',
     title: 'How to Start and Stop Screen Recording from the Command Line',
     shortTitle: 'Command-line screen recording',

@@ -33,6 +33,7 @@ export default defineConfig(({mode}) => {
           fastcastGuideHdrCapture: path.resolve(__dirname, 'fastcast/guides/hdr-screen-recording-screenshots-windows.html'),
           fastcastGuideObsAlt: path.resolve(__dirname, 'fastcast/guides/obs-alternative-windows.html'),
           fastcastGuideWebcam: path.resolve(__dirname, 'fastcast/guides/record-screen-and-webcam.html'),
+          fastcastGuideClipReplay: path.resolve(__dirname, 'fastcast/guides/clip-last-30-seconds-pc.html'),
           fastcastGuide4k: path.resolve(__dirname, 'fastcast/guides/record-4k-60fps-windows.html'),
           fastcastGuideNoLag: path.resolve(__dirname, 'fastcast/guides/screen-recording-without-lag.html'),
           fastcastGuideBlackScreen: path.resolve(__dirname, 'fastcast/guides/screen-recording-black-screen-no-audio.html'),

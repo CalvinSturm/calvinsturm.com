@@ -81,8 +81,8 @@ const panelRows = [
   },
   {
     name: 'Instant Replay',
-    body: 'Keep the last 15 to 300 seconds in memory and save the moment as an MP4 after it happens. Press Ctrl+Alt+F8 when you want the clip; nothing is written until then.',
-    spec: '15–300 sec · Ctrl+Alt+F8',
+    body: 'Keep the last 30 seconds to 5 minutes in memory and save the moment as an MP4 after it happens. Press Ctrl+Alt+F8 when you want the clip; nothing is written until then.',
+    spec: '30 s–5 min · Ctrl+Alt+F8',
   },
   {
     name: 'The same setup, live',
@@ -135,7 +135,7 @@ const fastCastFaqs = [
   {
     question: 'What is Instant Replay?',
     answer:
-      'Instant Replay keeps the last 15 to 300 seconds of your screen in memory and saves it as an MP4 when you press Ctrl+Alt+F8. Nothing is written until you save a clip, and the buffer keeps running afterward.',
+      'Instant Replay keeps the last 30 seconds to 5 minutes of your screen in memory and saves it as an MP4 when you press Ctrl+Alt+F8. Nothing is written until you save a clip, and the buffer keeps running afterward.',
   },
   {
     question: 'Is FastCast an OBS alternative?',

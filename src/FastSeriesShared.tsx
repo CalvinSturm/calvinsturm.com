@@ -911,7 +911,7 @@ const fastCastFeatures: FeatureItem[] = [
   { title: 'Passthrough, 1080p, or 720p output', Icon: FileVideo },
   { title: 'Hotkeys: Ctrl+Alt+F9 record, Ctrl+Alt+1-4 layouts', Icon: Keyboard },
   { title: 'Command-line recording control with fastcastc', Icon: Terminal },
-  { title: 'Instant Replay: save the last 15–300 seconds with Ctrl+Alt+F8', Icon: RotateCcw },
+  { title: 'Instant Replay: save the last 30 seconds to 5 minutes with Ctrl+Alt+F8', Icon: RotateCcw },
 ];
 
 const fastCastFaqs = [
@@ -923,7 +923,7 @@ const fastCastFaqs = [
   {
     question: 'What is Instant Replay?',
     answer:
-      'Instant Replay keeps the last 15 to 300 seconds in memory and saves it as an MP4 when you press Ctrl+Alt+F8. Nothing is written until you save a clip.',
+      'Instant Replay keeps the last 30 seconds to 5 minutes in memory and saves it as an MP4 when you press Ctrl+Alt+F8. Nothing is written until you save a clip.',
   },
   {
     question: 'Is FastCast an OBS alternative?',

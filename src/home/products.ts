@@ -66,7 +66,7 @@ export const products: Product[] = [
     points: [
       'A whole monitor or a single window, with mic and desktop audio',
       'Webcam overlay with a built-in green screen',
-      'Instant Replay saves the last 15 to 300 seconds as an MP4',
+      'Instant Replay saves the last 30 seconds to 5 minutes as an MP4',
       'Streams to YouTube, Twitch, Kick, or any RTMP/RTMPS service',
     ],
     color: '#3b82f6',
