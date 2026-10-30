@@ -106,33 +106,26 @@ so the reduced-motion view is the only view. */
   transition: background-color 120ms ease, border-color 120ms ease;
 }
 
-.hm-btn-primary {
+.hm .hm-btn-primary {
   background: var(--hm-accent-deep);
   color: #fff;
 }
 
-.hm-btn-primary:hover {
+.hm .hm-btn-primary:hover {
   background: var(--hm-accent);
 }
 
-.hm-btn-ghost {
+/* Written as .hm .hm-btn-* so the colour beats the shared
+   `.home-landing a { color: inherit }`. */
+.hm .hm-btn-ghost {
   border-color: var(--hm-border);
   background: var(--hm-surface);
   color: var(--hm-text);
 }
 
-.hm-btn-ghost:hover {
+.hm .hm-btn-ghost:hover {
   border-color: #3d4553;
   background: var(--hm-raised);
-}
-
-.hm-btn-pro {
-  background: var(--hm-pro);
-  color: #1c1402;
-}
-
-.hm-btn-pro:hover {
-  background: #f8c962;
 }
 
 .hm .hm-link {
@@ -518,11 +511,6 @@ a.hm-tile-cta-quiet {
   color: var(--hm-free);
 }
 
-.hm-price-pro span {
-  color: var(--hm-pro);
-  font-weight: 600;
-}
-
 .hm-price-muted strong {
   color: var(--hm-muted);
 }
@@ -536,9 +524,47 @@ a.hm-tile-cta-quiet {
   width: 100%;
 }
 
-.hm-actions-stack .hm-link {
-  align-self: flex-start;
-  margin-top: 6px;
+.hm-panel-buy > .hm-link {
+  display: inline-block;
+  margin-top: 18px;
+}
+
+.hm-pro {
+  display: grid;
+  gap: 4px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hm-border);
+}
+
+.hm .hm-pro-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.hm-pro-head strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.hm-pro-price {
+  color: var(--hm-pro);
+  font-size: 1.3rem;
+  font-weight: 800;
+  font-stretch: 85%;
+}
+
+.hm .hm-pro-note {
+  color: var(--hm-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.hm-pro .hm-btn {
+  width: 100%;
+  margin-top: 12px;
 }
 
 /* ---- Real media ---- */

@@ -34,6 +34,8 @@ export type Product = {
   price: string;
   priceNote: string;
   priceTone: 'free' | 'pro' | 'muted';
+  /** The paid tier, shown under the free download in the store panel. */
+  pro?: { name: string; price: string; note: string };
   summary: string;
   points: string[];
   /** The box accent, taken from the app icon. */
@@ -52,8 +54,13 @@ export const products: Product[] = [
     version: fastCastVersion,
     boxPrice: `Free  /  Pro ${fastCastLicensePrice}`,
     price: 'Free at 1080p60',
-    priceNote: `FastCast Pro is ${fastCastLicensePrice} until v1.0, then ${fastCastLicensePriceAtV1}. One-time purchase.`,
+    priceNote: 'Records and streams with nothing to pay during the Open Beta.',
     priceTone: 'pro',
+    pro: {
+      name: 'FastCast Pro',
+      price: fastCastLicensePrice,
+      note: `One-time purchase. Rises to ${fastCastLicensePriceAtV1} at v1.0.`,
+    },
     summary:
       'Screen recorder and live streaming app. Pick a screen, pick your audio, press record. The same setup goes live without building a second scene.',
     points: [
@@ -67,7 +74,7 @@ export const products: Product[] = [
     icon384: '/assets/FastCast/fastcast-icon-384.webp',
     actions: [
       { label: 'Download FastCast', href: fastCastDownloadUrl, kind: 'download', external: true },
-      { label: `Get Pro for ${fastCastLicensePrice}`, href: fastCastLicenseCheckoutUrl, kind: 'pro', external: true },
+      { label: 'Get FastCast Pro', href: fastCastLicenseCheckoutUrl, kind: 'pro', external: true },
       { label: 'FastCast page', href: '/fastcast', kind: 'page' },
     ],
   },

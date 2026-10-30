@@ -24,7 +24,7 @@ function track(product: Product['slug'], action: ProductAction, location: string
   else if (action.kind === 'source') trackCtaClick(product, 'github_clicked', location, action.href);
 }
 
-type Variant = 'primary' | 'pro' | 'ghost' | 'link';
+type Variant = 'primary' | 'ghost' | 'link';
 
 function ActionLink({
   product,
@@ -51,7 +51,6 @@ function ActionLink({
 }
 
 function variantFor(action: ProductAction, first: boolean): Variant {
-  if (action.kind === 'pro') return 'pro';
   if (first) return 'primary';
   if (action.kind === 'page') return 'link';
   return 'ghost';
@@ -105,6 +104,8 @@ function FlatShelf({ selected, onSelect }: { selected: number; onSelect: (i: num
 }
 
 function ProductPanel({ product }: { product: Product }) {
+  const proAction = product.actions.find((action) => action.kind === 'pro');
+  const pageAction = product.actions.find((action) => action.kind === 'page');
   return (
     <div className="hm-panel">
       <div className="hm-panel-main">
@@ -128,16 +129,31 @@ function ProductPanel({ product }: { product: Product }) {
           <span>{product.priceNote}</span>
         </div>
         <div className="hm-actions hm-actions-stack">
-          {product.actions.map((action, i) => (
-            <ActionLink
-              key={action.label}
-              product={product}
-              action={action}
-              location="store"
-              variant={variantFor(action, i === 0)}
-            />
-          ))}
+          {product.actions
+            .filter((action) => action.kind !== 'pro' && action.kind !== 'page')
+            .map((action, i) => (
+              <ActionLink
+                key={action.label}
+                product={product}
+                action={action}
+                location="store"
+                variant={variantFor(action, i === 0)}
+              />
+            ))}
         </div>
+        {product.pro && proAction ? (
+          <div className="hm-pro">
+            <p className="hm-pro-head">
+              <strong>{product.pro.name}</strong>
+              <span className="hm-pro-price">{product.pro.price}</span>
+            </p>
+            <p className="hm-pro-note">{product.pro.note}</p>
+            <ActionLink product={product} action={proAction} location="store" variant="ghost" />
+          </div>
+        ) : null}
+        {pageAction ? (
+          <ActionLink product={product} action={pageAction} location="store" variant="link" />
+        ) : null}
       </div>
     </div>
   );
