@@ -8,7 +8,7 @@ import type { GuideMeta } from '../product-guides/ProductGuides.tsx';
 export const fastPlayPath = '/fastplay';
 export const guidesIndexPath = '/fastplay/guides';
 
-export const fastPlayDownloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/download/v0.4.6/fastplay-0.4.6-x86_64.msi';
+export const fastPlayDownloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/download/v0.5.0/fastplay-0.5.0-x86_64.msi';
 export const fastPlaySourceUrl = 'https://github.com/CalvinSturm/FastPlay';
 
 export type GuideCategory = 'HDR & Color' | 'Formats & Codecs' | 'Playback Performance' | 'Workflow';
@@ -77,7 +77,7 @@ export const guides: Array<GuideMeta & { category: GuideCategory }> = [
       'A keyboard-first workflow for reviewing long recordings on Windows: frame stepping, in/out loop ranges, speed control, screenshots, and per-file resume.',
     category: 'Workflow',
     published: '2026-07-15',
-    updated: '2026-07-15',
+    updated: '2026-10-30',
     related: ['video-stuttering-windows', 'hevc-player-windows', 'mov-not-playing-windows'],
   },
   {

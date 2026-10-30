@@ -23,7 +23,7 @@ import { trackCtaClick } from './lib/analytics';
 import './fastplay-v3-base.css';
 import './fastplay-v3.css';
 
-const currentVersion = '0.4.6';
+const currentVersion = '0.5.0';
 const downloadUrl = `https://github.com/CalvinSturm/FastPlay/releases/download/v${currentVersion}/fastplay-${currentVersion}-x86_64.msi`;
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastPlay/releases/latest';
 const sourceUrl = 'https://github.com/CalvinSturm/FastPlay';
@@ -237,20 +237,20 @@ export function FastPlayV3() {
         <section id="overview" className="fastplay-v3-release-summary" aria-labelledby="release-summary-title">
           <div className="fastcast-v2-shell">
             <div className="fastplay-v3-release-card" data-reveal>
-              <h2 id="release-summary-title">New in v0.4.6: frameless windows and better portrait video</h2>
-              <p className="fastplay-v3-release-lede">Switch between framed and frameless windows, keep your preferred style, and open rotated phone videos at the right shape.</p>
+              <h2 id="release-summary-title">New in v0.5.0: save a clip, and a menu when you want one</h2>
+              <p className="fastplay-v3-release-lede">Mark an in and out point, save that stretch as its own MP4, and reach every command from a small menu you can hide.</p>
               <div className="fastplay-v3-release-grid">
                 <article>
-                  <h3>Frameless mode</h3>
-                  <p>Press Ctrl+Shift+S to switch between framed and frameless windows.</p>
+                  <h3>Export the marked range</h3>
+                  <p>Press I and O, then Ctrl+Shift+E. FastPlay saves the range as an MP4, and FFmpeg comes included.</p>
                 </article>
                 <article>
-                  <h3>Your choice remembered</h3>
-                  <p>New FastPlay windows open in the window style you last selected.</p>
+                  <h3>Quick when it can be</h3>
+                  <p>MP4 cuts that start on a keyframe are copied as is. Anything else is re-encoded so the clip starts and ends exactly where you marked.</p>
                 </article>
                 <article>
-                  <h3>Better portrait video</h3>
-                  <p>Rotated phone videos now open in a correctly sized portrait window.</p>
+                  <h3>A menu you can hide</h3>
+                  <p>Media, Playback, View and Help sit in one slim row. Ctrl+Shift+M hides it, and Alt brings it back for a moment.</p>
                 </article>
               </div>
               <a href={releaseNotesUrl} target="_blank" rel="noopener noreferrer">Read v{currentVersion} release notes <ArrowUpRight size={16} /></a>

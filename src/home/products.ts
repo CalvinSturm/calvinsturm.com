@@ -12,7 +12,7 @@ import {
   fastCastVersion,
 } from '../fastcast-guides/guides-data';
 
-export const fastPlayVersion = '0.4.6';
+export const fastPlayVersion = '0.5.0';
 export const fastPlayDownloadUrl = `https://github.com/CalvinSturm/FastPlay/releases/download/v${fastPlayVersion}/fastplay-${fastPlayVersion}-x86_64.msi`;
 
 export type ProductAction = {
@@ -88,6 +88,7 @@ export const products: Product[] = [
       'Responsive seeking, driven from the keyboard',
       'D3D11 hardware decode keeps video on the GPU',
       'Recent files and resume where you left off',
+      'Mark a range and save it as an MP4',
     ],
     color: '#32d583',
     icon: '/assets/FastPlay/fastplay-icon-128.webp',

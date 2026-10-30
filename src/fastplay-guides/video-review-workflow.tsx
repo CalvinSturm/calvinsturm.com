@@ -75,6 +75,10 @@ export function GuidePage() {
             shown on the timeline in whatever document or ticket you are already writing.
           </li>
           <li>
+            <strong>Keep the clip if you need it.</strong> With both points set, export the range as
+            its own MP4 to attach to the ticket or send on.
+          </li>
+          <li>
             <strong>Clear and continue.</strong> Clear the in/out points and resume skimming until
             the next moment.
           </li>
@@ -106,6 +110,11 @@ export function GuidePage() {
           </li>
           <li>
             <code>Ctrl+S</code> saves a screenshot of the current frame.
+          </li>
+          <li>
+            <code>Ctrl+Shift+E</code> exports the marked in/out range as an MP4. MP4 files cut on a
+            keyframe are copied without re-encoding; otherwise FastPlay re-encodes to H.264/AAC so
+            the clip lands exactly on your marks.
           </li>
           <li>
             <code>Ctrl+MouseWheel</code> zooms at the cursor and <code>Ctrl+Drag</code> pans, for
@@ -147,7 +156,8 @@ export function GuidePage() {
         <ul>
           <li>
             FastPlay does not keep annotations. There are no named timestamp markers, no notes, and
-            no export of marker lists; the in/out range is a playback tool, not a logging system.
+            no export of marker lists. You can save one in/out range as a clip, but it is not a
+            logging system.
             Keep notes in the document or ticket where the review results are going anyway.
           </li>
           <li>

@@ -219,10 +219,22 @@ const fastCastTimeline: TimelineItem[] = [
 
 const fastPlayTimeline: TimelineItem[] = [
   {
-    version: 'v0.4.6',
-    date: 'August 2026',
+    version: 'v0.5.0',
+    date: 'October 2026',
     status: 'Current release',
     tone: 'current',
+    title: 'Clip export and a native menu',
+    body: 'Set in and out points and press Ctrl+Shift+E to save the range as an MP4: copied as is when the cut lands on a keyframe, re-encoded otherwise, with FFmpeg bundled. A compact Media, Playback, View and Help menu toggles with Ctrl+Shift+M, and screenshots now save as PNG.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastPlay/releases/tag/v0.5.0',
+      label: 'Release notes',
+    },
+  },
+  {
+    version: 'v0.4.6',
+    date: 'August 2026',
+    status: 'Shipped',
+    tone: 'shipped',
     title: 'Frameless windows and better portrait video',
     body: 'FastPlay can switch between framed and frameless windows with Ctrl+Shift+S, remembers that choice for new instances, and sizes rotated phone videos correctly when they open.',
     link: {
@@ -583,7 +595,7 @@ export default function RoadmapApp() {
                 hardware-accelerated decode, and keyboard-driven controls. Free and open source under the MIT
                 License.
               </p>
-              <p className="fs-spot-meta">v0.4.6 · Windows 10+ · MSI installer · MIT License</p>
+              <p className="fs-spot-meta">v0.5.0 · Windows 10+ · MSI installer · MIT License</p>
               <div className="rm-spot-links">
                 <a href="/fastplay" className="home-spot-cta">
                   FastPlay product page

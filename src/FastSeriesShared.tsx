@@ -638,14 +638,14 @@ const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/re
 const fastCastPortableUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.10.0/FastCast-0.10.0-win-x64.zip';
 const fastCastReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
-const fastPlayDownloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/download/v0.4.6/fastplay-0.4.6-x86_64.msi';
+const fastPlayDownloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/download/v0.5.0/fastplay-0.5.0-x86_64.msi';
 const fastPlayReleaseUrl = 'https://github.com/CalvinSturm/FastPlay/releases/latest';
 const fastClipReleaseUrl = 'https://github.com/CalvinSturm/FastClip-Releases/releases/latest';
 const fastClipAllReleasesUrl = 'https://github.com/CalvinSturm/FastClip-Releases/releases';
 const fastCompressReleaseUrl = 'https://github.com/CalvinSturm/FastCompress-Releases/releases/latest';
 const fastCompressAllReleasesUrl = 'https://github.com/CalvinSturm/FastCompress-Releases/releases';
 const fastPlaySourceUrl = 'https://github.com/CalvinSturm/FastPlay';
-const fastPlayReleaseNotesUrl = 'https://github.com/CalvinSturm/FastPlay/releases/tag/v0.4.6';
+const fastPlayReleaseNotesUrl = 'https://github.com/CalvinSturm/FastPlay/releases/tag/v0.5.0';
 
 type ProductSectionHeadingProps = {
   eyebrow?: string;
@@ -1320,7 +1320,7 @@ export function FastPlayProductPage() {
       brand="FastPlay"
       brandIconUrl="/assets/FastPlay/fastplay.png"
       navLinks={[
-        { href: '#release', label: 'v0.4.6' },
+        { href: '#release', label: 'v0.5.0' },
         { href: '#features', label: 'Features' },
         { href: '#architecture', label: 'Architecture' },
         { href: '#vlc', label: 'vs VLC' },
@@ -1364,7 +1364,7 @@ export function FastPlayProductPage() {
         primaryHref={fastPlayDownloadUrl}
         secondaryLabel="View source on GitHub"
         secondaryHref={fastPlaySourceUrl}
-        meta="v0.4.6 · Windows 10+ · MIT License"
+        meta="v0.5.0 · Windows 10+ · MIT License"
         subMeta="Windows x64 local playback. No streaming, media library, or plugin system."
         heroIconUrl="/assets/FastPlay/fastplay.png"
         heroIconAlt="FastPlay app icon"
@@ -1392,7 +1392,7 @@ export function FastPlayProductPage() {
           <article className="product-panel product-release-panel rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)] sm:p-8">
             <ProductSectionHeading
               eyebrow="Current release"
-              title="New in v0.4.6: frameless windows and better portrait video"
+              title="New in v0.5.0: save a clip, and a menu when you want one"
               description="Switch between framed and frameless windows, keep your preferred style across new instances, and open rotated phone videos in a correctly sized portrait window."
             />
             <div className="product-release-list mt-7 grid gap-4 md:grid-cols-3">
@@ -1408,7 +1408,7 @@ export function FastPlayProductPage() {
               ))}
             </div>
             <a href={fastPlayReleaseNotesUrl} target="_blank" rel="noopener noreferrer" className="product-panel-link mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
-              Read v0.4.6 release notes
+              Read v0.5.0 release notes
               <ArrowUpRight className="h-4 w-4 text-amber-500" />
             </a>
           </article>

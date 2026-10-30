@@ -21,7 +21,7 @@ import { trackCtaClick } from './lib/analytics';
 import { useReducedMotion } from './lib/useReducedMotion';
 import './fastplay-v2.css';
 
-const VERSION = '0.4.6';
+const VERSION = '0.5.0';
 const DOWNLOAD_URL = `https://github.com/CalvinSturm/FastPlay/releases/download/v${VERSION}/fastplay-${VERSION}-x86_64.msi`;
 const SOURCE_URL = 'https://github.com/CalvinSturm/FastPlay';
 const RELEASE_NOTES_URL = `https://github.com/CalvinSturm/FastPlay/releases/tag/v${VERSION}`;
