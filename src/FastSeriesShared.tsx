@@ -634,8 +634,8 @@ export function ProductPage({ product }: { product: Product }) {
 }
 
 const githubProfileUrl = 'https://github.com/CalvinSturm';
-const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.2/FastCast-0.9.2-win-x64.msi';
-const fastCastPortableUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.9.2/FastCast-0.9.2-win-x64.zip';
+const fastCastDownloadUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.10.0/FastCast-0.10.0-win-x64.msi';
+const fastCastPortableUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/download/v0.10.0/FastCast-0.10.0-win-x64.zip';
 const fastCastReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
 const fastCastAllReleasesUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases';
 const fastPlayDownloadUrl = 'https://github.com/CalvinSturm/FastPlay/releases/download/v0.4.6/fastplay-0.4.6-x86_64.msi';
@@ -986,7 +986,7 @@ export function FastCastProductPage() {
         primaryHref={fastCastDownloadUrl}
         secondaryLabel="View release notes"
         secondaryHref={fastCastReleaseUrl}
-        meta="v0.9.2 · Windows 10/11 x64 · MSI or portable ZIP · Free version, optional Pro license"
+        meta="v0.10.0 · Windows 10/11 x64 · MSI or portable ZIP · Free version, optional Pro license"
         heroIconUrl="/assets/FastCast/FastCast_Icon.png"
         heroIconAlt="FastCast app icon"
         preview={
@@ -1013,11 +1013,11 @@ export function FastCastProductPage() {
           </div>
           <aside className="product-panel product-release-card rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
             <h3>Current release</h3>
-            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.9.2</p>
+            <p className="product-release-name mt-3 font-display text-4xl text-slate-900">v0.10.0</p>
             <p className="product-panel-copy mt-3 text-sm leading-relaxed text-slate-600">
-              This hotfix makes long recordings save reliably again: saving after Stop finishes in seconds, and a
-              recording that did not save can be rebuilt from Recent recordings. FastCast does not download or install
-              updates automatically.
+              Put an image, a solid color or a looping video behind your green-screened webcam, and reduce background
+              noise on your mic with one click. Stream keys pasted into a server URL are no longer saved to disk, so
+              install this update if you stream. FastCast does not download or install updates automatically.
             </p>
             <a href={fastCastReleaseUrl} target="_blank" rel="noopener noreferrer" className="product-panel-link mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900">
               Open release page
@@ -1058,12 +1058,12 @@ export function FastCastProductPage() {
               <ShieldCheck className="h-6 w-6 text-emerald-600" />
               <h3 className="mt-4 text-lg font-semibold text-slate-900">Verify the download</h3>
               <p className="product-panel-copy mt-2 text-sm leading-relaxed text-slate-600">
-                Download <code>FastCast-0.9.2-win-x64.zip</code> from the latest release. An optional{' '}
+                Download <code>FastCast-0.10.0-win-x64.zip</code> from the latest release. An optional{' '}
                 <code>.sha256</code> sidecar is included for integrity checks.
               </p>
               <p className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Expected SHA-256</p>
               <code className="mt-2 block break-all rounded-xl bg-slate-100 p-3 text-xs text-slate-700">
-                d060166c3a9eff92e62d5544d15e547c04f5b29b7b272108ed4fbc51d07b8a2d
+                7091ae729c33b02a3efa48c18525a8786e41934c917454ae129220e65c90683e
               </code>
             </article>
             <article className="product-panel product-warning-panel rounded-2xl border border-amber-200/70 bg-amber-50 p-6">

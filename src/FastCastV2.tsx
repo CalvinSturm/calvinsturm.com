@@ -14,7 +14,7 @@ import './fastcast-v2.css';
 // Single source of truth for the shipped version: the download URL and every
 // version string on the page derive from it, so a release bump is one edit
 // here plus softwareVersion/downloadUrl in fastcast.html and the guide CTA.
-const currentVersion = '0.9.2';
+const currentVersion = '0.10.0';
 const installerUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.msi`;
 const portableUrl = `https://github.com/CalvinSturm/FastCast-releases/releases/download/v${currentVersion}/FastCast-${currentVersion}-win-x64.zip`;
 const latestReleaseUrl = 'https://github.com/CalvinSturm/FastCast-releases/releases/latest';
@@ -61,17 +61,17 @@ const panelRows = [
   },
   {
     name: 'Mic and desktop audio',
-    body: 'A live level meter sits between the two mute buttons, and you can mute either one with a keyboard shortcut that works from anywhere.',
+    body: 'A live level meter sits between the two mute buttons, and you can mute either one with a keyboard shortcut that works from anywhere. One click cuts fan, hum and keyboard noise from the mic.',
     spec: 'Ctrl+Alt+F10 / F11',
   },
   {
     name: 'Webcam on top',
-    body: 'Turn the camera on and switch between screen, camera, and combined layouts while you are recording.',
+    body: 'Turn the camera on and switch between screen, camera, and combined layouts while you are recording. Anything sending to OBS Virtual Camera, such as OBS itself, can be picked as your webcam.',
     spec: '4 layouts',
   },
   {
     name: 'Built-in green screen',
-    body: 'Remove a green backdrop from your webcam inside FastCast, then place yourself cleanly over your recording or stream.',
+    body: 'Remove a green backdrop from your webcam inside FastCast, then place yourself over your screen, an image, a solid color, or a looping video.',
     spec: 'Live chroma key',
   },
   {

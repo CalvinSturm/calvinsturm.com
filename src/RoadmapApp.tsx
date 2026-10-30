@@ -24,10 +24,22 @@ type TimelineItem = {
 
 const fastCastTimeline: TimelineItem[] = [
   {
-    version: 'v0.9.2',
-    date: 'September 2026',
+    version: 'v0.10.0',
+    date: 'October 2026',
     status: 'Current release',
     tone: 'current',
+    title: 'Camera backgrounds and safer stream keys',
+    body: 'Put an image, a solid color or a looping video behind your green-screened webcam, with no full-screen monitor needed. One click reduces fan, hum and keyboard noise on the mic, OBS Virtual Camera works as a webcam, and Custom destinations can set the bitrate and keyframe interval their server asks for. A stream key pasted into a server URL is no longer saved to disk, and keys are masked in errors and the log. A blocked microphone no longer loses the recording.',
+    link: {
+      href: 'https://github.com/CalvinSturm/FastCast-releases/releases/tag/v0.10.0',
+      label: 'Release page',
+    },
+  },
+  {
+    version: 'v0.9.2',
+    date: 'September 2026',
+    status: 'Shipped',
+    tone: 'shipped',
     title: 'Long recordings save again',
     body: 'Fixed a v0.9.1 bug where a recording longer than about an hour could sit on Saving for hours. Saving after Stop finishes in seconds again, and a take that did not save can be rebuilt from its .fastcast-parts folder by selecting it in Recent recordings. The app now shows the current Pro price: $19 until v1.0, then $29.',
     link: {
